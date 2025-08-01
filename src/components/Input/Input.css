@@ -1,0 +1,85 @@
+/* Input.css */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-component {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  outline: none;
+  background-color: #ffffff;
+  color: #374151;
+  font-family: inherit;
+}
+
+/* Size variants */
+.input-component--sm {
+  padding: 0.375rem 0.625rem;
+  font-size: 0.875rem;
+}
+
+.input-component--md {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+}
+
+.input-component--lg {
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+}
+
+/* States */
+.input-component:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-component:hover:not(:disabled):not(.input-component--error) {
+  border-color: #9ca3af;
+}
+
+.input-component:disabled {
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.input-component--error {
+  border-color: #ef4444;
+}
+
+.input-component--error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.input-component--loading {
+  padding-right: 2.5rem;
+}
+
+/* Loading spinner */
+.input-spinner {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
+

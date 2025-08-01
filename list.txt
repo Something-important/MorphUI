@@ -1,0 +1,90 @@
+Basic UI Components
+Button
+
+Primary, secondary, disabled, loading states
+
+Different sizes and variants
+
+Input Fields
+
+Text input, password, number input
+
+With validation, icons, placeholders
+
+Select / Dropdown
+
+Single select, multi-select
+
+Searchable options
+
+Checkbox & Radio Buttons
+
+Single and grouped options
+
+Custom styles
+
+Textarea
+
+Multi-line input
+
+Auto resize
+
+Label / Text
+
+For form labels, helper text, error messages
+
+Card
+
+Container with shadow, padding, border
+
+Modal / Dialog
+
+Pop-up overlay for alerts, forms, confirmations
+
+Tooltip
+
+Hover or focus-triggered info bubbles
+
+Badge / Tag
+
+Status indicators or labels
+
+Avatar
+
+User profile image or initials
+
+Loader / Spinner
+
+Visual indication of loading state
+
+Toast / Notification
+
+Temporary message pop-ups for feedback
+
+Tabs
+
+Switch between views or content panels
+
+Accordion / Collapse
+
+Expandable sections
+
+Pagination
+
+Navigating through paged content
+
+Breadcrumbs
+
+Navigation path display
+
+Navbar / Header
+
+Top app navigation bar
+
+Footer
+
+Bottom site/app footer
+
+Grid / Layout Components
+
+Flexbox or CSS grid wrappers to organize content

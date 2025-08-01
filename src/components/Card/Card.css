@@ -1,0 +1,23 @@
+.card {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 8px;
+  background-color: #fff;
+
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, padding 0.3s ease;
+
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.card--shadow-none {
+  box-shadow: none;
+}
+
+.card--shadow-small {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card--shadow-large {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
