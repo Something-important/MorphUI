@@ -1,0 +1,674 @@
+/* Tooltip.css */
+.tooltip-component {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+}
+
+/* Tooltip Content */
+.tooltip-component__content {
+  position: fixed;
+  z-index: 1100;
+  background: var(--tooltip-custom-bg, var(--tooltip-bg, var(--color-background, #ffffff)));
+  border: 1px solid var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+  border-radius: var(--tooltip-custom-border-radius, var(--tooltip-border-radius, var(--border-radius-md, 6px)));
+  box-shadow: var(--tooltip-custom-shadow, var(--tooltip-shadow, var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1))));
+  color: var(--tooltip-custom-text-color, var(--tooltip-text, var(--color-text, #111827)));
+  max-width: var(--tooltip-custom-max-width, var(--tooltip-max-width, 300px));
+  min-width: var(--tooltip-custom-min-width, var(--tooltip-min-width, 120px));
+  max-height: var(--tooltip-custom-max-height, var(--tooltip-max-height, 200px));
+  min-height: var(--tooltip-custom-min-height, var(--tooltip-min-height, 40px));
+  overflow: hidden;
+  background-blend-mode: var(--tooltip-custom-bg-blend, normal);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+/* Interactive tooltips */
+.tooltip-component--interactive .tooltip-component__content {
+  pointer-events: auto;
+}
+
+/* Background pattern and image support */
+.tooltip-component__content {
+  background-image: var(--tooltip-custom-bg-image, var(--tooltip-custom-bg-pattern, none));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Glassmorphism effect */
+.tooltip-component--glassmorphism .tooltip-component__content:not([style*="--tooltip-custom-bg"]):not([style*="--tooltip-custom-bg-pattern"]):not([style*="--tooltip-custom-bg-image"]) {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Tooltip Arrow */
+.tooltip-component__arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+}
+
+/* Arrow positioning for different tooltip positions */
+.tooltip-component__arrow--top {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--top-start {
+  bottom: -6px;
+  left: 16px;
+  border-top-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--top-end {
+  bottom: -6px;
+  right: 16px;
+  border-top-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--bottom {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--bottom-start {
+  top: -6px;
+  left: 16px;
+  border-bottom-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--bottom-end {
+  top: -6px;
+  right: 16px;
+  border-bottom-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--left {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--left-start {
+  right: -6px;
+  top: 16px;
+  border-left-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--left-end {
+  right: -6px;
+  bottom: 16px;
+  border-left-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--right {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--right-start {
+  left: -6px;
+  top: 16px;
+  border-right-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+.tooltip-component__arrow--right-end {
+  left: -6px;
+  bottom: 16px;
+  border-right-color: var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+}
+
+/* Content Inner */
+.tooltip-component__content-inner {
+  padding: var(--tooltip-content-padding, 0.75rem 1rem);
+  line-height: var(--tooltip-content-line-height, 1.4);
+  font-size: var(--tooltip-content-font-size, var(--font-size-sm, 0.875rem));
+  color: var(--tooltip-custom-text-color, var(--tooltip-text, var(--color-text, #111827)));
+  word-wrap: break-word;
+  white-space: var(--tooltip-white-space, normal);
+}
+
+/* Multiline tooltips */
+.tooltip-component--multiline .tooltip-component__content-inner {
+  white-space: pre-wrap;
+  max-width: 300px;
+}
+
+/* Trigger */
+.tooltip-component__trigger {
+  cursor: help;
+  display: inline-block;
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+}
+
+.tooltip-component__trigger:hover {
+  opacity: 0.8;
+}
+
+.tooltip-component__trigger:focus {
+  outline: 2px solid var(--color-primary, #0070f3);
+  outline-offset: 2px;
+}
+
+/* Size Variants */
+.tooltip-component--xs .tooltip-component__content {
+  max-width: 150px;
+  min-width: 80px;
+  max-height: 120px;
+  min-height: 32px;
+}
+
+.tooltip-component--xs .tooltip-component__content-inner {
+  padding: 0.5rem 0.75rem;
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.tooltip-component--xs .tooltip-component__arrow {
+  border-width: 4px;
+}
+
+.tooltip-component--xs .tooltip-component__arrow--top {
+  bottom: -4px;
+}
+
+.tooltip-component--xs .tooltip-component__arrow--bottom {
+  top: -4px;
+}
+
+.tooltip-component--xs .tooltip-component__arrow--left {
+  right: -4px;
+}
+
+.tooltip-component--xs .tooltip-component__arrow--right {
+  left: -4px;
+}
+
+.tooltip-component--sm .tooltip-component__content {
+  max-width: 200px;
+  min-width: 100px;
+  max-height: 150px;
+  min-height: 36px;
+}
+
+.tooltip-component--sm .tooltip-component__content-inner {
+  padding: 0.625rem 0.875rem;
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.tooltip-component--sm .tooltip-component__arrow {
+  border-width: 5px;
+}
+
+.tooltip-component--sm .tooltip-component__arrow--top {
+  bottom: -5px;
+}
+
+.tooltip-component--sm .tooltip-component__arrow--bottom {
+  top: -5px;
+}
+
+.tooltip-component--sm .tooltip-component__arrow--left {
+  right: -5px;
+}
+
+.tooltip-component--sm .tooltip-component__arrow--right {
+  left: -5px;
+}
+
+.tooltip-component--md .tooltip-component__content {
+  max-width: 300px;
+  min-width: 120px;
+  max-height: 200px;
+  min-height: 40px;
+}
+
+.tooltip-component--md .tooltip-component__content-inner {
+  padding: 0.75rem 1rem;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.tooltip-component--md .tooltip-component__arrow {
+  border-width: 6px;
+}
+
+.tooltip-component--md .tooltip-component__arrow--top {
+  bottom: -6px;
+}
+
+.tooltip-component--md .tooltip-component__arrow--bottom {
+  top: -6px;
+}
+
+.tooltip-component--md .tooltip-component__arrow--left {
+  right: -6px;
+}
+
+.tooltip-component--md .tooltip-component__arrow--right {
+  left: -6px;
+}
+
+.tooltip-component--lg .tooltip-component__content {
+  max-width: 400px;
+  min-width: 150px;
+  max-height: 250px;
+  min-height: 48px;
+}
+
+.tooltip-component--lg .tooltip-component__content-inner {
+  padding: 1rem 1.25rem;
+  font-size: var(--font-size-base, 1rem);
+}
+
+.tooltip-component--lg .tooltip-component__arrow {
+  border-width: 7px;
+}
+
+.tooltip-component--lg .tooltip-component__arrow--top {
+  bottom: -7px;
+}
+
+.tooltip-component--lg .tooltip-component__arrow--bottom {
+  top: -7px;
+}
+
+.tooltip-component--lg .tooltip-component__arrow--left {
+  right: -7px;
+}
+
+.tooltip-component--lg .tooltip-component__arrow--right {
+  left: -7px;
+}
+
+.tooltip-component--xl .tooltip-component__content {
+  max-width: 500px;
+  min-width: 200px;
+  max-height: 300px;
+  min-height: 56px;
+}
+
+.tooltip-component--xl .tooltip-component__content-inner {
+  padding: 1.25rem 1.5rem;
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+.tooltip-component--xl .tooltip-component__arrow {
+  border-width: 8px;
+}
+
+.tooltip-component--xl .tooltip-component__arrow--top {
+  bottom: -8px;
+}
+
+.tooltip-component--xl .tooltip-component__arrow--bottom {
+  top: -8px;
+}
+
+.tooltip-component--xl .tooltip-component__arrow--left {
+  right: -8px;
+}
+
+.tooltip-component--xl .tooltip-component__arrow--right {
+  left: -8px;
+}
+
+/* Variant Styles */
+.tooltip-component--primary .tooltip-component__content {
+  --tooltip-border: var(--color-primary, #0070f3);
+  --tooltip-bg: var(--color-primary-subtle, #eff6ff);
+  --tooltip-text: var(--color-primary-dark, #1e40af);
+}
+
+.tooltip-component--secondary .tooltip-component__content {
+  --tooltip-border: var(--color-secondary, #6b7280);
+  --tooltip-bg: var(--color-secondary-subtle, #f9fafb);
+  --tooltip-text: var(--color-secondary-dark, #374151);
+}
+
+.tooltip-component--success .tooltip-component__content {
+  --tooltip-border: var(--color-success, #10b981);
+  --tooltip-bg: var(--color-success-subtle, #ecfdf5);
+  --tooltip-text: var(--color-success-dark, #047857);
+}
+
+.tooltip-component--warning .tooltip-component__content {
+  --tooltip-border: var(--color-warning, #f59e0b);
+  --tooltip-bg: var(--color-warning-subtle, #fffbeb);
+  --tooltip-text: var(--color-warning-dark, #d97706);
+}
+
+.tooltip-component--info .tooltip-component__content {
+  --tooltip-border: var(--color-info, #3b82f6);
+  --tooltip-bg: var(--color-info-subtle, #eff6ff);
+  --tooltip-text: var(--color-info-dark, #1d4ed8);
+}
+
+.tooltip-component--danger .tooltip-component__content {
+  --tooltip-border: var(--color-danger, #ef4444);
+  --tooltip-bg: var(--color-danger-subtle, #fef2f2);
+  --tooltip-text: var(--color-danger-dark, #dc2626);
+}
+
+.tooltip-component--ghost .tooltip-component__content {
+  --tooltip-border: var(--color-ghost, #f3f4f6);
+  --tooltip-bg: var(--color-ghost, #f3f4f6);
+  --tooltip-text: var(--color-text, #111827);
+}
+
+.tooltip-component--outline .tooltip-component__content {
+  --tooltip-border: var(--color-border, #d1d5db);
+  --tooltip-bg: transparent;
+  --tooltip-text: var(--color-text, #111827);
+}
+
+/* Animation States */
+.tooltip-component--animating .tooltip-component__content {
+  transition: all var(--transition-fast, 0.15s ease-in-out);
+}
+
+/* Enter/Exit Animations */
+.tooltip-component__content {
+  animation: tooltip-fade-in var(--transition-normal, 0.2s ease-out);
+}
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Position-specific animations */
+.tooltip-component__content--top {
+  animation: tooltip-slide-down var(--transition-normal, 0.2s ease-out);
+}
+
+.tooltip-component__content--bottom {
+  animation: tooltip-slide-up var(--transition-normal, 0.2s ease-out);
+}
+
+.tooltip-component__content--left {
+  animation: tooltip-slide-right var(--transition-normal, 0.2s ease-out);
+}
+
+.tooltip-component__content--right {
+  animation: tooltip-slide-left var(--transition-normal, 0.2s ease-out);
+}
+
+@keyframes tooltip-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltip-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tooltip-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tooltip-component__content {
+    max-width: calc(100vw - 2rem);
+    min-width: 100px;
+    margin: 0 1rem;
+  }
+  
+  .tooltip-component__content-inner {
+    padding: 0.625rem 0.875rem;
+    font-size: var(--font-size-sm, 0.875rem);
+  }
+  
+  .tooltip-component__arrow {
+    border-width: 5px;
+  }
+  
+  .tooltip-component__arrow--top {
+    bottom: -5px;
+  }
+  
+  .tooltip-component__arrow--bottom {
+    top: -5px;
+  }
+  
+  .tooltip-component__arrow--left {
+    right: -5px;
+  }
+  
+  .tooltip-component__arrow--right {
+    left: -5px;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .tooltip-component__content {
+    border-width: 2px;
+  }
+  
+  .tooltip-component__arrow {
+    border-width: 8px;
+  }
+  
+  .tooltip-component__arrow--top {
+    bottom: -8px;
+  }
+  
+  .tooltip-component__arrow--bottom {
+    top: -8px;
+  }
+  
+  .tooltip-component__arrow--left {
+    right: -8px;
+  }
+  
+  .tooltip-component__arrow--right {
+    left: -8px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-component__content {
+    animation: none;
+    transition: none;
+  }
+  
+  .tooltip-component__trigger {
+    transition: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .tooltip-component__content {
+    position: static;
+    box-shadow: none;
+    border: 1px solid #000;
+    page-break-inside: avoid;
+  }
+  
+  .tooltip-component__arrow {
+    display: none;
+  }
+}
+
+/* Focus Management */
+.tooltip-component__content:focus {
+  outline: none;
+}
+
+.tooltip-component__content:focus-visible {
+  outline: 2px solid var(--color-primary, #0070f3);
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling */
+.tooltip-component__content-inner {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border, #d1d5db) transparent;
+}
+
+.tooltip-component__content-inner::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tooltip-component__content-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tooltip-component__content-inner::-webkit-scrollbar-thumb {
+  background: var(--color-border, #d1d5db);
+  border-radius: 2px;
+}
+
+.tooltip-component__content-inner::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted, #9ca3af);
+}
+
+/* Z-index management */
+.tooltip-component__content {
+  z-index: 1100;
+}
+
+.tooltip-component__content--modal {
+  z-index: 1150;
+}
+
+.tooltip-component__content--popover {
+  z-index: 1200;
+}
+
+/* Accessibility improvements */
+.tooltip-component__content[aria-hidden="true"] {
+  display: none;
+}
+
+.tooltip-component__content[aria-expanded="false"] {
+  display: none;
+}
+
+/* Hover effects for interactive elements */
+.tooltip-component--interactive .tooltip-component__content-inner button,
+.tooltip-component--interactive .tooltip-component__content-inner a {
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+}
+
+.tooltip-component--interactive .tooltip-component__content-inner button:hover,
+.tooltip-component--interactive .tooltip-component__content-inner a:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+}
+
+/* Special cursor for interactive tooltips */
+.tooltip-component--interactive .tooltip-component__trigger {
+  cursor: pointer;
+}
+
+/* Persistent tooltip behavior */
+.tooltip-component--persistent .tooltip-component__content {
+  pointer-events: auto;
+}
+
+/* Rich content support */
+.tooltip-component__content-inner h1,
+.tooltip-component__content-inner h2,
+.tooltip-component__content-inner h3,
+.tooltip-component__content-inner h4,
+.tooltip-component__content-inner h5,
+.tooltip-component__content-inner h6 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.tooltip-component__content-inner p {
+  margin: 0 0 0.5rem 0;
+}
+
+.tooltip-component__content-inner p:last-child {
+  margin-bottom: 0;
+}
+
+.tooltip-component__content-inner ul,
+.tooltip-component__content-inner ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.tooltip-component__content-inner li {
+  margin: 0.25rem 0;
+}
+
+.tooltip-component__content-inner code {
+  background: var(--color-background-subtle, #f3f4f6);
+  padding: 0.125rem 0.25rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.875em;
+}
+
+.tooltip-component__content-inner pre {
+  background: var(--color-background-subtle, #f3f4f6);
+  padding: 0.75rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+
+.tooltip-component__content-inner blockquote {
+  border-left: 3px solid var(--color-border, #d1d5db);
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--color-text-muted, #6b7280);
+}

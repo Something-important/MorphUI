@@ -1,0 +1,341 @@
+/* Toggle.css */
+.toggle-component__wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+  font-family: var(--font-family, inherit);
+}
+
+.toggle-component {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  line-height: 1;
+}
+
+/* Size variants */
+.toggle-component--sm {
+  --toggle-size: 32px;
+  --toggle-thumb-size: 16px;
+  --toggle-track-width: 40px;
+  --toggle-track-height: 20px;
+}
+
+.toggle-component--md {
+  --toggle-size: 40px;
+  --toggle-thumb-size: 20px;
+  --toggle-track-width: 48px;
+  --toggle-track-height: 24px;
+}
+
+.toggle-component--lg {
+  --toggle-size: 48px;
+  --toggle-thumb-size: 24px;
+  --toggle-track-width: 56px;
+  --toggle-track-height: 28px;
+}
+
+/* Track styles */
+.toggle-component__track {
+  position: relative;
+  width: var(--toggle-track-width);
+  height: var(--toggle-track-height);
+  background: var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb)));
+  border: 2px solid var(--toggle-custom-border, var(--toggle-track-border, var(--color-gray-300, #d1d5db)));
+  border-radius: var(--toggle-custom-border-radius, var(--border-radius-full, 9999px));
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+  box-shadow: var(--toggle-custom-shadow, var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05)));
+  backdrop-filter: var(--toggle-custom-backdrop-blur);
+}
+
+/* Thumb styles */
+.toggle-component__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: var(--toggle-thumb-size);
+  height: var(--toggle-thumb-size);
+  background: var(--toggle-thumb-bg, var(--color-white, #ffffff));
+  border-radius: 50%;
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.1));
+}
+
+/* Checked state */
+.toggle-component--checked .toggle-component__track {
+  background: var(--toggle-custom-bg, var(--toggle-track-bg-checked, var(--color-primary, #0070f3)));
+  border-color: var(--toggle-custom-border, var(--toggle-track-border-checked, var(--color-primary, #0070f3)));
+}
+
+.toggle-component--checked .toggle-component__thumb {
+  transform: translateX(calc(var(--toggle-track-width) - var(--toggle-thumb-size) - 4px));
+}
+
+/* Variant styles - only set CSS custom properties, not background-color */
+.toggle-component--primary {
+  --toggle-track-bg-checked: var(--color-primary, #0070f3);
+  --toggle-track-border-checked: var(--color-primary, #0070f3);
+  --toggle-track-bg: var(--color-gray-200, #e5e7eb);
+  --toggle-track-border: var(--color-gray-300, #d1d5db);
+}
+
+.toggle-component--secondary {
+  --toggle-track-bg-checked: var(--color-secondary, #6b7280);
+  --toggle-track-border-checked: var(--color-secondary, #6b7280);
+  --toggle-track-bg: var(--color-gray-200, #e5e7eb);
+  --toggle-track-border: var(--color-gray-300, #d1d5db);
+}
+
+.toggle-component--success {
+  --toggle-track-bg-checked: var(--color-success, #10b981);
+  --toggle-track-border-checked: var(--color-success, #10b981);
+  --toggle-track-bg: var(--color-gray-200, #e5e7eb);
+  --toggle-track-border: var(--color-gray-300, #d1d5db);
+}
+
+.toggle-component--warning {
+  --toggle-track-bg-checked: var(--color-warning, #f59e0b);
+  --toggle-track-border-checked: var(--color-warning, #f59e0b);
+  --toggle-track-bg: var(--color-gray-200, #e5e7eb);
+  --toggle-track-border: var(--color-gray-300, #d1d5db);
+}
+
+.toggle-component--danger {
+  --toggle-track-bg-checked: var(--color-danger, #ef4444);
+  --toggle-track-border-checked: var(--color-danger, #ef4444);
+  --toggle-track-bg: var(--color-gray-200, #e5e7eb);
+  --toggle-track-border: var(--color-gray-300, #d1d5db);
+}
+
+.toggle-component--info {
+  --toggle-track-bg-checked: var(--color-info, #3b82f6);
+  --toggle-track-border-checked: var(--color-info, #3b82f6);
+  --toggle-track-bg: var(--color-gray-200, #e5e7eb);
+  --toggle-track-border: var(--color-gray-300, #d1d5db);
+}
+
+.toggle-component--ghost {
+  --toggle-track-bg-checked: var(--color-primary, #0070f3);
+  --toggle-track-border-checked: var(--color-primary, #0070f3);
+  --toggle-track-bg: transparent;
+  --toggle-track-border: var(--color-gray-300, #d1d5db);
+}
+
+.toggle-component--outline {
+  --toggle-track-bg-checked: var(--color-primary, #0070f3);
+  --toggle-track-border-checked: var(--color-primary, #0070f3);
+  --toggle-track-bg: transparent;
+  --toggle-track-border: var(--color-primary, #0070f3);
+}
+
+/* Shadow levels */
+.toggle-component--shadow-none .toggle-component__track {
+  box-shadow: none;
+}
+
+.toggle-component--shadow-sm .toggle-component__track {
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+}
+
+.toggle-component--shadow-md .toggle-component__track {
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+.toggle-component--shadow-lg .toggle-component__track {
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+}
+
+.toggle-component--shadow-xl .toggle-component__track {
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1));
+}
+
+/* Hover effects */
+.toggle-component:hover:not(.toggle-component--disabled) .toggle-component__track {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+.toggle-component--checked:hover:not(.toggle-component--disabled) .toggle-component__track {
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+}
+
+/* Focus styles */
+.toggle-component:focus-visible {
+  outline: 2px solid var(--color-border-focus, rgba(59, 130, 246, 0.3));
+  outline-offset: 2px;
+}
+
+/* Disabled state */
+.toggle-component--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.toggle-component--disabled .toggle-component__track {
+  background: var(--color-gray-100, #f3f4f6);
+  border-color: var(--color-gray-200, #e5e7eb);
+  cursor: not-allowed;
+}
+
+.toggle-component--disabled .toggle-component__thumb {
+  background: var(--color-gray-300, #d1d5db);
+  cursor: not-allowed;
+}
+
+/* Loading state */
+.toggle-component--loading {
+  cursor: not-allowed;
+}
+
+.toggle-component--loading .toggle-component__track {
+  opacity: 0.7;
+}
+
+/* Spinner */
+.toggle-component__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: toggle-spin 1s linear infinite;
+  z-index: 1;
+}
+
+@keyframes toggle-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Size-specific spinner adjustments */
+.toggle-component--sm .toggle-component__spinner {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.toggle-component--lg .toggle-component__spinner {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* Label styles */
+.toggle-component__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #111827);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-component--has-label.toggle-component--label-left .toggle-component__label,
+.toggle-component--has-label.toggle-component--label-top .toggle-component__label {
+  order: -1;
+}
+
+.toggle-component--has-label.toggle-component--label-right .toggle-component__label,
+.toggle-component--has-label.toggle-component--label-bottom .toggle-component__label {
+  order: 1;
+}
+
+.toggle-component--has-label.toggle-component--label-top .toggle-component__wrapper,
+.toggle-component--has-label.toggle-component--label-bottom .toggle-component__wrapper {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Icon styles */
+.toggle-component__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  margin: 0 var(--spacing-xs, 0.25rem);
+  color: var(--toggle-custom-color, var(--color-text, #111827));
+  transition: color var(--transition-normal, 0.2s ease-in-out);
+}
+
+.toggle-component--checked .toggle-component__icon {
+  color: var(--toggle-custom-color, var(--color-text-inverse, #ffffff));
+}
+
+.toggle-component--icon-left .toggle-component__icon {
+  order: -1;
+}
+
+.toggle-component--icon-right .toggle-component__icon {
+  order: 1;
+}
+
+/* Ripple effect */
+.toggle-component--ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes toggle-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Active state */
+.toggle-component:active:not(.toggle-component--disabled) .toggle-component__track {
+  transform: scale(0.98);
+}
+
+.toggle-component:active:not(.toggle-component--disabled) .toggle-component__thumb {
+  transform: translateX(calc(var(--toggle-track-width) - var(--toggle-thumb-size) - 4px)) scale(0.95);
+}
+
+.toggle-component:active:not(.toggle-component--disabled):not(.toggle-component--checked) .toggle-component__thumb {
+  transform: scale(0.95);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .toggle-component__track {
+    border-width: 3px;
+  }
+  
+  .toggle-component__thumb {
+    border: 2px solid var(--color-gray-900, #111827);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .toggle-component,
+  .toggle-component__track,
+  .toggle-component__thumb {
+    transition: none;
+  }
+  
+  .toggle-component:hover:not(.toggle-component--disabled) .toggle-component__track {
+    transform: none;
+  }
+  
+  .toggle-component:active:not(.toggle-component--disabled) .toggle-component__track,
+  .toggle-component:active:not(.toggle-component--disabled) .toggle-component__thumb {
+    transform: none;
+  }
+}
