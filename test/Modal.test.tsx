@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Modal } from '../src/components/Modal/Modal';
+import { Modal } from '../src/components/interactive/Modal/Modal';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 // Simple theme for testing

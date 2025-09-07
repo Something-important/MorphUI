@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Accordion } from '../src/components/Accordion/Accordion';
+import { Accordion } from '../src/components/interactive/Accordion/Accordion';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 describe('Accordion', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { RadioGroup } from '../src/components/RadioGroup/RadioGroup';
+import { RadioGroup } from '../src/components/interactive/RadioGroup/RadioGroup';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 // Simple theme for testing
@@ -195,6 +195,99 @@ describe('RadioGroup', () => {
       
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': gradient });
+    });
+
+    it('applies comprehensive color props', () => {
+      render(
+        <ThemeProvider>
+          <RadioGroup
+            options={mockOptions}
+            value="option1"
+            onChange={() => {}}
+            name="test"
+            containerColor="#ff0000"
+            optionColor="#00ff00"
+            radioColor="#0000ff"
+            radioDotColor="#ffff00"
+            labelColor="#ff00ff"
+            descriptionColor="#00ffff"
+            textColor="#ffffff"
+            borderColor="#000000"
+            errorColor="#ff0000"
+            noOptionsColor="#808080"
+          />
+        </ThemeProvider>
+      );
+      
+      const radioGroup = screen.getByRole('radiogroup');
+      expect(radioGroup).toHaveStyle({ '--radio-group-container-bg': '#ff0000' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': '#00ff00' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-radio-bg': '#0000ff' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-radio-dot-bg': '#ffff00' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-label-color': '#ff00ff' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-description-color': '#00ffff' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-text-color': '#ffffff' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-border-color': '#000000' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-error-color': '#ff0000' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-no-options-color': '#808080' });
+    });
+
+    it('applies comprehensive gradient props', () => {
+      const containerGradient = 'linear-gradient(90deg, #ff0000 0%, #00ff00 100%)';
+      const optionGradient = 'linear-gradient(90deg, #0000ff 0%, #ffff00 100%)';
+      const radioGradient = 'linear-gradient(90deg, #ff00ff 0%, #00ffff 100%)';
+      
+      render(
+        <ThemeProvider>
+          <RadioGroup
+            options={mockOptions}
+            value="option1"
+            onChange={() => {}}
+            name="test"
+            containerGradient={containerGradient}
+            optionGradient={optionGradient}
+            radioGradient={radioGradient}
+            labelGradient="linear-gradient(90deg, #800080 0%, #008080 100%)"
+            descriptionGradient="linear-gradient(90deg, #808000 0%, #800080 100%)"
+            textColorGradient="linear-gradient(90deg, #008000 0%, #800000 100%)"
+            borderColorGradient="linear-gradient(90deg, #000080 0%, #808000 100%)"
+            errorColorGradient="linear-gradient(90deg, #800000 0%, #008000 100%)"
+            noOptionsColorGradient="linear-gradient(90deg, #808080 0%, #404040 100%)"
+          />
+        </ThemeProvider>
+      );
+      
+      const radioGroup = screen.getByRole('radiogroup');
+      expect(radioGroup).toHaveStyle({ '--radio-group-container-bg': containerGradient });
+      expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': optionGradient });
+      expect(radioGroup).toHaveStyle({ '--radio-group-radio-bg': radioGradient });
+      expect(radioGroup).toHaveStyle({ '--radio-group-label-bg': 'linear-gradient(90deg, #800080 0%, #008080 100%)' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-description-bg': 'linear-gradient(90deg, #808000 0%, #800080 100%)' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-custom-text-gradient': 'linear-gradient(90deg, #008000 0%, #800000 100%)' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-custom-border-gradient': 'linear-gradient(90deg, #000080 0%, #808000 100%)' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-error-bg': 'linear-gradient(90deg, #800000 0%, #008000 100%)' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-no-options-bg': 'linear-gradient(90deg, #808080 0%, #404040 100%)' });
+    });
+
+    it('applies gradient detection classes', () => {
+      render(
+        <ThemeProvider>
+          <RadioGroup
+            options={mockOptions}
+            value="option1"
+            onChange={() => {}}
+            name="test"
+            containerGradient="linear-gradient(90deg, #ff0000 0%, #00ff00 100%)"
+            textColor="linear-gradient(90deg, #0000ff 0%, #ffff00 100%)"
+            borderColor="linear-gradient(90deg, #ff00ff 0%, #00ffff 100%)"
+          />
+        </ThemeProvider>
+      );
+      
+      const radioGroup = screen.getByRole('radiogroup');
+      expect(radioGroup).toHaveClass('radio-group-component--container-gradient');
+      expect(radioGroup).toHaveClass('radio-group-component--text-gradient');
+      expect(radioGroup).toHaveClass('radio-group-component--border-gradient');
     });
   });
 

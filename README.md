@@ -59,8 +59,9 @@ const customTheme = {
 ## 📚 Documentation
 
 - **Design System**: See `DESIGN_SYSTEM.md` for comprehensive design tokens and guidelines
-- **Documentation Strategy**: See `DOCUMENTATION_STRATEGY.md` for our approach to documentation
-- **Storybook**: Run `npm run storybook` for interactive component examples
+- **Theme System**: See `THEME_SYSTEM.md` for complete theming guide and examples
+- **Development Roadmap**: See `DEVELOPMENT_ROADMAP.md` for component development progress
+- **Storybook**: Run `npm run storybook` for interactive component examples and theme builders
 
 ## 🧪 Testing
 

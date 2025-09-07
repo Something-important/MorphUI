@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Button } from '../src/components/Button/Button';
+import { Button } from '../src/components/basic/Button/Button';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 // Simple theme for testing

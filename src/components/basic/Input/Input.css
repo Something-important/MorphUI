@@ -1,0 +1,678 @@
+/* Enhanced Input.css */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+}
+
+.input-component {
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 12px);
+  font-size: var(--font-size-md, 14px);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-normal, 1.5);
+  letter-spacing: var(--letter-spacing-normal, 0em);
+  border: 1px solid var(--input-custom-border, var(--color-border, #ddd));
+  border-radius: var(--input-custom-border-radius, var(--border-radius-md, 6px));
+  width: 100%;
+  box-sizing: border-box;
+  transition: all var(--transition-normal, 0.2s) var(--ease-out, ease-out);
+  outline: none;
+  background: var(--input-custom-bg, var(--color-background, #fff));
+  color: var(--input-custom-color, var(--color-text-primary, #333));
+  font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  
+  /* Enhanced styling */
+  box-shadow: var(--input-custom-shadow, var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1)));
+  backdrop-filter: var(--input-custom-backdrop-blur);
+}
+
+/* Size variants */
+.input-component.input-component--xs {
+  padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-normal, 1.5);
+  letter-spacing: var(--letter-spacing-normal, 0em);
+  min-height: 28px;
+}
+
+.input-component.input-component--sm {
+  padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
+  font-size: var(--font-size-sm, 12px);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-normal, 1.5);
+  letter-spacing: var(--letter-spacing-normal, 0em);
+  min-height: 32px;
+}
+
+.input-component.input-component--md {
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 12px);
+  font-size: var(--font-size-md, 14px);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-normal, 1.5);
+  letter-spacing: var(--letter-spacing-normal, 0em);
+  min-height: 40px;
+}
+
+.input-component.input-component--lg {
+  padding: var(--spacing-md, 12px) var(--spacing-lg, 16px);
+  font-size: var(--font-size-lg, 16px);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-normal, 1.5);
+  letter-spacing: var(--letter-spacing-normal, 0em);
+  min-height: 48px;
+}
+
+.input-component.input-component--xl {
+  padding: var(--spacing-lg, 16px) var(--spacing-xl, 20px);
+  font-size: var(--font-size-xl, 18px);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: var(--line-height-normal, 1.5);
+  letter-spacing: var(--letter-spacing-normal, 0em);
+  min-height: 56px;
+}
+
+/* Icon positioning */
+.input-component.input-component--has-left-icon {
+  padding-left: 2.5rem;
+}
+
+.input-component.input-component--has-right-icon {
+  padding-right: 2.5rem;
+}
+
+/* Floating label support */
+.input-component.input-component--floating-label {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+}
+
+/* Ensure proper spacing for floating labels with icons */
+.input-component.input-component--has-left-icon.input-component--floating-label {
+  padding-left: 2.5rem;
+}
+
+.input-component.input-component--has-right-icon.input-component--floating-label {
+  padding-right: 2.5rem;
+}
+
+/* States */
+.input-component:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+  transform: translateY(-1px);
+}
+
+.input-component:hover:not(:disabled):not(.input-component--error):not(.input-component--success):not(.input-component--warning):not(.input-component--info) {
+  border-color: var(--color-border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.input-component:disabled {
+  background-color: var(--color-background-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Variant classes (match Button exactly) - Highest specificity */
+.input-component.input-component--primary {
+  border-color: var(--color-primary) !important;
+  background-color: var(--color-background) !important;
+}
+
+.input-component.input-component--secondary {
+  border-color: var(--color-secondary) !important;
+  background-color: var(--color-background) !important;
+}
+
+.input-component.input-component--success {
+  border-color: var(--color-success) !important;
+  background-color: var(--color-background-secondary) !important;
+}
+
+.input-component.input-component--warning {
+  border-color: var(--color-warning) !important;
+  background-color: var(--color-background-secondary) !important;
+}
+
+.input-component.input-component--info {
+  border-color: var(--color-info) !important;
+  background-color: var(--color-background-secondary) !important;
+}
+
+.input-component.input-component--danger {
+  border-color: var(--color-danger) !important;
+  background-color: var(--color-background-secondary) !important;
+}
+
+.input-component.input-component--ghost {
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+
+.input-component.input-component--outline {
+  border-color: var(--color-primary) !important;
+  background-color: transparent !important;
+}
+
+/* Enhanced state variants */
+.input-component.input-component--error {
+  border-color: var(--color-danger);
+  background-color: var(--color-background-secondary);
+}
+
+.input-component.input-component--error:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.input-component.input-component--success {
+  border-color: var(--color-success);
+  background-color: var(--color-background-secondary);
+}
+
+.input-component.input-component--warning {
+  border-color: var(--color-warning);
+  background-color: var(--color-background-secondary);
+}
+
+.input-component.input-component--info {
+  border-color: var(--color-info);
+  background-color: var(--color-background-secondary);
+}
+
+/* Focused state */
+.input-component.input-component--focused {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+}
+
+/* Loading state */
+.input-component.input-component--loading {
+  padding-right: 2.5rem;
+}
+
+/* Loading spinner */
+.input-spinner {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--color-border);
+  border-top: 2px solid var(--color-primary);
+  border-radius: 50%;
+  animation: input-spin 1s linear infinite;
+}
+
+@keyframes input-spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Icon support */
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+  transition: color 0.2s ease;
+  line-height: 1;
+  z-index: 2;
+}
+
+/* Ensure icons are properly centered */
+.input-icon span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+}
+
+.input-icon--left {
+  left: 0.75rem;
+}
+
+.input-icon--right {
+  right: 0.75rem;
+}
+
+/* Password toggle button */
+.input-password-toggle,
+.input-mask-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  transition: opacity 0.2s ease;
+  pointer-events: auto;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.input-password-toggle:hover,
+.input-mask-toggle:hover {
+  opacity: 0.7;
+}
+
+.input-password-toggle:focus,
+.input-mask-toggle:focus {
+  outline: none;
+  opacity: 0.7;
+}
+
+.input-component:focus + .input-icon,
+.input-component.input-component--focused + .input-icon {
+  color: var(--color-primary);
+}
+
+/* Floating label */
+.input-floating-label {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--input-custom-bg, var(--color-background));
+  padding: 0 0.25rem;
+  z-index: 1;
+}
+
+.input-floating-label--active {
+  top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  transform: translateY(0);
+}
+
+.input-component.input-component--has-left-icon .input-floating-label {
+  left: 2.5rem;
+}
+
+/* Ensure proper spacing for floating labels with icons */
+.input-component.input-component--has-left-icon .input-floating-label--active {
+  left: 2.5rem;
+}
+
+/* Character count - positioned inside the input box */
+.input-character-count {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  background: var(--input-custom-bg, var(--color-background));
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-border);
+  z-index: 2;
+  pointer-events: none;
+  min-width: 3rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust input padding when character count is shown */
+.input-wrapper--has-character-count .input-component {
+  padding-right: 4rem;
+}
+
+/* Ensure character count doesn't overlap with right icon */
+.input-wrapper--has-character-count.input-wrapper--has-right-icon .input-component {
+  padding-right: 4rem;
+}
+
+/* Character count with custom styling */
+.input-character-count--custom {
+  background: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  font-weight: 500;
+}
+
+.input-character-count--warning {
+  background: var(--color-warning);
+  color: var(--color-background);
+  border-color: var(--color-warning);
+  font-weight: 500;
+}
+
+.input-character-count--danger {
+  background: var(--color-danger);
+  color: var(--color-background);
+  border-color: var(--color-danger);
+  font-weight: 500;
+}
+
+/* Error message */
+.input-error-message {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-danger);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-error-message::before {
+  content: '⚠️';
+  font-size: 0.75rem;
+}
+
+/* Suggestions dropdown */
+.input-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: -1px;
+}
+
+.input-suggestion-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.input-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.input-suggestion-item:hover {
+  background-color: var(--color-background-secondary);
+}
+
+.input-suggestion-item:active {
+  background-color: rgba(0, 112, 243, 0.1);
+}
+
+/* Layout variants */
+.input-component.input-component--full-width {
+  width: 100%;
+}
+
+.input-component.input-component--rounded {
+  border-radius: var(--border-radius-full);
+}
+
+/* Hover effects (match Button exactly) */
+.input-component.input-component--hover-none:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.input-component.input-component--hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.input-component.input-component--hover-glow:hover {
+  box-shadow: 0 0 20px var(--color-primary);
+}
+
+.input-component.input-component--hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Enhanced shadow variants */
+.input-component.input-component--shadow-none {
+  box-shadow: none;
+}
+
+.input-component.input-component--shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.input-component.input-component--shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.input-component.input-component--shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.input-component.input-component--shadow-xl {
+  box-shadow: var(--shadow-xl);
+}
+
+.input-component.input-component--shadow-2xl {
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Focus styles */
+.input-component:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .input-component {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .input-floating-label {
+    font-size: 16px;
+  }
+  
+  .input-floating-label--active {
+    font-size: 14px;
+  }
+}
+
+/* Ripple effect support */
+.input-component.input-component--ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.input-component__ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: input-ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes input-ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Animation for state changes */
+.input-component {
+  animation: inputStateChange 0.3s ease;
+}
+
+@keyframes inputStateChange {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Background gradient support with better text visibility */
+.input-component--background-gradient {
+  /* Ensure gradient background takes precedence over variant styles */
+  background: var(--input-custom-bg) !important;
+  /* Ensure text is visible on gradient backgrounds */
+  color: var(--input-custom-color, #ffffff) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+/* Text gradient support */
+.input-component--text-gradient {
+  background: var(--input-custom-color) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Border gradient support */
+.input-component--border-gradient {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.input-component--border-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--input-custom-border);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Gradient background support */
+.input-component[style*="--input-custom-bg"] {
+  background-image: var(--input-custom-bg);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Backdrop blur effect */
+.input-component[style*="--input-custom-backdrop-blur"] {
+  backdrop-filter: var(--input-custom-backdrop-blur);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .input-component {
+    background: var(--input-custom-bg, var(--color-background));
+    color: var(--input-custom-color, var(--color-text));
+    border-color: var(--input-custom-border, var(--color-border));
+  }
+  
+  .input-floating-label {
+    background: var(--input-custom-bg, var(--color-background));
+    color: var(--color-text-secondary);
+  }
+  
+  .input-floating-label--active {
+    color: var(--color-primary);
+  }
+  
+  .input-suggestions {
+    background: var(--color-background);
+    border-color: var(--color-border);
+  }
+  
+  .input-suggestion-item {
+    border-bottom-color: var(--color-border);
+  }
+  
+  .input-suggestion-item:hover {
+    background-color: var(--color-background-secondary);
+  }
+}
+
+/* Validation state icons - Ensure proper positioning inheritance */
+.input-icon.input-icon--validation {
+  /* Explicitly inherit positioning from base .input-icon class */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  
+  /* Add validation-specific styles */
+  color: var(--color-text-primary);
+  font-size: 1.125rem;
+  z-index: 2;
+  pointer-events: none;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+/* Specific styling for each validation icon type */
+.validation-icon-success {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.validation-icon-warning {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.validation-icon-info {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.validation-icon-error {
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 0.8;
+}
+
+/* Success state icon */
+.input-component--success .input-icon--validation {
+  color: var(--color-success);
+}
+
+/* Warning state icon */
+.input-component--warning .input-icon--validation {
+  color: var(--color-warning);
+}
+
+/* Info state icon */
+.input-component--info .input-icon--validation {
+  color: var(--color-info);
+}
+
+/* Error state icon */
+.input-component--error .input-icon--validation {
+  color: var(--color-danger);
+}
+

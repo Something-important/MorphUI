@@ -1,0 +1,548 @@
+/* Tabs.css */
+.tabs-component {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  background: var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff)));
+  border-radius: var(--tabs-custom-border-radius, var(--tabs-border-radius, var(--border-radius-lg, 8px)));
+  box-shadow: var(--tabs-custom-shadow, var(--tabs-shadow, var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1))));
+  background-blend-mode: var(--tabs-custom-bg-blend, normal);
+  overflow: hidden;
+}
+
+/* Background pattern and image support */
+.tabs-component {
+  background-image: var(--tabs-custom-bg-image, var(--tabs-custom-bg-pattern, none));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Glassmorphism effect */
+.tabs-component--glassmorphism:not([style*="--tabs-custom-bg"]):not([style*="--tabs-custom-bg-pattern"]):not([style*="--tabs-custom-bg-image"]) {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Tab Navigation */
+.tabs-component__navigation {
+  display: flex;
+  background: var(--tabs-custom-bg, var(--tabs-nav-bg, var(--color-background, #ffffff)));
+  border-bottom: 2px solid var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs-component__navigation::-webkit-scrollbar {
+  display: none;
+}
+
+/* Vertical orientation */
+.tabs-component--vertical {
+  flex-direction: row;
+}
+
+.tabs-component--vertical .tabs-component__navigation {
+  flex-direction: column;
+  border-bottom: none;
+  border-right: 2px solid var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
+  min-width: 200px;
+}
+
+/* Tab Buttons */
+.tabs-component__tab {
+  display: flex;
+  align-items: center;
+  gap: var(--tabs-tab-gap, 0.5rem);
+  padding: var(--tabs-tab-padding, 1rem 1.5rem);
+  background: transparent;
+  border: none;
+  color: var(--tabs-custom-text-color, var(--tabs-tab-color, var(--color-text-muted, #6b7280)));
+  cursor: pointer;
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+  position: relative;
+  white-space: nowrap;
+  font-size: var(--tabs-tab-font-size, var(--font-size-sm, 0.875rem));
+  font-weight: var(--tabs-tab-font-weight, 500);
+  border-radius: 0;
+  min-height: var(--tabs-tab-height, 48px);
+}
+
+/* Tab hover state */
+.tabs-component__tab:hover:not(.tabs-component__tab--disabled) {
+  color: var(--tabs-custom-text-color, var(--tabs-tab-hover-color, var(--color-text, #111827)));
+  background: var(--tabs-tab-hover-bg, var(--color-background-hover, #f9fafb));
+}
+
+/* Active tab */
+.tabs-component__tab--active {
+  color: var(--tabs-custom-color, var(--tabs-tab-active-color, var(--color-primary, #0070f3)));
+  background: var(--tabs-tab-active-bg, var(--color-background, #ffffff));
+  font-weight: var(--tabs-tab-active-font-weight, 600);
+}
+
+.tabs-component__tab--active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tabs-custom-color, var(--tabs-tab-active-indicator, var(--color-primary, #0070f3)));
+}
+
+/* Vertical active tab indicator */
+.tabs-component--vertical .tabs-component__tab--active::after {
+  bottom: 0;
+  top: 0;
+  left: auto;
+  right: 0;
+  width: 2px;
+  height: auto;
+}
+
+/* Disabled tab */
+.tabs-component__tab--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--tabs-tab-disabled-color, var(--color-text-muted, #9ca3af));
+}
+
+/* Tab Icon */
+.tabs-component__tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  font-size: var(--tabs-tab-icon-size, 1.125rem);
+}
+
+/* Tab Label */
+.tabs-component__tab-label {
+  color: inherit;
+  line-height: 1.2;
+}
+
+/* Tab Badge */
+.tabs-component__tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--tabs-badge-bg, var(--color-primary, #0070f3));
+  color: var(--tabs-badge-color, #ffffff);
+  border-radius: 10px;
+  font-size: var(--tabs-badge-font-size, 0.75rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Tab Close Button */
+.tabs-component__tab-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  color: var(--tabs-tab-close-color, var(--color-text-muted, #6b7280));
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.tabs-component__tab-close:hover {
+  background: var(--tabs-tab-close-hover-bg, var(--color-background-hover, #f3f4f6));
+  color: var(--tabs-tab-close-hover-color, var(--color-text, #111827));
+}
+
+/* Tab Panels */
+.tabs-component__panels {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tab Panel */
+.tabs-component__panel {
+  display: none;
+  padding: var(--tabs-panel-padding, 1.5rem);
+  background: var(--tabs-custom-bg, var(--tabs-panel-bg, var(--color-background, #ffffff)));
+  color: var(--tabs-custom-text-color, var(--tabs-panel-color, var(--color-text, #111827)));
+  min-height: var(--tabs-panel-min-height, 200px);
+}
+
+.tabs-component__panel--active {
+  display: block;
+}
+
+/* Animated panels */
+.tabs-component--animated .tabs-component__panel {
+  animation: tabs-fade-in var(--transition-normal, 0.2s ease-in-out);
+}
+
+@keyframes tabs-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Full width tabs */
+.tabs-component--full-width .tabs-component__navigation {
+  width: 100%;
+}
+
+.tabs-component--full-width .tabs-component__tab {
+  flex: 1;
+  justify-content: center;
+}
+
+/* Centered tabs */
+.tabs-component--centered .tabs-component__navigation {
+  justify-content: center;
+}
+
+/* Size Variants */
+.tabs-component--xs .tabs-component__tab {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-xs, 0.75rem);
+  min-height: 36px;
+}
+
+.tabs-component--xs .tabs-component__panel {
+  padding: 1rem;
+  min-height: 150px;
+}
+
+.tabs-component--sm .tabs-component__tab {
+  padding: 0.75rem 1.25rem;
+  font-size: var(--font-size-sm, 0.875rem);
+  min-height: 42px;
+}
+
+.tabs-component--sm .tabs-component__panel {
+  padding: 1.25rem;
+  min-height: 175px;
+}
+
+.tabs-component--md .tabs-component__tab {
+  padding: 1rem 1.5rem;
+  font-size: var(--font-size-sm, 0.875rem);
+  min-height: 48px;
+}
+
+.tabs-component--md .tabs-component__panel {
+  padding: 1.5rem;
+  min-height: 200px;
+}
+
+.tabs-component--lg .tabs-component__tab {
+  padding: 1.25rem 1.75rem;
+  font-size: var(--font-size-base, 1rem);
+  min-height: 56px;
+}
+
+.tabs-component--lg .tabs-component__panel {
+  padding: 1.75rem;
+  min-height: 250px;
+}
+
+.tabs-component--xl .tabs-component__tab {
+  padding: 1.5rem 2rem;
+  font-size: var(--font-size-lg, 1.125rem);
+  min-height: 64px;
+}
+
+.tabs-component--xl .tabs-component__panel {
+  padding: 2rem;
+  min-height: 300px;
+}
+
+/* Variant Styles */
+.tabs-component--primary .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-primary, #0070f3);
+  --tabs-tab-active-indicator: var(--color-primary, #0070f3);
+}
+
+.tabs-component--secondary .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-secondary, #6b7280);
+  --tabs-tab-active-indicator: var(--color-secondary, #6b7280);
+}
+
+.tabs-component--success .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-success, #10b981);
+  --tabs-tab-active-indicator: var(--color-success, #10b981);
+}
+
+.tabs-component--warning .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-warning, #f59e0b);
+  --tabs-tab-active-indicator: var(--color-warning, #f59e0b);
+}
+
+.tabs-component--info .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-info, #3b82f6);
+  --tabs-tab-active-indicator: var(--color-info, #3b7280);
+}
+
+.tabs-component--danger .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-danger, #ef4444);
+  --tabs-tab-active-indicator: var(--color-danger, #ef4444);
+}
+
+.tabs-component--ghost .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-ghost, #f3f4f6);
+  --tabs-tab-active-indicator: var(--color-ghost, #f3f4f6);
+}
+
+.tabs-component--outline .tabs-component__tab--active {
+  --tabs-tab-active-color: var(--color-primary, #0070f3);
+  --tabs-tab-active-indicator: var(--color-primary, #0070f3);
+}
+
+.tabs-component--outline .tabs-component__tab {
+  border: 1px solid var(--tabs-custom-border-color, var(--tabs-tab-border, var(--color-border, #d1d5db)));
+  margin: 0 2px 0 0;
+  border-radius: var(--border-radius-md, 6px) var(--border-radius-md, 6px) 0 0;
+}
+
+.tabs-component--outline .tabs-component__tab--active {
+  border-bottom-color: var(--tabs-custom-bg, var(--tabs-panel-bg, var(--color-background, #ffffff)));
+  margin-bottom: -2px;
+}
+
+/* Vertical outline variant */
+.tabs-component--outline.tabs-component--vertical .tabs-component__tab {
+  border: 1px solid var(--tabs-custom-border-color, var(--tabs-tab-border, var(--color-border, #d1d5db)));
+  margin: 0 0 2px 0;
+  border-radius: var(--border-radius-md, 6px) 0 0 var(--border-radius-md, 6px);
+}
+
+.tabs-component--outline.tabs-component--vertical .tabs-component__tab--active {
+  border-right-color: var(--tabs-custom-bg, var(--tabs-panel-bg, var(--color-background, #ffffff)));
+  margin-right: -2px;
+}
+
+/* Animation States */
+.tabs-component--animating .tabs-component__tab,
+.tabs-component--animating .tabs-component__panel {
+  transition: all var(--transition-fast, 0.15s ease-in-out);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tabs-component__navigation {
+    overflow-x: auto;
+  }
+  
+  .tabs-component__tab {
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+    font-size: var(--font-size-sm, 0.875rem);
+  }
+  
+  .tabs-component__panel {
+    padding: 1rem;
+    min-height: 150px;
+  }
+  
+  .tabs-component--vertical {
+    flex-direction: column;
+  }
+  
+  .tabs-component--vertical .tabs-component__navigation {
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 2px solid var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
+    min-width: auto;
+    overflow-x: auto;
+  }
+  
+  .tabs-component--vertical .tabs-component__tab--active::after {
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 2px;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .tabs-component__tab--active::after {
+    height: 3px;
+  }
+  
+  .tabs-component--vertical .tabs-component__tab--active::after {
+    width: 3px;
+  }
+  
+  .tabs-component__navigation {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .tabs-component__tab,
+  .tabs-component__panel {
+    transition: none;
+  }
+  
+  .tabs-component--animated .tabs-component__panel {
+    animation: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .tabs-component__navigation {
+    display: none;
+  }
+  
+  .tabs-component__panel {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+  
+  .tabs-component__panel--active {
+    display: block !important;
+  }
+}
+
+/* Focus Management */
+.tabs-component__tab:focus-visible {
+  outline: 2px solid var(--color-primary, #0070f3);
+  outline-offset: 2px;
+}
+
+/* Scrollbar Styling for Webkit */
+.tabs-component__navigation::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tabs-component__navigation::-webkit-scrollbar-track {
+  background: var(--color-background-hover, #f3f4f6);
+}
+
+.tabs-component__navigation::-webkit-scrollbar-thumb {
+  background: var(--color-border, #d1d5db);
+  border-radius: 2px;
+}
+
+.tabs-component__navigation::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted, #9ca3af);
+}
+
+/* ===== COMPREHENSIVE GRADIENT SUPPORT ===== */
+
+/* Tab gradient support */
+.tabs-component--tab-gradient .tabs-component__tab {
+  background: var(--tabs-custom-tab-color) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Active tab gradient support */
+.tabs-component--active-tab-gradient .tabs-component__tab--active {
+  background: var(--tabs-custom-active-tab-color) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover tab gradient support */
+.tabs-component--hover-tab-gradient .tabs-component__tab:hover:not(.tabs-component__tab--disabled) {
+  background: var(--tabs-custom-hover-tab-color) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Content gradient support */
+.tabs-component--content-gradient .tabs-component__panel {
+  background: var(--tabs-custom-content-color) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Indicator gradient support */
+.tabs-component--indicator-gradient .tabs-component__tab--active::after {
+  background: var(--tabs-custom-indicator-color) !important;
+}
+
+/* Badge gradient support */
+.tabs-component--badge-gradient .tabs-component__badge {
+  background: var(--tabs-custom-badge-color) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Icon gradient support */
+.tabs-component--icon-gradient .tabs-component__icon {
+  background: var(--tabs-custom-icon-color) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+/* Text gradient support */
+.tabs-component--text-gradient .tabs-component__tab {
+  background: var(--tabs-custom-text-color) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+/* Border gradient support */
+.tabs-component--border-gradient {
+  background-image: 
+    linear-gradient(var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff))), var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff)))),
+    var(--tabs-custom-border-color) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  border: 2px solid transparent !important;
+}
+
+/* Custom color fallback chains */
+.tabs-component__tab {
+  color: var(--tabs-custom-tab-color, var(--tabs-custom-text-color, var(--tabs-tab-color, var(--color-text-muted, #6b7280))));
+}
+
+.tabs-component__tab--active {
+  color: var(--tabs-custom-active-tab-color, var(--tabs-custom-color, var(--tabs-tab-active-color, var(--color-primary, #0070f3))));
+}
+
+.tabs-component__tab:hover:not(.tabs-component__tab--disabled) {
+  color: var(--tabs-custom-hover-tab-color, var(--tabs-custom-text-color, var(--tabs-tab-hover-color, var(--color-text, #111827))));
+}
+
+.tabs-component__panel {
+  color: var(--tabs-custom-content-color, var(--tabs-custom-text-color, var(--color-text, #111827)));
+}
+
+.tabs-component__tab--active::after {
+  background: var(--tabs-custom-indicator-color, var(--tabs-custom-color, var(--tabs-tab-active-indicator, var(--color-primary, #0070f3))));
+}
+
+.tabs-component__badge {
+  background: var(--tabs-custom-badge-color, var(--tabs-custom-color, var(--color-primary, #0070f3)));
+  color: var(--tabs-custom-badge-color, var(--tabs-custom-color, var(--color-primary, #0070f3)));
+}
+
+.tabs-component__icon {
+  color: var(--tabs-custom-icon-color, var(--tabs-custom-text-color, var(--color-text-muted, #6b7280)));
+}
