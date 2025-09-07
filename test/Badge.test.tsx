@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Badge } from '../src/components/Badge/Badge';
+import { Badge } from '../src/components/basic/Badge/Badge';
 
 describe('Badge Component', () => {
   it('renders with default props', () => {

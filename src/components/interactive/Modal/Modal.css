@@ -1,0 +1,629 @@
+/* Modal.css */
+.modal-component__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-modal, 1050);
+  animation: modalOverlayIn 0.3s ease-out;
+}
+
+/* Backdrop variants */
+.modal-component__overlay--dark {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-component__overlay--light {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.modal-component__overlay--blur {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.modal-component__overlay--none {
+  background-color: transparent;
+}
+
+/* Position-specific overlay overrides */
+.modal-component__overlay--position-left {
+  justify-content: flex-start;
+}
+
+.modal-component__overlay--position-right {
+  justify-content: flex-end;
+}
+
+.modal-component__overlay--position-top {
+  align-items: flex-start;
+}
+
+.modal-component__overlay--position-bottom {
+  align-items: flex-end;
+}
+
+.modal-component__overlay--position-top-left {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.modal-component__overlay--position-top-right {
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.modal-component__overlay--position-bottom-left {
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.modal-component__overlay--position-bottom-right {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* Main modal container */
+.modal-component {
+  background: var(--modal-custom-bg, var(--modal-bg, var(--color-background, #ffffff)));
+  color: var(--modal-custom-color, var(--modal-color, var(--color-text, #111827)));
+  border: 1px solid var(--modal-custom-border, var(--modal-border, var(--color-border, #d1d5db)));
+  border-radius: var(--border-radius-lg, 12px);
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modalIn 0.3s ease-out;
+  box-shadow: var(--modal-shadow, var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)));
+  background-blend-mode: var(--modal-bg-blend, normal);
+  transition: all 0.3s ease-out;
+}
+
+/* Background image support */
+.modal-component--image-bg {
+  background-image: var(--modal-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Pattern overlay support */
+.modal-component--pattern {
+  background-image: var(--modal-pattern);
+  background-size: 200px;
+  background-repeat: repeat;
+  background-blend-mode: overlay;
+}
+
+/* Glassmorphism effect */
+.modal-component--glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Size variants */
+.modal-component--xs {
+  --modal-width: 320px;
+  --modal-padding: var(--spacing-md, 1rem);
+  --modal-title-size: 1.125rem;
+  --modal-content-size: 0.875rem;
+}
+
+.modal-component--sm {
+  --modal-width: 480px;
+  --modal-padding: var(--spacing-lg, 1.5rem);
+  --modal-title-size: 1.25rem;
+  --modal-content-size: 1rem;
+}
+
+.modal-component--md {
+  --modal-width: 640px;
+  --modal-padding: var(--spacing-xl, 2rem);
+  --modal-title-size: 1.5rem;
+  --modal-content-size: 1rem;
+}
+
+.modal-component--lg {
+  --modal-width: 768px;
+  --modal-padding: var(--spacing-xl, 2rem);
+  --modal-title-size: 1.75rem;
+  --modal-content-size: 1.125rem;
+}
+
+.modal-component--xl {
+  --modal-width: 1024px;
+  --modal-padding: var(--spacing-2xl, 3rem);
+  --modal-title-size: 2rem;
+  --modal-content-size: 1.25rem;
+}
+
+.modal-component--full {
+  --modal-width: 95vw;
+  --modal-height: 95vh;
+  --modal-padding: var(--spacing-2xl, 3rem);
+  --modal-title-size: 2.25rem;
+  --modal-content-size: 1.25rem;
+}
+
+/* Apply size constraints */
+.modal-component--xs,
+.modal-component--sm,
+.modal-component--md,
+.modal-component--lg,
+.modal-component--xl {
+  width: var(--modal-width);
+}
+
+.modal-component--full {
+  width: var(--modal-width);
+  height: var(--modal-height);
+}
+
+/* Variant styles - only set CSS custom properties, not actual colors */
+.modal-component--primary {
+  --modal-bg: var(--color-background, #ffffff);
+  --modal-color: var(--color-text, #111827);
+  --modal-border: var(--color-border, #d1d5db);
+  --modal-header-bg: var(--color-primary, #0070f3);
+  --modal-header-color: var(--color-text-inverse, #ffffff);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+.modal-component--secondary {
+  --modal-bg: var(--color-background, #ffffff);
+  --modal-color: var(--color-text, #111827);
+  --modal-border: var(--color-border, #d1d5db);
+  --modal-header-bg: var(--color-secondary, #6b7280);
+  --modal-header-color: var(--color-text-inverse, #ffffff);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+.modal-component--success {
+  --modal-bg: var(--color-background, #ffffff);
+  --modal-color: var(--color-text, #111827);
+  --modal-border: var(--color-border, #d1d5db);
+  --modal-header-bg: var(--color-success, #10b981);
+  --modal-header-color: var(--color-text-inverse, #ffffff);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+.modal-component--warning {
+  --modal-bg: var(--color-background, #ffffff);
+  --modal-color: var(--color-text, #111827);
+  --modal-border: var(--color-border, #d1d5db);
+  --modal-header-bg: var(--color-warning, #f59e0b);
+  --modal-header-color: var(--color-text-inverse, #ffffff);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+.modal-component--danger {
+  --modal-bg: var(--color-background, #ffffff);
+  --modal-color: var(--color-text, #111827);
+  --modal-border: var(--color-border, #d1d5db);
+  --modal-header-bg: var(--color-danger, #ef4444);
+  --modal-header-color: var(--color-text-inverse, #ffffff);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+.modal-component--info {
+  --modal-bg: var(--color-background, #ffffff);
+  --modal-color: var(--color-text, #111827);
+  --modal-border: var(--color-border, #d1d5db);
+  --modal-header-bg: var(--color-info, #3b82f6);
+  --modal-header-color: var(--color-text-inverse, #ffffff);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+.modal-component--ghost {
+  --modal-bg: transparent;
+  --modal-color: var(--color-text, #111827);
+  --modal-border: transparent;
+  --modal-header-bg: transparent;
+  --modal-header-color: var(--color-text, #111827);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+.modal-component--outline {
+  --modal-bg: var(--color-background, #ffffff);
+  --modal-color: var(--color-text, #111827);
+  --modal-border: var(--color-border, #d1d5db);
+  --modal-header-bg: transparent;
+  --modal-header-color: var(--color-text, #111827);
+  --modal-close-color: var(--color-text, #111827);
+  --modal-close-hover: var(--color-gray-100, #f3f4f6);
+}
+
+/* Shadow variants */
+.modal-component--shadow-none {
+  --modal-shadow: none;
+}
+
+.modal-component--shadow-sm {
+  --modal-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+}
+
+.modal-component--shadow-md {
+  --modal-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+}
+
+.modal-component--shadow-lg {
+  --modal-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+}
+
+.modal-component--shadow-xl {
+  --modal-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04));
+}
+
+/* Position variants */
+.modal-component--center {
+  /* Default centered positioning */
+}
+
+.modal-component--top {
+  align-self: flex-start;
+  margin-top: var(--spacing-xl, 2rem);
+}
+
+.modal-component--bottom {
+  align-self: flex-end;
+  margin-bottom: var(--spacing-xl, 2rem);
+}
+
+.modal-component--left {
+  align-self: center;
+  margin-left: var(--spacing-xl, 2rem);
+}
+
+.modal-component--right {
+  align-self: center;
+  margin-right: var(--spacing-xl, 2rem);
+}
+
+.modal-component--top-left {
+  align-self: flex-start;
+  margin: var(--spacing-xl, 2rem) 0 0 var(--spacing-xl, 2rem);
+}
+
+.modal-component--top-right {
+  align-self: flex-start;
+  margin: var(--spacing-xl, 2rem) var(--spacing-xl, 2rem) 0 0;
+}
+
+.modal-component--bottom-left {
+  align-self: flex-end;
+  margin: 0 0 var(--spacing-xl, 2rem) var(--spacing-xl, 2rem);
+}
+
+.modal-component--bottom-right {
+  align-self: flex-end;
+  margin: 0 var(--spacing-xl, 2rem) var(--spacing-xl, 2rem) 0;
+}
+
+/* Animation variants */
+.modal-component--fade {
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-component--slide {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+.modal-component--scale {
+  animation: modalScaleIn 0.3s ease-out;
+}
+
+.modal-component--slide-up {
+  animation: modalSlideUpIn 0.3s ease-out;
+}
+
+.modal-component--slide-down {
+  animation: modalSlideDownIn 0.3s ease-out;
+}
+
+.modal-component--slide-left {
+  animation: modalSlideLeftIn 0.3s ease-out;
+}
+
+.modal-component--slide-right {
+  animation: modalSlideRightIn 0.3s ease-out;
+}
+
+/* Fullscreen variant */
+.modal-component--fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+/* Draggable variant */
+.modal-component--draggable {
+  cursor: move;
+}
+
+.modal-component--draggable .modal-component__header {
+  cursor: grab;
+}
+
+.modal-component--draggable .modal-component__header:active {
+  cursor: grabbing;
+}
+
+/* Resizable variant */
+.modal-component--resizable {
+  resize: both;
+  overflow: auto;
+}
+
+/* Header */
+.modal-component__header {
+  background: var(--modal-custom-header-bg, var(--modal-header-bg, var(--color-gray-50, #f9fafb)));
+  color: var(--modal-header-color, var(--color-text, #111827));
+  padding: var(--modal-padding);
+  border-bottom: 1px solid var(--color-border, #d1d5db);
+  position: relative;
+}
+
+.modal-component__title {
+  margin: 0;
+  font-size: var(--modal-title-size);
+  font-weight: 600;
+  line-height: 1.4;
+  color: inherit;
+}
+
+.modal-component__description {
+  margin: var(--spacing-sm, 0.5rem) 0 0 0;
+  font-size: calc(var(--modal-content-size) * 0.875);
+  color: var(--color-text-secondary, #6b7280);
+  line-height: 1.5;
+}
+
+/* Close button */
+.modal-component__close {
+  position: absolute;
+  top: var(--spacing-md, 1rem);
+  right: var(--spacing-md, 1rem);
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--modal-close-color, var(--color-text, #111827));
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: var(--border-radius, 6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+  z-index: 1;
+}
+
+.modal-component__close:hover {
+  background-color: var(--modal-close-hover, var(--color-gray-100, #f3f4f6));
+  transform: scale(1.1);
+}
+
+.modal-component__close:focus {
+  outline: 2px solid var(--color-primary, #0070f3);
+  outline-offset: 2px;
+}
+
+/* Content */
+.modal-component__content {
+  padding: var(--modal-padding);
+  flex: 1;
+  overflow-y: auto;
+  font-size: var(--modal-content-size);
+  line-height: 1.6;
+  background: var(--modal-custom-content-bg, transparent);
+}
+
+/* Footer */
+.modal-component__footer {
+  padding: var(--modal-padding);
+  border-top: 1px solid var(--color-border, #d1d5db);
+  background: var(--modal-custom-footer-bg, var(--color-gray-50, #f9fafb));
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+/* Animations */
+@keyframes modalOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalSlideUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalSlideDownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalSlideLeftIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes modalSlideRightIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .modal-component--xs,
+  .modal-component--sm,
+  .modal-component--md,
+  .modal-component--lg,
+  .modal-component--xl {
+    width: 95vw;
+    margin: var(--spacing-md, 1rem);
+  }
+  
+  .modal-component__header,
+  .modal-component__content,
+  .modal-component__footer {
+    padding: var(--spacing-md, 1rem);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .modal-component {
+    border-width: 2px;
+  }
+  
+  .modal-component__close:focus {
+    outline-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .modal-component,
+  .modal-component__overlay,
+  .modal-component__close {
+    animation: none;
+    transition: none;
+  }
+  
+  .modal-component__close:hover {
+    transform: none;
+  }
+}
+
+/* Focus management */
+.modal-component:focus {
+  outline: none;
+}
+
+/* Ripple effect */
+.modal-component__close .morphui-ripple {
+  border-radius: var(--border-radius, 6px);
+}
+
+/* Background gradient support with better text visibility */
+.modal-component--background-gradient {
+  /* Ensure gradient background takes precedence over variant styles */
+  background: var(--modal-custom-bg) !important;
+  /* Ensure text is visible on gradient backgrounds */
+  color: var(--modal-custom-color, #ffffff) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+}
+
+/* Text gradient support */
+.modal-component--text-gradient {
+  background: var(--modal-custom-color) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Border gradient support */
+.modal-component--border-gradient {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.modal-component--border-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--modal-custom-border);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}

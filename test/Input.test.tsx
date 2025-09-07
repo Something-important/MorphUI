@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Input } from '../src/components/Input/Input';
+import { Input } from '../src/components/basic/Input/Input';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 // Mock the utilities

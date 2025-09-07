@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Checkbox } from '../src/components/Checkbox/Checkbox';
+import { Checkbox } from '../src/components/basic/Checkbox/Checkbox';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 // Mock the utilities

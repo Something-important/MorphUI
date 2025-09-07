@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Toggle } from '../src/components/Toggle';
+import { Toggle } from '../src/components/basic/Toggle';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 // Mock icons for testing

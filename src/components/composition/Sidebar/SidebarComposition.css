@@ -1,0 +1,421 @@
+/* Sidebar Composition CSS - Minimal styles that work with existing Button/Badge components */
+
+/* ===== Sidebar Root ===== */
+.sidebar-root {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family);
+  background: var(--sidebar-custom-bg, var(--sidebar-bg, var(--color-background)));
+  border-radius: var(--sidebar-custom-border-radius, var(--border-radius-lg));
+  box-shadow: var(--sidebar-custom-shadow, var(--shadow-md));
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  position: relative;
+  height: 100%;
+  border: 1px solid var(--sidebar-custom-border, var(--sidebar-border, var(--color-border)));
+}
+
+/* Sidebar Variants */
+.sidebar-root--primary {
+  --sidebar-bg: var(--color-primary-light);
+  --sidebar-border: var(--color-primary);
+  --sidebar-text: var(--color-primary);
+}
+
+.sidebar-root--secondary {
+  --sidebar-bg: var(--color-secondary-light);
+  --sidebar-border: var(--color-secondary);
+  --sidebar-text: var(--color-secondary);
+}
+
+.sidebar-root--success {
+  --sidebar-bg: var(--color-success-light);
+  --sidebar-border: var(--color-success);
+  --sidebar-text: var(--color-success);
+}
+
+.sidebar-root--warning {
+  --sidebar-bg: var(--color-warning-light);
+  --sidebar-border: var(--color-warning);
+  --sidebar-text: var(--color-warning);
+}
+
+.sidebar-root--danger {
+  --sidebar-bg: var(--color-danger-light);
+  --sidebar-border: var(--color-danger);
+  --sidebar-text: var(--color-danger);
+}
+
+.sidebar-root--info {
+  --sidebar-bg: var(--color-info-light);
+  --sidebar-border: var(--color-info);
+  --sidebar-text: var(--color-info);
+}
+
+.sidebar-root--ghost {
+  --sidebar-bg: transparent;
+  --sidebar-border: transparent;
+  --sidebar-text: var(--color-text);
+}
+
+.sidebar-root--outline {
+  --sidebar-bg: transparent;
+  --sidebar-border: var(--color-border);
+  --sidebar-text: var(--color-text);
+}
+
+.sidebar-root--animated {
+  transition: all var(--transition-normal);
+}
+
+.sidebar-root--collapsed {
+  width: 60px !important;
+  min-width: 60px !important;
+  max-width: 60px !important;
+}
+
+/* Collapsed state toggle handling */
+.sidebar-root--collapsed:not(.sidebar-root--overlay) .sidebar-header {
+  padding: var(--spacing-xs);
+  justify-content: center;
+}
+
+.sidebar-root--collapsed:not(.sidebar-root--overlay) .sidebar-toggle {
+  min-width: 40px;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Hide text content in collapsed non-overlay mode, keep only icons */  
+.sidebar-root--collapsed:not(.sidebar-root--overlay) .sidebar-header > *:not(.sidebar-toggle) {
+  display: none;
+}
+
+/* Enhanced collapsed toggle states */
+.sidebar-toggle--collapsed {
+  transition: all var(--transition-normal);
+}
+
+.sidebar-root--collapsed:not(.sidebar-root--overlay) .sidebar-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure collapsed toggle is always visible and clickable */
+.sidebar-root--collapsed:not(.sidebar-root--overlay) .sidebar-toggle,
+.sidebar-toggle--persistent {
+  position: relative;
+  z-index: 10;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: all !important;
+}
+
+/* Persistent toggle ensures it's always visible */
+.sidebar-toggle--persistent {
+  display: flex !important;
+}
+
+.sidebar-root--overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.sidebar-root--overlay.sidebar-root--left {
+  left: 0;
+}
+
+.sidebar-root--overlay.sidebar-root--right {
+  right: 0;
+}
+
+.sidebar-root--overlay.sidebar-root--collapsed.sidebar-root--left {
+  transform: translateX(-100%);
+}
+
+.sidebar-root--overlay.sidebar-root--collapsed.sidebar-root--right {
+  transform: translateX(100%);
+}
+
+.sidebar-root__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* ===== Sidebar Header ===== */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sidebar-header-custom-padding, var(--sidebar-header-padding, var(--spacing-md)));
+  background: var(--sidebar-header-custom-bg, var(--sidebar-header-bg, inherit));
+  color: var(--sidebar-header-custom-text, var(--sidebar-header-text, var(--sidebar-text, inherit)));
+  border-bottom: 1px solid var(--sidebar-header-custom-border, var(--sidebar-header-border, var(--sidebar-border, var(--color-border))));
+}
+
+/* ===== Sidebar Content ===== */
+.sidebar-content {
+  flex: 1;
+  padding: var(--sidebar-content-custom-padding, var(--sidebar-content-padding, var(--spacing-sm)));
+  background: var(--sidebar-content-custom-bg, var(--sidebar-content-bg, inherit));
+  color: var(--sidebar-content-custom-text, var(--sidebar-content-text, var(--sidebar-text, inherit)));
+}
+
+.sidebar-content--scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.sidebar-content--scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-content--scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-content--scrollable::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.sidebar-content--scrollable::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ===== Sidebar Footer ===== */
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sidebar-footer-custom-padding, var(--sidebar-footer-padding, var(--spacing-md)));
+  background: var(--sidebar-footer-custom-bg, var(--sidebar-footer-bg, inherit));
+  color: var(--sidebar-footer-custom-text, var(--sidebar-footer-text, inherit));
+  border-top: 1px solid var(--sidebar-footer-custom-border, var(--sidebar-footer-border, var(--color-border)));
+}
+
+/* ===== Sidebar Items ===== */
+.sidebar-item {
+  margin-bottom: var(--spacing-xs);
+}
+
+.sidebar-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.sidebar-item__label {
+  flex: 1;
+  text-align: left;
+}
+
+.sidebar-item--collapsed .sidebar-item__icon {
+  margin: 0;
+}
+
+/* Override Button component styles for sidebar items */
+.sidebar-item .sidebar-item__button {
+  gap: var(--spacing-sm);
+}
+
+/* ===== Sidebar Groups ===== */
+.sidebar-group {
+  margin-bottom: var(--spacing-sm);
+}
+
+.sidebar-group__header {
+  margin-bottom: var(--spacing-xs);
+}
+
+.sidebar-group__toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-colors);
+}
+
+.sidebar-group__toggle:hover {
+  background: var(--color-background-hover);
+  color: var(--color-text);
+}
+
+.sidebar-group__icon {
+  margin-right: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.sidebar-group__title {
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sidebar-group__indicator {
+  font-size: var(--font-size-xs);
+  transition: transform var(--transition-normal);
+}
+
+.sidebar-group--expanded .sidebar-group__indicator {
+  transform: rotate(0deg);
+}
+
+.sidebar-group__content {
+  padding-left: var(--spacing-md);
+  animation: sidebar-group-expand var(--transition-normal);
+}
+
+.sidebar-group--collapsed .sidebar-group__content {
+  padding-left: 0;
+}
+
+@keyframes sidebar-group-expand {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Sidebar Sections ===== */
+.sidebar-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.sidebar-section__title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.sidebar-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sidebar-section-custom-gap, var(--sidebar-section-gap, var(--spacing-xs)));
+}
+
+/* ===== Sidebar Separators ===== */
+.sidebar-separator {
+  height: var(--sidebar-separator-custom-thickness, var(--sidebar-separator-thickness, 1px));
+  background: var(--sidebar-separator-custom-color, var(--sidebar-separator-color, var(--color-border)));
+  margin: var(--sidebar-separator-custom-spacing, var(--sidebar-separator-spacing, var(--spacing-sm))) 0;
+}
+
+.sidebar-separator--gradient {
+  background: var(--sidebar-separator-custom-color);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .sidebar-root:not(.sidebar-root--overlay) {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: auto;
+    max-height: 50vh;
+  }
+  
+  .sidebar-root--overlay {
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+  }
+}
+
+/* ===== Floating Toggle Styles ===== */
+.sidebar-toggle--floating {
+  transition: all var(--transition-normal, 0.2s ease-in-out);
+  animation: sidebar-floating-toggle-appear 0.3s ease-out;
+}
+
+.sidebar-toggle--floating:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.sidebar-toggle--floating-left {
+  left: 1rem;
+}
+
+.sidebar-toggle--floating-right {
+  right: 1rem;
+}
+
+@keyframes sidebar-floating-toggle-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== Enhanced Right-Side Positioning ===== */
+.sidebar-root--right {
+  border-top-left-radius: var(--border-radius-lg);
+  border-bottom-left-radius: var(--border-radius-lg);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.sidebar-root--overlay.sidebar-root--right {
+  right: 0;
+  left: auto;
+  border-radius: 0;
+  border-top-left-radius: var(--border-radius-lg);
+  border-bottom-left-radius: var(--border-radius-lg);
+}
+
+/* Right-side header alignment */
+.sidebar-root--right .sidebar-header {
+  justify-content: flex-start;
+}
+
+.sidebar-root--left .sidebar-header {
+  justify-content: space-between;
+}
+
+/* ===== Accessibility ===== */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-root,
+  .sidebar-group__indicator,
+  .sidebar-group__content,
+  .sidebar-toggle--floating {
+    transition: none;
+    animation: none;
+  }
+}
