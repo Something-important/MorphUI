@@ -69,7 +69,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       .filter(Boolean)
       .join(' ');
 
-    const badgeStyle: React.CSSProperties = {
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedColor && {
         '--badge-custom-bg': resolvedColor,
         '--badge-bg': resolvedColor, // Override variant color
@@ -82,8 +83,10 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
         '--badge-custom-border': resolvedBorderColor,
         '--badge-border': resolvedBorderColor, // Override variant color
       }),
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     const handleRemove = (event: React.MouseEvent) => {
       event.stopPropagation();
@@ -91,7 +94,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     };
 
     return (
-      <span ref={ref} className={classes} style={badgeStyle} {...rest}>
+      <span ref={ref} className={classes} style={mergedStyle} {...rest}>
         {dot && <span className="badge-component__dot" aria-hidden="true" />}
         {icon && iconPosition === 'left' && (
           <span className="badge-component__icon badge-component__icon--left" aria-hidden="true">

@@ -177,42 +177,54 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Style for color/gradient and dimensions
-    const componentStyle = {
-      // Background color takes precedence over color and gradient
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Main background: backgroundColor > gradient > color (gradients take precedence over color)
       ...(resolvedBackgroundColor && { '--accordion-custom-bg': resolvedBackgroundColor }),
-      ...(resolvedBackgroundColor
-        ? {}
-        : resolvedGradient && { '--accordion-custom-bg': resolvedGradient }),
-      ...(resolvedBackgroundColor
-        ? {}
-        : resolvedColor && { '--accordion-custom-bg': resolvedColor }),
-      ...(resolvedTextColor && { '--accordion-custom-color': resolvedTextColor }),
-      ...(resolvedBorderColor && { '--accordion-custom-border': resolvedBorderColor }),
+      ...(resolvedGradient &&
+        !resolvedBackgroundColor && { '--accordion-custom-bg': resolvedGradient }),
+      ...(resolvedColor &&
+        !resolvedBackgroundColor &&
+        !resolvedGradient && { '--accordion-custom-bg': resolvedColor }),
+
+      // Text and border colors
+      ...(resolvedTextColor && {
+        '--accordion-custom-color': resolvedTextColor,
+        '--accordion-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && {
+        '--accordion-custom-border': resolvedBorderColor,
+        '--accordion-border': resolvedBorderColor,
+      }),
+
+      // Header and content backgrounds
       ...(resolvedHeaderBackgroundColor && {
         '--accordion-custom-header-bg': resolvedHeaderBackgroundColor,
       }),
       ...(resolvedContentBackgroundColor && {
         '--accordion-custom-content-bg': resolvedContentBackgroundColor,
       }),
+
+      // Title, description, and icon colors
       ...(resolvedTitleTextColor && { '--accordion-custom-title-color': resolvedTitleTextColor }),
       ...(resolvedDescriptionTextColor && {
         '--accordion-custom-description-color': resolvedDescriptionTextColor,
       }),
       ...(resolvedIconColor && { '--accordion-custom-icon-color': resolvedIconColor }),
+
+      // Animation and dimensions
       ...(maxHeight && { '--accordion-max-height': maxHeight }),
       ...(animationDuration && { '--accordion-animation-duration': `${animationDuration}ms` }),
       ...(animationDuration && { '--accordion-animation-easing': 'var(--ease-in-out)' }),
+
+      // Background patterns
       ...(backgroundPattern && { '--accordion-custom-bg-pattern': backgroundPattern }),
       ...(backgroundImage && { '--accordion-custom-bg-image': `url(${backgroundImage})` }),
       ...(backgroundBlend && { '--accordion-custom-bg-blend': backgroundBlend }),
     };
 
-    // Combine component style with user style
-    const finalStyle: React.CSSProperties = {
-      ...componentStyle,
-      ...style,
-    };
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const finalStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // Generate unique ID for content if not exists
     useEffect(() => {

@@ -203,15 +203,28 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
     const isTextGradient = textColor && textColor.includes('gradient');
     const isBorderGradient = borderColor && borderColor.includes('gradient');
 
-    // Create style object with CSS custom properties
-    const toggleStyle: React.CSSProperties = {
-      // Legacy support
-      ...(resolvedGradient && { '--toggle-custom-bg': resolvedGradient }),
-      ...(resolvedColor && { '--toggle-custom-bg': resolvedColor }),
-      ...(resolvedTextColor && { '--toggle-custom-color': resolvedTextColor }),
-      ...(resolvedBorderColor && { '--toggle-custom-border': resolvedBorderColor }),
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Legacy support (gradients > colors)
+      ...(resolvedGradient && {
+        '--toggle-custom-bg': resolvedGradient,
+        '--toggle-bg': resolvedGradient,
+      }),
+      ...(resolvedColor &&
+        !resolvedGradient && {
+          '--toggle-custom-bg': resolvedColor,
+          '--toggle-bg': resolvedColor,
+        }),
+      ...(resolvedTextColor && {
+        '--toggle-custom-color': resolvedTextColor,
+        '--toggle-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && {
+        '--toggle-custom-border': resolvedBorderColor,
+        '--toggle-border': resolvedBorderColor,
+      }),
 
-      // Comprehensive color customization
+      // Comprehensive color customization (gradients > colors)
       ...(resolvedTrackGradient && { '--toggle-custom-track-gradient': resolvedTrackGradient }),
       ...(resolvedTrackColor &&
         !resolvedTrackGradient && { '--toggle-custom-track-color': resolvedTrackColor }),
@@ -252,8 +265,10 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
       }),
       ...(shadow && { '--toggle-custom-shadow': shadow }),
       ...(backdropBlur && { '--toggle-custom-backdrop-blur': 'blur(8px)' }),
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const toggleStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // Build CSS classes
     const classes = [

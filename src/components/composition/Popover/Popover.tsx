@@ -219,19 +219,52 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Component style object
-    const componentStyle: React.CSSProperties = {
-      ...(color && { '--popover-custom-color': color }),
-      ...(gradient && { '--popover-custom-gradient': gradient }),
-      ...(textColor && { '--popover-custom-text-color': textColor }),
-      ...(textColor && isTextGradient && { '--popover-custom-text-gradient': textColor }),
-      ...(borderColor && { '--popover-custom-border-color': borderColor }),
-      ...(borderColor && isBorderGradient && { '--popover-custom-border-gradient': borderColor }),
+    // Resolve theme values
+    const resolvedColor = resolveThemeValue(color);
+    const resolvedGradient = resolveThemeValue(gradient);
+    const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedBorderColor = resolveThemeValue(borderColor);
+
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Main background: gradient > color (gradients take precedence)
+      ...(resolvedGradient && {
+        '--popover-custom-bg': resolvedGradient,
+        '--popover-bg': resolvedGradient,
+      }),
+      ...(resolvedColor &&
+        !resolvedGradient && {
+          '--popover-custom-bg': resolvedColor,
+          '--popover-bg': resolvedColor,
+        }),
+
+      // Text colors and gradients
+      ...(resolvedTextColor &&
+        isTextGradient && { '--popover-custom-text-gradient': resolvedTextColor }),
+      ...(resolvedTextColor &&
+        !isTextGradient && {
+          '--popover-custom-text-color': resolvedTextColor,
+          '--popover-color': resolvedTextColor,
+        }),
+
+      // Border colors and gradients
+      ...(resolvedBorderColor &&
+        isBorderGradient && { '--popover-custom-border-gradient': resolvedBorderColor }),
+      ...(resolvedBorderColor &&
+        !isBorderGradient && {
+          '--popover-custom-border-color': resolvedBorderColor,
+          '--popover-border': resolvedBorderColor,
+        }),
+
+      // Other styling
       ...(borderRadius && {
         '--popover-custom-border-radius':
           typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }),
-      ...(shadow && { '--popover-custom-shadow': resolveThemeValue(`shadow-${shadow}`) }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--popover-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
       ...(backgroundPattern && { '--popover-custom-bg-pattern': backgroundPattern }),
       ...(backgroundImage && { '--popover-custom-bg-image': `url(${backgroundImage})` }),
       ...(backgroundBlend && { '--popover-custom-bg-blend': backgroundBlend }),
@@ -247,13 +280,10 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       ...(minHeight && {
         '--popover-custom-min-height': typeof minHeight === 'number' ? `${minHeight}px` : minHeight,
       }),
-    } as React.CSSProperties;
-
-    // Combine component style with user style
-    const finalStyle: React.CSSProperties = {
-      ...componentStyle,
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const finalStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // Content style
     const finalContentStyle: React.CSSProperties = {

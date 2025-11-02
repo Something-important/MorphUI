@@ -71,6 +71,10 @@ export interface InputProps
   characterCount?: boolean;
   maxLength?: number;
   minLength?: number;
+  characterCountLimit?: number;
+
+  // Input masking
+  mask?: 'phone' | 'credit-card' | string | RegExp;
 
   // Validation
   validation?: {
@@ -143,6 +147,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       characterCount = false,
       maxLength,
       minLength,
+      characterCountLimit,
+      mask,
 
       // Validation
       validation,
@@ -285,23 +291,39 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Determine the final background value with proper precedence
-    const finalBackground = resolvedGradient || resolvedColor;
-
-    // Build styles (match Button pattern exactly)
-    const inputStyle: React.CSSProperties = {
-      ...(resolvedTextColor && { '--input-custom-color': resolvedTextColor }),
-      ...(resolvedBorderColor && { '--input-custom-border': resolvedBorderColor }),
-      // Apply the final background value
-      ...(finalBackground && { '--input-custom-bg': finalBackground }),
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Gradients take precedence over colors
+      ...(resolvedGradient && {
+        '--input-custom-bg': resolvedGradient,
+        '--input-bg': resolvedGradient, // Override variant color
+      }),
+      // Colors only if no gradient
+      ...(resolvedColor &&
+        !resolvedGradient && {
+          '--input-custom-bg': resolvedColor,
+          '--input-bg': resolvedColor, // Override variant color
+        }),
+      // Text and border colors
+      ...(resolvedTextColor && {
+        '--input-custom-color': resolvedTextColor,
+        '--input-color': resolvedTextColor, // Override variant color
+      }),
+      ...(resolvedBorderColor && {
+        '--input-custom-border': resolvedBorderColor,
+        '--input-border': resolvedBorderColor, // Override variant color
+      }),
+      // Other styling properties
       ...(borderRadius && {
         '--input-custom-border-radius':
           typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }),
       ...(shadow && { '--input-custom-shadow': shadow }),
       ...(backdropBlur && { '--input-custom-backdrop-blur': 'blur(8px)' }),
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // Handle focus state
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -347,14 +369,52 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       onClick?.(event);
     };
 
+    // Apply mask to input value
+    const applyMask = (value: string, maskType: string | undefined): string => {
+      if (!maskType) return value;
+
+      // Remove all non-digit characters for processing
+      const digits = value.replace(/\D/g, '');
+
+      if (maskType === 'phone') {
+        // Format as (XXX) XXX-XXXX
+        if (digits.length <= 3) return digits;
+        if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+        return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+      }
+
+      if (maskType === 'credit-card') {
+        // Format as XXXX XXXX XXXX XXXX
+        const groups = digits.match(/.{1,4}/g);
+        return groups ? groups.join(' ').slice(0, 19) : digits; // Max 16 digits + 3 spaces
+      }
+
+      return value;
+    };
+
     // Handle input changes with validation
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.value;
+      let newValue = e.target.value;
 
-      // Enforce limit if specified
-      if (maxLength && newValue.length > maxLength) {
-        return; // Don't update if exceeding maxLength
+      // Apply mask if specified (only string masks supported for now)
+      if (mask && typeof mask === 'string') {
+        newValue = applyMask(newValue, mask);
       }
+
+      // Enforce limit if specified (use characterCountLimit or maxLength)
+      const limit = characterCountLimit || maxLength;
+      if (limit && newValue.length > limit) {
+        return; // Don't update if exceeding limit
+      }
+
+      // Create a new event with the masked value
+      const maskedEvent = {
+        ...e,
+        target: {
+          ...e.target,
+          value: newValue,
+        },
+      } as React.ChangeEvent<HTMLInputElement>;
 
       // Validate input
       const validationResult = validateInput(newValue);
@@ -369,8 +429,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         setShowSuggestions(filtered.length > 0);
       }
 
-      // Call onChange
-      onChange(e);
+      // Call onChange with masked value
+      onChange(maskedEvent);
     };
 
     // Validation function
@@ -430,10 +490,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Character count display
+    // Character count display (use characterCountLimit if provided, otherwise maxLength)
+    const countLimit = characterCountLimit || maxLength;
     const characterCountDisplay = characterCount ? (
       <div className="input-character-count">
-        {value.length}/{maxLength || '∞'}
+        {value.length}/{countLimit || '∞'}
       </div>
     ) : null;
 
@@ -449,7 +510,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     });
 
     return (
-      <div className={wrapperClasses} style={inputStyle}>
+      <div className={wrapperClasses} style={mergedStyle}>
         {/* Floating label */}
         {floatingLabel && (
           <label
@@ -487,7 +548,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           autoComplete={autoComplete ?? (type === 'password' ? 'current-password' : undefined)}
           {...ariaProps}
           required={required || validation?.required}
-          maxLength={maxLength}
+          maxLength={characterCountLimit || maxLength}
           minLength={minLength}
           {...rest}
           onFocus={handleFocus}
@@ -534,7 +595,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
             {error && (
               <div className="input-icon input-icon--right input-icon--validation">
-                <span className="validation-icon-error">×</span>
+                <span className="validation-icon-error" aria-label="Error">
+                  ×
+                </span>
               </div>
             )}
           </>

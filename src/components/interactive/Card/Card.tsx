@@ -160,27 +160,47 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Style for color/gradient and dimensions
-    const componentStyle: React.CSSProperties = {
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Main background: gradient > color (gradients take precedence)
       ...(resolvedGradient && { '--card-custom-bg': resolvedGradient }),
-      ...(resolvedColor && { '--card-custom-bg': resolvedColor }),
-      ...(resolvedTextColor && { '--card-custom-color': resolvedTextColor }),
-      ...(resolvedBorderColor && { '--card-custom-border': resolvedBorderColor }),
+      ...(resolvedColor && !resolvedGradient && { '--card-custom-bg': resolvedColor }),
+      // backgroundColor prop also supports gradient > color
       ...(resolvedBackgroundColor && { '--card-custom-bg': resolvedBackgroundColor }),
+
+      // Text and border colors
+      ...(resolvedTextColor && {
+        '--card-custom-color': resolvedTextColor,
+        '--card-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && {
+        '--card-custom-border': resolvedBorderColor,
+        '--card-border': resolvedBorderColor,
+      }),
+
+      // Header colors
       ...(resolvedHeaderBackgroundColor && {
         '--card-custom-header-bg': resolvedHeaderBackgroundColor,
       }),
       ...(resolvedTitleColor && { '--card-custom-title-color': resolvedTitleColor }),
       ...(resolvedSubtitleColor && { '--card-custom-subtitle-color': resolvedSubtitleColor }),
+
+      // Content colors
       ...(resolvedContentColor && { '--card-custom-content-color': resolvedContentColor }),
+
+      // Footer colors
       ...(resolvedFooterBackgroundColor && {
         '--card-custom-footer-bg': resolvedFooterBackgroundColor,
       }),
       ...(resolvedFooterColor && { '--card-custom-footer-color': resolvedFooterColor }),
+
+      // Dimensions
       ...(maxWidth && { maxWidth }),
       ...(minHeight && { minHeight }),
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // ARIA attributes
     const ariaProps = getAriaProps({
@@ -223,7 +243,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={classes}
-        style={componentStyle}
+        style={mergedStyle}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

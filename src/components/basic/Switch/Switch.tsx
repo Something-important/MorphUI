@@ -118,6 +118,12 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     const isControlled = controlledChecked !== undefined;
     const checked = isControlled ? controlledChecked : internalChecked;
 
+    // Resolve theme values
+    const resolvedColor = resolveThemeValue(color);
+    const resolvedGradient = resolveThemeValue(gradient);
+    const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedBorderColor = resolveThemeValue(borderColor);
+
     // Generate CSS classes
     const classes = [
       'switch-component',
@@ -140,27 +146,43 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Component style object
-    const componentStyle: React.CSSProperties = {
-      ...(color && { '--switch-custom-color': color }),
-      ...(gradient && { '--switch-custom-gradient': gradient }),
-      ...(textColor && { '--switch-custom-text-color': textColor }),
-      ...(borderColor && { '--switch-custom-border-color': borderColor }),
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Gradients take precedence over colors
+      ...(resolvedGradient && {
+        '--switch-custom-bg': resolvedGradient,
+        '--switch-bg': resolvedGradient,
+      }),
+      ...(resolvedColor &&
+        !resolvedGradient && {
+          '--switch-custom-bg': resolvedColor,
+          '--switch-bg': resolvedColor,
+        }),
+      // Text and border colors
+      ...(resolvedTextColor && {
+        '--switch-custom-text-color': resolvedTextColor,
+        '--switch-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && {
+        '--switch-custom-border-color': resolvedBorderColor,
+        '--switch-border': resolvedBorderColor,
+      }),
+      // Other styling properties
       ...(borderRadius && {
         '--switch-custom-border-radius':
           typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }),
-      ...(shadow && { '--switch-custom-shadow': resolveThemeValue(`shadow-${shadow}`) }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--switch-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
       ...(backgroundPattern && { '--switch-custom-bg-pattern': backgroundPattern }),
       ...(backgroundImage && { '--switch-custom-bg-image': `url(${backgroundImage})` }),
       ...(backgroundBlend && { '--switch-custom-bg-blend': backgroundBlend }),
-    } as React.CSSProperties;
-
-    // Combine component style with user style
-    const finalStyle: React.CSSProperties = {
-      ...componentStyle,
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const finalStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // ARIA attributes
     const ariaProps = getAriaProps({

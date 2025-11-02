@@ -195,32 +195,37 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Style for color/gradient and dimensions
-    const componentStyle = {
-      // Background color takes precedence over color and gradient
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Background precedence: backgroundColor > gradient > color
       ...(resolvedBackgroundColor && { '--checkbox-custom-bg': resolvedBackgroundColor }),
-      ...(resolvedBackgroundColor
-        ? {}
-        : resolvedGradient && { '--checkbox-custom-bg': resolvedGradient }),
-      ...(resolvedBackgroundColor
-        ? {}
-        : resolvedColor && { '--checkbox-custom-bg': resolvedColor }),
-      ...(resolvedTextColor && { '--checkbox-custom-color': resolvedTextColor }),
-      ...(resolvedBorderColor && { '--checkbox-custom-border': resolvedBorderColor }),
+      ...(resolvedGradient &&
+        !resolvedBackgroundColor && { '--checkbox-custom-bg': resolvedGradient }),
+      ...(resolvedColor &&
+        !resolvedBackgroundColor &&
+        !resolvedGradient && { '--checkbox-custom-bg': resolvedColor }),
+      // Text and border colors
+      ...(resolvedTextColor && {
+        '--checkbox-custom-color': resolvedTextColor,
+        '--checkbox-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && {
+        '--checkbox-custom-border': resolvedBorderColor,
+        '--checkbox-border': resolvedBorderColor,
+      }),
+      // Label and description colors
       ...(resolvedLabelColor && { '--checkbox-custom-label-color': resolvedLabelColor }),
       ...(resolvedDescriptionColor && {
         '--checkbox-custom-description-color': resolvedDescriptionColor,
       }),
+      // Background patterns
       ...(backgroundPattern && { '--checkbox-custom-bg-pattern': backgroundPattern }),
       ...(backgroundImage && { '--checkbox-custom-bg-image': `url(${backgroundImage})` }),
       ...(backgroundBlend && { '--checkbox-custom-bg-blend': backgroundBlend }),
     };
 
-    // Combine component style with user style
-    const finalStyle: React.CSSProperties = {
-      ...componentStyle,
-      ...style,
-    };
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const finalStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // ARIA attributes
     const ariaProps = getAriaProps({

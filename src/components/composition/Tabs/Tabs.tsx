@@ -299,40 +299,88 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Component style object
-    const componentStyle: React.CSSProperties = {
+    // Component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
       // Legacy support
-      ...(resolvedColor && { '--tabs-custom-color': resolvedColor }),
+      ...(resolvedColor && !resolvedGradient && { '--tabs-custom-color': resolvedColor }),
       ...(resolvedGradient && { '--tabs-custom-gradient': resolvedGradient }),
 
-      // Comprehensive color customization using unified variables
-      ...(finalTabColor && { '--tabs-custom-tab-color': finalTabColor }),
-      ...(finalActiveTabColor && { '--tabs-custom-active-tab-color': finalActiveTabColor }),
-      ...(finalHoverTabColor && { '--tabs-custom-hover-tab-color': finalHoverTabColor }),
-      ...(finalContentColor && { '--tabs-custom-content-color': finalContentColor }),
-      ...(finalIndicatorColor && { '--tabs-custom-indicator-color': finalIndicatorColor }),
-      ...(finalBadgeColor && { '--tabs-custom-badge-color': finalBadgeColor }),
-      ...(finalIconColor && { '--tabs-custom-icon-color': finalIconColor }),
-      ...(finalTextColor && { '--tabs-custom-text-color': finalTextColor }),
-      ...(finalBorderColor && { '--tabs-custom-border-color': finalBorderColor }),
+      // Comprehensive color customization using unified variables (gradients > colors)
+      // Tab colors
+      ...(resolvedTabGradient && { '--tabs-custom-tab-color': resolvedTabGradient }),
+      ...(resolvedTabColor &&
+        !resolvedTabGradient && { '--tabs-custom-tab-color': resolvedTabColor }),
+
+      // Active tab colors
+      ...(resolvedActiveTabGradient && {
+        '--tabs-custom-active-tab-color': resolvedActiveTabGradient,
+      }),
+      ...(resolvedActiveTabColor &&
+        !resolvedActiveTabGradient && {
+          '--tabs-custom-active-tab-color': resolvedActiveTabColor,
+        }),
+
+      // Hover tab colors
+      ...(resolvedHoverTabGradient && {
+        '--tabs-custom-hover-tab-color': resolvedHoverTabGradient,
+      }),
+      ...(resolvedHoverTabColor &&
+        !resolvedHoverTabGradient && {
+          '--tabs-custom-hover-tab-color': resolvedHoverTabColor,
+        }),
+
+      // Content colors
+      ...(resolvedContentGradient && {
+        '--tabs-custom-content-color': resolvedContentGradient,
+      }),
+      ...(resolvedContentColor &&
+        !resolvedContentGradient && {
+          '--tabs-custom-content-color': resolvedContentColor,
+        }),
+
+      // Indicator colors
+      ...(resolvedIndicatorGradient && {
+        '--tabs-custom-indicator-color': resolvedIndicatorGradient,
+      }),
+      ...(resolvedIndicatorColor &&
+        !resolvedIndicatorGradient && {
+          '--tabs-custom-indicator-color': resolvedIndicatorColor,
+        }),
+
+      // Badge colors
+      ...(resolvedBadgeGradient && { '--tabs-custom-badge-color': resolvedBadgeGradient }),
+      ...(resolvedBadgeColor &&
+        !resolvedBadgeGradient && { '--tabs-custom-badge-color': resolvedBadgeColor }),
+
+      // Icon colors
+      ...(resolvedIconGradient && { '--tabs-custom-icon-color': resolvedIconGradient }),
+      ...(resolvedIconColor &&
+        !resolvedIconGradient && { '--tabs-custom-icon-color': resolvedIconColor }),
+
+      // Text colors
+      ...(resolvedTextGradient && { '--tabs-custom-text-color': resolvedTextGradient }),
+      // Note: textColor prop doesn't exist, only textGradient
+
+      // Border colors
+      ...(resolvedBorderGradient && { '--tabs-custom-border-color': resolvedBorderGradient }),
+      // Note: borderColor prop doesn't exist, only borderGradient
 
       // Other styling
       ...(borderRadius && {
         '--tabs-custom-border-radius':
           typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }),
-      ...(shadow && { '--tabs-custom-shadow': resolveThemeValue(`shadow-${shadow}`) }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--tabs-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
       ...(backgroundPattern && { '--tabs-custom-bg-pattern': backgroundPattern }),
       ...(backgroundImage && { '--tabs-custom-bg-image': `url(${backgroundImage})` }),
       ...(backgroundBlend && { '--tabs-custom-bg-blend': backgroundBlend }),
-      ...style,
-    } as React.CSSProperties;
-
-    // Combine component style with user style
-    const finalStyle: React.CSSProperties = {
-      ...componentStyle,
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const finalStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // ARIA attributes
     const ariaProps = getAriaProps({

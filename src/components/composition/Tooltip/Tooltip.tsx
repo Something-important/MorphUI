@@ -256,30 +256,41 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Component style object
-    const componentStyle: React.CSSProperties = {
+    // Component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
       // Legacy color support (for backward compatibility)
-      ...(resolvedColor && { '--tooltip-custom-color': resolvedColor }),
+      ...(resolvedColor && !resolvedGradient && { '--tooltip-custom-color': resolvedColor }),
       ...(resolvedGradient && { '--tooltip-custom-gradient': resolvedGradient }),
 
-      // Background colors and gradients
-      ...(finalBackground && { '--tooltip-custom-bg': finalBackground }),
+      // Background colors and gradients (gradients > colors)
+      ...(resolvedBackgroundGradient && { '--tooltip-custom-bg': resolvedBackgroundGradient }),
+      ...(resolvedBackgroundColor &&
+        !resolvedBackgroundGradient && { '--tooltip-custom-bg': resolvedBackgroundColor }),
 
       // Text colors and gradients
-      ...(finalTextColor && { '--tooltip-custom-text-color': finalTextColor }),
+      ...(resolvedTextGradient && { '--tooltip-custom-text-color': resolvedTextGradient }),
+      ...(resolvedTextColor &&
+        !resolvedTextGradient && { '--tooltip-custom-text-color': resolvedTextColor }),
 
       // Border colors and gradients
-      ...(finalBorderColor && { '--tooltip-custom-border-color': finalBorderColor }),
+      ...(resolvedBorderGradient && { '--tooltip-custom-border-color': resolvedBorderGradient }),
+      ...(resolvedBorderColor &&
+        !resolvedBorderGradient && { '--tooltip-custom-border-color': resolvedBorderColor }),
 
       // Arrow colors and gradients
-      ...(finalArrowColor && { '--tooltip-custom-arrow-color': finalArrowColor }),
+      ...(resolvedArrowGradient && { '--tooltip-custom-arrow-color': resolvedArrowGradient }),
+      ...(resolvedArrowColor &&
+        !resolvedArrowGradient && { '--tooltip-custom-arrow-color': resolvedArrowColor }),
 
       // Other styling properties
       ...(borderRadius && {
         '--tooltip-custom-border-radius':
           typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }),
-      ...(shadow && { '--tooltip-custom-shadow': resolveThemeValue(`shadow-${shadow}`) }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--tooltip-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
       ...(backgroundPattern && { '--tooltip-custom-bg-pattern': backgroundPattern }),
       ...(backgroundImage && { '--tooltip-custom-bg-image': `url(${backgroundImage})` }),
       ...(backgroundBlend && { '--tooltip-custom-bg-blend': backgroundBlend }),
@@ -295,13 +306,10 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ...(minHeight && {
         '--tooltip-custom-min-height': typeof minHeight === 'number' ? `${minHeight}px` : minHeight,
       }),
-    } as React.CSSProperties;
-
-    // Combine component style with user style
-    const finalStyle: React.CSSProperties = {
-      ...componentStyle,
-      ...style,
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const finalStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // Content style
     const finalContentStyle: React.CSSProperties = {

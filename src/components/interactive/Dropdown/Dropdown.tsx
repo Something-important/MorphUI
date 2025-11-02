@@ -395,16 +395,42 @@ export const Dropdown = ({
     finalBackground,
   });
 
-  // Build styles
-  const containerStyle: React.CSSProperties = {
-    ...(resolvedTextColor && { '--dropdown-custom-color': resolvedTextColor }),
-    ...(resolvedBorderColor && { '--dropdown-custom-border': resolvedBorderColor }),
-    // Apply the final background value
-    ...(finalBackground && { '--dropdown-custom-bg': finalBackground }),
+  // Build component style object with CSS custom properties (match Button pattern)
+  const componentStyle: React.CSSProperties & Record<string, string> = {
+    // Main background: gradient > color > backgroundColor (gradients take precedence)
+    ...(resolvedGradient && {
+      '--dropdown-custom-bg': resolvedGradient,
+      '--dropdown-bg': resolvedGradient,
+    }),
+    ...(resolvedColor &&
+      !resolvedGradient && {
+        '--dropdown-custom-bg': resolvedColor,
+        '--dropdown-bg': resolvedColor,
+      }),
+    ...(resolvedBackground &&
+      !resolvedGradient &&
+      !resolvedColor && {
+        '--dropdown-custom-bg': resolvedBackground,
+        '--dropdown-bg': resolvedBackground,
+      }),
+
+    // Text and border colors
+    ...(resolvedTextColor && {
+      '--dropdown-custom-color': resolvedTextColor,
+      '--dropdown-color': resolvedTextColor,
+    }),
+    ...(resolvedBorderColor && {
+      '--dropdown-custom-border': resolvedBorderColor,
+      '--dropdown-border': resolvedBorderColor,
+    }),
+
+    // Label and description colors
     ...(resolvedLabelColor && { '--dropdown-custom-label-color': resolvedLabelColor }),
     ...(resolvedDescriptionColor && {
       '--dropdown-custom-description-color': resolvedDescriptionColor,
     }),
+
+    // Option backgrounds
     ...(resolvedOptionBackground && { '--dropdown-custom-option-bg': resolvedOptionBackground }),
     ...(resolvedOptionHoverBackground && {
       '--dropdown-custom-option-hover-bg': resolvedOptionHoverBackground,
@@ -412,8 +438,12 @@ export const Dropdown = ({
     ...(resolvedOptionSelectedBackground && {
       '--dropdown-custom-option-selected-bg': resolvedOptionSelectedBackground,
     }),
+
+    // Background patterns
     ...(backgroundImage && { '--dropdown-custom-background-image': backgroundImage }),
     ...(backgroundBlend && { '--dropdown-custom-background-blend': backgroundBlend }),
+
+    // Other styling
     ...(borderRadius && {
       '--dropdown-custom-border-radius':
         typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
@@ -421,8 +451,10 @@ export const Dropdown = ({
     ...(shadow && { '--dropdown-custom-shadow': shadow }),
     ...(backdropBlur && { '--dropdown-custom-backdrop-blur': 'blur(8px)' }),
     ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
-    ...style,
   };
+
+  // Explicitly merge with user's style prop (user style takes precedence)
+  const containerStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
   // Build list styles
   const listStyle: React.CSSProperties = {

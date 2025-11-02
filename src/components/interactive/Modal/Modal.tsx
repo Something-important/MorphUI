@@ -231,15 +231,37 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Determine the final background value with proper precedence
-    const finalBackground = resolvedGradient || resolvedColor || resolvedBackgroundColor;
-
-    // Style for color/gradient and dimensions
+    // Build component style object with CSS custom properties (match Button pattern)
+    // Note: Using CSSProperties only here since zIndex can be a number
     const componentStyle: React.CSSProperties = {
-      ...(resolvedTextColor && { '--modal-custom-color': resolvedTextColor }),
-      ...(resolvedBorderColor && { '--modal-custom-border': resolvedBorderColor }),
-      // Apply the final background value
-      ...(finalBackground && { '--modal-custom-bg': finalBackground }),
+      // Main background: gradient > color > backgroundColor (gradients take precedence)
+      ...(resolvedGradient && {
+        '--modal-custom-bg': resolvedGradient,
+        '--modal-bg': resolvedGradient,
+      }),
+      ...(resolvedColor &&
+        !resolvedGradient && {
+          '--modal-custom-bg': resolvedColor,
+          '--modal-bg': resolvedColor,
+        }),
+      ...(resolvedBackgroundColor &&
+        !resolvedGradient &&
+        !resolvedColor && {
+          '--modal-custom-bg': resolvedBackgroundColor,
+          '--modal-bg': resolvedBackgroundColor,
+        }),
+
+      // Text and border colors
+      ...(resolvedTextColor && {
+        '--modal-custom-color': resolvedTextColor,
+        '--modal-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && {
+        '--modal-custom-border': resolvedBorderColor,
+        '--modal-border': resolvedBorderColor,
+      }),
+
+      // Header, footer, and content backgrounds
       ...(resolvedHeaderBackgroundColor && {
         '--modal-custom-header-bg': resolvedHeaderBackgroundColor,
       }),
@@ -249,16 +271,22 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       ...(resolvedContentBackgroundColor && {
         '--modal-custom-content-bg': resolvedContentBackgroundColor,
       }),
+
+      // Background patterns
       ...(backgroundPattern && { '--modal-pattern': backgroundPattern }),
       ...(backgroundImage && { '--modal-bg-image': backgroundImage }),
       ...(backgroundBlend && { '--modal-bg-blend': backgroundBlend }),
+
+      // Dimensions
       ...(maxWidth && { maxWidth }),
       ...(maxHeight && { maxHeight }),
       ...(minWidth && { minWidth }),
       ...(minHeight && { minHeight }),
-      ...(zIndex && { zIndex }),
-      ...style,
+      ...(zIndex !== undefined && { zIndex }),
     };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // ARIA attributes for overlay
     const overlayAriaProps = getAriaProps({
@@ -380,7 +408,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         <div
           ref={ref || modalRef}
           className={classes}
-          style={{ ...componentStyle, ...style }}
+          style={mergedStyle}
           role="dialog"
           aria-modal="true"
           aria-labelledby={ariaLabelledBy || (title ? 'modal-title' : undefined)}

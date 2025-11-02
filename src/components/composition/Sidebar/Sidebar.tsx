@@ -313,8 +313,8 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Component style object
-    const componentStyle: React.CSSProperties = {
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
       // Layout - use theme tokens or fallback to pixel values
       width: collapsed
         ? '60px'
@@ -332,9 +332,9 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
           ? `${maxWidth}px`
           : resolveThemeValue(maxWidth) || maxWidth,
 
-      // Legacy support
-      ...(resolvedColor && { '--sidebar-custom-color': resolvedColor }),
+      // Legacy support (gradients > colors)
       ...(resolvedGradient && { '--sidebar-custom-gradient': resolvedGradient }),
+      ...(resolvedColor && !resolvedGradient && { '--sidebar-custom-color': resolvedColor }),
 
       // Comprehensive color customization using unified variables
       ...(finalItemColor && { '--sidebar-custom-item-color': finalItemColor }),
@@ -352,12 +352,17 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
         '--sidebar-custom-border-radius':
           typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }),
-      ...(shadow && { '--sidebar-custom-shadow': resolveThemeValue(`shadow-${shadow}`) }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--sidebar-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
       ...(backgroundPattern && { '--sidebar-custom-bg-pattern': backgroundPattern }),
       ...(backgroundImage && { '--sidebar-custom-bg-image': `url(${backgroundImage})` }),
       ...(backgroundBlend && { '--sidebar-custom-bg-blend': backgroundBlend }),
-      ...style,
-    } as React.CSSProperties;
+    };
+
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     // ARIA attributes
     const ariaProps = getAriaProps({
@@ -466,7 +471,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
         <div
           ref={ref || sidebarRef}
           className={classes}
-          style={componentStyle}
+          style={mergedStyle}
           role="navigation"
           {...ariaProps}
           {...rest}

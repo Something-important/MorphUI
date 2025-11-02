@@ -177,7 +177,7 @@ describe('Input Component', () => {
   });
 
   describe('Input Masks', () => {
-    it.skip('applies phone mask', async () => {
+    it('applies phone mask', async () => {
       const onChange = jest.fn();
       renderWithTheme(<Input {...defaultProps} mask="phone" onChange={onChange} />);
       const input = screen.getByPlaceholderText('Test placeholder');
@@ -193,7 +193,7 @@ describe('Input Component', () => {
       expect(lastCall[0].target.value).toBe('(123) 456-7890');
     });
 
-    it.skip('applies credit card mask', async () => {
+    it('applies credit card mask', async () => {
       const onChange = jest.fn();
       renderWithTheme(<Input {...defaultProps} mask="credit-card" onChange={onChange} />);
       const input = screen.getByPlaceholderText('Test placeholder');
@@ -257,9 +257,9 @@ describe('Input Component', () => {
       expect(screen.getByText('i')).toBeInTheDocument();
     });
 
-    it.skip('shows error icon when error state is active', () => {
+    it('shows error icon when error state is active', () => {
       renderWithTheme(<Input {...defaultProps} error={true} />);
-      expect(screen.getByText('X')).toBeInTheDocument();
+      expect(screen.getByText('×')).toBeInTheDocument();
     });
 
     it('applies wrapper classes for validation icons', () => {
@@ -268,9 +268,9 @@ describe('Input Component', () => {
       expect(wrapper).toHaveClass('input-wrapper--has-right-icon');
     });
 
-    it.skip('applies validation icon CSS classes', () => {
+    it('applies validation icon CSS classes', () => {
       renderWithTheme(<Input {...defaultProps} error={true} />);
-      const errorIcon = screen.getByText('X');
+      const errorIcon = screen.getByText('×');
       expect(errorIcon).toHaveClass('validation-icon-error');
     });
   });
@@ -294,7 +294,7 @@ describe('Input Component', () => {
       expect(wrapper).toHaveClass('input-wrapper--has-character-count');
     });
 
-    it.skip('shows custom character count limit', () => {
+    it('shows custom character count limit', () => {
       renderWithTheme(
         <Input {...defaultProps} value="test" characterCount characterCountLimit={25} />,
       );
@@ -316,7 +316,7 @@ describe('Input Component', () => {
       expect(input).toHaveAttribute('maxLength', '5');
     });
 
-    it.skip('enforces characterCountLimit when typing', async () => {
+    it('enforces characterCountLimit when typing', async () => {
       const onChange = jest.fn();
       renderWithTheme(
         <Input
