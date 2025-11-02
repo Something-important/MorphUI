@@ -47,5 +47,5 @@ export {
 // Theme System
 export * from './theme';
 
-// Shared utilities
-export * from '../utils';
+// Shared utilities (theme utilities are already exported above, so only export non-theme utils)
+export { createRipple, getAriaProps } from '../utils';

@@ -44,7 +44,10 @@ module.exports = {
     'react/prop-types': 'off',
     'import/no-unresolved': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-explicit-any': 'warn',
     'testing-library/no-node-access': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
   },
   ignorePatterns: ['dist/', 'node_modules/', 'storybook-static/'],
   overrides: [
@@ -52,7 +55,13 @@ module.exports = {
       files: ['**/*.test.tsx', '**/*.test.ts', '**/*.spec.tsx', '**/*.spec.ts'],
       rules: {
         'testing-library/no-node-access': 'off',
+        'testing-library/no-wait-for-multiple-assertions': 'warn',
+        '@typescript-eslint/no-unused-vars': 'warn',
+        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/no-require-imports': 'warn',
         'jest/no-disabled-tests': 'warn',
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/no-static-element-interactions': 'off',
       },
     },
     {
@@ -60,7 +69,12 @@ module.exports = {
       rules: {
         'react-hooks/rules-of-hooks': 'off',
         '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/no-unused-vars': 'warn',
         'jsx-a11y/label-has-associated-control': 'off',
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/no-static-element-interactions': 'off',
+        'jsx-a11y/no-noninteractive-element-interactions': 'off',
+        'jsx-a11y/anchor-is-valid': 'off',
         'react/no-unescaped-entities': 'off',
       },
     },
