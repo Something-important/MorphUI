@@ -1,6 +1,7 @@
 # Git Hooks Setup
 
 This project uses **Husky** and **lint-staged** to automatically:
+
 - ✅ Format code with Prettier on commit
 - ✅ Run ESLint with auto-fix on staged files
 - ✅ Validate formatting and types before pushing
@@ -32,17 +33,19 @@ This project uses **Husky** and **lint-staged** to automatically:
 ## Manual commands
 
 If you need to bypass hooks (not recommended):
+
 ```bash
 git commit --no-verify
 ```
 
 To format all files manually:
+
 ```bash
 npm run format
 ```
 
 To check formatting without fixing:
+
 ```bash
 npm run format:check
 ```
-
