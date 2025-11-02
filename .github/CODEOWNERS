@@ -1,0 +1,13 @@
+# CODEOWNERS
+# GitHub will request reviews from these owners when matching files change.
+
+# Default owner(s)
+* @mysstique
+
+# Areas
+src/components/** @mysstique
+src/theme/** @mysstique
+test/** @mysstique
+stories/** @mysstique
+
+

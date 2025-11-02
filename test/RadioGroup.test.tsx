@@ -249,10 +249,10 @@ describe('RadioGroup', () => {
             radioGradient={radioGradient}
             labelGradient="linear-gradient(90deg, #800080 0%, #008080 100%)"
             descriptionGradient="linear-gradient(90deg, #808000 0%, #800080 100%)"
-            textColorGradient="linear-gradient(90deg, #008000 0%, #800000 100%)"
-            borderColorGradient="linear-gradient(90deg, #000080 0%, #808000 100%)"
-            errorColorGradient="linear-gradient(90deg, #800000 0%, #008000 100%)"
-            noOptionsColorGradient="linear-gradient(90deg, #808080 0%, #404040 100%)"
+            textColor="linear-gradient(90deg, #008000 0%, #800000 100%)"
+            borderColor="linear-gradient(90deg, #000080 0%, #808000 100%)"
+            errorGradient="linear-gradient(90deg, #800000 0%, #008000 100%)"
+            noOptionsGradient="linear-gradient(90deg, #808080 0%, #404040 100%)"
           />
         </ThemeProvider>
       );
@@ -736,7 +736,10 @@ describe('RadioGroup', () => {
       
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('custom-class');
-      expect(radioGroup).toHaveStyle({ backgroundColor: 'red' });
+      // Check that style prop is applied (may be mixed with CSS custom properties)
+      const styleAttr = radioGroup.getAttribute('style') || '';
+      // React converts backgroundColor to background-color in the style attribute
+      expect(styleAttr).toMatch(/background-color:\s*red/i);
     });
   });
 });

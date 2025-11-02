@@ -309,3 +309,56 @@ test('ripple effect respects loading state', () => {
   const ripple = document.querySelector('.morphui-ripple');
   expect(ripple).not.toBeInTheDocument();
 });
+
+describe('Accessibility', () => {
+  it('applies aria-label when provided', () => {
+    render(<Button ariaLabel="Submit form">Submit</Button>);
+    const button = screen.getByRole('button', { name: 'Submit form' });
+    expect(button).toHaveAttribute('aria-label', 'Submit form');
+  });
+
+  it('applies aria-describedby when provided', () => {
+    render(<Button ariaDescribedBy="help-text">Click me</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('aria-describedby', 'help-text');
+  });
+
+  it('applies aria-busy when loading', () => {
+    render(<Button loading>Loading</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('aria-busy', 'true');
+  });
+
+  it('does not apply aria-busy when not loading', () => {
+    render(<Button>Not Loading</Button>);
+    const button = screen.getByRole('button');
+    expect(button).not.toHaveAttribute('aria-busy');
+  });
+});
+
+describe('Style Prop', () => {
+  it('user style prop takes precedence over component styles', () => {
+    render(
+      <Button 
+        color="#10b981" 
+        style={{ backgroundColor: 'red', color: 'blue' }}
+      >
+        Custom Style
+      </Button>
+    );
+    const button = screen.getByRole('button');
+    const styleAttr = button.getAttribute('style') || '';
+    
+    // User style should override CSS custom properties
+    expect(styleAttr).toMatch(/background-color:\s*red/i);
+    expect(styleAttr).toMatch(/color:\s*blue/i);
+    // Component CSS custom property should still be present
+    expect(styleAttr).toMatch(/--btn-custom-bg/i);
+  });
+
+  it('applies component styles when no user style provided', () => {
+    render(<Button color="#10b981">Custom Color</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveStyle({ '--btn-custom-bg': '#10b981' });
+  });
+});

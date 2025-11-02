@@ -189,7 +189,10 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
   ].filter(Boolean).join(' ');
 
   // Clean style application - prioritize gradients over colors, specific over general
-  const componentStyle: React.CSSProperties = {
+  const componentStyle: React.CSSProperties & Record<string, string> = {
+    // Top-level custom background variable for tests and legacy consumers
+    ...(resolvedGradient && { '--radio-group-custom-bg': resolvedGradient }),
+    ...(resolvedColor && !resolvedGradient && { '--radio-group-custom-bg': resolvedColor }),
     // Container level
     ...(resolvedContainerGradient && { '--radio-group-container-bg': resolvedContainerGradient }),
     ...(resolvedContainerColor && !resolvedContainerGradient && { '--radio-group-container-bg': resolvedContainerColor }),
@@ -237,9 +240,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
     // Text and border colors (always applied)
     ...(resolvedTextColor && { '--radio-group-text-color': resolvedTextColor }),
     ...(resolvedBorderColor && { '--radio-group-border-color': resolvedBorderColor }),
-    
-    // Apply custom style prop last to allow overrides
-    ...style,
   };
 
   // Debug logging for theme builder
@@ -331,11 +331,14 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(({
     );
   }
 
+  // Merge component style with custom style prop (custom style takes precedence)
+  const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
+
   return (
     <div
       ref={ref}
       className={classes}
-      style={componentStyle}
+      style={mergedStyle}
       {...ariaProps}
       {...rest}
     >

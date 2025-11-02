@@ -1,5 +1,5 @@
 // Basic Components
-export { Button } from './basic/Button';
+export { Button, type ButtonProps } from './basic/Button';
 export { Badge, type BadgeProps } from './basic/Badge';
 export { Checkbox, type CheckboxProps } from './basic/Checkbox';
 export { Input, type InputProps } from './basic/Input';

@@ -1,6 +1,6 @@
 // Button.tsx
 import React, { ReactNode, ButtonHTMLAttributes, ElementType, forwardRef } from 'react';
-import { resolveThemeValue, createRipple } from '../../../utils';
+import { resolveThemeValue, createRipple, getAriaProps } from '../../../utils';
 import './Button.css';
 
 export interface ButtonProps {
@@ -26,6 +26,9 @@ export interface ButtonProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   style?: React.CSSProperties;
+  // Accessibility
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
@@ -39,7 +42,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   as: Component = 'button',
   href,
   children,
-  className = '',
   loadingText,
   rounded = false,
   color,
@@ -49,6 +51,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   shadow = 'md',
   hoverEffect = 'lift',
   ripple = false,
+  className = '',
+  style,
+  ariaLabel,
+  ariaDescribedBy,
   ...rest
 }, ref) => {
   const isDisabled = disabled || loading;
@@ -109,13 +115,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     className,
   ].filter(Boolean).join(' ');
 
-  // Style for color/gradient
-  const style: React.CSSProperties = {
+  // Component style object with CSS custom properties
+  const componentStyle: React.CSSProperties & Record<string, string> = {
     ...(resolvedGradient && { 
       '--btn-custom-bg': resolvedGradient,
       '--btn-bg': resolvedGradient  // Override variant color
     }),
-    ...(resolvedColor && { 
+    ...(resolvedColor && !resolvedGradient && { 
       '--btn-custom-bg': resolvedColor,
       '--btn-bg': resolvedColor  // Override variant color
     }),
@@ -127,8 +133,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
       '--btn-custom-border': resolvedBorderColor,
       '--btn-border': resolvedBorderColor  // Override variant color
     }),
-    ...rest.style,
   };
+
+  // Explicitly merge with user's style prop (user style takes precedence)
+  const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
+
+  // ARIA attributes
+  const ariaProps = getAriaProps({
+    label: ariaLabel,
+    describedBy: ariaDescribedBy,
+    disabled: isDisabled,
+  });
+
+  // Add aria-busy for loading state
+  const loadingAriaProps = loading ? { 'aria-busy': true as const } : {};
 
   // For anchor tag, add href and aria-disabled instead of disabled
   const componentProps = Component === 'a'
@@ -155,8 +173,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     <Component 
       ref={Component === 'button' ? ref : undefined}
       className={classes} 
-      style={style}
+      style={mergedStyle}
       onClick={handleClick}
+      {...ariaProps}
+      {...loadingAriaProps}
       {...componentProps} 
       {...rest}
     >

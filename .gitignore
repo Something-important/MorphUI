@@ -32,6 +32,9 @@ coverage/
 *.njsproj
 *.sln
 
+# Cursor AI files (keep local for now)
+.cursor/
+
 # Package files
 *.tgz
 *.tar.gz
