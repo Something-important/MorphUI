@@ -1,5 +1,5 @@
 {
-  "*.{ts,tsx}": ["prettier --write"],
+  "*.{ts,tsx}": ["prettier --write", "eslint --fix --max-warnings=100"],
   "!(*.stories).{ts,tsx}": ["eslint --fix --max-warnings=100"],
-  "*.{json,css,md,yml,yaml}": ["prettier --write"]
+  "*.{json,css,md,yml,yaml,cjs,js}": ["prettier --write"]
 }
