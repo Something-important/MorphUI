@@ -11,7 +11,8 @@ export default {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A highly customizable card component with support for variants, sizes, colors, gradients, hover effects, images, badges, and advanced theming. Perfect for content containers, product displays, and information cards.',
+        component:
+          'A highly customizable card component with support for variants, sizes, colors, gradients, hover effects, images, badges, and advanced theming. Perfect for content containers, product displays, and information cards.',
       },
     },
   },
@@ -66,29 +67,45 @@ export const Default: StoryObj<typeof Card> = {
     title: 'Card Title',
     subtitle: 'Card Subtitle',
     description: 'This is a basic card with title, subtitle, and description.',
-    children: (
-      <p>This is the main content area of the card. You can put any content here.</p>
-    ),
+    children: <p>This is the main content area of the card. You can put any content here.</p>,
   },
-  render: (args: any) => (
-    <Card {...args} />
-  ),
+  render: (args: any) => <Card {...args} />,
 };
-
-
 
 // Variants showcase
 export const Variants: StoryObj<typeof Card> = {
   render: () => {
-    const variants = ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'ghost', 'outline'];
+    const variants = [
+      'primary',
+      'secondary',
+      'success',
+      'warning',
+      'danger',
+      'info',
+      'ghost',
+      'outline',
+    ];
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: 'var(--color-text)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <h3
+          style={{
+            marginBottom: '16px',
+            fontSize: '18px',
+            fontWeight: '600',
+            color: 'var(--color-text)',
+          }}
+        >
           🎨 Card Variants
         </h3>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '20px',
+          }}
+        >
           {variants.map((variant) => (
             <Card
               key={variant}
@@ -99,17 +116,24 @@ export const Variants: StoryObj<typeof Card> = {
               badge={variant === 'new' ? 'NEW' : undefined}
               actions={
                 <div style={{ display: 'flex', gap: '8px' }}>
-                  <Button size="sm" variant="outline">View</Button>
-                  <Button size="sm" variant="primary">Action</Button>
+                  <Button size="sm" variant="outline">
+                    View
+                  </Button>
+                  <Button size="sm" variant="primary">
+                    Action
+                  </Button>
                 </div>
               }
               footer={`${variant.charAt(0).toUpperCase() + variant.slice(1)} variant footer`}
             >
-              <p>The {variant} variant provides a distinct visual style while maintaining consistency.</p>
+              <p>
+                The {variant} variant provides a distinct visual style while maintaining
+                consistency.
+              </p>
             </Card>
           ))}
         </div>
-        </div>
+      </div>
     );
   },
 };
@@ -126,11 +150,18 @@ export const Sizes: StoryObj<typeof Card> = {
     ];
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: 'var(--color-text)' }}>
-            📏 Card Sizes
-          </h3>
-        
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <h3
+          style={{
+            marginBottom: '16px',
+            fontSize: '18px',
+            fontWeight: '600',
+            color: 'var(--color-text)',
+          }}
+        >
+          📏 Card Sizes
+        </h3>
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {sizes.map((size) => (
             <Card
@@ -146,7 +177,7 @@ export const Sizes: StoryObj<typeof Card> = {
             </Card>
           ))}
         </div>
-        </div>
+      </div>
     );
   },
 };
@@ -164,11 +195,24 @@ export const HoverEffects: StoryObj<typeof Card> = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: 'var(--color-text)' }}>
+        <h3
+          style={{
+            marginBottom: '16px',
+            fontSize: '18px',
+            fontWeight: '600',
+            color: 'var(--color-text)',
+          }}
+        >
           ✨ Hover Effects
         </h3>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '20px',
+          }}
+        >
           {effects.map((effect) => (
             <Card
               key={effect.key}
@@ -180,7 +224,10 @@ export const HoverEffects: StoryObj<typeof Card> = {
               onClick={() => console.log(`${effect.label} card clicked`)}
               style={{ maxWidth: '280px' }}
             >
-              <p>Hover over this card to see the <strong>{effect.label.toLowerCase()}</strong> effect in action!</p>
+              <p>
+                Hover over this card to see the <strong>{effect.label.toLowerCase()}</strong> effect
+                in action!
+              </p>
             </Card>
           ))}
         </div>
@@ -201,11 +248,24 @@ export const ImagePositioning: StoryObj<typeof Card> = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: 'var(--color-text)' }}>
+        <h3
+          style={{
+            marginBottom: '16px',
+            fontSize: '18px',
+            fontWeight: '600',
+            color: 'var(--color-text)',
+          }}
+        >
           🖼️ Image Positioning
         </h3>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+            gap: '20px',
+          }}
+        >
           {positions.map((position) => (
             <Card
               key={position.key}
@@ -217,7 +277,10 @@ export const ImagePositioning: StoryObj<typeof Card> = {
               imageAlt="Mountain landscape"
               style={{ maxWidth: '400px' }}
             >
-              <p>The image is positioned at the <strong>{position.label.toLowerCase()}</strong> of the card.</p>
+              <p>
+                The image is positioned at the <strong>{position.label.toLowerCase()}</strong> of
+                the card.
+              </p>
               <p>This layout is great for showcasing visual content alongside text.</p>
             </Card>
           ))}
@@ -238,27 +301,39 @@ export const AdvancedFeatures: StoryObj<typeof Card> = {
         <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
           🚀 Advanced Features
         </h3>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '20px' }}>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+            gap: '20px',
+          }}
+        >
           {/* Clickable Card */}
           <Card
             clickable
             title="Clickable Card"
             subtitle="Interactive card with ripple effect"
             description="This card can be clicked and shows a ripple effect."
-            onClick={() => setClickCount(prev => prev + 1)}
+            onClick={() => setClickCount((prev) => prev + 1)}
             hoverEffect="lift"
             badge="CLICK"
             actions={
               <div style={{ display: 'flex', gap: '8px' }}>
-                <Button size="sm" variant="outline">Secondary</Button>
-                <Button size="sm" variant="primary">Primary</Button>
+                <Button size="sm" variant="outline">
+                  Secondary
+                </Button>
+                <Button size="sm" variant="primary">
+                  Primary
+                </Button>
               </div>
             }
             footer={`Clicked ${clickCount} times`}
           >
             <p>Click this card to see the ripple effect and increment the counter!</p>
-            <p>Current clicks: <strong>{clickCount}</strong></p>
+            <p>
+              Current clicks: <strong>{clickCount}</strong>
+            </p>
           </Card>
 
           {/* Loading Card */}
@@ -270,9 +345,9 @@ export const AdvancedFeatures: StoryObj<typeof Card> = {
             image="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop"
             imageAlt="Mountain landscape"
             actions={
-              <Button 
-                size="sm" 
-                variant="primary" 
+              <Button
+                size="sm"
+                variant="primary"
                 onClick={() => {
                   setLoadingCard(true);
                   setTimeout(() => setLoadingCard(false), 3000);
@@ -297,8 +372,12 @@ export const AdvancedFeatures: StoryObj<typeof Card> = {
             badge="ROUND"
             actions={
               <div style={{ display: 'flex', gap: '8px' }}>
-                <Button size="sm" variant="outline">View</Button>
-                <Button size="sm" variant="success">Success</Button>
+                <Button size="sm" variant="outline">
+                  View
+                </Button>
+                <Button size="sm" variant="success">
+                  Success
+                </Button>
               </div>
             }
             footer="Rounded design for modern aesthetics"
@@ -317,8 +396,12 @@ export const AdvancedFeatures: StoryObj<typeof Card> = {
             imageAlt="Mountain landscape"
             actions={
               <div style={{ display: 'flex', gap: '8px' }}>
-                <Button size="sm" variant="outline" disabled>Disabled</Button>
-                <Button size="sm" variant="primary" disabled>Action</Button>
+                <Button size="sm" variant="outline" disabled>
+                  Disabled
+                </Button>
+                <Button size="sm" variant="primary" disabled>
+                  Action
+                </Button>
               </div>
             }
             footer="Disabled state prevents all interactions"
@@ -342,9 +425,7 @@ export const Simple: StoryObj<typeof Card> = {
       </div>
     ),
   },
-  render: (args: any) => (
-    <Card {...args} />
-  ),
+  render: (args: any) => <Card {...args} />,
 };
 
 // Card with custom styling
@@ -364,41 +445,43 @@ export const CustomStyling: StoryObj<typeof Card> = {
     shadow: 'xl',
     hoverEffect: 'glow',
   },
-  render: (args: any) => (
-    <Card {...args} />
-  ),
+  render: (args: any) => <Card {...args} />,
 };
 
 // Interactive Theme Builder
 export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
   render: () => {
     const [currentTheme, setCurrentTheme] = useState('default');
-    
+
     // Simplified color states - only essential ones
     const [backgroundColor, setBackgroundColor] = useState('');
     const [textColor, setTextColor] = useState('');
     const [borderColor, setBorderColor] = useState('');
     const [headerBackgroundColor, setHeaderBackgroundColor] = useState('');
-    
+
     // Single gradient generator
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#ff0000', '#00ff00']);
     const [generatedGradient, setGeneratedGradient] = useState('');
-    
+
     // Other controls
     const [shadow, setShadow] = useState<'none' | 'sm' | 'md' | 'lg' | 'xl'>('md');
-    const [hoverEffect, setHoverEffect] = useState<'none' | 'lift' | 'glow' | 'scale' | 'slide'>('lift');
+    const [hoverEffect, setHoverEffect] = useState<'none' | 'lift' | 'glow' | 'scale' | 'slide'>(
+      'lift',
+    );
     const [size, setSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md');
-    const [variant, setVariant] = useState<'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'>('primary');
+    const [variant, setVariant] = useState<
+      'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'
+    >('primary');
     const [rounded, setRounded] = useState(false);
     const [clickable, setClickable] = useState(false);
-    
+
     const [clickCount, setClickCount] = useState(0);
-    
+
     // Use centralized themes from the theme system
     const availableThemes = themes;
-    
+
     const applyTheme = (themeName: string) => {
       const theme = availableThemes[themeName as keyof typeof availableThemes];
       if (theme) {
@@ -408,12 +491,12 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
         setCurrentTheme(themeName);
       }
     };
-    
+
     // Helper functions
     const generateGradient = () => {
       if (gradientColors.length < 2) return '';
       const colors = gradientColors.join(', ');
-      
+
       if (gradientType === 'linear') {
         return `linear-gradient(${gradientDirection}, ${colors})`;
       } else if (gradientType === 'radial') {
@@ -423,14 +506,14 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
         const direction = gradientDirection || 'from 0deg at center';
         return `conic-gradient(${direction}, ${colors})`;
       }
-      
+
       return '';
     };
-    
+
     const applyGradientToTarget = (target: 'background' | 'text' | 'border' | 'header') => {
       const gradient = generateGradient();
       setGeneratedGradient(gradient);
-      
+
       if (target === 'background') {
         setBackgroundColor(gradient);
       } else if (target === 'text') {
@@ -441,7 +524,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
         setHeaderBackgroundColor(gradient);
       }
     };
-    
+
     const resetCustomStyling = () => {
       setBackgroundColor('');
       setTextColor('');
@@ -457,16 +540,19 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
       <ThemeProvider theme={availableThemes[currentTheme as keyof typeof availableThemes]}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Theme Switcher */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎨 Theme Switcher</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
-              Current theme: <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
+              Current theme:{' '}
+              <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {Object.keys(availableThemes).map((themeName) => (
@@ -482,14 +568,16 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
             </div>
           </div>
 
-          <div style={{ 
-            padding: '20px', 
-            background: 'var(--color-background)', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            color: 'var(--color-text)',
-            marginBottom: '20px'
-          }}>
+          <div
+            style={{
+              padding: '20px',
+              background: 'var(--color-background)',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              color: 'var(--color-text)',
+              marginBottom: '20px',
+            }}
+          >
             <h2 style={{ margin: '0 0 8px 0', fontSize: '24px', fontWeight: '700' }}>
               🎨 Interactive Theme Builder
             </h2>
@@ -500,43 +588,86 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
             {/* Controls Panel */}
-            <div style={{ 
-              padding: '20px', 
-              background: 'var(--color-background)', 
-              borderRadius: '8px', 
-              border: '1px solid var(--color-border)',
-              height: 'fit-content'
-            }}>
-              <h3 style={{ marginBottom: '20px', fontSize: '18px', fontWeight: '600', color: 'var(--color-text)' }}>
+            <div
+              style={{
+                padding: '20px',
+                background: 'var(--color-background)',
+                borderRadius: '8px',
+                border: '1px solid var(--color-border)',
+                height: 'fit-content',
+              }}
+            >
+              <h3
+                style={{
+                  marginBottom: '20px',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
                 🎛️ Customization Controls
               </h3>
-              
+
               {/* Precedence Information */}
-              <div style={{ 
-                marginBottom: '1.5rem', 
-                padding: '1rem', 
-                backgroundColor: 'var(--color-background-secondary)', 
-                borderRadius: 'var(--border-radius)', 
-                border: '1px solid var(--color-border)',
-                borderLeft: '4px solid var(--color-primary)'
-              }}>
-                <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color-text)', fontSize: '1rem' }}>
+              <div
+                style={{
+                  marginBottom: '1.5rem',
+                  padding: '1rem',
+                  backgroundColor: 'var(--color-background-secondary)',
+                  borderRadius: 'var(--border-radius)',
+                  border: '1px solid var(--color-border)',
+                  borderLeft: '4px solid var(--color-primary)',
+                }}
+              >
+                <h4
+                  style={{ margin: '0 0 0.5rem 0', color: 'var(--color-text)', fontSize: '1rem' }}
+                >
                   🎯 Color Precedence
                 </h4>
-                <p style={{ margin: '0 0 0.5rem 0', fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: '1.5' }}>
+                <p
+                  style={{
+                    margin: '0 0 0.5rem 0',
+                    fontSize: '14px',
+                    color: 'var(--color-text-secondary)',
+                    lineHeight: '1.5',
+                  }}
+                >
                   Colors are applied in this order of priority:
                 </p>
-                <ol style={{ margin: '0', paddingLeft: '1.5rem', fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: '1.5' }}>
-                  <li><strong>Gradients</strong> - Highest priority (overrides everything)</li>
-                  <li><strong>Custom Colors</strong> - Overrides theme defaults</li>
-                  <li><strong>Theme Colors</strong> - Default theme values</li>
+                <ol
+                  style={{
+                    margin: '0',
+                    paddingLeft: '1.5rem',
+                    fontSize: '14px',
+                    color: 'var(--color-text-secondary)',
+                    lineHeight: '1.5',
+                  }}
+                >
+                  <li>
+                    <strong>Gradients</strong> - Highest priority (overrides everything)
+                  </li>
+                  <li>
+                    <strong>Custom Colors</strong> - Overrides theme defaults
+                  </li>
+                  <li>
+                    <strong>Theme Colors</strong> - Default theme values
+                  </li>
                 </ol>
               </div>
-              
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {/* Basic Controls */}
                 <div>
-                  <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Variant:</label>
+                  <label
+                    style={{
+                      fontSize: '14px',
+                      display: 'block',
+                      marginBottom: '4px',
+                      color: 'var(--color-text)',
+                    }}
+                  >
+                    Variant:
+                  </label>
                   <Dropdown
                     options={[
                       { label: 'Primary', value: 'primary' },
@@ -546,7 +677,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                       { label: 'Danger', value: 'danger' },
                       { label: 'Info', value: 'info' },
                       { label: 'Ghost', value: 'ghost' },
-                      { label: 'Outline', value: 'outline' }
+                      { label: 'Outline', value: 'outline' },
                     ]}
                     value={variant}
                     onChange={(value) => setVariant(value as any)}
@@ -554,127 +685,291 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                     size="sm"
                   />
                 </div>
-                
+
                 {/* Simplified Color Controls */}
                 <div style={{ marginTop: '1rem' }}>
-                  <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--color-text)', fontSize: '14px', fontWeight: '600' }}>🎨 Color Controls</h4>
-                  
+                  <h4
+                    style={{
+                      margin: '0 0 0.5rem 0',
+                      color: 'var(--color-text)',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                    }}
+                  >
+                    🎨 Color Controls
+                  </h4>
+
                   {/* Background Color */}
                   <div style={{ marginBottom: '0.75rem' }}>
-                    <label style={{ fontSize: '12px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Background Color:</label>
+                    <label
+                      style={{
+                        fontSize: '12px',
+                        display: 'block',
+                        marginBottom: '4px',
+                        color: 'var(--color-text)',
+                      }}
+                    >
+                      Background Color:
+                    </label>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       <input
                         type="color"
                         value={backgroundColor || '#ffffff'}
                         onChange={(e) => setBackgroundColor(e.target.value)}
-                        style={{ width: '32px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
                       />
                       <input
                         type="text"
                         value={backgroundColor}
                         onChange={(e) => setBackgroundColor(e.target.value)}
                         placeholder="e.g., #ffffff or gradient"
-                        style={{ flex: 1, padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', fontSize: '12px', background: 'var(--color-background)', color: 'var(--color-text)' }}
+                        style={{
+                          flex: 1,
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          fontSize: '12px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                        }}
                       />
                       <button
                         onClick={() => setBackgroundColor('')}
-                        style={{ padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', background: 'var(--color-background)', color: 'var(--color-text)', cursor: 'pointer', fontSize: '12px' }}
+                        style={{
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                          cursor: 'pointer',
+                          fontSize: '12px',
+                        }}
                       >
                         Reset
                       </button>
                     </div>
                   </div>
-                  
+
                   {/* Header Background Color */}
                   <div style={{ marginBottom: '0.75rem' }}>
-                    <label style={{ fontSize: '12px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Header Background:</label>
+                    <label
+                      style={{
+                        fontSize: '12px',
+                        display: 'block',
+                        marginBottom: '4px',
+                        color: 'var(--color-text)',
+                      }}
+                    >
+                      Header Background:
+                    </label>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       <input
                         type="color"
                         value={headerBackgroundColor || '#0070f3'}
                         onChange={(e) => setHeaderBackgroundColor(e.target.value)}
-                        style={{ width: '32px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
                       />
                       <input
                         type="text"
                         value={headerBackgroundColor}
                         onChange={(e) => setHeaderBackgroundColor(e.target.value)}
                         placeholder="e.g., #0070f3 or gradient"
-                        style={{ flex: 1, padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', fontSize: '12px', background: 'var(--color-background)', color: 'var(--color-text)' }}
+                        style={{
+                          flex: 1,
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          fontSize: '12px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                        }}
                       />
                       <button
                         onClick={() => setHeaderBackgroundColor('')}
-                        style={{ padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', background: 'var(--color-background)', color: 'var(--color-text)', cursor: 'pointer', fontSize: '12px' }}
+                        style={{
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                          cursor: 'pointer',
+                          fontSize: '12px',
+                        }}
                       >
                         Reset
                       </button>
                     </div>
                   </div>
-                  
+
                   {/* Text Color */}
                   <div style={{ marginBottom: '0.75rem' }}>
-                    <label style={{ fontSize: '12px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Text Color:</label>
+                    <label
+                      style={{
+                        fontSize: '12px',
+                        display: 'block',
+                        marginBottom: '4px',
+                        color: 'var(--color-text)',
+                      }}
+                    >
+                      Text Color:
+                    </label>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       <input
                         type="color"
                         value={textColor || '#111827'}
                         onChange={(e) => setTextColor(e.target.value)}
-                        style={{ width: '32px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
                       />
                       <input
                         type="text"
                         value={textColor}
                         onChange={(e) => setTextColor(e.target.value)}
                         placeholder="e.g., #111827 or gradient"
-                        style={{ flex: 1, padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', fontSize: '12px', background: 'var(--color-background)', color: 'var(--color-text)' }}
+                        style={{
+                          flex: 1,
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          fontSize: '12px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                        }}
                       />
                       <button
                         onClick={() => setTextColor('')}
-                        style={{ padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', background: 'var(--color-background)', color: 'var(--color-text)', cursor: 'pointer', fontSize: '12px' }}
+                        style={{
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                          cursor: 'pointer',
+                          fontSize: '12px',
+                        }}
                       >
                         Reset
                       </button>
                     </div>
                   </div>
-                  
+
                   {/* Border Color */}
                   <div style={{ marginBottom: '0.75rem' }}>
-                    <label style={{ fontSize: '12px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Border Color:</label>
+                    <label
+                      style={{
+                        fontSize: '12px',
+                        display: 'block',
+                        marginBottom: '4px',
+                        color: 'var(--color-text)',
+                      }}
+                    >
+                      Border Color:
+                    </label>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  <input
-                    type="color"
+                      <input
+                        type="color"
                         value={borderColor || '#d1d5db'}
                         onChange={(e) => setBorderColor(e.target.value)}
-                        style={{ width: '32px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
                       />
                       <input
                         type="text"
                         value={borderColor}
                         onChange={(e) => setBorderColor(e.target.value)}
                         placeholder="e.g., #d1d5db or gradient"
-                        style={{ flex: 1, padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', fontSize: '12px', background: 'var(--color-background)', color: 'var(--color-text)' }}
+                        style={{
+                          flex: 1,
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          fontSize: '12px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                        }}
                       />
                       <button
                         onClick={() => setBorderColor('')}
-                        style={{ padding: '6px 8px', border: '1px solid var(--color-border)', borderRadius: '4px', background: 'var(--color-background)', color: 'var(--color-text)', cursor: 'pointer', fontSize: '12px' }}
+                        style={{
+                          padding: '6px 8px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                          background: 'var(--color-background)',
+                          color: 'var(--color-text)',
+                          cursor: 'pointer',
+                          fontSize: '12px',
+                        }}
                       >
                         Reset
                       </button>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Advanced Gradient Builder */}
-                <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: 'var(--color-background-secondary)', borderRadius: 'var(--border-radius)', border: '1px solid var(--color-border)' }}>
-                  <h4 style={{ margin: '0 0 1rem 0', color: 'var(--color-text)', fontSize: '14px', fontWeight: '600' }}>🎨 Advanced Gradient Builder</h4>
-                  
-                  <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
+                <div
+                  style={{
+                    marginTop: '1rem',
+                    padding: '1rem',
+                    backgroundColor: 'var(--color-background-secondary)',
+                    borderRadius: 'var(--border-radius)',
+                    border: '1px solid var(--color-border)',
+                  }}
+                >
+                  <h4
+                    style={{
+                      margin: '0 0 1rem 0',
+                      color: 'var(--color-text)',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                    }}
+                  >
+                    🎨 Advanced Gradient Builder
+                  </h4>
+
+                  <div
+                    style={{
+                      display: 'grid',
+                      gap: '0.75rem',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                    }}
+                  >
                     {/* Gradient Type */}
                     <div>
-                      <label style={{ display: 'block', marginBottom: '0.25rem', fontWeight: '600', color: 'var(--color-text)', fontSize: '12px' }}>
+                      <label
+                        style={{
+                          display: 'block',
+                          marginBottom: '0.25rem',
+                          fontWeight: '600',
+                          color: 'var(--color-text)',
+                          fontSize: '12px',
+                        }}
+                      >
                         Gradient Type:
                       </label>
-                      <select 
+                      <select
                         value={gradientType}
                         onChange={(e) => {
                           const newType = e.target.value;
@@ -695,7 +990,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                           borderRadius: '4px',
                           background: 'var(--color-background)',
                           color: 'var(--color-text)',
-                          fontSize: '12px'
+                          fontSize: '12px',
                         }}
                       >
                         <option value="linear">Linear</option>
@@ -703,20 +998,30 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                         <option value="conic">Conic</option>
                       </select>
                     </div>
-                    
+
                     {/* Gradient Direction */}
-                <div>
-                      <label style={{ display: 'block', marginBottom: '0.25rem', fontWeight: '600', color: 'var(--color-text)', fontSize: '12px' }}>
+                    <div>
+                      <label
+                        style={{
+                          display: 'block',
+                          marginBottom: '0.25rem',
+                          fontWeight: '600',
+                          color: 'var(--color-text)',
+                          fontSize: '12px',
+                        }}
+                      >
                         Direction:
                       </label>
-                  <input
-                    type="text"
+                      <input
+                        type="text"
                         value={gradientDirection}
                         onChange={(e) => setGradientDirection(e.target.value)}
                         placeholder={
-                          gradientType === 'linear' ? 'e.g., 90deg, to right, to bottom left' :
-                          gradientType === 'radial' ? 'e.g., circle at center, ellipse at top left' :
-                          'e.g., from 0deg at center, from 45deg at 50% 50%'
+                          gradientType === 'linear'
+                            ? 'e.g., 90deg, to right, to bottom left'
+                            : gradientType === 'radial'
+                              ? 'e.g., circle at center, ellipse at top left'
+                              : 'e.g., from 0deg at center, from 45deg at 50% 50%'
                         }
                         style={{
                           width: '100%',
@@ -725,32 +1030,56 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                           borderRadius: '4px',
                           background: 'var(--color-background)',
                           color: 'var(--color-text)',
-                          fontSize: '12px'
+                          fontSize: '12px',
                         }}
                       />
                     </div>
                   </div>
-                  
+
                   {/* Gradient Colors */}
                   <div style={{ marginTop: '0.75rem' }}>
-                    <label style={{ display: 'block', marginBottom: '0.25rem', fontWeight: '600', color: 'var(--color-text)', fontSize: '12px' }}>
+                    <label
+                      style={{
+                        display: 'block',
+                        marginBottom: '0.25rem',
+                        fontWeight: '600',
+                        color: 'var(--color-text)',
+                        fontSize: '12px',
+                      }}
+                    >
                       Colors:
                     </label>
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        gap: '0.5rem',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                      }}
+                    >
                       {gradientColors.map((color, index) => (
-                        <div key={index} style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-                          <input 
-                            type="color" 
+                        <div
+                          key={index}
+                          style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}
+                        >
+                          <input
+                            type="color"
                             value={color}
                             onChange={(e) => {
                               const newColors = [...gradientColors];
                               newColors[index] = e.target.value;
                               setGradientColors(newColors);
                             }}
-                            style={{ width: '28px', height: '28px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                            style={{
+                              width: '28px',
+                              height: '28px',
+                              border: '1px solid var(--color-border)',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                            }}
                           />
                           {gradientColors.length > 2 && (
-                            <button 
+                            <button
                               onClick={() => {
                                 const newColors = gradientColors.filter((_, i) => i !== index);
                                 setGradientColors(newColors);
@@ -762,7 +1091,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                                 background: 'var(--color-background)',
                                 color: 'var(--color-text)',
                                 cursor: 'pointer',
-                                fontSize: '10px'
+                                fontSize: '10px',
                               }}
                             >
                               ×
@@ -770,7 +1099,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                           )}
                         </div>
                       ))}
-                      <button 
+                      <button
                         onClick={() => setGradientColors([...gradientColors, '#000000'])}
                         style={{
                           padding: '6px 12px',
@@ -779,44 +1108,61 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                           background: 'var(--color-background)',
                           color: 'var(--color-text)',
                           cursor: 'pointer',
-                          fontSize: '12px'
+                          fontSize: '12px',
                         }}
                       >
                         + Add Color
                       </button>
                     </div>
                   </div>
-                  
+
                   {/* Gradient Preview */}
                   <div style={{ marginTop: '0.75rem' }}>
-                    <label style={{ display: 'block', marginBottom: '0.25rem', fontWeight: '600', color: 'var(--color-text)', fontSize: '12px' }}>
+                    <label
+                      style={{
+                        display: 'block',
+                        marginBottom: '0.25rem',
+                        fontWeight: '600',
+                        color: 'var(--color-text)',
+                        fontSize: '12px',
+                      }}
+                    >
                       Preview:
                     </label>
-                    <div 
+                    <div
                       style={{
                         width: '100%',
                         height: '32px',
                         background: generateGradient(),
                         borderRadius: 'var(--border-radius)',
                         border: '1px solid var(--color-border)',
-                        marginBottom: '0.5rem'
+                        marginBottom: '0.5rem',
                       }}
                     />
-                    <code style={{ 
-                      display: 'block',
-                      padding: '0.5rem',
-                      backgroundColor: 'var(--color-background-tertiary)',
-                      borderRadius: '4px',
-                      fontSize: '10px',
-                      color: 'var(--color-text)',
-                      wordBreak: 'break-all'
-                    }}>
+                    <code
+                      style={{
+                        display: 'block',
+                        padding: '0.5rem',
+                        backgroundColor: 'var(--color-background-tertiary)',
+                        borderRadius: '4px',
+                        fontSize: '10px',
+                        color: 'var(--color-text)',
+                        wordBreak: 'break-all',
+                      }}
+                    >
                       {generateGradient()}
                     </code>
                   </div>
-                  
+
                   {/* Apply Buttons */}
-                  <div style={{ marginTop: '0.75rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <div
+                    style={{
+                      marginTop: '0.75rem',
+                      display: 'flex',
+                      gap: '0.5rem',
+                      flexWrap: 'wrap',
+                    }}
+                  >
                     <button
                       onClick={() => applyGradientToTarget('background')}
                       style={{
@@ -826,7 +1172,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         cursor: 'pointer',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     >
                       Apply to Background
@@ -840,7 +1186,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         cursor: 'pointer',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     >
                       Apply to Header
@@ -854,7 +1200,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         cursor: 'pointer',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     >
                       Apply to Text
@@ -868,23 +1214,32 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         cursor: 'pointer',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     >
                       Apply to Border
                     </button>
                   </div>
                 </div>
-                
+
                 <div>
-                  <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Shadow:</label>
+                  <label
+                    style={{
+                      fontSize: '14px',
+                      display: 'block',
+                      marginBottom: '4px',
+                      color: 'var(--color-text)',
+                    }}
+                  >
+                    Shadow:
+                  </label>
                   <Dropdown
                     options={[
                       { label: 'None', value: 'none' },
                       { label: 'Small', value: 'sm' },
                       { label: 'Medium', value: 'md' },
                       { label: 'Large', value: 'lg' },
-                      { label: 'Extra Large', value: 'xl' }
+                      { label: 'Extra Large', value: 'xl' },
                     ]}
                     value={shadow}
                     onChange={(value) => setShadow(value as any)}
@@ -892,16 +1247,25 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                     size="sm"
                   />
                 </div>
-                
+
                 <div>
-                  <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Hover Effect:</label>
+                  <label
+                    style={{
+                      fontSize: '14px',
+                      display: 'block',
+                      marginBottom: '4px',
+                      color: 'var(--color-text)',
+                    }}
+                  >
+                    Hover Effect:
+                  </label>
                   <Dropdown
                     options={[
                       { label: 'None', value: 'none' },
                       { label: 'Lift', value: 'lift' },
                       { label: 'Glow', value: 'glow' },
                       { label: 'Scale', value: 'scale' },
-                      { label: 'Slide', value: 'slide' }
+                      { label: 'Slide', value: 'slide' },
                     ]}
                     value={hoverEffect}
                     onChange={(value) => setHoverEffect(value as any)}
@@ -909,16 +1273,25 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                     size="sm"
                   />
                 </div>
-                
+
                 <div>
-                  <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Size:</label>
+                  <label
+                    style={{
+                      fontSize: '14px',
+                      display: 'block',
+                      marginBottom: '4px',
+                      color: 'var(--color-text)',
+                    }}
+                  >
+                    Size:
+                  </label>
                   <Dropdown
                     options={[
                       { label: 'Extra Small', value: 'xs' },
                       { label: 'Small', value: 'sm' },
                       { label: 'Medium', value: 'md' },
                       { label: 'Large', value: 'lg' },
-                      { label: 'Extra Large', value: 'xl' }
+                      { label: 'Extra Large', value: 'xl' },
                     ]}
                     value={size}
                     onChange={(value) => setSize(value as any)}
@@ -926,7 +1299,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                     size="sm"
                   />
                 </div>
-                
+
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Checkbox
                     checked={rounded}
@@ -935,7 +1308,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                     size="sm"
                   />
                 </div>
-                
+
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Checkbox
                     checked={clickable}
@@ -945,10 +1318,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                   />
                 </div>
               </div>
-              
+
               {/* Reset Button */}
               <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-                <button 
+                <button
                   onClick={resetCustomStyling}
                   style={{
                     padding: '8px 16px',
@@ -958,14 +1331,22 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                     color: 'var(--color-text)',
                     cursor: 'pointer',
                     fontSize: '14px',
-                    fontWeight: '500'
+                    fontWeight: '500',
                   }}
                 >
                   🔄 Reset All Custom Styling
                 </button>
               </div>
-              
-              <div style={{ marginTop: '20px', padding: '16px', background: 'var(--color-info)', borderRadius: '6px', border: '1px solid var(--color-border)' }}>
+
+              <div
+                style={{
+                  marginTop: '20px',
+                  padding: '16px',
+                  background: 'var(--color-info)',
+                  borderRadius: '6px',
+                  border: '1px solid var(--color-border)',
+                }}
+              >
                 <p style={{ margin: 0, fontSize: '14px', color: 'var(--color-text)' }}>
                   <strong>Tip:</strong> Try different combinations! The card updates in real-time.
                 </p>
@@ -973,16 +1354,25 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
             </div>
 
             {/* Preview Panel */}
-            <div style={{ 
-              padding: '20px', 
-              background: 'var(--color-background)', 
-              borderRadius: '8px', 
-              border: '1px solid var(--color-border)'
-            }}>
-              <h3 style={{ marginBottom: '20px', fontSize: '18px', fontWeight: '600', color: 'var(--color-text)' }}>
+            <div
+              style={{
+                padding: '20px',
+                background: 'var(--color-background)',
+                borderRadius: '8px',
+                border: '1px solid var(--color-border)',
+              }}
+            >
+              <h3
+                style={{
+                  marginBottom: '20px',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
                 👀 Live Preview
               </h3>
-              
+
               <Card
                 variant={variant}
                 size={size}
@@ -1003,12 +1393,16 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                 badge="NEW"
                 actions={
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <Button size="sm" variant="outline">Action 1</Button>
-                    <Button size="sm" variant="primary">Action 2</Button>
+                    <Button size="sm" variant="outline">
+                      Action 1
+                    </Button>
+                    <Button size="sm" variant="primary">
+                      Action 2
+                    </Button>
                   </div>
                 }
                 footer="Card footer with additional information"
-                onClick={clickable ? () => setClickCount(prev => prev + 1) : undefined}
+                onClick={clickable ? () => setClickCount((prev) => prev + 1) : undefined}
                 maxWidth="400px"
               >
                 <div>
@@ -1026,7 +1420,13 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                     <li>Clickable: {clickable ? 'Yes' : 'No'}</li>
                   </ul>
                   {clickable && (
-                    <p style={{ marginTop: '12px', fontWeight: '600', color: 'var(--color-primary)' }}>
+                    <p
+                      style={{
+                        marginTop: '12px',
+                        fontWeight: '600',
+                        color: 'var(--color-primary)',
+                      }}
+                    >
                       Clicks: {clickCount}
                     </p>
                   )}

@@ -10,7 +10,8 @@ export default {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A highly customizable accordion component with support for variants, sizes, colors, gradients, animations, and advanced theming. Perfect for collapsible content sections, FAQs, and information organization.',
+        component:
+          'A highly customizable accordion component with support for variants, sizes, colors, gradients, animations, and advanced theming. Perfect for collapsible content sections, FAQs, and information organization.',
       },
     },
   },
@@ -81,7 +82,10 @@ export const Default: Story = {
     title: 'Default Accordion',
     children: (
       <div style={{ padding: '16px' }}>
-        <p>This is the default accordion content. It demonstrates the basic functionality and styling.</p>
+        <p>
+          This is the default accordion content. It demonstrates the basic functionality and
+          styling.
+        </p>
       </div>
     ),
   },
@@ -95,31 +99,31 @@ export const Variants: Story = {
           <p>Primary variant with enhanced styling and visual prominence.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Secondary" variant="secondary">
         <div style={{ padding: '16px' }}>
           <p>Secondary variant with subtle styling.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Success" variant="success">
         <div style={{ padding: '16px' }}>
           <p>Success variant with green accent colors.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Warning" variant="warning">
         <div style={{ padding: '16px' }}>
           <p>Warning variant with yellow accent colors.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Danger" variant="danger">
         <div style={{ padding: '16px' }}>
           <p>Danger variant with red accent colors.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Info" variant="info">
         <div style={{ padding: '16px' }}>
           <p>Info variant with blue accent colors.</p>
@@ -137,25 +141,25 @@ export const Sizes: Story = {
           <p>Extra small accordion with minimal padding and compact styling.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Small" size="sm">
         <div style={{ padding: '12px' }}>
           <p>Small accordion with reduced padding and compact styling.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Medium" size="md">
         <div style={{ padding: '16px' }}>
           <p>Medium accordion with standard padding and balanced styling.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Large" size="lg">
         <div style={{ padding: '20px' }}>
           <p>Large accordion with increased padding and spacious styling.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Extra Large" size="xl">
         <div style={{ padding: '24px' }}>
           <p>Extra large accordion with maximum padding and generous styling.</p>
@@ -173,31 +177,31 @@ export const Shadows: Story = {
           <p>Accordion without any shadow for a flat appearance.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Small Shadow" shadow="sm">
         <div style={{ padding: '16px' }}>
           <p>Accordion with a subtle small shadow for gentle depth.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Medium Shadow" shadow="md">
         <div style={{ padding: '16px' }}>
           <p>Accordion with a medium shadow for balanced depth.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Large Shadow" shadow="lg">
         <div style={{ padding: '16px' }}>
           <p>Accordion with a large shadow for prominent depth.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Extra Large Shadow" shadow="xl">
         <div style={{ padding: '16px' }}>
           <p>Accordion with an extra large shadow for dramatic depth.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="2X Large Shadow" shadow="2xl">
         <div style={{ padding: '16px' }}>
           <p>Accordion with a 2X large shadow for maximum depth.</p>
@@ -215,7 +219,7 @@ export const IconPositions: Story = {
           <p>Accordion with the expand/collapse icon positioned on the left side.</p>
         </div>
       </Accordion>
-      
+
       <Accordion title="Icon on the Right" iconPosition="right">
         <div style={{ padding: '16px' }}>
           <p>Accordion with the expand/collapse icon positioned on the right side.</p>
@@ -234,20 +238,24 @@ export const RichContent: Story = {
           Welcome to Rich Content
         </h3>
         <p style={{ marginBottom: '16px', lineHeight: '1.6' }}>
-          This accordion demonstrates how to include rich content with multiple elements,
-          including headings, paragraphs, lists, and interactive components.
+          This accordion demonstrates how to include rich content with multiple elements, including
+          headings, paragraphs, lists, and interactive components.
         </p>
-        
+
         <ul style={{ marginBottom: '16px', paddingLeft: '20px' }}>
           <li>Feature 1: Comprehensive theming support</li>
           <li>Feature 2: Multiple size variants</li>
           <li>Feature 3: Customizable animations</li>
           <li>Feature 4: Icon position control</li>
         </ul>
-        
+
         <div style={{ display: 'flex', gap: '8px', marginTop: '16px' }}>
-          <Button size="sm" variant="primary">Learn More</Button>
-          <Button size="sm" variant="outline">Documentation</Button>
+          <Button size="sm" variant="primary">
+            Learn More
+          </Button>
+          <Button size="sm" variant="outline">
+            Documentation
+          </Button>
         </div>
       </div>
     ),
@@ -258,7 +266,9 @@ export const GradientShowcase: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🌈 Background Gradients</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🌈 Background Gradients
+        </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <Accordion
             title="🎨 Linear Gradient Background"
@@ -268,7 +278,8 @@ export const GradientShowcase: Story = {
             <div style={{ padding: '20px', textAlign: 'center' }}>
               <h4 style={{ marginBottom: '12px', color: '#fff' }}>Beautiful Linear Gradients</h4>
               <p style={{ color: '#fff', lineHeight: '1.6' }}>
-                This accordion uses linear gradients for both header and content backgrounds, creating a stunning visual effect!
+                This accordion uses linear gradients for both header and content backgrounds,
+                creating a stunning visual effect!
               </p>
             </div>
           </Accordion>
@@ -281,7 +292,8 @@ export const GradientShowcase: Story = {
             <div style={{ padding: '20px', textAlign: 'center' }}>
               <h4 style={{ marginBottom: '12px', color: '#fff' }}>Radial Gradient Magic</h4>
               <p style={{ color: '#fff', lineHeight: '1.6' }}>
-                Radial gradients create beautiful circular color transitions that draw the eye naturally!
+                Radial gradients create beautiful circular color transitions that draw the eye
+                naturally!
               </p>
             </div>
           </Accordion>
@@ -294,7 +306,8 @@ export const GradientShowcase: Story = {
             <div style={{ padding: '20px', textAlign: 'center' }}>
               <h4 style={{ marginBottom: '12px', color: '#fff' }}>Conic Gradient Wonder</h4>
               <p style={{ color: '#fff', lineHeight: '1.6' }}>
-                Conic gradients create stunning rainbow-like effects that rotate around a center point!
+                Conic gradients create stunning rainbow-like effects that rotate around a center
+                point!
               </p>
             </div>
           </Accordion>
@@ -302,7 +315,9 @@ export const GradientShowcase: Story = {
       </div>
 
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>✨ Text Gradients</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          ✨ Text Gradients
+        </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <Accordion
             title="🎭 Gradient Text Title"
@@ -310,23 +325,28 @@ export const GradientShowcase: Story = {
             descriptionTextColor="linear-gradient(90deg, #8b5cf6, #ec4899)"
           >
             <div style={{ padding: '20px', textAlign: 'center' }}>
-              <h4 style={{ 
-                marginBottom: '12px', 
-                background: 'linear-gradient(45deg, #ff0000, #00ff00, #0000ff)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
+              <h4
+                style={{
+                  marginBottom: '12px',
+                  background: 'linear-gradient(45deg, #ff0000, #00ff00, #0000ff)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
                 Rainbow Text Magic
               </h4>
-              <p style={{ 
-                background: 'linear-gradient(90deg, #8b5cf6, #ec4899)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                lineHeight: '1.6'
-              }}>
-                Text gradients create eye-catching effects that make content pop! Perfect for headings and special text.
+              <p
+                style={{
+                  background: 'linear-gradient(90deg, #8b5cf6, #ec4899)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  lineHeight: '1.6',
+                }}
+              >
+                Text gradients create eye-catching effects that make content pop! Perfect for
+                headings and special text.
               </p>
             </div>
           </Accordion>
@@ -337,23 +357,28 @@ export const GradientShowcase: Story = {
             descriptionTextColor="linear-gradient(135deg, #ff416c, #ff4b2b)"
           >
             <div style={{ padding: '20px', textAlign: 'center' }}>
-              <h4 style={{ 
-                marginBottom: '12px', 
-                background: 'linear-gradient(45deg, #ff6b35, #f7931e, #ffd23f)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
+              <h4
+                style={{
+                  marginBottom: '12px',
+                  background: 'linear-gradient(45deg, #ff6b35, #f7931e, #ffd23f)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
                 Fire & Energy
               </h4>
-              <p style={{ 
-                background: 'linear-gradient(135deg, #ff416c, #ff4b2b)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                lineHeight: '1.6'
-              }}>
-                Warm gradient colors create energy and excitement, perfect for call-to-action content!
+              <p
+                style={{
+                  background: 'linear-gradient(135deg, #ff416c, #ff4b2b)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  lineHeight: '1.6',
+                }}
+              >
+                Warm gradient colors create energy and excitement, perfect for call-to-action
+                content!
               </p>
             </div>
           </Accordion>
@@ -361,7 +386,9 @@ export const GradientShowcase: Story = {
       </div>
 
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎨 Combined Effects</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🎨 Combined Effects
+        </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <Accordion
             title="🌟 Ultimate Gradient Experience"
@@ -372,23 +399,28 @@ export const GradientShowcase: Story = {
             shadow="xl"
           >
             <div style={{ padding: '20px', textAlign: 'center' }}>
-              <h4 style={{ 
-                marginBottom: '12px', 
-                background: 'linear-gradient(90deg, #ffffff, #f0f0f0)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
+              <h4
+                style={{
+                  marginBottom: '12px',
+                  background: 'linear-gradient(90deg, #ffffff, #f0f0f0)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
                 Complete Gradient Package
               </h4>
-              <p style={{ 
-                background: 'linear-gradient(45deg, #ffffff, #e0e0e0)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                lineHeight: '1.6'
-              }}>
-                When you combine background gradients with text gradients and shadows, you get truly spectacular results!
+              <p
+                style={{
+                  background: 'linear-gradient(45deg, #ffffff, #e0e0e0)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  lineHeight: '1.6',
+                }}
+              >
+                When you combine background gradients with text gradients and shadows, you get truly
+                spectacular results!
               </p>
             </div>
           </Accordion>
@@ -402,50 +434,61 @@ export const GradientShowcase: Story = {
             shadow="lg"
           >
             <div style={{ padding: '20px', textAlign: 'center' }}>
-              <h4 style={{ 
-                marginBottom: '12px', 
-                background: 'linear-gradient(90deg, #f1f5f9, #cbd5e1)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
+              <h4
+                style={{
+                  marginBottom: '12px',
+                  background: 'linear-gradient(90deg, #f1f5f9, #cbd5e1)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
                 Dark & Mysterious
               </h4>
-              <p style={{ 
-                background: 'linear-gradient(45deg, #e2e8f0, #94a3b8)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                lineHeight: '1.6'
-              }}>
-                Dark gradients create sophisticated, modern looks perfect for professional applications!
+              <p
+                style={{
+                  background: 'linear-gradient(45deg, #e2e8f0, #94a3b8)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  lineHeight: '1.6',
+                }}
+              >
+                Dark gradients create sophisticated, modern looks perfect for professional
+                applications!
               </p>
             </div>
           </Accordion>
         </div>
       </div>
 
-      <div style={{ 
-        padding: '20px', 
-        background: '#f8fafc', 
-        borderRadius: '8px', 
-        border: '1px solid #e2e8f0' 
-      }}>
+      <div
+        style={{
+          padding: '20px',
+          background: '#f8fafc',
+          borderRadius: '8px',
+          border: '1px solid #e2e8f0',
+        }}
+      >
         <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600', color: '#334155' }}>
           🚀 How to Use Gradients
         </h4>
         <div style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>Background Gradients:</strong> Use <code>headerBackgroundColor</code> and <code>contentBackgroundColor</code> props with CSS gradient syntax.
+            <strong>Background Gradients:</strong> Use <code>headerBackgroundColor</code> and{' '}
+            <code>contentBackgroundColor</code> props with CSS gradient syntax.
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>Text Gradients:</strong> Use <code>titleTextColor</code> and <code>descriptionTextColor</code> props with gradient values.
+            <strong>Text Gradients:</strong> Use <code>titleTextColor</code> and{' '}
+            <code>descriptionTextColor</code> props with gradient values.
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>CSS Syntax:</strong> <code>linear-gradient(direction, color1, color2, ...)</code>
+            <strong>CSS Syntax:</strong>{' '}
+            <code>linear-gradient(direction, color1, color2, ...)</code>
           </p>
           <p style={{ margin: '0 0 0 0' }}>
-            <strong>Precedence:</strong> Gradients override solid colors, which override theme defaults.
+            <strong>Precedence:</strong> Gradients override solid colors, which override theme
+            defaults.
           </p>
         </div>
       </div>
@@ -456,13 +499,15 @@ export const GradientShowcase: Story = {
 export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
   render: () => {
     const [currentTheme, setCurrentTheme] = useState('light');
-    const [variant, setVariant] = useState<'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'>('primary');
+    const [variant, setVariant] = useState<
+      'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'
+    >('primary');
     const [size, setSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md');
     const [shadow, setShadow] = useState<'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'>('md');
     const [animation, setAnimation] = useState<'slide' | 'fade' | 'scale' | 'none'>('slide');
     const [iconPosition, setIconPosition] = useState<'left' | 'right'>('right');
     const [animationDuration, setAnimationDuration] = useState(300);
-    
+
     // Background color controls
     const [backgroundColor, setBackgroundColor] = useState('');
     const [backgroundColorGradient, setBackgroundColorGradient] = useState('');
@@ -470,22 +515,22 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
     const [headerBackgroundColorGradient, setHeaderBackgroundColorGradient] = useState('');
     const [contentBackgroundColor, setContentBackgroundColor] = useState('');
     const [contentBackgroundColorGradient, setContentBackgroundColorGradient] = useState('');
-    
+
     // Text color controls
     const [titleTextColor, setTitleTextColor] = useState('');
     const [titleTextColorGradient, setTitleTextColorGradient] = useState('');
     const [contentTextColor, setContentTextColor] = useState('');
     const [contentTextColorGradient, setContentTextColorGradient] = useState('');
-    
+
     // Gradient builder states
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#f43f5e', '#3b82f6']);
     const [activeGradientBuilder, setActiveGradientBuilder] = useState<string | null>(null);
-    
+
     // Use centralized themes from the theme system
     const availableThemes = themes;
-    
+
     const applyTheme = (themeName: string) => {
       const theme = availableThemes[themeName as keyof typeof availableThemes];
       if (theme) {
@@ -549,19 +594,22 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
       <ThemeProvider theme={availableThemes[currentTheme as keyof typeof availableThemes]}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Theme Switcher */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎨 Theme Switcher</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
-              Current theme: <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
+              Current theme:{' '}
+              <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              {Object.keys(availableThemes).map(themeName => (
+              {Object.keys(availableThemes).map((themeName) => (
                 <button
                   key={themeName}
                   onClick={() => applyTheme(themeName)}
@@ -569,10 +617,14 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                     padding: '8px 16px',
                     border: '1px solid var(--color-border)',
                     borderRadius: '6px',
-                    background: currentTheme === themeName ? 'var(--color-primary)' : 'var(--color-background)',
-                    color: currentTheme === themeName ? 'var(--color-background)' : 'var(--color-text)',
+                    background:
+                      currentTheme === themeName
+                        ? 'var(--color-primary)'
+                        : 'var(--color-background)',
+                    color:
+                      currentTheme === themeName ? 'var(--color-background)' : 'var(--color-text)',
                     cursor: 'pointer',
-                    fontSize: '14px'
+                    fontSize: '14px',
                   }}
                 >
                   {themeName.charAt(0).toUpperCase() + themeName.slice(1)}
@@ -582,38 +634,69 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
           </div>
 
           {/* Themed Accordion Preview */}
-          <div style={{ 
-            background: backgroundColorGradient.trim() || backgroundColor.trim() || 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-            transition: 'background 0.3s ease'
-          }}>
-            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎭 Themed Accordion</h3>
+          <div
+            style={{
+              background:
+                backgroundColorGradient.trim() ||
+                backgroundColor.trim() ||
+                'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              transition: 'background 0.3s ease',
+            }}
+          >
+            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
+              🎭 Themed Accordion
+            </h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
               This accordion automatically adapts to the selected theme!
             </p>
-            
-                          <Accordion
-                variant={variant}
-                size={size}
-                shadow={shadow}
-                animation={animation}
-                iconPosition={iconPosition}
-                animationDuration={animationDuration}
-                headerBackgroundColor={headerBackgroundColorGradient.trim() || headerBackgroundColor.trim() || undefined}
-                contentBackgroundColor={contentBackgroundColorGradient.trim() || contentBackgroundColor.trim() || undefined}
-                titleTextColor={titleTextColorGradient.trim() || titleTextColor.trim() || undefined}
-                descriptionTextColor={contentTextColorGradient.trim() || contentTextColor.trim() || undefined}
-                title="🎨 Themed Accordion"
-              >
+
+            <Accordion
+              variant={variant}
+              size={size}
+              shadow={shadow}
+              animation={animation}
+              iconPosition={iconPosition}
+              animationDuration={animationDuration}
+              headerBackgroundColor={
+                headerBackgroundColorGradient.trim() || headerBackgroundColor.trim() || undefined
+              }
+              contentBackgroundColor={
+                contentBackgroundColorGradient.trim() || contentBackgroundColor.trim() || undefined
+              }
+              titleTextColor={titleTextColorGradient.trim() || titleTextColor.trim() || undefined}
+              descriptionTextColor={
+                contentTextColorGradient.trim() || contentTextColor.trim() || undefined
+              }
+              title="🎨 Themed Accordion"
+            >
               <div style={{ textAlign: 'center', padding: '20px 0' }}>
-                <h3 style={{ marginBottom: '16px', color: 'var(--color-text)' }}>✨ Theme Features</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', textAlign: 'left' }}>
+                <h3 style={{ marginBottom: '16px', color: 'var(--color-text)' }}>
+                  ✨ Theme Features
+                </h3>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '16px',
+                    textAlign: 'left',
+                  }}
+                >
                   <div>
-                    <h4 style={{ color: 'var(--color-primary)', marginBottom: '8px' }}>🎨 Colors</h4>
-                    <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '14px', color: 'var(--color-text)' }}>
+                    <h4 style={{ color: 'var(--color-primary)', marginBottom: '8px' }}>
+                      🎨 Colors
+                    </h4>
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingLeft: '20px',
+                        fontSize: '14px',
+                        color: 'var(--color-text)',
+                      }}
+                    >
                       <li>Primary colors</li>
                       <li>Background colors</li>
                       <li>Text colors</li>
@@ -621,8 +704,17 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                     </ul>
                   </div>
                   <div>
-                    <h4 style={{ color: 'var(--color-primary)', marginBottom: '8px' }}>🌟 Effects</h4>
-                    <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '14px', color: 'var(--color-text)' }}>
+                    <h4 style={{ color: 'var(--color-primary)', marginBottom: '8px' }}>
+                      🌟 Effects
+                    </h4>
+                    <ul
+                      style={{
+                        margin: 0,
+                        paddingLeft: '20px',
+                        fontSize: '14px',
+                        color: 'var(--color-text)',
+                      }}
+                    >
                       <li>Shadows</li>
                       <li>Animations</li>
                       <li>Typography</li>
@@ -635,16 +727,26 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
           </div>
 
           {/* Accordion Customization Controls */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
-            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🔧 Accordion Customization</h3>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
+              🔧 Accordion Customization
+            </h3>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '16px',
+              }}
+            >
               {/* Variant Control */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
@@ -659,7 +761,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                     { value: 'info', label: 'Info' },
                     { value: 'danger', label: 'Danger' },
                     { value: 'ghost', label: 'Ghost' },
-                    { value: 'outline', label: 'Outline' }
+                    { value: 'outline', label: 'Outline' },
                   ]}
                   placeholder="Select variant"
                   size="sm"
@@ -677,7 +779,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                     { value: 'sm', label: 'Small' },
                     { value: 'md', label: 'Medium' },
                     { value: 'lg', label: 'Large' },
-                    { value: 'xl', label: 'Extra Large' }
+                    { value: 'xl', label: 'Extra Large' },
                   ]}
                   placeholder="Select size"
                   size="sm"
@@ -696,7 +798,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                     { value: 'md', label: 'Medium' },
                     { value: 'lg', label: 'Large' },
                     { value: 'xl', label: 'Extra Large' },
-                    { value: '2xl', label: '2X Large' }
+                    { value: '2xl', label: '2X Large' },
                   ]}
                   placeholder="Select shadow"
                   size="sm"
@@ -705,13 +807,15 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
               {/* Icon Position Control */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Icon Position:</label>
+                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                  Icon Position:
+                </label>
                 <Dropdown
                   value={iconPosition}
                   onChange={(value) => setIconPosition(value as any)}
                   options={[
                     { value: 'left', label: 'Left' },
-                    { value: 'right', label: 'Right' }
+                    { value: 'right', label: 'Right' },
                   ]}
                   placeholder="Select position"
                   size="sm"
@@ -728,7 +832,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                     { value: 'slide', label: 'Slide' },
                     { value: 'fade', label: 'Fade' },
                     { value: 'scale', label: 'Scale' },
-                    { value: 'none', label: 'None' }
+                    { value: 'none', label: 'None' },
                   ]}
                   placeholder="Select animation"
                   size="sm"
@@ -740,16 +844,16 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
                   Animation Duration: {animationDuration}ms
                 </label>
-                <input 
-                  type="range" 
-                  min="100" 
-                  max="1000" 
-                  step="50" 
-                  value={animationDuration} 
+                <input
+                  type="range"
+                  min="100"
+                  max="1000"
+                  step="50"
+                  value={animationDuration}
                   onChange={(e) => setAnimationDuration(Number(e.target.value))}
                   style={{
                     width: '100%',
-                    accentColor: 'var(--color-primary)'
+                    accentColor: 'var(--color-primary)',
                   }}
                 />
               </div>
@@ -757,24 +861,45 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
             {/* Background Color Controls */}
             <div style={{ marginTop: '24px' }}>
-              <h4 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600', color: 'var(--color-text)' }}>
+              <h4
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
                 🎨 Background Colors
               </h4>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '16px',
+                }}
+              >
                 {/* Main Background Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Main Background Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Main Background Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={backgroundColor || '#ffffff'} 
+                    <input
+                      type="color"
+                      value={backgroundColor || '#ffffff'}
                       onChange={(e) => setBackgroundColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={backgroundColor} 
+                    <input
+                      type="text"
+                      value={backgroundColor}
                       onChange={(e) => setBackgroundColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -784,10 +909,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setBackgroundColor('')}
                       style={{
                         padding: '6px 8px',
@@ -796,7 +921,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -806,11 +931,13 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Main Background Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Main Background Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Main Background Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={backgroundColorGradient} 
+                    <input
+                      type="text"
+                      value={backgroundColorGradient}
                       onChange={(e) => setBackgroundColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -820,10 +947,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setBackgroundColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -832,7 +959,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -842,17 +969,25 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Header Background Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Header Background Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Header Background Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={headerBackgroundColor || '#f8f9fa'} 
+                    <input
+                      type="color"
+                      value={headerBackgroundColor || '#f8f9fa'}
                       onChange={(e) => setHeaderBackgroundColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={headerBackgroundColor} 
+                    <input
+                      type="text"
+                      value={headerBackgroundColor}
                       onChange={(e) => setHeaderBackgroundColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -862,10 +997,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setHeaderBackgroundColor('')}
                       style={{
                         padding: '6px 8px',
@@ -874,7 +1009,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -884,11 +1019,13 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Header Background Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Header Background Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Header Background Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={headerBackgroundColorGradient} 
+                    <input
+                      type="text"
+                      value={headerBackgroundColorGradient}
                       onChange={(e) => setHeaderBackgroundColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -898,10 +1035,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setHeaderBackgroundColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -910,7 +1047,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -920,17 +1057,25 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Content Background Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Content Background Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Content Background Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={contentBackgroundColor || '#ffffff'} 
+                    <input
+                      type="color"
+                      value={contentBackgroundColor || '#ffffff'}
                       onChange={(e) => setContentBackgroundColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={contentBackgroundColor} 
+                    <input
+                      type="text"
+                      value={contentBackgroundColor}
                       onChange={(e) => setContentBackgroundColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -940,10 +1085,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setContentBackgroundColor('')}
                       style={{
                         padding: '6px 8px',
@@ -952,7 +1097,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -962,11 +1107,13 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Content Background Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Content Background Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Content Background Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={contentBackgroundColorGradient} 
+                    <input
+                      type="text"
+                      value={contentBackgroundColorGradient}
                       onChange={(e) => setContentBackgroundColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -976,10 +1123,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setContentBackgroundColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -988,7 +1135,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -999,59 +1146,83 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
             </div>
 
             {/* Gradient Builder Section */}
-            <div style={{ 
-              background: 'var(--color-background)', 
-              border: '1px solid var(--color-border)', 
-              borderRadius: '8px', 
-              padding: '20px',
-              marginBottom: '20px'
-            }}>
-              <h4 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600', color: 'var(--color-text)' }}>
+            <div
+              style={{
+                background: 'var(--color-background)',
+                border: '1px solid var(--color-border)',
+                borderRadius: '8px',
+                padding: '20px',
+                marginBottom: '20px',
+              }}
+            >
+              <h4
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
                 🌈 Advanced Gradient Builder
               </h4>
-              
+
               {/* Gradient Type Selector */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Type:</label>
-                <select 
-                  value={gradientType} 
+              <div
+                style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}
+              >
+                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                  Type:
+                </label>
+                <select
+                  value={gradientType}
                   onChange={(e) => setGradientType(e.target.value)}
-                  style={{ 
-                    padding: '8px', 
-                    border: '1px solid var(--color-border)', 
-                    borderRadius: '4px', 
+                  style={{
+                    padding: '8px',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: '4px',
                     fontSize: '14px',
                     background: 'var(--color-background)',
-                    color: 'var(--color-text)'
+                    color: 'var(--color-text)',
                   }}
                 >
                   <option value="linear">Linear</option>
                   <option value="radial">Radial</option>
                   <option value="conic">Conic</option>
                 </select>
-                
-                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Direction:</label>
+
+                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                  Direction:
+                </label>
                 <input
                   type="text"
                   value={gradientDirection}
                   onChange={(e) => setGradientDirection(e.target.value)}
-                  style={{ 
-                    width: '80px', 
-                    padding: '8px', 
-                    border: '1px solid var(--color-border)', 
-                    borderRadius: '4px', 
+                  style={{
+                    width: '80px',
+                    padding: '8px',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: '4px',
                     fontSize: '14px',
                     background: 'var(--color-background)',
-                    color: 'var(--color-text)'
+                    color: 'var(--color-text)',
                   }}
                   placeholder="90deg"
                 />
               </div>
-              
+
               {/* Color Management */}
               <div style={{ marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                  <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Colors:</label>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '8px',
+                  }}
+                >
+                  <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                    Colors:
+                  </label>
                   <button
                     onClick={addColor}
                     style={{
@@ -1061,20 +1232,27 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     + Add Color
                   </button>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+                <div
+                  style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}
+                >
                   {gradientColors.map((color, index) => (
                     <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <input
                         type="color"
                         value={color}
                         onChange={(e) => updateColor(index, e.target.value)}
-                        style={{ width: '40px', height: '30px', border: '1px solid var(--color-border)', borderRadius: '4px' }}
+                        style={{
+                          width: '40px',
+                          height: '30px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                        }}
                       />
                       <button
                         onClick={() => removeColor(index)}
@@ -1085,7 +1263,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                           background: 'var(--color-background)',
                           color: 'var(--color-text)',
                           cursor: 'pointer',
-                          fontSize: '10px'
+                          fontSize: '10px',
                         }}
                       >
                         ×
@@ -1094,32 +1272,50 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                   ))}
                 </div>
               </div>
-              
+
               {/* Gradient Preview */}
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Preview:</label>
-                <div 
-                  style={{ 
-                    width: '100%', 
-                    height: '60px', 
-                    background: generateGradient(), 
-                    border: '1px solid var(--color-border)', 
+                <label
+                  style={{
+                    fontSize: '14px',
+                    display: 'block',
+                    marginBottom: '4px',
+                    color: 'var(--color-text)',
+                  }}
+                >
+                  Preview:
+                </label>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '60px',
+                    background: generateGradient(),
+                    border: '1px solid var(--color-border)',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: '#fff',
                     fontSize: '12px',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
                   }}
                 >
                   {generateGradient()}
                 </div>
               </div>
-              
+
               {/* Apply to Target */}
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ fontSize: '14px', display: 'block', marginBottom: '8px', color: 'var(--color-text)' }}>Apply to:</label>
+                <label
+                  style={{
+                    fontSize: '14px',
+                    display: 'block',
+                    marginBottom: '8px',
+                    color: 'var(--color-text)',
+                  }}
+                >
+                  Apply to:
+                </label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   <button
                     onClick={() => applyGradientToTarget('backgroundColor')}
@@ -1130,7 +1326,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Main Background
@@ -1144,7 +1340,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Header Background
@@ -1158,7 +1354,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Content Background
@@ -1172,7 +1368,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Title Text
@@ -1186,7 +1382,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Content Text
@@ -1196,31 +1392,54 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
             </div>
 
             {/* Text Colors Section */}
-            <div style={{ 
-              background: 'var(--color-background)', 
-              border: '1px solid var(--color-border)', 
-              borderRadius: '8px', 
-              padding: '20px',
-              marginBottom: '20px'
-            }}>
-              <h4 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600', color: 'var(--color-text)' }}>
+            <div
+              style={{
+                background: 'var(--color-background)',
+                border: '1px solid var(--color-border)',
+                borderRadius: '8px',
+                padding: '20px',
+                marginBottom: '20px',
+              }}
+            >
+              <h4
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
                 🎨 Text Colors
               </h4>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '16px',
+                }}
+              >
                 {/* Title Text Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Title Text Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Title Text Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={titleTextColor || '#000000'} 
+                    <input
+                      type="color"
+                      value={titleTextColor || '#000000'}
                       onChange={(e) => setTitleTextColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={titleTextColor} 
+                    <input
+                      type="text"
+                      value={titleTextColor}
                       onChange={(e) => setTitleTextColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -1230,10 +1449,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setTitleTextColor('')}
                       style={{
                         padding: '6px 8px',
@@ -1242,7 +1461,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1252,11 +1471,13 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Title Text Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Title Text Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Title Text Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={titleTextColorGradient} 
+                    <input
+                      type="text"
+                      value={titleTextColorGradient}
                       onChange={(e) => setTitleTextColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -1266,10 +1487,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setTitleTextColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -1278,7 +1499,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1288,17 +1509,25 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Content Text Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Content Text Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Content Text Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={contentTextColor || '#000000'} 
+                    <input
+                      type="color"
+                      value={contentTextColor || '#000000'}
                       onChange={(e) => setContentTextColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={contentTextColor} 
+                    <input
+                      type="text"
+                      value={contentTextColor}
                       onChange={(e) => setContentTextColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -1308,10 +1537,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setContentTextColor('')}
                       style={{
                         padding: '6px 8px',
@@ -1320,7 +1549,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1330,11 +1559,13 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
                 {/* Content Text Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Content Text Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Content Text Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={contentTextColorGradient} 
+                    <input
+                      type="text"
+                      value={contentTextColorGradient}
                       onChange={(e) => setContentTextColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -1344,10 +1575,10 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setContentTextColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -1356,7 +1587,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1368,7 +1599,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
 
             {/* Reset Button */}
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <Button 
+              <Button
                 onClick={() => {
                   setVariant('primary');
                   setSize('md');
@@ -1403,4 +1634,3 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
     );
   },
 };
-

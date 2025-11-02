@@ -21,23 +21,31 @@ export interface SidebarItem {
   onClick?: (id: string) => void;
   href?: string;
   target?: string;
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'info'
+    | 'danger'
+    | 'ghost'
+    | 'outline';
 }
 
 // Unified Sidebar Props - supports both composition and legacy approaches
 export interface SidebarProps extends Omit<SidebarRootProps, 'children'> {
   children?: React.ReactNode;
-  
+
   // Legacy API support (items array)
   items?: SidebarItem[];
   defaultActiveItem?: string;
   activeItem?: string;
   onChange?: (activeItem: string | null) => void;
-  
+
   // Header/Footer content for legacy mode
   headerContent?: React.ReactNode;
   footerContent?: React.ReactNode;
-  
+
   // Legacy styling (maps to composition equivalents)
   showToggle?: boolean;
 }
@@ -53,17 +61,12 @@ const LegacyItemRenderer: React.FC<{
         // If item has children, render as a group
         if (item.children && item.children.length > 0) {
           return (
-            <SidebarGroup
-              key={item.id}
-              id={item.id}
-              title={item.label}
-              icon={item.icon}
-            >
+            <SidebarGroup key={item.id} id={item.id} title={item.label} icon={item.icon}>
               <LegacyItemRenderer items={item.children} level={level + 1} />
             </SidebarGroup>
           );
         }
-        
+
         // Regular item
         return (
           <SidebarItem
@@ -85,63 +88,62 @@ const LegacyItemRenderer: React.FC<{
   );
 };
 
-// Main unified Sidebar component with attached composition components  
-const SidebarComponent = forwardRef<HTMLDivElement, SidebarProps>(({
-  children,
-  items,
-  headerContent,
-  footerContent,
-  showToggle = true,
-  // Legacy props that map to new system
-  defaultActiveItem,
-  activeItem,
-  onChange,
-  ...rootProps
-}, ref) => {
-  // If children are provided, use composition mode
-  if (children) {
+// Main unified Sidebar component with attached composition components
+const SidebarComponent = forwardRef<HTMLDivElement, SidebarProps>(
+  (
+    {
+      children,
+      items,
+      headerContent,
+      footerContent,
+      showToggle = true,
+      // Legacy props that map to new system
+      defaultActiveItem,
+      activeItem,
+      onChange,
+      ...rootProps
+    },
+    ref,
+  ) => {
+    // If children are provided, use composition mode
+    if (children) {
+      return (
+        <SidebarRoot
+          ref={ref}
+          defaultActiveItem={defaultActiveItem}
+          onActiveItemChange={onChange}
+          {...rootProps}
+        >
+          {children}
+        </SidebarRoot>
+      );
+    }
+
+    // Legacy mode: render using items array
     return (
-      <SidebarRoot 
-        ref={ref} 
+      <SidebarRoot
+        ref={ref}
         defaultActiveItem={defaultActiveItem}
         onActiveItemChange={onChange}
         {...rootProps}
       >
-        {children}
+        {/* Header */}
+        {(headerContent || showToggle) && (
+          <SidebarHeader>
+            {headerContent}
+            {showToggle && <SidebarToggle />}
+          </SidebarHeader>
+        )}
+
+        {/* Content */}
+        <SidebarContent>{items && <LegacyItemRenderer items={items} />}</SidebarContent>
+
+        {/* Footer */}
+        {footerContent && <SidebarFooter>{footerContent}</SidebarFooter>}
       </SidebarRoot>
     );
-  }
-  
-  // Legacy mode: render using items array
-  return (
-    <SidebarRoot 
-      ref={ref}
-      defaultActiveItem={defaultActiveItem}
-      onActiveItemChange={onChange}
-      {...rootProps}
-    >
-      {/* Header */}
-      {(headerContent || showToggle) && (
-        <SidebarHeader>
-          {headerContent}
-          {showToggle && <SidebarToggle />}
-        </SidebarHeader>
-      )}
-      
-      {/* Content */}
-      <SidebarContent>
-        {items && <LegacyItemRenderer items={items} />}
-      </SidebarContent>
-      
-      {/* Footer */}
-      {footerContent && (
-        <SidebarFooter>
-          {footerContent}
-        </SidebarFooter>
-      )}
-    </SidebarRoot>
-  );
-});
+  },
+);
 
 SidebarComponent.displayName = 'Sidebar';
 

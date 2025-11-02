@@ -29,5 +29,3 @@ jobs:
             revert
           requireScope: false
           validateSingleCommit: false
-
-

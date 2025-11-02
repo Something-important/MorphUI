@@ -44,12 +44,25 @@ module.exports = {
     'react/prop-types': 'off',
     'import/no-unresolved': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'testing-library/no-node-access': 'warn',
   },
-  ignorePatterns: [
-    'dist/',
-    'node_modules/',
-    'storybook-static/',
+  ignorePatterns: ['dist/', 'node_modules/', 'storybook-static/'],
+  overrides: [
+    {
+      files: ['**/*.test.tsx', '**/*.test.ts', '**/*.spec.tsx', '**/*.spec.ts'],
+      rules: {
+        'testing-library/no-node-access': 'off',
+        'jest/no-disabled-tests': 'warn',
+      },
+    },
+    {
+      files: ['**/*.stories.tsx', '**/*.stories.ts'],
+      rules: {
+        'react-hooks/rules-of-hooks': 'off',
+        '@typescript-eslint/no-explicit-any': 'warn',
+        'jsx-a11y/label-has-associated-control': 'off',
+        'react/no-unescaped-entities': 'off',
+      },
+    },
   ],
 };
-
-

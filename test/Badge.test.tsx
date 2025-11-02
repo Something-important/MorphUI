@@ -46,13 +46,21 @@ describe('Badge Component', () => {
   });
 
   it('renders with icon on left', () => {
-    render(<Badge icon="✓" iconPosition="left">With Icon</Badge>);
+    render(
+      <Badge icon="✓" iconPosition="left">
+        With Icon
+      </Badge>,
+    );
     const badge = screen.getByText('With Icon').parentElement;
     expect(badge).toHaveClass('badge-component--icon-left');
   });
 
   it('renders with icon on right', () => {
-    render(<Badge icon="✓" iconPosition="right">With Icon</Badge>);
+    render(
+      <Badge icon="✓" iconPosition="right">
+        With Icon
+      </Badge>,
+    );
     const badge = screen.getByText('With Icon').parentElement;
     expect(badge).toHaveClass('badge-component--icon-right');
   });
@@ -69,9 +77,9 @@ describe('Badge Component', () => {
     render(
       <Badge removable onRemove={handleRemove}>
         Removable
-      </Badge>
+      </Badge>,
     );
-    
+
     const removeButton = screen.getByLabelText('Remove badge');
     fireEvent.click(removeButton);
     expect(handleRemove).toHaveBeenCalledTimes(1);
@@ -81,9 +89,9 @@ describe('Badge Component', () => {
     render(
       <Badge color="#ff0000" textColor="#ffffff">
         Custom Colors
-      </Badge>
+      </Badge>,
     );
-    
+
     const badge = screen.getByText('Custom Colors').parentElement;
     expect(badge).toHaveStyle({
       '--badge-custom-bg': '#ff0000',
@@ -92,12 +100,8 @@ describe('Badge Component', () => {
   });
 
   it('applies custom border color', () => {
-    render(
-      <Badge borderColor="#00ff00">
-        Custom Border
-      </Badge>
-    );
-    
+    render(<Badge borderColor="#00ff00">Custom Border</Badge>);
+
     const badge = screen.getByText('Custom Border').parentElement;
     expect(badge).toHaveStyle({
       '--badge-custom-border': '#00ff00',
@@ -120,10 +124,10 @@ describe('Badge Component', () => {
     const customStyle = { backgroundColor: 'purple' };
     render(<Badge style={customStyle}>Custom Style</Badge>);
     const badge = screen.getByText('Custom Style').parentElement;
-    
+
     // Check that the custom style is applied (CSS converts purple to rgb)
     expect(badge).toHaveStyle('background-color: rgb(128, 0, 128)');
-    
+
     // Also verify that other badge styles are still present
     expect(badge).toHaveClass('badge-component');
   });
@@ -131,26 +135,35 @@ describe('Badge Component', () => {
   it('prevents event propagation on remove button click', () => {
     const handleRemove = jest.fn();
     const handleBadgeClick = jest.fn();
-    
+
     render(
       <div onClick={handleBadgeClick}>
         <Badge removable onRemove={handleRemove}>
           Test
         </Badge>
-      </div>
+      </div>,
     );
-    
+
     const removeButton = screen.getByLabelText('Remove badge');
     fireEvent.click(removeButton);
-    
+
     expect(handleRemove).toHaveBeenCalledTimes(1);
     expect(handleBadgeClick).not.toHaveBeenCalled();
   });
 
   it('renders all variant combinations correctly', () => {
-    const variants = ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'];
-    
-    variants.forEach(variant => {
+    const variants = [
+      'primary',
+      'secondary',
+      'success',
+      'warning',
+      'danger',
+      'info',
+      'light',
+      'dark',
+    ];
+
+    variants.forEach((variant) => {
       const { unmount } = render(<Badge variant={variant as any}>{variant}</Badge>);
       expect(screen.getByText(variant).parentElement).toHaveClass(`badge-component--${variant}`);
       unmount();
@@ -159,8 +172,8 @@ describe('Badge Component', () => {
 
   it('renders all size combinations correctly', () => {
     const sizes = ['xs', 'sm', 'md', 'lg'];
-    
-    sizes.forEach(size => {
+
+    sizes.forEach((size) => {
       const { unmount } = render(<Badge size={size as any}>{size}</Badge>);
       expect(screen.getByText(size).parentElement).toHaveClass(`badge-component--${size}`);
       unmount();

@@ -1,6 +1,6 @@
 /**
  * Animation Utilities
- * 
+ *
  * Shared functions for creating smooth animations, ripple effects, and transitions.
  * Used by components to ensure consistent animation behavior and performance.
  */
@@ -20,25 +20,20 @@ export interface AnimationOptions {
 
 /**
  * Creates a ripple effect on click (Material Design style)
- * 
+ *
  * @param event - Mouse click event
  * @param options - Ripple customization options
  * @returns Function to remove the ripple
- * 
+ *
  * @example
  * const removeRipple = createRipple(event, { color: 'rgba(255,255,255,0.3)' });
  * setTimeout(removeRipple, 600);
  */
 export const createRipple = (
   event: React.MouseEvent<HTMLElement>,
-  options: RippleOptions = {}
+  options: RippleOptions = {},
 ): (() => void) => {
-  const {
-    color = 'rgba(255, 255, 255, 0.3)',
-    duration = 600,
-    scale = 4,
-    opacity = 0
-  } = options;
+  const { color = 'rgba(255, 255, 255, 0.3)', duration = 600, scale = 4, opacity = 0 } = options;
 
   const element = event.currentTarget;
   const rect = element.getBoundingClientRect();
@@ -85,24 +80,20 @@ export const createRipple = (
 
 /**
  * Animates an element in with a specified animation
- * 
+ *
  * @param element - Element to animate
  * @param animation - Animation type
  * @param options - Animation options
- * 
+ *
  * @example
  * animateIn(element, 'fadeIn', { duration: 300, delay: 100 });
  */
 export const animateIn = (
   element: HTMLElement,
   animation: 'fadeIn' | 'slideIn' | 'scaleIn' | 'slideUp',
-  options: AnimationOptions = {}
+  options: AnimationOptions = {},
 ): void => {
-  const {
-    duration = 300,
-    easing = 'ease-out',
-    delay = 0
-  } = options;
+  const { duration = 300, easing = 'ease-out', delay = 0 } = options;
 
   // Set initial state
   element.style.opacity = '0';
@@ -123,29 +114,26 @@ export const animateIn = (
 
 /**
  * Animates an element out with a specified animation
- * 
+ *
  * @param element - Element to animate
  * @param animation - Animation type
  * @param options - Animation options
  * @returns Promise that resolves when animation completes
- * 
+ *
  * @example
  * await animateOut(element, 'fadeOut', { duration: 200 });
  */
 export const animateOut = (
   element: HTMLElement,
   animation: 'fadeOut' | 'slideOut' | 'scaleOut' | 'slideDown',
-  options: AnimationOptions = {}
+  options: AnimationOptions = {},
 ): Promise<void> => {
-  const {
-    duration = 300,
-    easing = 'ease-in'
-  } = options;
+  const { duration = 300, easing = 'ease-in' } = options;
 
   return new Promise((resolve) => {
     // Set final state
     element.style.transition = `all ${duration}ms ${easing}`;
-    
+
     switch (animation) {
       case 'fadeOut':
         element.style.opacity = '0';
@@ -170,11 +158,11 @@ export const animateOut = (
 
 /**
  * Creates a staggered animation for multiple elements
- * 
+ *
  * @param elements - Array of elements to animate
  * @param animation - Animation type
  * @param options - Animation options with stagger delay
- * 
+ *
  * @example
  * const elements = document.querySelectorAll('.item');
  * staggerAnimation(Array.from(elements), 'fadeIn', { staggerDelay: 100 });
@@ -182,7 +170,7 @@ export const animateOut = (
 export const staggerAnimation = (
   elements: HTMLElement[],
   animation: 'fadeIn' | 'slideIn' | 'scaleIn',
-  options: AnimationOptions & { staggerDelay?: number } = {}
+  options: AnimationOptions & { staggerDelay?: number } = {},
 ): void => {
   const { staggerDelay = 100, ...animationOptions } = options;
 
@@ -194,21 +182,21 @@ export const staggerAnimation = (
 
 /**
  * Debounces a function to improve performance
- * 
+ *
  * @param func - Function to debounce
  * @param wait - Wait time in milliseconds
  * @returns Debounced function
- * 
+ *
  * @example
  * const debouncedResize = debounce(handleResize, 250);
  * window.addEventListener('resize', debouncedResize);
  */
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -217,35 +205,35 @@ export const debounce = <T extends (...args: any[]) => any>(
 
 /**
  * Throttles a function to improve performance
- * 
+ *
  * @param func - Function to throttle
  * @param limit - Time limit in milliseconds
  * @returns Throttled function
- * 
+ *
  * @example
  * const throttledScroll = throttle(handleScroll, 100);
  * window.addEventListener('scroll', throttledScroll);
  */
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
-  limit: number
+  limit: number,
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
-  
+
   return (...args: Parameters<T>) => {
     if (!inThrottle) {
       func(...args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 };
 
 /**
  * Checks if the user prefers reduced motion
- * 
+ *
  * @returns True if user prefers reduced motion
- * 
+ *
  * @example
  * if (!prefersReducedMotion()) {
  *   animateIn(element, 'fadeIn');
@@ -257,13 +245,13 @@ export const prefersReducedMotion = (): boolean => {
 
 /**
  * Safely animates an element respecting user preferences
- * 
+ *
  * @param element - Element to animate
  * @param animation - Animation function
  * @param fallback - Fallback function if motion is reduced
- * 
+ *
  * @example
- * safeAnimate(element, 
+ * safeAnimate(element,
  *   () => animateIn(element, 'fadeIn'),
  *   () => element.style.opacity = '1'
  * );
@@ -271,7 +259,7 @@ export const prefersReducedMotion = (): boolean => {
 export const safeAnimate = (
   element: HTMLElement,
   animation: () => void,
-  fallback: () => void
+  fallback: () => void,
 ): void => {
   if (prefersReducedMotion()) {
     fallback();

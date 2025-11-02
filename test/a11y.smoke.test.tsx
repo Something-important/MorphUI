@@ -9,5 +9,3 @@ describe('Accessibility smoke tests', () => {
     expect(results).toHaveNoViolations();
   });
 });
-
-

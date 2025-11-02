@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: [master, dev]
   pull_request:
-    branches: [ master, dev ]
+    branches: [master, dev]
 
 permissions:
   contents: read
@@ -51,5 +51,3 @@ jobs:
       - name: Build library
         run: |
           npm run build:all
-
-

@@ -1,0 +1,12 @@
+{
+  "*.{ts,tsx}": [
+    "prettier --write"
+  ],
+  "!(*.stories).{ts,tsx}": [
+    "eslint --fix --max-warnings=100"
+  ],
+  "*.{json,css,md,yml,yaml}": [
+    "prettier --write"
+  ]
+}
+

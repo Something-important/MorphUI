@@ -18,7 +18,7 @@ export const warmTheme = {
   'color-info': '#0ea5e9',
   'color-info-hover': '#0284c7',
   'color-info-active': '#0369a1',
-  
+
   // Light color variants (for backgrounds, highlights)
   'color-primary-light': 'rgba(239, 68, 68, 0.1)',
   'color-secondary-light': 'rgba(156, 163, 175, 0.1)',
@@ -26,7 +26,7 @@ export const warmTheme = {
   'color-warning-light': 'rgba(234, 88, 12, 0.1)',
   'color-danger-light': 'rgba(239, 68, 68, 0.1)',
   'color-info-light': 'rgba(14, 165, 233, 0.1)',
-  
+
   // Neutral colors (subtle warm undertones)
   'color-white': '#ffffff',
   'color-black': '#000000',
@@ -40,7 +40,7 @@ export const warmTheme = {
   'color-gray-700': '#44403c',
   'color-gray-800': '#292524',
   'color-gray-900': '#1c1917',
-  
+
   // Background colors
   'color-background': '#fef3c7',
   'color-background-secondary': '#fde68a',
@@ -48,12 +48,12 @@ export const warmTheme = {
   'color-background-hover': 'rgba(0, 0, 0, 0.05)',
   'color-background-disabled': '#fde68a',
   'color-background-light': '#fde68a',
-  
+
   // Option background colors
   'color-option-background': 'transparent',
   'color-option-background-hover': 'rgba(0, 0, 0, 0.05)',
   'color-option-background-selected': 'rgba(245, 158, 11, 0.15)',
-  
+
   // Text colors
   'color-text': '#92400e',
   'color-text-secondary': '#b45309',
@@ -61,37 +61,37 @@ export const warmTheme = {
   'color-text-primary': '#92400e',
   'color-text-disabled': '#a16207',
   'color-text-inverse': '#fef3c7',
-  
+
   // Heading colors - for better text hierarchy
   'color-heading-primary': '#451a03',
   'color-heading-secondary': '#78350f',
   'color-heading-tertiary': '#92400e',
   'color-heading-muted': '#b45309',
-  
+
   // Content text colors
   'color-content-primary': '#78350f',
   'color-content-secondary': '#92400e',
   'color-content-muted': '#b45309',
   'color-content-light': '#d97706',
-  
+
   // Link and interactive text
   'color-link': '#f97316',
   'color-link-hover': '#ea580c',
   'color-link-active': '#c2410c',
   'color-link-visited': '#dc2626',
-  
+
   // Status text colors
   'color-text-success': '#b45309',
   'color-text-warning': '#dc2626',
   'color-text-error': '#b91c1c',
   'color-text-info': '#f97316',
-  
+
   // Border colors
   'color-border': '#fbbf24',
   'color-border-hover': '#f59e0b',
   'color-border-focus': '#f97316',
   'color-border-light': '#fcd34d',
-  
+
   // Gradients
   'gradient-primary': 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
   'gradient-secondary': 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
@@ -99,13 +99,13 @@ export const warmTheme = {
   'gradient-warning': 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
   'gradient-danger': 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)',
   'gradient-info': 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-  
+
   // Typography - Font Families
   'font-family': 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   'font-family-mono': 'JetBrains Mono, Fira Code, Consolas, monospace',
   'font-family-serif': 'Georgia, Cambria, "Times New Roman", Times, serif',
   'font-family-display': 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  
+
   // Typography - Font Sizes
   'font-size-xs': '10px',
   'font-size-sm': '12px',
@@ -120,7 +120,7 @@ export const warmTheme = {
   'font-size-7xl': '60px',
   'font-size-8xl': '72px',
   'font-size-9xl': '96px',
-  
+
   // Typography - Font Weights
   'font-weight-thin': '100',
   'font-weight-light': '300',
@@ -130,7 +130,7 @@ export const warmTheme = {
   'font-weight-bold': '700',
   'font-weight-extrabold': '800',
   'font-weight-black': '900',
-  
+
   // Typography - Line Heights
   'line-height-none': '1',
   'line-height-tight': '1.25',
@@ -138,7 +138,7 @@ export const warmTheme = {
   'line-height-normal': '1.5',
   'line-height-relaxed': '1.625',
   'line-height-loose': '2',
-  
+
   // Typography - Letter Spacing
   'letter-spacing-tighter': '-0.05em',
   'letter-spacing-tight': '-0.025em',
@@ -146,13 +146,13 @@ export const warmTheme = {
   'letter-spacing-wide': '0.025em',
   'letter-spacing-wider': '0.05em',
   'letter-spacing-widest': '0.1em',
-  
+
   // Typography - Text Decoration
   'text-decoration-underline': 'underline',
   'text-decoration-overline': 'overline',
   'text-decoration-line-through': 'line-through',
   'text-decoration-none': 'none',
-  
+
   // Spacing
   'spacing-xs': '0.25rem',
   'spacing-sm': '0.5rem',
@@ -167,7 +167,7 @@ export const warmTheme = {
   'spacing-7xl': '10rem',
   'spacing-8xl': '12rem',
   'spacing-9xl': '16rem',
-  
+
   // Layout - Width & Height
   'width-auto': 'auto',
   'width-full': '100%',
@@ -175,21 +175,21 @@ export const warmTheme = {
   'width-min': 'min-content',
   'width-max': 'max-content',
   'width-fit': 'fit-content',
-  
+
   'height-auto': 'auto',
   'height-full': '100%',
   'height-screen': '100vh',
   'height-min': 'min-content',
   'height-max': 'max-content',
   'height-fit': 'fit-content',
-  
+
   // Layout - Min/Max Dimensions
   'min-width-0': '0px',
   'min-width-full': '100%',
   'min-width-min': 'min-content',
   'min-width-max': 'max-content',
   'min-width-fit': 'fit-content',
-  
+
   'max-width-none': 'none',
   'max-width-xs': '20rem',
   'max-width-sm': '24rem',
@@ -212,14 +212,14 @@ export const warmTheme = {
   'max-width-screen-lg': '1024px',
   'max-width-screen-xl': '1280px',
   'max-width-screen-2xl': '1536px',
-  
+
   // Layout - Breakpoints
   'breakpoint-sm': '640px',
   'breakpoint-md': '768px',
   'breakpoint-lg': '1024px',
   'breakpoint-xl': '1280px',
   'breakpoint-2xl': '1536px',
-  
+
   // Layout - Container Sizes
   'container-sm': '640px',
   'container-md': '768px',
@@ -232,7 +232,7 @@ export const warmTheme = {
   'container-6xl': '2304px',
   'container-7xl': '2560px',
   'container-full': '100%',
-  
+
   // Border radius
   'border-radius': '8px',
   'border-radius-sm': '6px',
@@ -240,7 +240,7 @@ export const warmTheme = {
   'border-radius-lg': '14px',
   'border-radius-xl': '18px',
   'border-radius-full': '9999px',
-  
+
   // Shadows
   'shadow-sm': '0 1px 2px 0 rgba(146, 64, 14, 0.1)',
   'shadow-md': '0 4px 6px -1px rgba(146, 64, 14, 0.2), 0 2px 4px -1px rgba(146, 64, 14, 0.1)',
@@ -249,7 +249,7 @@ export const warmTheme = {
   'shadow-2xl': '0 25px 50px -12px rgba(146, 64, 14, 0.3)',
   'shadow-inner': 'inset 0 2px 4px 0 rgba(146, 64, 14, 0.1)',
   'shadow-none': '0 0 #0000',
-  
+
   // Visual Effects - Backdrop Filters
   'backdrop-blur-none': 'blur(0)',
   'backdrop-blur-sm': 'blur(4px)',
@@ -258,7 +258,7 @@ export const warmTheme = {
   'backdrop-blur-xl': 'blur(24px)',
   'backdrop-blur-2xl': 'blur(40px)',
   'backdrop-blur-3xl': 'blur(64px)',
-  
+
   // Visual Effects - Filters
   'filter-brightness-50': 'brightness(0.5)',
   'filter-brightness-75': 'brightness(0.75)',
@@ -270,7 +270,7 @@ export const warmTheme = {
   'filter-brightness-125': 'brightness(1.25)',
   'filter-brightness-150': 'brightness(1.5)',
   'filter-brightness-200': 'brightness(2)',
-  
+
   // Visual Effects - Opacity
   'opacity-0': '0',
   'opacity-5': '0.05',
@@ -287,7 +287,7 @@ export const warmTheme = {
   'opacity-90': '0.9',
   'opacity-95': '0.95',
   'opacity-100': '1',
-  
+
   // Transform Values
   'transform-scale-0': 'scale(0)',
   'transform-scale-50': 'scale(0.5)',
@@ -299,7 +299,7 @@ export const warmTheme = {
   'transform-scale-110': 'scale(1.1)',
   'transform-scale-125': 'scale(1.25)',
   'transform-scale-150': 'scale(1.5)',
-  
+
   'transform-rotate-0': 'rotate(0deg)',
   'transform-rotate-1': 'rotate(1deg)',
   'transform-rotate-2': 'rotate(2deg)',
@@ -309,7 +309,7 @@ export const warmTheme = {
   'transform-rotate-45': 'rotate(45deg)',
   'transform-rotate-90': 'rotate(90deg)',
   'transform-rotate-180': 'rotate(180deg)',
-  
+
   // Animation Durations
   'duration-75': '75ms',
   'duration-100': '100ms',
@@ -319,7 +319,7 @@ export const warmTheme = {
   'duration-500': '500ms',
   'duration-700': '700ms',
   'duration-1000': '1000ms',
-  
+
   // Animation Delays
   'delay-75': '75ms',
   'delay-100': '100ms',
@@ -329,7 +329,7 @@ export const warmTheme = {
   'delay-500': '500ms',
   'delay-700': '700ms',
   'delay-1000': '1000ms',
-  
+
   // Animation Easing
   'ease-linear': 'linear',
   'ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
@@ -337,53 +337,54 @@ export const warmTheme = {
   'ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
   'ease-bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
   'ease-elastic': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-  
+
   // Transitions (Enhanced)
   'transition-fast': '0.15s ease-in-out',
   'transition-normal': '0.2s ease-in-out',
   'transition-slow': '0.3s ease-in-out',
   'transition-all': 'all 0.2s ease-in-out',
-  'transition-colors': 'color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out',
+  'transition-colors':
+    'color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out',
   'transition-opacity': 'opacity 0.2s ease-in-out',
   'transition-transform': 'transform 0.2s ease-in-out',
   'transition-shadow': 'box-shadow 0.2s ease-in-out',
-  
+
   // Component-Specific Tokens - Form Elements
   'input-height-xs': '28px',
   'input-height-sm': '32px',
   'input-height-md': '40px',
   'input-height-lg': '48px',
   'input-height-xl': '56px',
-  
+
   'checkbox-size-sm': '16px',
   'checkbox-size-md': '20px',
   'checkbox-size-lg': '24px',
-  
+
   'radio-size-sm': '16px',
   'radio-size-md': '20px',
   'radio-size-lg': '24px',
-  
+
   'switch-width-sm': '36px',
   'switch-width-md': '44px',
   'switch-width-lg': '52px',
   'switch-height-sm': '20px',
   'switch-height-md': '24px',
   'switch-height-lg': '28px',
-  
+
   // Component-Specific Tokens - Navigation & Layout
   'nav-height-sm': '48px',
   'nav-height-md': '56px',
   'nav-height-lg': '64px',
-  
+
   'sidebar-width-sm': '200px',
   'sidebar-width-md': '240px',
   'sidebar-width-lg': '280px',
-  
+
   'header-height-sm': '48px',
   'header-height-md': '56px',
   'header-height-lg': '64px',
   'header-height-xl': '72px',
-  
+
   // Component-Specific Tokens - Modal & Overlay
   'modal-max-width-sm': '400px',
   'modal-max-width-md': '500px',
@@ -397,7 +398,7 @@ export const warmTheme = {
   'modal-max-width-7xl': '1300px',
   'modal-max-width-full': '95vw',
   'modal-max-width-screen': '95vw',
-  
+
   // Advanced Color Tokens - RGB Values (for opacity calculations)
   'color-primary-rgb': '249, 115, 22',
   'color-secondary-rgb': '245, 158, 11',
@@ -405,7 +406,7 @@ export const warmTheme = {
   'color-warning-rgb': '234, 88, 12',
   'color-danger-rgb': '220, 38, 38',
   'color-info-rgb': '14, 165, 233',
-  
+
   // Advanced Color Tokens - Opacity Variants
   'color-primary-10': 'rgba(249, 115, 22, 0.1)',
   'color-primary-20': 'rgba(249, 115, 22, 0.2)',
@@ -416,7 +417,7 @@ export const warmTheme = {
   'color-primary-70': 'rgba(249, 115, 22, 0.7)',
   'color-primary-80': 'rgba(249, 115, 22, 0.8)',
   'color-primary-90': 'rgba(249, 115, 22, 0.9)',
-  
+
   'color-secondary-10': 'rgba(245, 158, 11, 0.1)',
   'color-secondary-20': 'rgba(245, 158, 11, 0.2)',
   'color-secondary-30': 'rgba(245, 158, 11, 0.3)',
@@ -426,7 +427,7 @@ export const warmTheme = {
   'color-secondary-70': 'rgba(245, 158, 11, 0.7)',
   'color-secondary-80': 'rgba(245, 158, 11, 0.8)',
   'color-secondary-90': 'rgba(245, 158, 11, 0.9)',
-  
+
   // Z-index
   'z-dropdown': '1000',
   'z-modal': '1050',

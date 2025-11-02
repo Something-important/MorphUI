@@ -20,5 +20,3 @@ jobs:
           package-name: morphui-react
           bump-minor-pre-major: true
           default-branch: master
-
-

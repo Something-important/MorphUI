@@ -4,8 +4,14 @@
   flex-direction: column;
   font-family: var(--font-family, system-ui, -apple-system, sans-serif);
   background: var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff)));
-  border-radius: var(--tabs-custom-border-radius, var(--tabs-border-radius, var(--border-radius-lg, 8px)));
-  box-shadow: var(--tabs-custom-shadow, var(--tabs-shadow, var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1))));
+  border-radius: var(
+    --tabs-custom-border-radius,
+    var(--tabs-border-radius, var(--border-radius-lg, 8px))
+  );
+  box-shadow: var(
+    --tabs-custom-shadow,
+    var(--tabs-shadow, var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1)))
+  );
   background-blend-mode: var(--tabs-custom-bg-blend, normal);
   overflow: hidden;
 }
@@ -19,7 +25,9 @@
 }
 
 /* Glassmorphism effect */
-.tabs-component--glassmorphism:not([style*="--tabs-custom-bg"]):not([style*="--tabs-custom-bg-pattern"]):not([style*="--tabs-custom-bg-image"]) {
+.tabs-component--glassmorphism:not([style*='--tabs-custom-bg']):not(
+    [style*='--tabs-custom-bg-pattern']
+  ):not([style*='--tabs-custom-bg-image']) {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -30,7 +38,8 @@
 .tabs-component__navigation {
   display: flex;
   background: var(--tabs-custom-bg, var(--tabs-nav-bg, var(--color-background, #ffffff)));
-  border-bottom: 2px solid var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
+  border-bottom: 2px solid
+    var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -48,7 +57,8 @@
 .tabs-component--vertical .tabs-component__navigation {
   flex-direction: column;
   border-bottom: none;
-  border-right: 2px solid var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
+  border-right: 2px solid
+    var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
   min-width: 200px;
 }
 
@@ -91,7 +101,10 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--tabs-custom-color, var(--tabs-tab-active-indicator, var(--color-primary, #0070f3)));
+  background: var(
+    --tabs-custom-color,
+    var(--tabs-tab-active-indicator, var(--color-primary, #0070f3))
+  );
 }
 
 /* Vertical active tab indicator */
@@ -313,19 +326,24 @@
 }
 
 .tabs-component--outline .tabs-component__tab {
-  border: 1px solid var(--tabs-custom-border-color, var(--tabs-tab-border, var(--color-border, #d1d5db)));
+  border: 1px solid
+    var(--tabs-custom-border-color, var(--tabs-tab-border, var(--color-border, #d1d5db)));
   margin: 0 2px 0 0;
   border-radius: var(--border-radius-md, 6px) var(--border-radius-md, 6px) 0 0;
 }
 
 .tabs-component--outline .tabs-component__tab--active {
-  border-bottom-color: var(--tabs-custom-bg, var(--tabs-panel-bg, var(--color-background, #ffffff)));
+  border-bottom-color: var(
+    --tabs-custom-bg,
+    var(--tabs-panel-bg, var(--color-background, #ffffff))
+  );
   margin-bottom: -2px;
 }
 
 /* Vertical outline variant */
 .tabs-component--outline.tabs-component--vertical .tabs-component__tab {
-  border: 1px solid var(--tabs-custom-border-color, var(--tabs-tab-border, var(--color-border, #d1d5db)));
+  border: 1px solid
+    var(--tabs-custom-border-color, var(--tabs-tab-border, var(--color-border, #d1d5db)));
   margin: 0 0 2px 0;
   border-radius: var(--border-radius-md, 6px) 0 0 var(--border-radius-md, 6px);
 }
@@ -346,30 +364,31 @@
   .tabs-component__navigation {
     overflow-x: auto;
   }
-  
+
   .tabs-component__tab {
     padding: 0.75rem 1rem;
     min-height: 44px;
     font-size: var(--font-size-sm, 0.875rem);
   }
-  
+
   .tabs-component__panel {
     padding: 1rem;
     min-height: 150px;
   }
-  
+
   .tabs-component--vertical {
     flex-direction: column;
   }
-  
+
   .tabs-component--vertical .tabs-component__navigation {
     flex-direction: row;
     border-right: none;
-    border-bottom: 2px solid var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
+    border-bottom: 2px solid
+      var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
     min-width: auto;
     overflow-x: auto;
   }
-  
+
   .tabs-component--vertical .tabs-component__tab--active::after {
     bottom: 0;
     top: auto;
@@ -385,11 +404,11 @@
   .tabs-component__tab--active::after {
     height: 3px;
   }
-  
+
   .tabs-component--vertical .tabs-component__tab--active::after {
     width: 3px;
   }
-  
+
   .tabs-component__navigation {
     border-width: 3px;
   }
@@ -401,7 +420,7 @@
   .tabs-component__panel {
     transition: none;
   }
-  
+
   .tabs-component--animated .tabs-component__panel {
     animation: none;
   }
@@ -412,12 +431,12 @@
   .tabs-component__navigation {
     display: none;
   }
-  
+
   .tabs-component__panel {
     display: block !important;
     page-break-inside: avoid;
   }
-  
+
   .tabs-component__panel--active {
     display: block !important;
   }
@@ -509,8 +528,11 @@
 
 /* Border gradient support */
 .tabs-component--border-gradient {
-  background-image: 
-    linear-gradient(var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff))), var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff)))),
+  background-image:
+    linear-gradient(
+      var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff))),
+      var(--tabs-custom-bg, var(--tabs-bg, var(--color-background, #ffffff)))
+    ),
     var(--tabs-custom-border-color) !important;
   background-origin: border-box !important;
   background-clip: padding-box, border-box !important;
@@ -519,30 +541,51 @@
 
 /* Custom color fallback chains */
 .tabs-component__tab {
-  color: var(--tabs-custom-tab-color, var(--tabs-custom-text-color, var(--tabs-tab-color, var(--color-text-muted, #6b7280))));
+  color: var(
+    --tabs-custom-tab-color,
+    var(--tabs-custom-text-color, var(--tabs-tab-color, var(--color-text-muted, #6b7280)))
+  );
 }
 
 .tabs-component__tab--active {
-  color: var(--tabs-custom-active-tab-color, var(--tabs-custom-color, var(--tabs-tab-active-color, var(--color-primary, #0070f3))));
+  color: var(
+    --tabs-custom-active-tab-color,
+    var(--tabs-custom-color, var(--tabs-tab-active-color, var(--color-primary, #0070f3)))
+  );
 }
 
 .tabs-component__tab:hover:not(.tabs-component__tab--disabled) {
-  color: var(--tabs-custom-hover-tab-color, var(--tabs-custom-text-color, var(--tabs-tab-hover-color, var(--color-text, #111827))));
+  color: var(
+    --tabs-custom-hover-tab-color,
+    var(--tabs-custom-text-color, var(--tabs-tab-hover-color, var(--color-text, #111827)))
+  );
 }
 
 .tabs-component__panel {
-  color: var(--tabs-custom-content-color, var(--tabs-custom-text-color, var(--color-text, #111827)));
+  color: var(
+    --tabs-custom-content-color,
+    var(--tabs-custom-text-color, var(--color-text, #111827))
+  );
 }
 
 .tabs-component__tab--active::after {
-  background: var(--tabs-custom-indicator-color, var(--tabs-custom-color, var(--tabs-tab-active-indicator, var(--color-primary, #0070f3))));
+  background: var(
+    --tabs-custom-indicator-color,
+    var(--tabs-custom-color, var(--tabs-tab-active-indicator, var(--color-primary, #0070f3)))
+  );
 }
 
 .tabs-component__badge {
-  background: var(--tabs-custom-badge-color, var(--tabs-custom-color, var(--color-primary, #0070f3)));
+  background: var(
+    --tabs-custom-badge-color,
+    var(--tabs-custom-color, var(--color-primary, #0070f3))
+  );
   color: var(--tabs-custom-badge-color, var(--tabs-custom-color, var(--color-primary, #0070f3)));
 }
 
 .tabs-component__icon {
-  color: var(--tabs-custom-icon-color, var(--tabs-custom-text-color, var(--color-text-muted, #6b7280)));
+  color: var(
+    --tabs-custom-icon-color,
+    var(--tabs-custom-text-color, var(--color-text-muted, #6b7280))
+  );
 }

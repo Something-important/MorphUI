@@ -152,10 +152,7 @@ export const Dropdown = ({
   // Close dropdown if clicked outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         console.log('Click outside detected, closing dropdown');
         handleOpenChange(false);
       }
@@ -175,7 +172,7 @@ export const Dropdown = ({
   // Process options with groups
   const processedOptions = useMemo(() => {
     if (optionGroups && optionGroups.length > 0) {
-      return optionGroups.flatMap(group => group.options);
+      return optionGroups.flatMap((group) => group.options);
     }
     return options || [];
   }, [options, optionGroups]);
@@ -183,11 +180,9 @@ export const Dropdown = ({
   const filteredOptions = useMemo(
     () =>
       search
-        ? processedOptions.filter((opt) =>
-            opt.label.toLowerCase().includes(search.toLowerCase())
-          )
+        ? processedOptions.filter((opt) => opt.label.toLowerCase().includes(search.toLowerCase()))
         : processedOptions,
-    [processedOptions, search]
+    [processedOptions, search],
   );
 
   const isSelected = (val: string | number) => {
@@ -227,17 +222,17 @@ export const Dropdown = ({
     console.log('Select all clicked, multiSelect:', multiSelect, 'disabled:', disabled);
     if (multiSelect && !disabled) {
       const allValues = filteredOptions.map((opt) => opt.value);
-      const newValues = maxSelections 
-        ? allValues.slice(0, maxSelections)
-        : allValues;
-      
+      const newValues = maxSelections ? allValues.slice(0, maxSelections) : allValues;
+
       console.log('Select all - new values:', newValues, 'filtered options:', filteredOptions);
-      
+
       // If we're limited by maxSelections, log a helpful message
       if (maxSelections && allValues.length > maxSelections) {
-        console.log(`Select All: Limited to ${maxSelections} selections out of ${allValues.length} available options`);
+        console.log(
+          `Select All: Limited to ${maxSelections} selections out of ${allValues.length} available options`,
+        );
       }
-      
+
       onChange(newValues);
     }
   };
@@ -245,13 +240,13 @@ export const Dropdown = ({
   const handleRandomSelect = (event: React.MouseEvent) => {
     event.stopPropagation();
     if (multiSelect && !disabled) {
-      const availableOptions = filteredOptions.filter(opt => !opt.disabled);
+      const availableOptions = filteredOptions.filter((opt) => !opt.disabled);
       const count = maxSelections || Math.min(3, availableOptions.length); // Default to 3 if no max
-      
+
       // Shuffle array and take first N items
       const shuffled = [...availableOptions].sort(() => Math.random() - 0.5);
-      const randomValues = shuffled.slice(0, count).map(opt => opt.value);
-      
+      const randomValues = shuffled.slice(0, count).map((opt) => opt.value);
+
       console.log('Random select - selected values:', randomValues, 'count:', count);
       onChange(randomValues);
     }
@@ -296,9 +291,7 @@ export const Dropdown = ({
         handleOpenChange(true);
         setFocusedIndex(0);
       } else {
-        setFocusedIndex((prev) =>
-          prev < filteredOptions.length - 1 ? prev + 1 : prev
-        );
+        setFocusedIndex((prev) => (prev < filteredOptions.length - 1 ? prev + 1 : prev));
       }
     },
     onArrowUp: () => {
@@ -330,35 +323,44 @@ export const Dropdown = ({
   }, [processedOptions, value, placeholder, multiSelect]);
 
   // Detect text gradients
-  const isTextGradient = textColor && (
-    textColor.includes('linear-gradient') || 
-    textColor.includes('radial-gradient') || 
-    textColor.includes('conic-gradient')
-  );
-  
-  const isLabelGradient = labelColor && (
-    labelColor.includes('linear-gradient') || 
-    labelColor.includes('radial-gradient') || 
-    labelColor.includes('conic-gradient')
-  );
-  
-  const isDescriptionGradient = descriptionColor && (
-    descriptionColor.includes('linear-gradient') || 
-    descriptionColor.includes('radial-gradient') || 
-    descriptionColor.includes('conic-gradient')
-  );
-  
-  const isBorderGradient = borderColor && (
-    borderColor.includes('linear-gradient') || 
-    borderColor.includes('radial-gradient') || 
-    borderColor.includes('conic-gradient')
-  );
-  
-  const isBackgroundGradient = (background || gradient || color) && (
-    (background && (background.includes('linear-gradient') || background.includes('radial-gradient') || background.includes('conic-gradient'))) ||
-    (gradient && (gradient.includes('linear-gradient') || gradient.includes('radial-gradient') || gradient.includes('conic-gradient'))) ||
-    (color && (color.includes('linear-gradient') || color.includes('radial-gradient') || color.includes('conic-gradient')))
-  );
+  const isTextGradient =
+    textColor &&
+    (textColor.includes('linear-gradient') ||
+      textColor.includes('radial-gradient') ||
+      textColor.includes('conic-gradient'));
+
+  const isLabelGradient =
+    labelColor &&
+    (labelColor.includes('linear-gradient') ||
+      labelColor.includes('radial-gradient') ||
+      labelColor.includes('conic-gradient'));
+
+  const isDescriptionGradient =
+    descriptionColor &&
+    (descriptionColor.includes('linear-gradient') ||
+      descriptionColor.includes('radial-gradient') ||
+      descriptionColor.includes('conic-gradient'));
+
+  const isBorderGradient =
+    borderColor &&
+    (borderColor.includes('linear-gradient') ||
+      borderColor.includes('radial-gradient') ||
+      borderColor.includes('conic-gradient'));
+
+  const isBackgroundGradient =
+    (background || gradient || color) &&
+    ((background &&
+      (background.includes('linear-gradient') ||
+        background.includes('radial-gradient') ||
+        background.includes('conic-gradient'))) ||
+      (gradient &&
+        (gradient.includes('linear-gradient') ||
+          gradient.includes('radial-gradient') ||
+          gradient.includes('conic-gradient'))) ||
+      (color &&
+        (color.includes('linear-gradient') ||
+          color.includes('radial-gradient') ||
+          color.includes('conic-gradient'))));
 
   // Build classes
   const classes = [
@@ -375,11 +377,13 @@ export const Dropdown = ({
     isBorderGradient && 'dropdown-container--border-gradient',
     isBackgroundGradient && 'dropdown-container--background-gradient',
     className,
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   // Determine the final background value with proper precedence
   const finalBackground = resolvedGradient || resolvedBackground || resolvedColor;
-  
+
   // Debug logging
   console.log('Dropdown Debug:', {
     gradient,
@@ -388,9 +392,9 @@ export const Dropdown = ({
     resolvedGradient,
     resolvedBackground,
     resolvedColor,
-    finalBackground
+    finalBackground,
   });
-  
+
   // Build styles
   const containerStyle: React.CSSProperties = {
     ...(resolvedTextColor && { '--dropdown-custom-color': resolvedTextColor }),
@@ -398,13 +402,22 @@ export const Dropdown = ({
     // Apply the final background value
     ...(finalBackground && { '--dropdown-custom-bg': finalBackground }),
     ...(resolvedLabelColor && { '--dropdown-custom-label-color': resolvedLabelColor }),
-    ...(resolvedDescriptionColor && { '--dropdown-custom-description-color': resolvedDescriptionColor }),
+    ...(resolvedDescriptionColor && {
+      '--dropdown-custom-description-color': resolvedDescriptionColor,
+    }),
     ...(resolvedOptionBackground && { '--dropdown-custom-option-bg': resolvedOptionBackground }),
-    ...(resolvedOptionHoverBackground && { '--dropdown-custom-option-hover-bg': resolvedOptionHoverBackground }),
-    ...(resolvedOptionSelectedBackground && { '--dropdown-custom-option-selected-bg': resolvedOptionSelectedBackground }),
+    ...(resolvedOptionHoverBackground && {
+      '--dropdown-custom-option-hover-bg': resolvedOptionHoverBackground,
+    }),
+    ...(resolvedOptionSelectedBackground && {
+      '--dropdown-custom-option-selected-bg': resolvedOptionSelectedBackground,
+    }),
     ...(backgroundImage && { '--dropdown-custom-background-image': backgroundImage }),
     ...(backgroundBlend && { '--dropdown-custom-background-blend': backgroundBlend }),
-    ...(borderRadius && { '--dropdown-custom-border-radius': typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius }),
+    ...(borderRadius && {
+      '--dropdown-custom-border-radius':
+        typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
+    }),
     ...(shadow && { '--dropdown-custom-shadow': shadow }),
     ...(backdropBlur && { '--dropdown-custom-backdrop-blur': 'blur(8px)' }),
     ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
@@ -472,7 +485,7 @@ export const Dropdown = ({
           </div>
         </div>
       )}
-      
+
       {isOpen && (
         <ul
           className={`dropdown-list dropdown-list--${position}`}
@@ -497,94 +510,97 @@ export const Dropdown = ({
               </div>
             </li>
           )}
-          
+
           {filteredOptions.length === 0 ? (
             <li className="dropdown-no-options">
               {loading ? 'Loading options...' : error ? `Error: ${error}` : 'No options available'}
             </li>
           ) : (
             <>
-              {optionGroups && optionGroups.length > 0 ? (
-                // Render grouped options
-                optionGroups.map((group) => (
-                  <li key={group.value} className="dropdown-group">
-                    <div className="dropdown-group-header">
-                      {group.icon && <span className="dropdown-group-icon">{group.icon}</span>}
-                      <span className="dropdown-group-label">{group.label}</span>
-                      {group.description && (
-                        <span className="dropdown-group-description">{group.description}</span>
-                      )}
-                    </div>
-                    <ul className="dropdown-group-options">
-                      {group.options
-                        .filter(opt => 
-                          !search || opt.label.toLowerCase().includes(search.toLowerCase())
-                        )
-                        .map((opt, index) => (
-                          <li
-                            key={opt.value}
-                            role="option"
-                            aria-selected={isSelected(opt.value)}
-                            tabIndex={-1}
-                            className={`                              dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
-                                index === focusedIndex ? 'focused' : ''} ${opt.disabled ? 'disabled' : ''}`}
-                            onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
-                          >
-                            {multiSelect && (
-                              <input
-                                type="checkbox"
-                                checked={isSelected(opt.value)}
-                                readOnly
-                                tabIndex={-1}
-                                disabled={opt.disabled}
-                              />
-                            )}
-                            {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
-                            <span className="dropdown-option-content">
-                              <span className="dropdown-option-label">{opt.label}</span>
-                              {opt.description && (
-                                <span className="dropdown-option-description">{opt.description}</span>
+              {optionGroups && optionGroups.length > 0
+                ? // Render grouped options
+                  optionGroups.map((group) => (
+                    <li key={group.value} className="dropdown-group">
+                      <div className="dropdown-group-header">
+                        {group.icon && <span className="dropdown-group-icon">{group.icon}</span>}
+                        <span className="dropdown-group-label">{group.label}</span>
+                        {group.description && (
+                          <span className="dropdown-group-description">{group.description}</span>
+                        )}
+                      </div>
+                      <ul className="dropdown-group-options">
+                        {group.options
+                          .filter(
+                            (opt) =>
+                              !search || opt.label.toLowerCase().includes(search.toLowerCase()),
+                          )
+                          .map((opt, index) => (
+                            <li
+                              key={opt.value}
+                              role="option"
+                              aria-selected={isSelected(opt.value)}
+                              tabIndex={-1}
+                              className={`                              dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
+                                index === focusedIndex ? 'focused' : ''
+                              } ${opt.disabled ? 'disabled' : ''}`}
+                              onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
+                            >
+                              {multiSelect && (
+                                <input
+                                  type="checkbox"
+                                  checked={isSelected(opt.value)}
+                                  readOnly
+                                  tabIndex={-1}
+                                  disabled={opt.disabled}
+                                />
                               )}
-                            </span>
-                          </li>
-                        ))}
-                    </ul>
-                  </li>
-                ))
-              ) : (
-                // Render regular options
-                filteredOptions.map((opt, index) => (
-                  <li
-                    key={opt.value}
-                    role="option"
-                    aria-selected={isSelected(opt.value)}
-                    tabIndex={-1}
-                    className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
-                      index === focusedIndex ? 'focused' : ''} ${opt.disabled ? 'disabled' : ''}`}
-                    onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
-                  >
-                    {multiSelect && (
-                      <input
-                        type="checkbox"
-                        checked={isSelected(opt.value)}
-                        readOnly
-                        tabIndex={-1}
-                        disabled={opt.disabled}
-                      />
-                    )}
-                    {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
-                    <span className="dropdown-option-content">
-                      <span className="dropdown-option-label">{opt.label}</span>
-                      {opt.description && (
-                        <span className="dropdown-option-description">{opt.description}</span>
+                              {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
+                              <span className="dropdown-option-content">
+                                <span className="dropdown-option-label">{opt.label}</span>
+                                {opt.description && (
+                                  <span className="dropdown-option-description">
+                                    {opt.description}
+                                  </span>
+                                )}
+                              </span>
+                            </li>
+                          ))}
+                      </ul>
+                    </li>
+                  ))
+                : // Render regular options
+                  filteredOptions.map((opt, index) => (
+                    <li
+                      key={opt.value}
+                      role="option"
+                      aria-selected={isSelected(opt.value)}
+                      tabIndex={-1}
+                      className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
+                        index === focusedIndex ? 'focused' : ''
+                      } ${opt.disabled ? 'disabled' : ''}`}
+                      onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
+                    >
+                      {multiSelect && (
+                        <input
+                          type="checkbox"
+                          checked={isSelected(opt.value)}
+                          readOnly
+                          tabIndex={-1}
+                          disabled={opt.disabled}
+                        />
                       )}
-                    </span>
-                  </li>
-                ))
-              )}
+                      {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
+                      <span className="dropdown-option-content">
+                        <span className="dropdown-option-label">{opt.label}</span>
+                        {opt.description && (
+                          <span className="dropdown-option-description">{opt.description}</span>
+                        )}
+                      </span>
+                    </li>
+                  ))}
             </>
           )}
-          
+
           {multiSelect && (
             <li className="dropdown-footer">
               {/* Only show Select All when it's actually selecting all available options */}
@@ -599,7 +615,7 @@ export const Dropdown = ({
                   Select All
                 </button>
               )}
-              
+
               {/* Show Select Top N when there's a selection limit */}
               {maxSelections && filteredOptions.length > maxSelections && (
                 <button
@@ -612,7 +628,7 @@ export const Dropdown = ({
                   Select Top {maxSelections}
                 </button>
               )}
-              
+
               {/* Random Selector */}
               <button
                 type="button"
@@ -623,7 +639,7 @@ export const Dropdown = ({
               >
                 Random {maxSelections || 3}
               </button>
-              
+
               <button
                 type="button"
                 className="dropdown-footer-btn dropdown-footer-btn--clear-all"

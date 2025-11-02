@@ -11,7 +11,7 @@ const customTheme = {
   '--color-warning': '#f59e0b',
   '--color-danger': '#ef4444',
   '--color-secondary': '#6b7280',
-  '--color-info': '#3b82f6'
+  '--color-info': '#3b82f6',
 };
 
 const mockOptions = [
@@ -31,15 +31,10 @@ describe('RadioGroup', () => {
     it('renders radio group with options', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toBeInTheDocument();
       expect(screen.getByText('Option 1')).toBeInTheDocument();
       expect(screen.getByText('Option 2')).toBeInTheDocument();
@@ -57,9 +52,9 @@ describe('RadioGroup', () => {
             label="Test Label"
             description="Test Description"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('Test Label')).toBeInTheDocument();
       expect(screen.getByText('Test Description')).toBeInTheDocument();
     });
@@ -75,9 +70,9 @@ describe('RadioGroup', () => {
             label="Test Label"
             required
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('*')).toBeInTheDocument();
     });
 
@@ -92,9 +87,9 @@ describe('RadioGroup', () => {
             invalid
             errorMessage="This field is required"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('This field is required')).toBeInTheDocument();
       expect(screen.getByRole('alert')).toBeInTheDocument();
     });
@@ -102,15 +97,10 @@ describe('RadioGroup', () => {
     it('renders no options message when options array is empty', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={[]}
-            value={undefined}
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={[]} value={undefined} onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('No options available')).toBeInTheDocument();
     });
   });
@@ -119,15 +109,10 @@ describe('RadioGroup', () => {
     it('renders with primary variant by default', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--primary');
     });
@@ -142,11 +127,11 @@ describe('RadioGroup', () => {
             name="test"
             variant="success"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--success');
-      
+
       rerender(
         <ThemeProvider>
           <RadioGroup
@@ -156,9 +141,9 @@ describe('RadioGroup', () => {
             name="test"
             variant="warning"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--warning');
     });
 
@@ -172,9 +157,9 @@ describe('RadioGroup', () => {
             name="test"
             color="#ff0000"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': '#ff0000' });
     });
@@ -190,9 +175,9 @@ describe('RadioGroup', () => {
             name="test"
             gradient={gradient}
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': gradient });
     });
@@ -216,9 +201,9 @@ describe('RadioGroup', () => {
             errorColor="#ff0000"
             noOptionsColor="#808080"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveStyle({ '--radio-group-container-bg': '#ff0000' });
       expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': '#00ff00' });
@@ -236,7 +221,7 @@ describe('RadioGroup', () => {
       const containerGradient = 'linear-gradient(90deg, #ff0000 0%, #00ff00 100%)';
       const optionGradient = 'linear-gradient(90deg, #0000ff 0%, #ffff00 100%)';
       const radioGradient = 'linear-gradient(90deg, #ff00ff 0%, #00ffff 100%)';
-      
+
       render(
         <ThemeProvider>
           <RadioGroup
@@ -254,19 +239,31 @@ describe('RadioGroup', () => {
             errorGradient="linear-gradient(90deg, #800000 0%, #008000 100%)"
             noOptionsGradient="linear-gradient(90deg, #808080 0%, #404040 100%)"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveStyle({ '--radio-group-container-bg': containerGradient });
       expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': optionGradient });
       expect(radioGroup).toHaveStyle({ '--radio-group-radio-bg': radioGradient });
-      expect(radioGroup).toHaveStyle({ '--radio-group-label-bg': 'linear-gradient(90deg, #800080 0%, #008080 100%)' });
-      expect(radioGroup).toHaveStyle({ '--radio-group-description-bg': 'linear-gradient(90deg, #808000 0%, #800080 100%)' });
-      expect(radioGroup).toHaveStyle({ '--radio-group-custom-text-gradient': 'linear-gradient(90deg, #008000 0%, #800000 100%)' });
-      expect(radioGroup).toHaveStyle({ '--radio-group-custom-border-gradient': 'linear-gradient(90deg, #000080 0%, #808000 100%)' });
-      expect(radioGroup).toHaveStyle({ '--radio-group-error-bg': 'linear-gradient(90deg, #800000 0%, #008000 100%)' });
-      expect(radioGroup).toHaveStyle({ '--radio-group-no-options-bg': 'linear-gradient(90deg, #808080 0%, #404040 100%)' });
+      expect(radioGroup).toHaveStyle({
+        '--radio-group-label-bg': 'linear-gradient(90deg, #800080 0%, #008080 100%)',
+      });
+      expect(radioGroup).toHaveStyle({
+        '--radio-group-description-bg': 'linear-gradient(90deg, #808000 0%, #800080 100%)',
+      });
+      expect(radioGroup).toHaveStyle({
+        '--radio-group-custom-text-gradient': 'linear-gradient(90deg, #008000 0%, #800000 100%)',
+      });
+      expect(radioGroup).toHaveStyle({
+        '--radio-group-custom-border-gradient': 'linear-gradient(90deg, #000080 0%, #808000 100%)',
+      });
+      expect(radioGroup).toHaveStyle({
+        '--radio-group-error-bg': 'linear-gradient(90deg, #800000 0%, #008000 100%)',
+      });
+      expect(radioGroup).toHaveStyle({
+        '--radio-group-no-options-bg': 'linear-gradient(90deg, #808080 0%, #404040 100%)',
+      });
     });
 
     it('applies gradient detection classes', () => {
@@ -281,9 +278,9 @@ describe('RadioGroup', () => {
             textColor="linear-gradient(90deg, #0000ff 0%, #ffff00 100%)"
             borderColor="linear-gradient(90deg, #ff00ff 0%, #00ffff 100%)"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--container-gradient');
       expect(radioGroup).toHaveClass('radio-group-component--text-gradient');
@@ -295,15 +292,10 @@ describe('RadioGroup', () => {
     it('renders with medium size by default', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--md');
     });
@@ -318,11 +310,11 @@ describe('RadioGroup', () => {
             name="test"
             size="sm"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--sm');
-      
+
       rerender(
         <ThemeProvider>
           <RadioGroup
@@ -332,9 +324,9 @@ describe('RadioGroup', () => {
             name="test"
             size="lg"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--lg');
     });
   });
@@ -343,15 +335,10 @@ describe('RadioGroup', () => {
     it('renders with vertical direction by default', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--vertical');
     });
@@ -366,9 +353,9 @@ describe('RadioGroup', () => {
             name="test"
             direction="horizontal"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--horizontal');
     });
@@ -385,11 +372,11 @@ describe('RadioGroup', () => {
             name="test"
             shadow="lg"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--shadow-lg');
-      
+
       rerender(
         <ThemeProvider>
           <RadioGroup
@@ -399,9 +386,9 @@ describe('RadioGroup', () => {
             name="test"
             shadow="xl"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--shadow-xl');
     });
 
@@ -415,11 +402,11 @@ describe('RadioGroup', () => {
             name="test"
             hoverEffect="lift"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--hover-lift');
-      
+
       rerender(
         <ThemeProvider>
           <RadioGroup
@@ -429,9 +416,9 @@ describe('RadioGroup', () => {
             name="test"
             hoverEffect="glow"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('radiogroup')).toHaveClass('radio-group-component--hover-glow');
     });
 
@@ -445,9 +432,9 @@ describe('RadioGroup', () => {
             name="test"
             rounded
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--rounded');
     });
@@ -464,9 +451,9 @@ describe('RadioGroup', () => {
             name="test"
             disabled
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--disabled');
     });
@@ -481,9 +468,9 @@ describe('RadioGroup', () => {
             name="test"
             invalid
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('radio-group-component--invalid');
     });
@@ -497,9 +484,9 @@ describe('RadioGroup', () => {
             onChange={() => {}}
             name="test"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const disabledOption = screen.getByText('Option 2').closest('label');
       expect(disabledOption).toHaveClass('disabled');
     });
@@ -510,18 +497,13 @@ describe('RadioGroup', () => {
       const mockOnChange = jest.fn();
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={mockOnChange}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={mockOnChange} name="test" />
+        </ThemeProvider>,
       );
-      
+
       const option2 = screen.getByText('Option 2').closest('label')!;
       fireEvent.click(option2);
-      
+
       expect(mockOnChange).toHaveBeenCalledWith('option2');
     });
 
@@ -536,12 +518,12 @@ describe('RadioGroup', () => {
             name="test"
             disabled
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const option2 = screen.getByText('Option 2').closest('label')!;
       fireEvent.click(option2);
-      
+
       expect(mockOnChange).not.toHaveBeenCalled();
     });
 
@@ -555,12 +537,12 @@ describe('RadioGroup', () => {
             onChange={mockOnChange}
             name="test"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const disabledOption = screen.getByText('Option 2').closest('label')!;
       fireEvent.click(disabledOption);
-      
+
       expect(mockOnChange).not.toHaveBeenCalled();
     });
 
@@ -568,26 +550,21 @@ describe('RadioGroup', () => {
       const mockOnChange = jest.fn();
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={mockOnChange}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={mockOnChange} name="test" />
+        </ThemeProvider>,
       );
-      
+
       const option1 = screen.getByText('Option 1').closest('label')!;
       option1.focus();
-      
+
       // Test arrow down navigation
       fireEvent.keyDown(option1, { key: 'ArrowDown' });
       expect(mockOnChange).toHaveBeenCalledWith('option2');
-      
+
       // Test arrow up navigation
       fireEvent.keyDown(option1, { key: 'ArrowUp' });
       expect(mockOnChange).toHaveBeenCalledWith('option3');
-      
+
       // Test space key selection
       fireEvent.keyDown(option1, { key: ' ' });
       expect(mockOnChange).toHaveBeenCalledWith('option1');
@@ -606,9 +583,9 @@ describe('RadioGroup', () => {
             label="Test Group"
             required
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveAttribute('aria-label', 'Test Group');
       expect(radioGroup).toHaveAttribute('aria-required', 'true');
@@ -617,18 +594,13 @@ describe('RadioGroup', () => {
     it('has proper ARIA attributes for individual options', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       const option1Input = screen.getByDisplayValue('option1');
       const option2Input = screen.getByDisplayValue('option2');
-      
+
       expect(option1Input).toHaveAttribute('aria-checked', 'true');
       expect(option2Input).toHaveAttribute('aria-checked', 'false');
     });
@@ -636,17 +608,12 @@ describe('RadioGroup', () => {
     it('has proper tabindex for keyboard navigation', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value="option1"
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value="option1" onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       const options = screen.getAllByRole('radio');
-      options.forEach(option => {
+      options.forEach((option) => {
         expect(option.closest('label')).toHaveAttribute('tabindex', '0');
       });
     });
@@ -663,9 +630,9 @@ describe('RadioGroup', () => {
             name="test"
             color="color-success"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': 'var(--color-success)' });
     });
@@ -680,9 +647,9 @@ describe('RadioGroup', () => {
             name="test"
             color="--color-primary"
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': 'var(--color-primary)' });
     });
@@ -692,30 +659,20 @@ describe('RadioGroup', () => {
     it('handles empty options array gracefully', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={[]}
-            value={undefined}
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={[]} value={undefined} onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('No options available')).toBeInTheDocument();
     });
 
     it('handles undefined value gracefully', () => {
       render(
         <ThemeProvider>
-          <RadioGroup
-            options={mockOptions}
-            value={undefined}
-            onChange={() => {}}
-            name="test"
-          />
-        </ThemeProvider>
+          <RadioGroup options={mockOptions} value={undefined} onChange={() => {}} name="test" />
+        </ThemeProvider>,
       );
-      
+
       // Should render without errors
       expect(screen.getByRole('radiogroup')).toBeInTheDocument();
     });
@@ -731,9 +688,9 @@ describe('RadioGroup', () => {
             className="custom-class"
             style={{ backgroundColor: 'red' }}
           />
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const radioGroup = screen.getByRole('radiogroup');
       expect(radioGroup).toHaveClass('custom-class');
       // Check that style prop is applied (may be mixed with CSS custom properties)

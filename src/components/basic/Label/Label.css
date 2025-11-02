@@ -1,0 +1,11 @@
+.morphui-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: var(--text-primary, #111827);
+}
+
+.morphui-label-required {
+  color: var(--color-danger, #ef4444);
+}

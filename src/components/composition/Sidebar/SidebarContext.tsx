@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+  useEffect,
+} from 'react';
 
 // Sidebar Context Types
 export interface SidebarContextType {
@@ -6,12 +13,12 @@ export interface SidebarContextType {
   collapsed: boolean;
   activeItem: string | null;
   expandedGroups: Set<string>;
-  
+
   // Actions
   setCollapsed: (collapsed: boolean) => void;
   setActiveItem: (id: string | null) => void;
   toggleGroup: (id: string) => void;
-  
+
   // Configuration
   collapsible: boolean;
   animated: boolean;
@@ -62,24 +69,28 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
   // Internal state
   const [collapsed, setCollapsedInternal] = useState(defaultCollapsed);
   const [activeItem, setActiveItemInternal] = useState<string | null>(defaultActiveItem);
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
-    new Set(defaultExpandedGroups)
-  );
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(defaultExpandedGroups));
 
   // Wrapped setters that call external callbacks
-  const setCollapsed = useCallback((newCollapsed: boolean) => {
-    setCollapsedInternal(newCollapsed);
-    onCollapseChange?.(newCollapsed);
-  }, [onCollapseChange]);
+  const setCollapsed = useCallback(
+    (newCollapsed: boolean) => {
+      setCollapsedInternal(newCollapsed);
+      onCollapseChange?.(newCollapsed);
+    },
+    [onCollapseChange],
+  );
 
-  const setActiveItem = useCallback((itemId: string | null) => {
-    setActiveItemInternal(itemId);
-    onActiveItemChange?.(itemId);
-  }, [onActiveItemChange]);
+  const setActiveItem = useCallback(
+    (itemId: string | null) => {
+      setActiveItemInternal(itemId);
+      onActiveItemChange?.(itemId);
+    },
+    [onActiveItemChange],
+  );
 
   // Toggle group expansion
   const toggleGroup = useCallback((groupId: string) => {
-    setExpandedGroups(prev => {
+    setExpandedGroups((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(groupId)) {
         newSet.delete(groupId);
@@ -128,9 +139,5 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
     size,
   };
 
-  return (
-    <SidebarContext.Provider value={contextValue}>
-      {children}
-    </SidebarContext.Provider>
-  );
+  return <SidebarContext.Provider value={contextValue}>{children}</SidebarContext.Provider>;
 };

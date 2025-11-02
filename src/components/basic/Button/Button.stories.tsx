@@ -33,7 +33,8 @@ export default {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A highly customizable button component with support for variants, sizes, colors, gradients, loading states, icons, ripple effects, and advanced theming.',
+        component:
+          'A highly customizable button component with support for variants, sizes, colors, gradients, loading states, icons, ripple effects, and advanced theming.',
       },
     },
   },
@@ -138,7 +139,9 @@ export const AllSizes: Story = {
 
 export const ShadowLevels: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
+    >
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <Button shadow="none">No Shadow</Button>
         <Button shadow="sm">Small Shadow</Button>
@@ -152,7 +155,9 @@ export const ShadowLevels: Story = {
 
 export const HoverEffects: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
+    >
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <Button hoverEffect="lift">Lift Effect</Button>
         <Button hoverEffect="glow">Glow Effect</Button>
@@ -165,9 +170,13 @@ export const HoverEffects: Story = {
 
 export const WithIcons: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}
+    >
       <Button iconLeft={<DownloadIcon />}>Download</Button>
-      <Button variant="secondary" iconRight={<ChevronRightIcon />}>Continue</Button>
+      <Button variant="secondary" iconRight={<ChevronRightIcon />}>
+        Continue
+      </Button>
       <Button variant="ghost" iconLeft={<HeartIcon />} iconRight={<ChevronRightIcon />}>
         Like & Share
       </Button>
@@ -179,60 +188,102 @@ export const LoadingStates: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Basic Loading States</h3>
+        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
+          Basic Loading States
+        </h3>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-      <Button loading>Loading...</Button>
-          <Button loading variant="success">Processing</Button>
-          <Button loading variant="warning">Saving</Button>
-          <Button loading variant="danger">Deleting</Button>
+          <Button loading>Loading...</Button>
+          <Button loading variant="success">
+            Processing
+          </Button>
+          <Button loading variant="warning">
+            Saving
+          </Button>
+          <Button loading variant="danger">
+            Deleting
+          </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Loading with Custom Text</h3>
+        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
+          Loading with Custom Text
+        </h3>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button loading loadingText="Submitting...">Submit</Button>
-          <Button loading loadingText="Uploading..." variant="success">Upload File</Button>
-          <Button loading loadingText="Please wait..." variant="info">Process Data</Button>
+          <Button loading loadingText="Submitting...">
+            Submit
+          </Button>
+          <Button loading loadingText="Uploading..." variant="success">
+            Upload File
+          </Button>
+          <Button loading loadingText="Please wait..." variant="info">
+            Process Data
+          </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Loading with Icons</h3>
+        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
+          Loading with Icons
+        </h3>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button loading iconLeft="📤" loadingText="Sending...">Send Message</Button>
-          <Button loading iconRight="💾" loadingText="Saving...">Save Document</Button>
-          <Button loading iconLeft="🔄" iconRight="✅" loadingText="Syncing...">Sync Data</Button>
+          <Button loading iconLeft="📤" loadingText="Sending...">
+            Send Message
+          </Button>
+          <Button loading iconRight="💾" loadingText="Saving...">
+            Save Document
+          </Button>
+          <Button loading iconLeft="🔄" iconRight="✅" loadingText="Syncing...">
+            Sync Data
+          </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Loading with Gradients</h3>
+        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
+          Loading with Gradients
+        </h3>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button loading gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" loadingText="Processing...">
+          <Button
+            loading
+            gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            loadingText="Processing..."
+          >
             Gradient Loading
-      </Button>
-          <Button loading gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)" loadingText="Working...">
+          </Button>
+          <Button
+            loading
+            gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)"
+            loadingText="Working..."
+          >
             Colorful Loading
-      </Button>
+          </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Loading vs Normal with Effects</h3>
+        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
+          Loading vs Normal with Effects
+        </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <Button shadow="lg" hoverEffect="glow">Normal Button (Hover me!)</Button>
-            <Button loading shadow="lg" hoverEffect="glow" loadingText="Loading...">Loading Button (Effects disabled)</Button>
+            <Button shadow="lg" hoverEffect="glow">
+              Normal Button (Hover me!)
+            </Button>
+            <Button loading shadow="lg" hoverEffect="glow" loadingText="Loading...">
+              Loading Button (Effects disabled)
+            </Button>
           </div>
           <p style={{ fontSize: '12px', color: '#666', margin: '0', fontStyle: 'italic' }}>
             Notice: Loading buttons disable hover effects and show only the spinner
           </p>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Interactive Loading Demo</h3>
+        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
+          Interactive Loading Demo
+        </h3>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <LoadingDemo />
         </div>
@@ -245,7 +296,7 @@ export const LoadingStates: Story = {
 const LoadingDemo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('Processing...');
-  
+
   const handleClick = () => {
     setIsLoading(true);
     // Simulate async operation
@@ -253,11 +304,11 @@ const LoadingDemo = () => {
       setIsLoading(false);
     }, 3000);
   };
-  
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-      <Button 
-        loading={isLoading} 
+      <Button
+        loading={isLoading}
         loadingText={loadingText}
         onClick={handleClick}
         disabled={isLoading}
@@ -270,12 +321,12 @@ const LoadingDemo = () => {
         value={loadingText}
         onChange={(e) => setLoadingText(e.target.value)}
         placeholder="Custom loading text..."
-        style={{ 
-          padding: '4px 8px', 
-          border: '1px solid #ddd', 
-          borderRadius: '4px', 
+        style={{
+          padding: '4px 8px',
+          border: '1px solid #ddd',
+          borderRadius: '4px',
           fontSize: '12px',
-          width: '150px'
+          width: '150px',
         }}
       />
     </div>
@@ -286,13 +337,27 @@ export const DisabledStates: Story = {
   render: () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
       <Button disabled>Disabled Primary</Button>
-      <Button variant="secondary" disabled>Disabled Secondary</Button>
-      <Button variant="success" disabled>Disabled Success</Button>
-      <Button variant="warning" disabled>Disabled Warning</Button>
-      <Button variant="danger" disabled>Disabled Danger</Button>
-      <Button variant="info" disabled>Disabled Info</Button>
-      <Button variant="ghost" disabled>Disabled Ghost</Button>
-      <Button variant="outline" disabled>Disabled Outline</Button>
+      <Button variant="secondary" disabled>
+        Disabled Secondary
+      </Button>
+      <Button variant="success" disabled>
+        Disabled Success
+      </Button>
+      <Button variant="warning" disabled>
+        Disabled Warning
+      </Button>
+      <Button variant="danger" disabled>
+        Disabled Danger
+      </Button>
+      <Button variant="info" disabled>
+        Disabled Info
+      </Button>
+      <Button variant="ghost" disabled>
+        Disabled Ghost
+      </Button>
+      <Button variant="outline" disabled>
+        Disabled Outline
+      </Button>
     </div>
   ),
 };
@@ -301,7 +366,9 @@ export const FullWidthButtons: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       <Button fullWidth>Full Width Primary</Button>
-      <Button variant="secondary" fullWidth>Full Width Secondary</Button>
+      <Button variant="secondary" fullWidth>
+        Full Width Secondary
+      </Button>
       <Button variant="outline" fullWidth iconLeft={<DownloadIcon />}>
         Full Width with Icon
       </Button>
@@ -313,7 +380,9 @@ export const RoundedButtons: Story = {
   render: () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
       <Button rounded>Rounded Primary</Button>
-      <Button variant="secondary" rounded>Rounded Secondary</Button>
+      <Button variant="secondary" rounded>
+        Rounded Secondary
+      </Button>
       <Button variant="outline" rounded iconLeft={<HeartIcon />}>
         Rounded with Icon
       </Button>
@@ -336,7 +405,9 @@ export const AsAnchorTag: Story = {
 
 export const CustomColors: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
+    >
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <Button color="#10b981">Custom Green</Button>
         <Button color="#f59e0b">Custom Orange</Button>
@@ -344,9 +415,15 @@ export const CustomColors: Story = {
         <Button color="#ec4899">Custom Pink</Button>
       </div>
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button color="#10b981" textColor="#ffffff">Green with White Text</Button>
-        <Button color="#f59e0b" textColor="#000000">Orange with Black Text</Button>
-        <Button color="#8b5cf6" borderColor="#4c1d95">Purple with Dark Border</Button>
+        <Button color="#10b981" textColor="#ffffff">
+          Green with White Text
+        </Button>
+        <Button color="#f59e0b" textColor="#000000">
+          Orange with Black Text
+        </Button>
+        <Button color="#8b5cf6" borderColor="#4c1d95">
+          Purple with Dark Border
+        </Button>
       </div>
     </div>
   ),
@@ -354,7 +431,9 @@ export const CustomColors: Story = {
 
 export const Gradients: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
+    >
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <Button gradient="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)">Red to Blue</Button>
         <Button gradient="linear-gradient(90deg, #10b981 0%, #3b82f6 100%)">Green to Blue</Button>
@@ -372,15 +451,21 @@ export const Gradients: Story = {
 
 export const ThemeIntegration: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
-      <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600' }}>Using Theme Keys</h3>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
+    >
+      <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600' }}>
+        Using Theme Keys
+      </h3>
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <Button color="color-success">Theme Success</Button>
         <Button color="color-warning">Theme Warning</Button>
         <Button color="color-info">Theme Info</Button>
         <Button gradient="gradient-primary">Theme Gradient</Button>
       </div>
-      <h3 style={{ margin: '16px 0 12px 0', fontSize: '16px', fontWeight: '600' }}>Using CSS Variables</h3>
+      <h3 style={{ margin: '16px 0 12px 0', fontSize: '16px', fontWeight: '600' }}>
+        Using CSS Variables
+      </h3>
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <Button color="--color-success">CSS Variable Success</Button>
         <Button color="--color-warning">CSS Variable Warning</Button>
@@ -412,36 +497,46 @@ export const ButtonGroups: Story = {
         <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Action Group</h3>
         <div style={{ display: 'flex', gap: '8px' }}>
           <Button size="sm">Edit</Button>
-          <Button variant="secondary" size="sm">Duplicate</Button>
-          <Button variant="danger" size="sm">Delete</Button>
+          <Button variant="secondary" size="sm">
+            Duplicate
+          </Button>
+          <Button variant="danger" size="sm">
+            Delete
+          </Button>
         </div>
       </div>
-      
+
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Form Actions</h3>
-        <div style={{ 
-          border: '1px solid #e5e7eb', 
-          borderRadius: '8px', 
-          padding: '20px',
-          maxWidth: '400px'
-        }}>
+        <div
+          style={{
+            border: '1px solid #e5e7eb',
+            borderRadius: '8px',
+            padding: '20px',
+            maxWidth: '400px',
+          }}
+        >
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Title:</label>
-            <input 
-              type="text" 
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+              Title:
+            </label>
+            <input
+              type="text"
               placeholder="Enter title"
               style={{
                 width: '100%',
                 padding: '8px 12px',
                 border: '1px solid #d1d5db',
                 borderRadius: '4px',
-                fontSize: '14px'
+                fontSize: '14px',
               }}
             />
           </div>
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Description:</label>
-            <textarea 
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+              Description:
+            </label>
+            <textarea
               placeholder="Enter description"
               rows={3}
               style={{
@@ -450,39 +545,53 @@ export const ButtonGroups: Story = {
                 border: '1px solid #d1d5db',
                 borderRadius: '4px',
                 fontSize: '14px',
-                resize: 'vertical'
+                resize: 'vertical',
               }}
             />
           </div>
-          <div style={{ 
-            display: 'flex', 
-            gap: '12px', 
-            justifyContent: 'flex-start',
-            borderTop: '1px solid #e5e7eb',
-            paddingTop: '16px',
-            marginTop: '16px'
-          }}>
-          <Button variant="ghost">Cancel</Button>
-          <Button variant="outline">Save Draft</Button>
-          <Button>Publish</Button>
+          <div
+            style={{
+              display: 'flex',
+              gap: '12px',
+              justifyContent: 'flex-start',
+              borderTop: '1px solid #e5e7eb',
+              paddingTop: '16px',
+              marginTop: '16px',
+            }}
+          >
+            <Button variant="ghost">Cancel</Button>
+            <Button variant="outline">Save Draft</Button>
+            <Button>Publish</Button>
           </div>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Status Buttons</h3>
+        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
+          Status Buttons
+        </h3>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <Button variant="success" size="sm">✓ Approved</Button>
-          <Button variant="warning" size="sm">⚠ Pending</Button>
-          <Button variant="danger" size="sm">✗ Rejected</Button>
-          <Button variant="info" size="sm">ℹ Info</Button>
+          <Button variant="success" size="sm">
+            ✓ Approved
+          </Button>
+          <Button variant="warning" size="sm">
+            ⚠ Pending
+          </Button>
+          <Button variant="danger" size="sm">
+            ✗ Rejected
+          </Button>
+          <Button variant="info" size="sm">
+            ℹ Info
+          </Button>
         </div>
       </div>
-      
+
       <div>
         <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Navigation</h3>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <Button variant="outline" size="sm">← Previous</Button>
+          <Button variant="outline" size="sm">
+            ← Previous
+          </Button>
           <Button size="sm">Next →</Button>
         </div>
       </div>
@@ -494,7 +603,9 @@ export const ThemeVariations: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎨 Theme Color Buttons</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🎨 Theme Color Buttons
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button variant="primary">Primary</Button>
           <Button variant="secondary">Secondary</Button>
@@ -504,12 +615,15 @@ export const ThemeVariations: Story = {
           <Button variant="info">Info</Button>
         </div>
         <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
-          💡 These buttons use theme colors - they change when you switch themes in the Interactive Theme Builder!
+          💡 These buttons use theme colors - they change when you switch themes in the Interactive
+          Theme Builder!
         </p>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🌈 Theme Gradient Buttons</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🌈 Theme Gradient Buttons
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button gradient="gradient-primary">Primary Gradient</Button>
           <Button gradient="gradient-success">Success Gradient</Button>
@@ -520,9 +634,11 @@ export const ThemeVariations: Story = {
           💡 These buttons use theme gradients - they also change with themes!
         </p>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎭 Mixed Examples</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🎭 Mixed Examples
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button variant="ghost">Ghost Button</Button>
           <Button variant="outline">Outline Button</Button>
@@ -534,28 +650,34 @@ export const ThemeVariations: Story = {
           💡 These show different button styles that work with any theme!
         </p>
       </div>
-      
-      <div style={{ 
-        padding: '16px', 
-        background: '#f8fafc', 
-        borderRadius: '8px', 
-        border: '1px solid #e2e8f0' 
-      }}>
+
+      <div
+        style={{
+          padding: '16px',
+          background: '#f8fafc',
+          borderRadius: '8px',
+          border: '1px solid #e2e8f0',
+        }}
+      >
         <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600', color: '#334155' }}>
           🚀 How to Use Themes
         </h4>
         <div style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>1. Switch Themes:</strong> Go to the Interactive Theme Builder above and click different theme buttons.
+            <strong>1. Switch Themes:</strong> Go to the Interactive Theme Builder above and click
+            different theme buttons.
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>2. Watch Changes:</strong> All theme-based buttons above will instantly change colors!
+            <strong>2. Watch Changes:</strong> All theme-based buttons above will instantly change
+            colors!
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>3. Custom Colors:</strong> Use the color picker and gradient builder to create your own styles.
+            <strong>3. Custom Colors:</strong> Use the color picker and gradient builder to create
+            your own styles.
           </p>
           <p style={{ margin: '0 0 0 0' }}>
-            <strong>4. Integration:</strong> Copy working colors/gradients to use in your own Button components.
+            <strong>4. Integration:</strong> Copy working colors/gradients to use in your own Button
+            components.
           </p>
         </div>
       </div>
@@ -567,7 +689,9 @@ export const AdvancedGradients: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🌈 Complex Custom Gradients</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🌈 Complex Custom Gradients
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57)">
             Multi-Color Gradient
@@ -583,9 +707,11 @@ export const AdvancedGradients: Story = {
           </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>✨ Gradients with Effects</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          ✨ Gradients with Effects
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button gradient="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)" shadow="lg">
             Gradient + Shadow
@@ -596,7 +722,10 @@ export const AdvancedGradients: Story = {
           <Button gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)" rounded shadow="xl">
             Gradient + Rounded + Shadow
           </Button>
-          <Button gradient="conic-gradient(from 45deg, #ff6b6b, #4ecdc4, #45b7d1)" hoverEffect="scale">
+          <Button
+            gradient="conic-gradient(from 45deg, #ff6b6b, #4ecdc4, #45b7d1)"
+            hoverEffect="scale"
+          >
             Gradient + Scale (Hover me!)
           </Button>
         </div>
@@ -604,43 +733,58 @@ export const AdvancedGradients: Story = {
           💡 Hover over the buttons to see the effects in action!
         </p>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎨 Custom Color Combinations</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🎨 Custom Color Combinations
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button gradient="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)" textColor="#ffffff">
             Gradient + White Text
           </Button>
-          <Button gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" borderColor="#4c1d95">
+          <Button
+            gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            borderColor="#4c1d95"
+          >
             Gradient + Custom Border
           </Button>
-          <Button gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)" textColor="#ffffff" borderColor="#dc2626">
+          <Button
+            gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)"
+            textColor="#ffffff"
+            borderColor="#dc2626"
+          >
             Gradient + White Text + Red Border
           </Button>
         </div>
       </div>
-      
-      <div style={{ 
-        padding: '16px', 
-        background: '#f8fafc', 
-        borderRadius: '8px', 
-        border: '1px solid #e2e8f0' 
-      }}>
+
+      <div
+        style={{
+          padding: '16px',
+          background: '#f8fafc',
+          borderRadius: '8px',
+          border: '1px solid #e2e8f0',
+        }}
+      >
         <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600', color: '#334155' }}>
           🚀 How to Create Amazing Gradients
         </h4>
         <div style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>1. Linear Gradients:</strong> Use <code>linear-gradient(direction, color1, color2, ...)</code>
+            <strong>1. Linear Gradients:</strong> Use{' '}
+            <code>linear-gradient(direction, color1, color2, ...)</code>
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>2. Radial Gradients:</strong> Use <code>radial-gradient(shape at position, color1, color2, ...)</code>
+            <strong>2. Radial Gradients:</strong> Use{' '}
+            <code>radial-gradient(shape at position, color1, color2, ...)</code>
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>3. Conic Gradients:</strong> Use <code>conic-gradient(from angle, color1, color2, ...)</code>
+            <strong>3. Conic Gradients:</strong> Use{' '}
+            <code>conic-gradient(from angle, color1, color2, ...)</code>
           </p>
           <p style={{ margin: '0 0 0 0' }}>
-            <strong>4. Combine with Effects:</strong> Add shadows, hover effects, and rounded corners for amazing results!
+            <strong>4. Combine with Effects:</strong> Add shadows, hover effects, and rounded
+            corners for amazing results!
           </p>
         </div>
       </div>
@@ -652,7 +796,9 @@ export const InteractiveThemeBuilder: Story = {
   render: () => {
     const [currentTheme, setCurrentTheme] = useState<ThemeName>('light');
     const [customColor, setCustomColor] = useState('#10b981');
-    const [customGradient, setCustomGradient] = useState('linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)');
+    const [customGradient, setCustomGradient] = useState(
+      'linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)',
+    );
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#f43f5e', '#3b82f6']);
@@ -682,14 +828,18 @@ export const InteractiveThemeBuilder: Story = {
       newColors[index] = color;
       setGradientColors(newColors);
     };
-    
+
     return (
       <ThemeProvider theme={themes[currentTheme]}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div>
-            <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎨 Theme Switcher</h3>
+            <h3
+              style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}
+            >
+              🎨 Theme Switcher
+            </h3>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-              {Object.keys(themes).map(themeName => (
+              {Object.keys(themes).map((themeName) => (
                 <button
                   key={themeName}
                   onClick={() => setCurrentTheme(themeName as ThemeName)}
@@ -700,7 +850,7 @@ export const InteractiveThemeBuilder: Story = {
                     background: currentTheme === themeName ? '#0070f3' : '#fff',
                     color: currentTheme === themeName ? '#fff' : '#333',
                     cursor: 'pointer',
-                    fontSize: '14px'
+                    fontSize: '14px',
                   }}
                 >
                   {themeName.charAt(0).toUpperCase() + themeName.slice(1)}
@@ -708,180 +858,249 @@ export const InteractiveThemeBuilder: Story = {
               ))}
             </div>
             <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
-              Current theme: <strong>{currentTheme}</strong> - Click theme buttons to see all buttons change colors!
+              Current theme: <strong>{currentTheme}</strong> - Click theme buttons to see all
+              buttons change colors!
             </p>
           </div>
-        
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎯 Theme Buttons (These Change with Theme!)</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-            <Button variant="primary">Primary</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="success">Success</Button>
-            <Button variant="warning">Warning</Button>
-            <Button variant="danger">Danger</Button>
-            <Button variant="info">Info</Button>
-            <Button gradient="gradient-primary">Primary Gradient</Button>
-            <Button gradient="gradient-success">Success Gradient</Button>
-          </div>
-          <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
-            💡 Try switching themes above - these buttons will change colors automatically!
-          </p>
-        </div>
-        
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🔧 Advanced Gradient Builder</h3>
-          
-          {/* Gradient Type Selector */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <label style={{ fontSize: '14px', minWidth: '80px' }}>Type:</label>
-            <select 
-              value={gradientType} 
-              onChange={(e) => setGradientType(e.target.value)}
-              style={{ padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
+
+          <div>
+            <h3
+              style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}
             >
-              <option value="linear">Linear</option>
-              <option value="radial">Radial</option>
-              <option value="conic">Conic</option>
-            </select>
-            
-            <label style={{ fontSize: '14px', minWidth: '80px' }}>Direction:</label>
-            <input
-              type="text"
-              value={gradientDirection}
-              onChange={(e) => setGradientDirection(e.target.value)}
-              style={{ width: '80px', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
-              placeholder="90deg"
-            />
+              🎯 Theme Buttons (These Change with Theme!)
+            </h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="success">Success</Button>
+              <Button variant="warning">Warning</Button>
+              <Button variant="danger">Danger</Button>
+              <Button variant="info">Info</Button>
+              <Button gradient="gradient-primary">Primary Gradient</Button>
+              <Button gradient="gradient-success">Success Gradient</Button>
+            </div>
+            <p
+              style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}
+            >
+              💡 Try switching themes above - these buttons will change colors automatically!
+            </p>
           </div>
-          
-          {/* Color Management */}
-          <div style={{ marginBottom: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-              <label style={{ fontSize: '14px', minWidth: '80px' }}>Colors:</label>
-              <button
-                onClick={addColor}
+
+          <div>
+            <h3
+              style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}
+            >
+              🔧 Advanced Gradient Builder
+            </h3>
+
+            {/* Gradient Type Selector */}
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}
+            >
+              <label style={{ fontSize: '14px', minWidth: '80px' }}>Type:</label>
+              <select
+                value={gradientType}
+                onChange={(e) => setGradientType(e.target.value)}
                 style={{
-                  padding: '4px 8px',
+                  padding: '8px',
                   border: '1px solid #ddd',
                   borderRadius: '4px',
-                  background: '#fff',
-                  cursor: 'pointer',
-                  fontSize: '12px'
+                  fontSize: '14px',
                 }}
               >
-                + Add Color
+                <option value="linear">Linear</option>
+                <option value="radial">Radial</option>
+                <option value="conic">Conic</option>
+              </select>
+
+              <label style={{ fontSize: '14px', minWidth: '80px' }}>Direction:</label>
+              <input
+                type="text"
+                value={gradientDirection}
+                onChange={(e) => setGradientDirection(e.target.value)}
+                style={{
+                  width: '80px',
+                  padding: '8px',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                }}
+                placeholder="90deg"
+              />
+            </div>
+
+            {/* Color Management */}
+            <div style={{ marginBottom: '16px' }}>
+              <div
+                style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}
+              >
+                <label style={{ fontSize: '14px', minWidth: '80px' }}>Colors:</label>
+                <button
+                  onClick={addColor}
+                  style={{
+                    padding: '4px 8px',
+                    border: '1px solid #ddd',
+                    borderRadius: '4px',
+                    background: '#fff',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                  }}
+                >
+                  + Add Color
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+                {gradientColors.map((color, index) => (
+                  <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <input
+                      type="color"
+                      value={color}
+                      onChange={(e) => updateColor(index, e.target.value)}
+                      style={{
+                        width: '40px',
+                        height: '30px',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                      }}
+                    />
+                    <button
+                      onClick={() => removeColor(index)}
+                      style={{
+                        padding: '2px 6px',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        background: '#fff',
+                        cursor: 'pointer',
+                        fontSize: '10px',
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Generate Button */}
+            <div style={{ marginBottom: '16px' }}>
+              <button
+                onClick={generateGradient}
+                style={{
+                  padding: '8px 16px',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  background: '#0070f3',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                }}
+              >
+                Generate Gradient
               </button>
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
-              {gradientColors.map((color, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <input
-                    type="color"
-                    value={color}
-                    onChange={(e) => updateColor(index, e.target.value)}
-                    style={{ width: '40px', height: '30px', border: '1px solid #ddd', borderRadius: '4px' }}
-                  />
-                  <button
-                    onClick={() => removeColor(index)}
-                    style={{
-                      padding: '2px 6px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
-                      background: '#fff',
-                      cursor: 'pointer',
-                      fontSize: '10px'
-                    }}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Generate Button */}
-          <div style={{ marginBottom: '16px' }}>
-            <button
-              onClick={generateGradient}
-              style={{
-                padding: '8px 16px',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                background: '#0070f3',
-                color: '#fff',
-                cursor: 'pointer',
-                fontSize: '14px'
-              }}
-            >
-              Generate Gradient
-            </button>
-          </div>
-          
-          {/* Custom Gradient Input */}
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px' }}>Custom Gradient:</label>
-            <input
-              type="text"
-              value={customGradient}
-              onChange={(e) => setCustomGradient(e.target.value)}
-              style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
-              placeholder="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)"
-            />
-          </div>
-          
-          {/* Gradient Preview */}
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px' }}>Preview:</label>
-            <div 
-              style={{ 
-                width: '100%', 
-                height: '60px', 
-                background: customGradient, 
-                border: '1px solid #ddd', 
-                borderRadius: '4px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                fontSize: '12px',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-              }}
-            >
-              {customGradient}
-            </div>
-          </div>
-          
-          {/* Generated Buttons */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-            <Button gradient={customGradient}>Custom Gradient</Button>
-            <Button gradient={customGradient} rounded>Rounded</Button>
-            <Button gradient={customGradient} shadow="lg">With Shadow</Button>
-            <Button gradient={customGradient} hoverEffect="glow">With Glow</Button>
-            <Button gradient={customGradient} rounded shadow="xl" hoverEffect="lift">All Effects</Button>
-          </div>
-        </div>
-        
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎨 Custom Color Builder</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <label style={{ fontSize: '14px', minWidth: '80px' }}>Custom Color:</label>
+
+            {/* Custom Gradient Input */}
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px' }}>
+                Custom Gradient:
+              </label>
               <input
-                type="color"
-                value={customColor}
-                onChange={(e) => setCustomColor(e.target.value)}
-                style={{ width: '50px', height: '30px', border: '1px solid #ddd', borderRadius: '4px' }}
+                type="text"
+                value={customGradient}
+                onChange={(e) => setCustomGradient(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                }}
+                placeholder="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)"
               />
-              <span style={{ fontSize: '14px', color: '#666' }}>{customColor}</span>
+            </div>
+
+            {/* Gradient Preview */}
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px' }}>
+                Preview:
+              </label>
+              <div
+                style={{
+                  width: '100%',
+                  height: '60px',
+                  background: customGradient,
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff',
+                  fontSize: '12px',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                }}
+              >
+                {customGradient}
+              </div>
+            </div>
+
+            {/* Generated Buttons */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
+              <Button gradient={customGradient}>Custom Gradient</Button>
+              <Button gradient={customGradient} rounded>
+                Rounded
+              </Button>
+              <Button gradient={customGradient} shadow="lg">
+                With Shadow
+              </Button>
+              <Button gradient={customGradient} hoverEffect="glow">
+                With Glow
+              </Button>
+              <Button gradient={customGradient} rounded shadow="xl" hoverEffect="lift">
+                All Effects
+              </Button>
             </div>
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-            <Button color={customColor}>Custom Color</Button>
-            <Button color={customColor} textColor="#ffffff">Custom + White Text</Button>
-            <Button color={customColor} rounded shadow="lg">Custom + Effects</Button>
+
+          <div>
+            <h3
+              style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}
+            >
+              🎨 Custom Color Builder
+            </h3>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                marginBottom: '16px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <label style={{ fontSize: '14px', minWidth: '80px' }}>Custom Color:</label>
+                <input
+                  type="color"
+                  value={customColor}
+                  onChange={(e) => setCustomColor(e.target.value)}
+                  style={{
+                    width: '50px',
+                    height: '30px',
+                    border: '1px solid #ddd',
+                    borderRadius: '4px',
+                  }}
+                />
+                <span style={{ fontSize: '14px', color: '#666' }}>{customColor}</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
+              <Button color={customColor}>Custom Color</Button>
+              <Button color={customColor} textColor="#ffffff">
+                Custom + White Text
+              </Button>
+              <Button color={customColor} rounded shadow="lg">
+                Custom + Effects
+              </Button>
+            </div>
           </div>
-        </div>
         </div>
       </ThemeProvider>
     );
@@ -892,68 +1111,103 @@ export const RippleEffects: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>✨ Ripple Effects</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          ✨ Ripple Effects
+        </h3>
         <p style={{ fontSize: '14px', color: '#666', marginBottom: '16px', lineHeight: '1.5' }}>
-          Click any button below to see the Material Design-style ripple effect! The ripple appears where you click and spreads outward.
+          Click any button below to see the Material Design-style ripple effect! The ripple appears
+          where you click and spreads outward.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button ripple>Click Me!</Button>
-          <Button ripple variant="success">Success Ripple</Button>
-          <Button ripple variant="warning">Warning Ripple</Button>
-          <Button ripple variant="danger">Danger Ripple</Button>
+          <Button ripple variant="success">
+            Success Ripple
+          </Button>
+          <Button ripple variant="warning">
+            Warning Ripple
+          </Button>
+          <Button ripple variant="danger">
+            Danger Ripple
+          </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🎨 Ripple with Different Styles</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🎨 Ripple with Different Styles
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button ripple rounded>Rounded Ripple</Button>
-          <Button ripple shadow="lg">Shadow + Ripple</Button>
-          <Button ripple hoverEffect="glow">Glow + Ripple</Button>
-          <Button ripple gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">Gradient Ripple</Button>
+          <Button ripple rounded>
+            Rounded Ripple
+          </Button>
+          <Button ripple shadow="lg">
+            Shadow + Ripple
+          </Button>
+          <Button ripple hoverEffect="glow">
+            Glow + Ripple
+          </Button>
+          <Button ripple gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+            Gradient Ripple
+          </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>🔄 Ripple with Icons</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          🔄 Ripple with Icons
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button ripple iconLeft="🚀">Launch with Ripple</Button>
-          <Button ripple iconRight="💾" variant="success">Save with Ripple</Button>
-          <Button ripple iconLeft="📤" iconRight="📥">Transfer with Ripple</Button>
+          <Button ripple iconLeft="🚀">
+            Launch with Ripple
+          </Button>
+          <Button ripple iconRight="💾" variant="success">
+            Save with Ripple
+          </Button>
+          <Button ripple iconLeft="📤" iconRight="📥">
+            Transfer with Ripple
+          </Button>
         </div>
       </div>
-      
+
       <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>⚡ Ripple vs No Ripple</h3>
+        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
+          ⚡ Ripple vs No Ripple
+        </h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <Button>No Ripple</Button>
           <Button ripple>With Ripple</Button>
           <Button variant="outline">No Ripple</Button>
-          <Button variant="outline" ripple>With Ripple</Button>
+          <Button variant="outline" ripple>
+            With Ripple
+          </Button>
         </div>
         <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
           💡 Notice the difference? Ripple adds a satisfying click feedback!
         </p>
       </div>
-      
-      <div style={{ 
-        padding: '16px', 
-        background: '#f8fafc', 
-        borderRadius: '8px', 
-        border: '1px solid #e2e8f0' 
-      }}>
+
+      <div
+        style={{
+          padding: '16px',
+          background: '#f8fafc',
+          borderRadius: '8px',
+          border: '1px solid #e2e8f0',
+        }}
+      >
         <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600', color: '#334155' }}>
           🚀 How Ripple Effects Work
         </h4>
         <div style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>1. Click Detection:</strong> Ripple appears exactly where you click on the button.
+            <strong>1. Click Detection:</strong> Ripple appears exactly where you click on the
+            button.
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
             <strong>2. Animation:</strong> Smooth scale and fade animation that spreads outward.
           </p>
           <p style={{ margin: '0 0 8px 0' }}>
-            <strong>3. Auto-Cleanup:</strong> Ripple elements are automatically removed after animation.
+            <strong>3. Auto-Cleanup:</strong> Ripple elements are automatically removed after
+            animation.
           </p>
           <p style={{ margin: '0 0 0 0' }}>
             <strong>4. Performance:</strong> Lightweight DOM manipulation with CSS animations.

@@ -27,12 +27,7 @@ describe('Checkbox', () => {
     });
 
     it('renders with description', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          description="This is a description" 
-        />
-      );
+      renderWithTheme(<Checkbox label="Test checkbox" description="This is a description" />);
       expect(screen.getByText('This is a description')).toBeInTheDocument();
     });
 
@@ -42,22 +37,12 @@ describe('Checkbox', () => {
     });
 
     it('renders with custom className', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          className="custom-class" 
-        />
-      );
+      renderWithTheme(<Checkbox label="Test checkbox" className="custom-class" />);
       expect(screen.getByRole('checkbox').closest('.custom-class')).toBeInTheDocument();
     });
 
     it('renders with custom style', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          style={{ backgroundColor: 'red' }} 
-        />
-      );
+      renderWithTheme(<Checkbox label="Test checkbox" style={{ backgroundColor: 'red' }} />);
       const checkbox = screen.getByRole('checkbox').closest('.checkbox-component');
       expect(checkbox).toHaveStyle({ 'background-color': 'rgb(255, 0, 0)' });
     });
@@ -218,94 +203,61 @@ describe('Checkbox', () => {
   describe('Interactive Features', () => {
     it('calls onChange when clicked', () => {
       const handleChange = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          onChange={handleChange} 
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" onChange={handleChange} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.click(checkbox);
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
     });
 
     it('calls onChange when label is clicked', () => {
       const handleChange = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          onChange={handleChange} 
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" onChange={handleChange} />);
+
       const label = screen.getByText('Test checkbox');
       fireEvent.click(label);
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
     });
 
     it('toggles state when space key is pressed', () => {
       const handleChange = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          onChange={handleChange} 
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" onChange={handleChange} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.keyDown(checkbox, { key: ' ' });
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
     });
 
     it('does not call onChange when disabled', () => {
       const handleChange = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          disabled={true}
-          onChange={handleChange} 
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" disabled={true} onChange={handleChange} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.click(checkbox);
-      
+
       expect(handleChange).not.toHaveBeenCalled();
     });
 
     it('does not call onChange when loading', () => {
       const handleChange = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          loading={true}
-          onChange={handleChange} 
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" loading={true} onChange={handleChange} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.click(checkbox);
-      
+
       expect(handleChange).not.toHaveBeenCalled();
     });
 
     it('does not call onChange when read-only', () => {
       const handleChange = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          readOnly={true}
-          onChange={handleChange} 
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" readOnly={true} onChange={handleChange} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.click(checkbox);
-      
+
       expect(handleChange).not.toHaveBeenCalled();
     });
   });
@@ -314,38 +266,25 @@ describe('Checkbox', () => {
     it('works as controlled component', () => {
       const handleChange = jest.fn();
       const { rerender } = renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          checked={false}
-          onChange={handleChange} 
-        />
+        <Checkbox label="Test checkbox" checked={false} onChange={handleChange} />,
       );
-      
+
       let checkbox = screen.getByRole('checkbox') as HTMLInputElement;
       expect(checkbox.checked).toBe(false);
-      
+
       rerender(
         <ThemeProvider>
-          <Checkbox 
-            label="Test checkbox" 
-            checked={true}
-            onChange={handleChange} 
-          />
-        </ThemeProvider>
+          <Checkbox label="Test checkbox" checked={true} onChange={handleChange} />
+        </ThemeProvider>,
       );
-      
+
       checkbox = screen.getByRole('checkbox') as HTMLInputElement;
       expect(checkbox.checked).toBe(true);
     });
 
     it('works as uncontrolled component', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          defaultChecked={true}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" defaultChecked={true} />);
+
       const checkbox = screen.getByRole('checkbox') as HTMLInputElement;
       expect(checkbox.checked).toBe(true);
     });
@@ -353,61 +292,36 @@ describe('Checkbox', () => {
 
   describe('Accessibility', () => {
     it('has proper ARIA attributes when required', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          required={true}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" required={true} />);
+
       const checkbox = screen.getByRole('checkbox');
       expect(checkbox).toHaveAttribute('required');
     });
 
     it('has proper ARIA attributes when invalid', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          invalid={true}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" invalid={true} />);
+
       const checkbox = screen.getByRole('checkbox');
       expect(checkbox).toHaveAttribute('aria-invalid', 'true');
     });
 
     it('has proper ARIA attributes when disabled', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          disabled={true}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" disabled={true} />);
+
       const checkbox = screen.getByRole('checkbox');
       expect(checkbox).toHaveAttribute('disabled');
     });
 
     it('has proper ARIA attributes when checked', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          checked={true}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" checked={true} />);
+
       const checkbox = screen.getByRole('checkbox');
       expect(checkbox).toHaveAttribute('aria-checked', 'true');
     });
 
     it('has proper ARIA attributes when indeterminate', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          indeterminate={true}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" indeterminate={true} />);
+
       const checkbox = screen.getByRole('checkbox');
       expect(checkbox).toHaveAttribute('aria-checked', 'mixed');
     });
@@ -415,38 +329,23 @@ describe('Checkbox', () => {
 
   describe('Form Integration', () => {
     it('has proper name attribute', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          name="test-checkbox"
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" name="test-checkbox" />);
+
       const checkbox = screen.getByRole('checkbox');
       expect(checkbox).toHaveAttribute('name', 'test-checkbox');
     });
 
     it('has proper value attribute', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          value="test-value"
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" value="test-value" />);
+
       const checkbox = screen.getByRole('checkbox');
       expect(checkbox).toHaveAttribute('value', 'test-value');
     });
 
     it('forwards ref correctly', () => {
       const ref = React.createRef<HTMLInputElement>();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          ref={ref}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" ref={ref} />);
+
       expect(ref.current).toBeInstanceOf(HTMLInputElement);
     });
   });
@@ -454,110 +353,72 @@ describe('Checkbox', () => {
   describe('Event Handlers', () => {
     it('calls onFocus when focused', () => {
       const handleFocus = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          onFocus={handleFocus}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" onFocus={handleFocus} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.focus(checkbox);
-      
+
       expect(handleFocus).toHaveBeenCalled();
     });
 
     it('calls onBlur when blurred', () => {
       const handleBlur = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          onBlur={handleBlur}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" onBlur={handleBlur} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.focus(checkbox);
       fireEvent.blur(checkbox);
-      
+
       expect(handleBlur).toHaveBeenCalled();
     });
 
     it('calls onKeyDown when key is pressed', () => {
       const handleKeyDown = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          onKeyDown={handleKeyDown}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" onKeyDown={handleKeyDown} />);
+
       const checkbox = screen.getByRole('checkbox');
       fireEvent.keyDown(checkbox, { key: 'Enter' });
-      
+
       expect(handleKeyDown).toHaveBeenCalled();
     });
   });
 
   describe('Custom Styling', () => {
     it('applies custom color', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          color="#ff0000"
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" color="#ff0000" />);
+
       const checkbox = screen.getByRole('checkbox').closest('.checkbox-component');
       expect(checkbox).toHaveStyle({ '--checkbox-custom-bg': '#ff0000' });
     });
 
     it('applies custom gradient', () => {
       renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          gradient="linear-gradient(45deg, #ff0000, #00ff00)"
-        />
+        <Checkbox label="Test checkbox" gradient="linear-gradient(45deg, #ff0000, #00ff00)" />,
       );
-      
+
       const checkbox = screen.getByRole('checkbox').closest('.checkbox-component');
-      expect(checkbox).toHaveStyle({ 
-        '--checkbox-custom-bg': 'linear-gradient(45deg, #ff0000, #00ff00)' 
+      expect(checkbox).toHaveStyle({
+        '--checkbox-custom-bg': 'linear-gradient(45deg, #ff0000, #00ff00)',
       });
     });
 
     it('applies custom text color', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          textColor="#ff0000"
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" textColor="#ff0000" />);
+
       const checkbox = screen.getByRole('checkbox').closest('.checkbox-component');
       expect(checkbox).toHaveStyle({ '--checkbox-custom-color': '#ff0000' });
     });
 
     it('applies custom border color', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          borderColor="#ff0000"
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" borderColor="#ff0000" />);
+
       const checkbox = screen.getByRole('checkbox').closest('.checkbox-component');
       expect(checkbox).toHaveStyle({ '--checkbox-custom-border': '#ff0000' });
     });
 
     it('applies custom background color', () => {
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          backgroundColor="#ff0000"
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" backgroundColor="#ff0000" />);
+
       const checkbox = screen.getByRole('checkbox').closest('.checkbox-component');
       expect(checkbox).toHaveStyle({ '--checkbox-custom-bg': '#ff0000' });
     });
@@ -572,7 +433,7 @@ describe('Checkbox', () => {
     it('handles undefined onChange gracefully', () => {
       renderWithTheme(<Checkbox label="Test checkbox" />);
       const checkbox = screen.getByRole('checkbox');
-      
+
       expect(() => {
         fireEvent.click(checkbox);
       }).not.toThrow();
@@ -580,19 +441,14 @@ describe('Checkbox', () => {
 
     it('handles rapid clicks gracefully', () => {
       const handleChange = jest.fn();
-      renderWithTheme(
-        <Checkbox 
-          label="Test checkbox" 
-          onChange={handleChange}
-        />
-      );
-      
+      renderWithTheme(<Checkbox label="Test checkbox" onChange={handleChange} />);
+
       const checkbox = screen.getByRole('checkbox');
-      
+
       fireEvent.click(checkbox);
       fireEvent.click(checkbox);
       fireEvent.click(checkbox);
-      
+
       expect(handleChange).toHaveBeenCalledTimes(3);
     });
   });

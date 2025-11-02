@@ -9,7 +9,8 @@ const meta: Meta<typeof Badge> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A versatile badge component for status indicators, labels, and notifications. Supports multiple variants, sizes, and features like icons, dots, and removable badges.',
+        component:
+          'A versatile badge component for status indicators, labels, and notifications. Supports multiple variants, sizes, and features like icons, dots, and removable badges.',
       },
     },
   },
@@ -105,14 +106,30 @@ export const Sizes: Story = {
 export const Outlined: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="primary" outlined>Primary</Badge>
-      <Badge variant="secondary" outlined>Secondary</Badge>
-      <Badge variant="success" outlined>Success</Badge>
-      <Badge variant="warning" outlined>Warning</Badge>
-      <Badge variant="danger" outlined>Danger</Badge>
-      <Badge variant="info" outlined>Info</Badge>
-      <Badge variant="light" outlined>Light</Badge>
-      <Badge variant="dark" outlined>Dark</Badge>
+      <Badge variant="primary" outlined>
+        Primary
+      </Badge>
+      <Badge variant="secondary" outlined>
+        Secondary
+      </Badge>
+      <Badge variant="success" outlined>
+        Success
+      </Badge>
+      <Badge variant="warning" outlined>
+        Warning
+      </Badge>
+      <Badge variant="danger" outlined>
+        Danger
+      </Badge>
+      <Badge variant="info" outlined>
+        Info
+      </Badge>
+      <Badge variant="light" outlined>
+        Light
+      </Badge>
+      <Badge variant="dark" outlined>
+        Dark
+      </Badge>
     </div>
   ),
   parameters: {
@@ -128,11 +145,21 @@ export const Outlined: Story = {
 export const WithIcons: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="success" icon="✓">Completed</Badge>
-      <Badge variant="warning" icon="⚠">Pending</Badge>
-      <Badge variant="danger" icon="✕">Failed</Badge>
-      <Badge variant="info" icon="ℹ">Info</Badge>
-      <Badge variant="primary" icon="🔔" iconPosition="right">Notifications</Badge>
+      <Badge variant="success" icon="✓">
+        Completed
+      </Badge>
+      <Badge variant="warning" icon="⚠">
+        Pending
+      </Badge>
+      <Badge variant="danger" icon="✕">
+        Failed
+      </Badge>
+      <Badge variant="info" icon="ℹ">
+        Info
+      </Badge>
+      <Badge variant="primary" icon="🔔" iconPosition="right">
+        Notifications
+      </Badge>
     </div>
   ),
   parameters: {
@@ -148,10 +175,18 @@ export const WithIcons: Story = {
 export const WithDots: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="success" dot>Online</Badge>
-      <Badge variant="danger" dot>Offline</Badge>
-      <Badge variant="warning" dot>Away</Badge>
-      <Badge variant="info" dot>Busy</Badge>
+      <Badge variant="success" dot>
+        Online
+      </Badge>
+      <Badge variant="danger" dot>
+        Offline
+      </Badge>
+      <Badge variant="warning" dot>
+        Away
+      </Badge>
+      <Badge variant="info" dot>
+        Busy
+      </Badge>
     </div>
   ),
   parameters: {
@@ -194,10 +229,18 @@ export const Removable: Story = {
 export const Rounded: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="primary" rounded>Rounded</Badge>
-      <Badge variant="success" rounded>Success</Badge>
-      <Badge variant="warning" rounded>Warning</Badge>
-      <Badge variant="danger" rounded>Danger</Badge>
+      <Badge variant="primary" rounded>
+        Rounded
+      </Badge>
+      <Badge variant="success" rounded>
+        Success
+      </Badge>
+      <Badge variant="warning" rounded>
+        Warning
+      </Badge>
+      <Badge variant="danger" rounded>
+        Danger
+      </Badge>
     </div>
   ),
   parameters: {
@@ -213,11 +256,21 @@ export const Rounded: Story = {
 export const StatusIndicators: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="success" dot>Active</Badge>
-      <Badge variant="warning" dot>Pending</Badge>
-      <Badge variant="danger" dot>Inactive</Badge>
-      <Badge variant="info" dot>Processing</Badge>
-      <Badge variant="secondary" dot>Archived</Badge>
+      <Badge variant="success" dot>
+        Active
+      </Badge>
+      <Badge variant="warning" dot>
+        Pending
+      </Badge>
+      <Badge variant="danger" dot>
+        Inactive
+      </Badge>
+      <Badge variant="info" dot>
+        Processing
+      </Badge>
+      <Badge variant="secondary" dot>
+        Archived
+      </Badge>
     </div>
   ),
   parameters: {
@@ -252,10 +305,18 @@ export const NotificationBadges: Story = {
 export const CustomColors: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge color="#8b5cf6" textColor="#ffffff">Custom Purple</Badge>
-      <Badge color="#f97316" textColor="#ffffff">Custom Orange</Badge>
-      <Badge color="#06b6d4" textColor="#ffffff">Custom Cyan</Badge>
-      <Badge color="#ec4899" textColor="#ffffff">Custom Pink</Badge>
+      <Badge color="#8b5cf6" textColor="#ffffff">
+        Custom Purple
+      </Badge>
+      <Badge color="#f97316" textColor="#ffffff">
+        Custom Orange
+      </Badge>
+      <Badge color="#06b6d4" textColor="#ffffff">
+        Custom Cyan
+      </Badge>
+      <Badge color="#ec4899" textColor="#ffffff">
+        Custom Pink
+      </Badge>
     </div>
   ),
   parameters: {
@@ -295,7 +356,9 @@ export const ComplexExamples: Story = {
 export const InteractiveThemeBuilder: Story = {
   render: () => {
     const [currentTheme, setCurrentTheme] = useState('default');
-    const [variant, setVariant] = useState<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark'>('primary');
+    const [variant, setVariant] = useState<
+      'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark'
+    >('primary');
     const [size, setSize] = useState<'xs' | 'sm' | 'md' | 'lg'>('md');
     const [outlined, setOutlined] = useState(false);
     const [rounded, setRounded] = useState(false);
@@ -303,7 +366,7 @@ export const InteractiveThemeBuilder: Story = {
     const [removable, setRemovable] = useState(false);
     const [icon, setIcon] = useState('✓');
     const [iconPosition, setIconPosition] = useState<'left' | 'right'>('left');
-    
+
     // Color controls
     const [color, setColor] = useState('');
     const [colorGradient, setColorGradient] = useState('');
@@ -311,15 +374,15 @@ export const InteractiveThemeBuilder: Story = {
     const [textColorGradient, setTextColorGradient] = useState('');
     const [borderColor, setBorderColor] = useState('');
     const [borderColorGradient, setBorderColorGradient] = useState('');
-    
+
     // Gradient builder states
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#f43f5e', '#3b82f6']);
     const [activeGradientBuilder, setActiveGradientBuilder] = useState<string | null>(null);
-    
+
     const availableThemes = themes;
-    
+
     // Gradient builder functions
     const generateGradient = () => {
       let gradient = '';
@@ -362,18 +425,22 @@ export const InteractiveThemeBuilder: Story = {
       newColors[index] = color;
       setGradientColors(newColors);
     };
-    
+
     const themeContent = (
       <div>
         <h4>🎨 Theme Preview</h4>
-        <p>Current theme: <strong>{currentTheme}</strong></p>
+        <p>
+          Current theme: <strong>{currentTheme}</strong>
+        </p>
         <p>This badge automatically adapts to the selected theme!</p>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', 
-          gap: '0.5rem',
-          marginTop: '1rem'
-        }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+            gap: '0.5rem',
+            marginTop: '1rem',
+          }}
+        >
           {Object.entries(availableThemes).map(([name, theme]) => (
             <div
               key={name}
@@ -387,18 +454,20 @@ export const InteractiveThemeBuilder: Story = {
                 fontSize: '12px',
               }}
             >
-              <div style={{ 
-                width: '20px', 
-                height: '20px', 
-                background: theme['color-primary'], 
-                borderRadius: '50%',
-                margin: '0 auto 0.25rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontSize: '10px'
-              }}>
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  background: theme['color-primary'],
+                  borderRadius: '50%',
+                  margin: '0 auto 0.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '10px',
+                }}
+              >
                 {name.charAt(0).toUpperCase()}
               </div>
               <strong>{name}</strong>
@@ -412,16 +481,19 @@ export const InteractiveThemeBuilder: Story = {
       <ThemeProvider theme={availableThemes[currentTheme as keyof typeof availableThemes]}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Theme Switcher */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎨 Theme Switcher</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
-              Current theme: <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
+              Current theme:{' '}
+              <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {Object.entries(availableThemes).map(([name, theme]) => (
@@ -441,19 +513,21 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Badge with Theme */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-            textAlign: 'center'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎭 Themed Badge</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
               This badge automatically adapts to the selected theme!
             </p>
-            
+
             <Badge
               variant={variant}
               size={size}
@@ -473,16 +547,26 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Badge Customization Controls */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
-            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🔧 Badge Customization</h3>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
+              🔧 Badge Customization
+            </h3>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '16px',
+              }}
+            >
               {/* Basic Controls */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
@@ -495,7 +579,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Danger', value: 'danger' },
                     { label: 'Info', value: 'info' },
                     { label: 'Light', value: 'light' },
-                    { label: 'Dark', value: 'dark' }
+                    { label: 'Dark', value: 'dark' },
                   ]}
                   value={variant}
                   onChange={(value) => setVariant(value as any)}
@@ -511,7 +595,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Extra Small', value: 'xs' },
                     { label: 'Small', value: 'sm' },
                     { label: 'Medium', value: 'md' },
-                    { label: 'Large', value: 'lg' }
+                    { label: 'Large', value: 'lg' },
                   ]}
                   value={size}
                   onChange={(value) => setSize(value as any)}
@@ -522,7 +606,9 @@ export const InteractiveThemeBuilder: Story = {
 
               {/* Style Controls */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Style Options:</label>
+                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                  Style Options:
+                </label>
                 <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <Checkbox
                     checked={outlined}
@@ -554,24 +640,24 @@ export const InteractiveThemeBuilder: Story = {
               {/* Icon Controls */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Icon:</label>
-                <input 
-                  type="text" 
-                  value={icon} 
+                <input
+                  type="text"
+                  value={icon}
                   onChange={(e) => setIcon(e.target.value)}
                   placeholder="Enter icon (emoji or text)"
-                  style={{ 
-                    padding: '8px', 
-                    borderRadius: '6px', 
+                  style={{
+                    padding: '8px',
+                    borderRadius: '6px',
                     border: '1px solid var(--color-border)',
                     background: 'var(--color-background)',
                     color: 'var(--color-text)',
-                    fontSize: '14px'
+                    fontSize: '14px',
                   }}
                 />
                 <Dropdown
                   options={[
                     { label: 'Left', value: 'left' },
-                    { label: 'Right', value: 'right' }
+                    { label: 'Right', value: 'right' },
                   ]}
                   value={iconPosition}
                   onChange={(value) => setIconPosition(value as any)}
@@ -582,59 +668,83 @@ export const InteractiveThemeBuilder: Story = {
             </div>
 
             {/* Gradient Builder Section */}
-            <div style={{ 
-              background: 'var(--color-background)', 
-              border: '1px solid var(--color-border)', 
-              borderRadius: '8px', 
-              padding: '20px',
-              marginBottom: '20px'
-            }}>
-              <h4 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600', color: 'var(--color-text)' }}>
+            <div
+              style={{
+                background: 'var(--color-background)',
+                border: '1px solid var(--color-border)',
+                borderRadius: '8px',
+                padding: '20px',
+                marginBottom: '20px',
+              }}
+            >
+              <h4
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
                 🌈 Advanced Gradient Builder
               </h4>
-              
+
               {/* Gradient Type Selector */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Type:</label>
-                <select 
-                  value={gradientType} 
+              <div
+                style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}
+              >
+                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                  Type:
+                </label>
+                <select
+                  value={gradientType}
                   onChange={(e) => setGradientType(e.target.value)}
-                  style={{ 
-                    padding: '8px', 
-                    border: '1px solid var(--color-border)', 
-                    borderRadius: '4px', 
+                  style={{
+                    padding: '8px',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: '4px',
                     fontSize: '14px',
                     background: 'var(--color-background)',
-                    color: 'var(--color-text)'
+                    color: 'var(--color-text)',
                   }}
                 >
                   <option value="linear">Linear</option>
                   <option value="radial">Radial</option>
                   <option value="conic">Conic</option>
                 </select>
-                
-                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Direction:</label>
+
+                <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                  Direction:
+                </label>
                 <input
                   type="text"
                   value={gradientDirection}
                   onChange={(e) => setGradientDirection(e.target.value)}
-                  style={{ 
-                    width: '80px', 
-                    padding: '8px', 
-                    border: '1px solid var(--color-border)', 
-                    borderRadius: '4px', 
+                  style={{
+                    width: '80px',
+                    padding: '8px',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: '4px',
                     fontSize: '14px',
                     background: 'var(--color-background)',
-                    color: 'var(--color-text)'
+                    color: 'var(--color-text)',
                   }}
                   placeholder="90deg"
                 />
               </div>
-              
+
               {/* Color Management */}
               <div style={{ marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                  <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Colors:</label>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '8px',
+                  }}
+                >
+                  <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                    Colors:
+                  </label>
                   <button
                     onClick={addColor}
                     style={{
@@ -644,20 +754,27 @@ export const InteractiveThemeBuilder: Story = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     + Add Color
                   </button>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+                <div
+                  style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}
+                >
                   {gradientColors.map((color, index) => (
                     <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <input
                         type="color"
                         value={color}
                         onChange={(e) => updateColor(index, e.target.value)}
-                        style={{ width: '40px', height: '30px', border: '1px solid var(--color-border)', borderRadius: '4px' }}
+                        style={{
+                          width: '40px',
+                          height: '30px',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: '4px',
+                        }}
                       />
                       <button
                         onClick={() => removeColor(index)}
@@ -668,7 +785,7 @@ export const InteractiveThemeBuilder: Story = {
                           background: 'var(--color-background)',
                           color: 'var(--color-text)',
                           cursor: 'pointer',
-                          fontSize: '10px'
+                          fontSize: '10px',
                         }}
                       >
                         ×
@@ -677,32 +794,50 @@ export const InteractiveThemeBuilder: Story = {
                   ))}
                 </div>
               </div>
-              
+
               {/* Gradient Preview */}
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ fontSize: '14px', display: 'block', marginBottom: '4px', color: 'var(--color-text)' }}>Preview:</label>
-                <div 
-                  style={{ 
-                    width: '100%', 
-                    height: '60px', 
-                    background: generateGradient(), 
-                    border: '1px solid var(--color-border)', 
+                <label
+                  style={{
+                    fontSize: '14px',
+                    display: 'block',
+                    marginBottom: '4px',
+                    color: 'var(--color-text)',
+                  }}
+                >
+                  Preview:
+                </label>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '60px',
+                    background: generateGradient(),
+                    border: '1px solid var(--color-border)',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: '#fff',
                     fontSize: '12px',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
                   }}
                 >
                   {generateGradient()}
                 </div>
               </div>
-              
+
               {/* Apply to Target */}
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ fontSize: '14px', display: 'block', marginBottom: '8px', color: 'var(--color-text)' }}>Apply to:</label>
+                <label
+                  style={{
+                    fontSize: '14px',
+                    display: 'block',
+                    marginBottom: '8px',
+                    color: 'var(--color-text)',
+                  }}
+                >
+                  Apply to:
+                </label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   <button
                     onClick={() => applyGradientToTarget('color')}
@@ -713,7 +848,7 @@ export const InteractiveThemeBuilder: Story = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Badge Color
@@ -727,7 +862,7 @@ export const InteractiveThemeBuilder: Story = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Text Color
@@ -741,7 +876,7 @@ export const InteractiveThemeBuilder: Story = {
                       background: 'var(--color-background)',
                       color: 'var(--color-text)',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
                     }}
                   >
                     Border Color
@@ -751,31 +886,54 @@ export const InteractiveThemeBuilder: Story = {
             </div>
 
             {/* Color Controls Section */}
-            <div style={{ 
-              background: 'var(--color-background)', 
-              border: '1px solid var(--color-border)', 
-              borderRadius: '8px', 
-              padding: '20px',
-              marginBottom: '20px'
-            }}>
-              <h4 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600', color: 'var(--color-text)' }}>
+            <div
+              style={{
+                background: 'var(--color-background)',
+                border: '1px solid var(--color-border)',
+                borderRadius: '8px',
+                padding: '20px',
+                marginBottom: '20px',
+              }}
+            >
+              <h4
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
                 🎨 Color Controls
               </h4>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '16px',
+                }}
+              >
                 {/* Badge Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Badge Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Badge Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={color || '#0070f3'} 
+                    <input
+                      type="color"
+                      value={color || '#0070f3'}
                       onChange={(e) => setColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={color} 
+                    <input
+                      type="text"
+                      value={color}
                       onChange={(e) => setColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -785,10 +943,10 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setColor('')}
                       style={{
                         padding: '6px 8px',
@@ -797,7 +955,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -807,11 +965,13 @@ export const InteractiveThemeBuilder: Story = {
 
                 {/* Badge Color Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Badge Color Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Badge Color Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={colorGradient} 
+                    <input
+                      type="text"
+                      value={colorGradient}
                       onChange={(e) => setColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -821,10 +981,10 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -833,7 +993,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -843,17 +1003,25 @@ export const InteractiveThemeBuilder: Story = {
 
                 {/* Text Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Text Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Text Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={textColor || '#ffffff'} 
+                    <input
+                      type="color"
+                      value={textColor || '#ffffff'}
                       onChange={(e) => setTextColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={textColor} 
+                    <input
+                      type="text"
+                      value={textColor}
                       onChange={(e) => setTextColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -863,10 +1031,10 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setTextColor('')}
                       style={{
                         padding: '6px 8px',
@@ -875,7 +1043,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -885,11 +1053,13 @@ export const InteractiveThemeBuilder: Story = {
 
                 {/* Text Color Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Text Color Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Text Color Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={textColorGradient} 
+                    <input
+                      type="text"
+                      value={textColorGradient}
                       onChange={(e) => setTextColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -899,10 +1069,10 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setTextColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -911,7 +1081,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -921,17 +1091,25 @@ export const InteractiveThemeBuilder: Story = {
 
                 {/* Border Color */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Border Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Border Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={borderColor || '#e5e7eb'} 
+                    <input
+                      type="color"
+                      value={borderColor || '#e5e7eb'}
                       onChange={(e) => setBorderColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
-                    <input 
-                      type="text" 
-                      value={borderColor} 
+                    <input
+                      type="text"
+                      value={borderColor}
                       onChange={(e) => setBorderColor(e.target.value)}
                       placeholder="e.g., #ff0000 or red"
                       style={{
@@ -941,10 +1119,10 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setBorderColor('')}
                       style={{
                         padding: '6px 8px',
@@ -953,7 +1131,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -963,11 +1141,13 @@ export const InteractiveThemeBuilder: Story = {
 
                 {/* Border Color Gradient */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Border Color Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Border Color Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <input 
-                      type="text" 
-                      value={borderColorGradient} 
+                    <input
+                      type="text"
+                      value={borderColorGradient}
                       onChange={(e) => setBorderColorGradient(e.target.value)}
                       placeholder="e.g., linear-gradient(45deg, #ff0000, #00ff00)"
                       style={{
@@ -977,10 +1157,10 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
-                    <button 
+                    <button
                       onClick={() => setBorderColorGradient('')}
                       style={{
                         padding: '6px 8px',
@@ -989,7 +1169,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1001,7 +1181,7 @@ export const InteractiveThemeBuilder: Story = {
 
             {/* Reset Button */}
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <Button 
+              <Button
                 onClick={() => {
                   setVariant('primary');
                   setSize('md');
@@ -1035,7 +1215,8 @@ export const InteractiveThemeBuilder: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive theme builder that allows you to customize all badge properties in real-time. Perfect for designers and developers to experiment with different combinations.',
+        story:
+          'Interactive theme builder that allows you to customize all badge properties in real-time. Perfect for designers and developers to experiment with different combinations.',
       },
     },
   },
