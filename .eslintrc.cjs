@@ -44,7 +44,10 @@ module.exports = {
     'react/prop-types': 'off',
     'import/no-unresolved': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
     '@typescript-eslint/no-explicit-any': 'warn',
     'testing-library/no-node-access': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
