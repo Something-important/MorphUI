@@ -41,6 +41,8 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:all": "npm run build:types && npm run build",
     "test": "jest",
+    "test:ci": "jest --ci --coverage",
+    "type-check": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint . --ext .ts,.tsx",
