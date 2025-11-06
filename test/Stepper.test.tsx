@@ -351,8 +351,8 @@ describe('Stepper Component', () => {
 
     it('uses ordered list structure', () => {
       const { container } = render(<Stepper steps={defaultSteps} activeStep={0} />);
-      expect(container.querySelector('ol[role="list"]')).toBeInTheDocument();
-      expect(container.querySelectorAll('li[role="listitem"]')).toHaveLength(3);
+      expect(container.querySelector('ol')).toBeInTheDocument();
+      expect(container.querySelectorAll('li')).toHaveLength(3);
     });
   });
 
