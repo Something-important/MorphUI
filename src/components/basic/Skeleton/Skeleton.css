@@ -1,0 +1,151 @@
+/* Skeleton.css */
+.skeleton-component {
+  display: block;
+  background: var(--skeleton-custom-bg, var(--skeleton-bg, var(--color-gray-200, #e5e7eb)));
+  border-radius: var(--border-radius-sm, 4px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Variants */
+.skeleton-component--text {
+  height: 1em;
+  border-radius: var(--border-radius-sm, 4px);
+}
+
+.skeleton-component--circular {
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+.skeleton-component--rectangular {
+  border-radius: var(--border-radius-sm, 4px);
+}
+
+.skeleton-component--rounded {
+  border-radius: var(--border-radius-lg, 8px);
+}
+
+/* Sizes for text variant */
+.skeleton-component--xs.skeleton-component--text {
+  height: 0.75em;
+}
+
+.skeleton-component--sm.skeleton-component--text {
+  height: 0.875em;
+}
+
+.skeleton-component--md.skeleton-component--text {
+  height: 1em;
+}
+
+.skeleton-component--lg.skeleton-component--text {
+  height: 1.25em;
+}
+
+.skeleton-component--xl.skeleton-component--text {
+  height: 1.5em;
+}
+
+/* Sizes for circular variant */
+.skeleton-component--xs.skeleton-component--circular {
+  width: 24px;
+  height: 24px;
+}
+
+.skeleton-component--sm.skeleton-component--circular {
+  width: 32px;
+  height: 32px;
+}
+
+.skeleton-component--md.skeleton-component--circular {
+  width: 40px;
+  height: 40px;
+}
+
+.skeleton-component--lg.skeleton-component--circular {
+  width: 56px;
+  height: 56px;
+}
+
+.skeleton-component--xl.skeleton-component--circular {
+  width: 80px;
+  height: 80px;
+}
+
+/* Sizes for rectangular variant */
+.skeleton-component--xs.skeleton-component--rectangular {
+  min-height: 60px;
+}
+
+.skeleton-component--sm.skeleton-component--rectangular {
+  min-height: 80px;
+}
+
+.skeleton-component--md.skeleton-component--rectangular {
+  min-height: 120px;
+}
+
+.skeleton-component--lg.skeleton-component--rectangular {
+  min-height: 160px;
+}
+
+.skeleton-component--xl.skeleton-component--rectangular {
+  min-height: 200px;
+}
+
+/* Animation */
+.skeleton-component--animated {
+  position: relative;
+}
+
+.skeleton-component--animated::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Alternative pulse animation (can be toggled) */
+.skeleton-component--animated.skeleton-component--pulse {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-component--animated.skeleton-component--pulse::after {
+  display: none;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-component--animated::after {
+    animation: none;
+  }
+
+  .skeleton-component--animated.skeleton-component--pulse {
+    animation: none;
+  }
+}

@@ -1,0 +1,306 @@
+/* Divider.css */
+.divider-component {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+/* Horizontal divider */
+.divider-component--horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.divider-component--horizontal.divider-component--xs {
+  height: 1px;
+}
+
+.divider-component--horizontal.divider-component--sm {
+  height: 2px;
+}
+
+.divider-component--horizontal.divider-component--md {
+  height: 2px;
+}
+
+.divider-component--horizontal.divider-component--lg {
+  height: 3px;
+}
+
+/* Vertical divider */
+.divider-component--vertical {
+  width: 1px;
+  height: 100%;
+  min-height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.divider-component--vertical.divider-component--xs {
+  width: 1px;
+}
+
+.divider-component--vertical.divider-component--sm {
+  width: 2px;
+}
+
+.divider-component--vertical.divider-component--md {
+  width: 2px;
+}
+
+.divider-component--vertical.divider-component--lg {
+  width: 3px;
+}
+
+/* Variants */
+.divider-component--solid {
+  border-style: solid;
+}
+
+.divider-component--dashed {
+  border-style: dashed;
+  background: transparent;
+  border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+.divider-component--horizontal.divider-component--dashed {
+  border-top-width: 1px;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.divider-component--vertical.divider-component--dashed {
+  border-left-width: 1px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.divider-component--dotted {
+  border-style: dotted;
+  background: transparent;
+  border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+.divider-component--horizontal.divider-component--dotted {
+  border-top-width: 1px;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.divider-component--vertical.divider-component--dotted {
+  border-left-width: 1px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+/* Spacing */
+.divider-component--spacing-none {
+  margin: 0;
+}
+
+.divider-component--spacing-xs.divider-component--horizontal {
+  margin-top: var(--spacing-xs, 0.25rem);
+  margin-bottom: var(--spacing-xs, 0.25rem);
+}
+
+.divider-component--spacing-xs.divider-component--vertical {
+  margin-left: var(--spacing-xs, 0.25rem);
+  margin-right: var(--spacing-xs, 0.25rem);
+}
+
+.divider-component--spacing-sm.divider-component--horizontal {
+  margin-top: var(--spacing-sm, 0.5rem);
+  margin-bottom: var(--spacing-sm, 0.5rem);
+}
+
+.divider-component--spacing-sm.divider-component--vertical {
+  margin-left: var(--spacing-sm, 0.5rem);
+  margin-right: var(--spacing-sm, 0.5rem);
+}
+
+.divider-component--spacing-md.divider-component--horizontal {
+  margin-top: var(--spacing-md, 1rem);
+  margin-bottom: var(--spacing-md, 1rem);
+}
+
+.divider-component--spacing-md.divider-component--vertical {
+  margin-left: var(--spacing-md, 1rem);
+  margin-right: var(--spacing-md, 1rem);
+}
+
+.divider-component--spacing-lg.divider-component--horizontal {
+  margin-top: var(--spacing-lg, 1.5rem);
+  margin-bottom: var(--spacing-lg, 1.5rem);
+}
+
+.divider-component--spacing-lg.divider-component--vertical {
+  margin-left: var(--spacing-lg, 1.5rem);
+  margin-right: var(--spacing-lg, 1.5rem);
+}
+
+.divider-component--spacing-xl.divider-component--horizontal {
+  margin-top: var(--spacing-xl, 2rem);
+  margin-bottom: var(--spacing-xl, 2rem);
+}
+
+.divider-component--spacing-xl.divider-component--vertical {
+  margin-left: var(--spacing-xl, 2rem);
+  margin-right: var(--spacing-xl, 2rem);
+}
+
+/* Divider with text */
+.divider-component--with-text {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  width: 100%;
+}
+
+.divider-component--with-text.divider-component--horizontal {
+  height: auto;
+}
+
+.divider-component--with-text.divider-component--vertical {
+  flex-direction: column;
+  width: auto;
+  height: 100%;
+}
+
+.divider-component__line {
+  flex: 1;
+  background: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+.divider-component--horizontal .divider-component__line {
+  height: 1px;
+}
+
+.divider-component--vertical .divider-component__line {
+  width: 1px;
+}
+
+.divider-component--horizontal.divider-component--xs .divider-component__line {
+  height: 1px;
+}
+
+.divider-component--horizontal.divider-component--sm .divider-component__line {
+  height: 2px;
+}
+
+.divider-component--horizontal.divider-component--md .divider-component__line {
+  height: 2px;
+}
+
+.divider-component--horizontal.divider-component--lg .divider-component__line {
+  height: 3px;
+}
+
+.divider-component--vertical.divider-component--xs .divider-component__line {
+  width: 1px;
+}
+
+.divider-component--vertical.divider-component--sm .divider-component__line {
+  width: 2px;
+}
+
+.divider-component--vertical.divider-component--md .divider-component__line {
+  width: 2px;
+}
+
+.divider-component--vertical.divider-component--lg .divider-component__line {
+  width: 3px;
+}
+
+/* Dashed/dotted variants with text */
+.divider-component--dashed .divider-component__line {
+  background: transparent;
+  border-style: dashed;
+}
+
+.divider-component--horizontal.divider-component--dashed .divider-component__line {
+  border-top-width: 1px;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+.divider-component--vertical.divider-component--dashed .divider-component__line {
+  border-left-width: 1px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+.divider-component--dotted .divider-component__line {
+  background: transparent;
+  border-style: dotted;
+}
+
+.divider-component--horizontal.divider-component--dotted .divider-component__line {
+  border-top-width: 1px;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+.divider-component--vertical.divider-component--dotted .divider-component__line {
+  border-left-width: 1px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
+}
+
+.divider-component__text {
+  padding: 0 var(--spacing-md, 1rem);
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-muted, #6b7280);
+  white-space: nowrap;
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.divider-component--vertical .divider-component__text {
+  padding: var(--spacing-md, 1rem) 0;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Text position */
+.divider-component--text-left .divider-component__line--before {
+  flex: 0 0 0;
+}
+
+.divider-component--text-left .divider-component__line--after {
+  flex: 1;
+}
+
+.divider-component--text-right .divider-component__line--before {
+  flex: 1;
+}
+
+.divider-component--text-right .divider-component__line--after {
+  flex: 0 0 0;
+}
+
+.divider-component--text-center .divider-component__line--before,
+.divider-component--text-center .divider-component__line--after {
+  flex: 1;
+}
+
+/* Gradient support */
+.divider-component--gradient {
+  background: var(--divider-custom-color) !important;
+}
+
+.divider-component--gradient .divider-component__line {
+  background: var(--divider-custom-color) !important;
+}

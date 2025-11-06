@@ -1,0 +1,212 @@
+/* Avatar.css */
+.avatar-component {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  background: var(--avatar-custom-bg, var(--avatar-bg, var(--color-gray-300, #d1d5db)));
+  color: var(--avatar-custom-color, var(--avatar-color, var(--color-text-inverse, #ffffff)));
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Shapes */
+.avatar-component--circle {
+  border-radius: 50%;
+}
+
+.avatar-component--square {
+  border-radius: var(--border-radius-md, 6px);
+}
+
+.avatar-component--rounded {
+  border-radius: var(--border-radius-lg, 8px);
+}
+
+/* Sizes */
+.avatar-component--xs {
+  width: 24px;
+  height: 24px;
+  font-size: 0.625rem;
+}
+
+.avatar-component--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 0.75rem;
+}
+
+.avatar-component--md {
+  width: 40px;
+  height: 40px;
+  font-size: 0.875rem;
+}
+
+.avatar-component--lg {
+  width: 56px;
+  height: 56px;
+  font-size: 1rem;
+}
+
+.avatar-component--xl {
+  width: 80px;
+  height: 80px;
+  font-size: 1.5rem;
+}
+
+/* Image */
+.avatar-component__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Initials */
+.avatar-component__initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* Icon */
+.avatar-component__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+}
+
+/* Status indicator */
+.avatar-component__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.375em;
+  height: 0.375em;
+  border-radius: 50%;
+  border: 2px solid var(--color-background, #ffffff);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-component--xs .avatar-component__status {
+  width: 6px;
+  height: 6px;
+  border-width: 1.5px;
+}
+
+.avatar-component--sm .avatar-component__status {
+  width: 8px;
+  height: 8px;
+}
+
+.avatar-component--md .avatar-component__status {
+  width: 10px;
+  height: 10px;
+}
+
+.avatar-component--lg .avatar-component__status {
+  width: 14px;
+  height: 14px;
+}
+
+.avatar-component--xl .avatar-component__status {
+  width: 18px;
+  height: 18px;
+}
+
+/* Status colors */
+.avatar-component__status--online {
+  background: var(--color-success, #10b981);
+}
+
+.avatar-component__status--offline {
+  background: var(--color-gray-400, #9ca3af);
+}
+
+.avatar-component__status--away {
+  background: var(--color-warning, #f59e0b);
+}
+
+.avatar-component__status--busy {
+  background: var(--color-danger, #ef4444);
+}
+
+/* Badge */
+.avatar-component__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1;
+  color: var(--color-text-inverse, #ffffff);
+  background: var(--color-danger, #ef4444);
+  border: 2px solid var(--color-background, #ffffff);
+  border-radius: var(--border-radius-full, 9999px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-component--xs .avatar-component__badge {
+  min-width: 14px;
+  height: 14px;
+  padding: 0 4px;
+  font-size: 0.5rem;
+  border-width: 1.5px;
+}
+
+.avatar-component--sm .avatar-component__badge {
+  min-width: 16px;
+  height: 16px;
+  padding: 0 5px;
+  font-size: 0.5625rem;
+}
+
+.avatar-component--md .avatar-component__badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  font-size: 0.625rem;
+}
+
+.avatar-component--lg .avatar-component__badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 7px;
+  font-size: 0.6875rem;
+}
+
+.avatar-component--xl .avatar-component__badge {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 8px;
+  font-size: 0.75rem;
+}
+
+/* Gradient support */
+.avatar-component--gradient {
+  background: var(--avatar-custom-bg) !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .avatar-component__status {
+    transition: none !important;
+  }
+}

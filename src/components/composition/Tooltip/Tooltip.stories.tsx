@@ -730,7 +730,12 @@ export const InteractiveThemeBuilder: Story = {
               {Object.entries(availableThemes).map(([name, theme]) => (
                 <Button
                   key={name}
-                  onClick={() => setCurrentTheme(name)}
+                  onClick={() => {
+                    Object.entries(theme).forEach(([key, value]) => {
+                      document.documentElement.style.setProperty(`--${key}`, String(value));
+                    });
+                    setCurrentTheme(name);
+                  }}
                   variant={currentTheme === name ? 'primary' : 'outline'}
                   size="sm"
                 >
