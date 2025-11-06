@@ -2,7 +2,14 @@
 .input-wrapper {
   position: relative;
   width: 100%;
-  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-family: var(
+    --font-family,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif
+  );
 }
 
 .input-component {
@@ -19,8 +26,15 @@
   outline: none;
   background: var(--input-custom-bg, var(--color-background, #fff));
   color: var(--input-custom-color, var(--color-text-primary, #333));
-  font-family: var(--font-family-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-  
+  font-family: var(
+    --font-family-sans,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif
+  );
+
   /* Enhanced styling */
   box-shadow: var(--input-custom-shadow, var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1)));
   backdrop-filter: var(--input-custom-backdrop-blur);
@@ -103,7 +117,9 @@
   transform: translateY(-1px);
 }
 
-.input-component:hover:not(:disabled):not(.input-component--error):not(.input-component--success):not(.input-component--warning):not(.input-component--info) {
+.input-component:hover:not(:disabled):not(.input-component--error):not(
+    .input-component--success
+  ):not(.input-component--warning):not(.input-component--info) {
   border-color: var(--color-border-hover);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
@@ -211,8 +227,12 @@
 }
 
 @keyframes input-spin {
-  0% { transform: translateY(-50%) rotate(0deg); }
-  100% { transform: translateY(-50%) rotate(360deg); }
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+  }
 }
 
 /* Icon support */
@@ -483,11 +503,11 @@
   .input-component {
     font-size: 16px; /* Prevents zoom on iOS */
   }
-  
+
   .input-floating-label {
     font-size: 16px;
   }
-  
+
   .input-floating-label--active {
     font-size: 14px;
   }
@@ -521,9 +541,15 @@
 }
 
 @keyframes inputStateChange {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Background gradient support with better text visibility */
@@ -532,7 +558,9 @@
   background: var(--input-custom-bg) !important;
   /* Ensure text is visible on gradient backgrounds */
   color: var(--input-custom-color, #ffffff) !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.8);
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.5),
+    0 0 1px rgba(0, 0, 0, 0.8);
   font-weight: 500;
 }
 
@@ -561,22 +589,26 @@
   border-radius: inherit;
   padding: 1px;
   background: var(--input-custom-border);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
 }
 
 /* Gradient background support */
-.input-component[style*="--input-custom-bg"] {
+.input-component[style*='--input-custom-bg'] {
   background-image: var(--input-custom-bg);
   background-size: cover;
   background-position: center;
 }
 
 /* Backdrop blur effect */
-.input-component[style*="--input-custom-backdrop-blur"] {
+.input-component[style*='--input-custom-backdrop-blur'] {
   backdrop-filter: var(--input-custom-backdrop-blur);
   background-color: rgba(255, 255, 255, 0.8);
 }
@@ -588,25 +620,25 @@
     color: var(--input-custom-color, var(--color-text));
     border-color: var(--input-custom-border, var(--color-border));
   }
-  
+
   .input-floating-label {
     background: var(--input-custom-bg, var(--color-background));
     color: var(--color-text-secondary);
   }
-  
+
   .input-floating-label--active {
     color: var(--color-primary);
   }
-  
+
   .input-suggestions {
     background: var(--color-background);
     border-color: var(--color-border);
   }
-  
+
   .input-suggestion-item {
     border-bottom-color: var(--color-border);
   }
-  
+
   .input-suggestion-item:hover {
     background-color: var(--color-background-secondary);
   }
@@ -623,7 +655,7 @@
   justify-content: center;
   width: 1.5rem;
   height: 1.5rem;
-  
+
   /* Add validation-specific styles */
   color: var(--color-text-primary);
   font-size: 1.125rem;
@@ -675,4 +707,3 @@
 .input-component--error .input-icon--validation {
   color: var(--color-danger);
 }
-

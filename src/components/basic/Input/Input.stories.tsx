@@ -6,13 +6,13 @@ import { Input, Button, Dropdown, Checkbox, ThemeProvider, themes } from '../../
 // Utility function to create controlled inputs with state
 const createControlledInputs = (fields: string[]) => {
   const [values, setValues] = useState<Record<string, string>>(
-    fields.reduce((acc, field) => ({ ...acc, [field]: '' }), {})
+    fields.reduce((acc, field) => ({ ...acc, [field]: '' }), {}),
   );
-  
+
   const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues(prev => ({ ...prev, [field]: e.target.value }));
+    setValues((prev) => ({ ...prev, [field]: e.target.value }));
   };
-  
+
   return { values, handleChange };
 };
 
@@ -23,7 +23,8 @@ const meta: Meta<typeof Input> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Enhanced Input component with gradient backgrounds, icons, floating labels, validation, and advanced styling.',
+        component:
+          'Enhanced Input component with gradient backgrounds, icons, floating labels, validation, and advanced styling.',
       },
     },
   },
@@ -100,7 +101,7 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
   render: () => {
     const [value, setValue] = useState('');
-    
+
     return (
       <Input
         placeholder="Enter your text here..."
@@ -119,13 +120,13 @@ export const SizeVariants: Story = {
       sm: '',
       md: '',
       lg: '',
-      xl: ''
+      xl: '',
     });
-    
+
     const handleChange = (size: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValues(prev => ({ ...prev, [size]: e.target.value }));
+      setValues((prev) => ({ ...prev, [size]: e.target.value }));
     };
-    
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '300px' }}>
         <Input
@@ -174,13 +175,13 @@ export const Variants: Story = {
       info: '',
       danger: '',
       ghost: '',
-      outline: ''
+      outline: '',
     });
-    
+
     const handleChange = (variant: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValues(prev => ({ ...prev, [variant]: e.target.value }));
+      setValues((prev) => ({ ...prev, [variant]: e.target.value }));
     };
-    
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '400px' }}>
         <Input
@@ -243,13 +244,13 @@ export const IconsAndFloatingLabels: Story = {
       search: '',
       email: '',
       floating: '',
-      both: ''
+      both: '',
     });
-    
+
     const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValues(prev => ({ ...prev, [field]: e.target.value }));
+      setValues((prev) => ({ ...prev, [field]: e.target.value }));
     };
-    
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '350px' }}>
         <Input
@@ -259,7 +260,7 @@ export const IconsAndFloatingLabels: Story = {
           onChange={handleChange('search')}
           shadow="md"
         />
-        
+
         <Input
           placeholder="Email with right icon"
           type="email"
@@ -268,7 +269,7 @@ export const IconsAndFloatingLabels: Story = {
           onChange={handleChange('email')}
           shadow="md"
         />
-        
+
         <Input
           placeholder="Floating label input"
           floatingLabel={true}
@@ -277,7 +278,7 @@ export const IconsAndFloatingLabels: Story = {
           shadow="lg"
           borderRadius={12}
         />
-        
+
         <Input
           placeholder="Both icons + floating label"
           iconLeft={<span>👤</span>}
@@ -297,9 +298,17 @@ export const IconsAndFloatingLabels: Story = {
 export const InputTypes: Story = {
   render: () => {
     const { values, handleChange } = createControlledInputs([
-      'text', 'email', 'password', 'number', 'search', 'tel', 'url', 'date', 'time'
+      'text',
+      'email',
+      'password',
+      'number',
+      'search',
+      'tel',
+      'url',
+      'date',
+      'time',
     ]);
-    
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '400px' }}>
         <Input
@@ -374,27 +383,37 @@ export const InputTypes: Story = {
 export const ValidationStates: Story = {
   render: () => {
     const { values, handleChange } = createControlledInputs([
-      'basic', 'withError', 'withSuccess', 'withWarning', 'withInfo'
+      'basic',
+      'withError',
+      'withSuccess',
+      'withWarning',
+      'withInfo',
     ]);
-    
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '500px' }}>
         <div>
           <h3 style={{ marginBottom: '0.5rem', color: 'var(--color-text-primary)' }}>
             Validation States
           </h3>
-          <p style={{ marginBottom: '1rem', color: 'var(--color-text-secondary)', fontSize: '0.875rem' }}>
+          <p
+            style={{
+              marginBottom: '1rem',
+              color: 'var(--color-text-secondary)',
+              fontSize: '0.875rem',
+            }}
+          >
             Validation state icons appear automatically when you set the corresponding props.
           </p>
         </div>
-        
+
         <Input
           placeholder="Basic input - no validation state"
           value={values.basic}
           onChange={handleChange('basic')}
           shadow="sm"
         />
-        
+
         <Input
           placeholder="Error state - shows × icon automatically"
           error={true}
@@ -403,7 +422,7 @@ export const ValidationStates: Story = {
           onChange={handleChange('withError')}
           shadow="sm"
         />
-        
+
         <Input
           placeholder="Success state - shows ✓ icon automatically"
           success={true}
@@ -411,7 +430,7 @@ export const ValidationStates: Story = {
           onChange={handleChange('withSuccess')}
           shadow="sm"
         />
-        
+
         <Input
           placeholder="Warning state - shows ! icon automatically"
           warning={true}
@@ -419,7 +438,7 @@ export const ValidationStates: Story = {
           onChange={handleChange('withWarning')}
           shadow="sm"
         />
-        
+
         <Input
           placeholder="Info state - shows i icon automatically"
           info={true}
@@ -435,10 +454,8 @@ export const ValidationStates: Story = {
 // Character Count and Validation
 export const CharacterCountAndValidation: Story = {
   render: () => {
-    const { values, handleChange } = createControlledInputs([
-      'limited', 'email', 'required'
-    ]);
-    
+    const { values, handleChange } = createControlledInputs(['limited', 'email', 'required']);
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '400px' }}>
         <Input
@@ -449,7 +466,7 @@ export const CharacterCountAndValidation: Story = {
           onChange={handleChange('limited')}
           shadow="md"
         />
-        
+
         <Input
           placeholder="Email validation"
           type="email"
@@ -458,10 +475,13 @@ export const CharacterCountAndValidation: Story = {
           shadow="md"
           validation={{
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            custom: (value) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length > 0 ? 'Invalid email format' : null
+            custom: (value) =>
+              !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length > 0
+                ? 'Invalid email format'
+                : null,
           }}
         />
-        
+
         <Input
           placeholder="Required field"
           value={values.required}
@@ -469,7 +489,7 @@ export const CharacterCountAndValidation: Story = {
           shadow="md"
           validation={{
             required: true,
-            custom: (value) => value.length === 0 ? 'This field is required' : null
+            custom: (value) => (value.length === 0 ? 'This field is required' : null),
           }}
         />
       </div>
@@ -482,9 +502,18 @@ export const AutoCompleteWithSuggestions: Story = {
   render: () => {
     const [value, setValue] = useState('');
     const suggestions = [
-      'React', 'TypeScript', 'JavaScript', 'Node.js', 'Python', 'Java', 'C++', 'Go', 'Rust', 'Swift'
+      'React',
+      'TypeScript',
+      'JavaScript',
+      'Node.js',
+      'Python',
+      'Java',
+      'C++',
+      'Go',
+      'Rust',
+      'Swift',
     ];
-    
+
     return (
       <div style={{ width: '350px' }}>
         <Input
@@ -505,10 +534,8 @@ export const AutoCompleteWithSuggestions: Story = {
 // Hover Effects and Ripple
 export const HoverEffectsAndRipple: Story = {
   render: () => {
-    const { values, handleChange } = createControlledInputs([
-      'lift', 'glow', 'scale', 'ripple'
-    ]);
-    
+    const { values, handleChange } = createControlledInputs(['lift', 'glow', 'scale', 'ripple']);
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '400px' }}>
         <Input
@@ -556,7 +583,7 @@ export const AdvancedStyling: Story = {
         onChange={() => {}}
         iconLeft={<span>✨</span>}
       />
-      
+
       <Input
         placeholder="Backdrop blur effect"
         backdropBlur={true}
@@ -569,7 +596,7 @@ export const AdvancedStyling: Story = {
         onChange={() => {}}
         iconLeft={<span>🌟</span>}
       />
-      
+
       <Input
         placeholder="Custom gradient background"
         gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)"
@@ -590,12 +617,12 @@ export const LoadingAndInteractiveStates: Story = {
   render: () => {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState('');
-    
+
     const simulateLoading = () => {
       setLoading(true);
       setTimeout(() => setLoading(false), 2000);
     };
-    
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '350px' }}>
         <Input
@@ -606,7 +633,7 @@ export const LoadingAndInteractiveStates: Story = {
           onClick={simulateLoading}
           shadow="md"
         />
-        
+
         <Input
           placeholder="Disabled state"
           disabled={true}
@@ -614,7 +641,7 @@ export const LoadingAndInteractiveStates: Story = {
           onChange={() => {}}
           shadow="sm"
         />
-        
+
         <Input
           placeholder="Read-only state"
           readOnly={true}
@@ -634,13 +661,13 @@ export const FormIntegration: Story = {
       name: '',
       email: '',
       phone: '',
-      message: ''
+      message: '',
     });
-    
+
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
     };
-    
+
     return (
       <form onSubmit={handleSubmit} style={{ width: '400px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -653,7 +680,7 @@ export const FormIntegration: Story = {
             required={true}
             shadow="md"
           />
-          
+
           <Input
             placeholder="Email Address"
             type="email"
@@ -664,11 +691,14 @@ export const FormIntegration: Story = {
             required={true}
             validation={{
               pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              custom: (value) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length > 0 ? 'Invalid email format' : null
+              custom: (value) =>
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length > 0
+                  ? 'Invalid email format'
+                  : null,
             }}
             shadow="md"
           />
-          
+
           <Input
             placeholder="Phone Number"
             type="tel"
@@ -678,7 +708,7 @@ export const FormIntegration: Story = {
             floatingLabel={true}
             shadow="md"
           />
-          
+
           <Input
             placeholder="Message"
             value={formData.message}
@@ -689,8 +719,8 @@ export const FormIntegration: Story = {
             characterCount={true}
             shadow="md"
           />
-          
-          <button 
+
+          <button
             type="submit"
             style={{
               padding: '0.75rem 1.5rem',
@@ -700,7 +730,7 @@ export const FormIntegration: Story = {
               borderRadius: '8px',
               fontSize: '1rem',
               cursor: 'pointer',
-              marginTop: '1rem'
+              marginTop: '1rem',
             }}
           >
             Submit Form
@@ -716,12 +746,14 @@ export const InteractiveThemeBuilder: Story = {
   render: () => {
     const [currentTheme, setCurrentTheme] = useState('default');
     const [inputValue, setInputValue] = useState('');
-    const [variant, setVariant] = useState<'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'>('primary');
+    const [variant, setVariant] = useState<
+      'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'
+    >('primary');
     const [size, setSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md');
     const [floatingLabel, setFloatingLabel] = useState(false);
     const [showIcons, setShowIcons] = useState(false);
     const [characterCount, setCharacterCount] = useState(false);
-    
+
     // Advanced color states
     const [backgroundColor, setBackgroundColor] = useState('');
     const [backgroundColorGradient, setBackgroundColorGradient] = useState('');
@@ -729,12 +761,12 @@ export const InteractiveThemeBuilder: Story = {
     const [textColorGradient, setTextColorGradient] = useState('');
     const [borderColor, setBorderColor] = useState('');
     const [borderColorGradient, setBorderColorGradient] = useState('');
-    
+
     // Gradient builder states
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#f43f5e', '#3b82f6']);
-    
+
     const availableThemes = themes;
 
     // Utility functions
@@ -765,7 +797,7 @@ export const InteractiveThemeBuilder: Story = {
     const generateGradient = () => {
       if (gradientColors.length < 2) return '';
       const colors = gradientColors.join(', ');
-      
+
       let gradient = '';
       if (gradientType === 'linear') {
         gradient = `linear-gradient(${gradientDirection}, ${colors})`;
@@ -776,14 +808,14 @@ export const InteractiveThemeBuilder: Story = {
         const direction = gradientDirection || 'from 0deg at center';
         gradient = `conic-gradient(${direction}, ${colors})`;
       }
-      
+
       return gradient;
     };
 
     const applyGradientToTarget = (target: string) => {
       const gradient = generateGradient();
       if (!gradient) return;
-      
+
       switch (target) {
         case 'background':
           setBackgroundColorGradient(gradient);
@@ -808,27 +840,33 @@ export const InteractiveThemeBuilder: Story = {
       setBorderColor('');
       setBorderColorGradient('');
     };
-    
+
     return (
       <ThemeProvider theme={availableThemes[currentTheme as keyof typeof availableThemes]}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Theme Switcher */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎨 Theme Switcher</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
-              Current theme: <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
+              Current theme:{' '}
+              <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {Object.entries(availableThemes).map(([name, theme]) => (
                 <Button
                   key={name}
                   onClick={() => {
+                    Object.entries(theme).forEach(([key, value]) => {
+                      document.documentElement.style.setProperty(`--${key}`, String(value));
+                    });
                     setCurrentTheme(name);
                   }}
                   variant={currentTheme === name ? 'primary' : 'outline'}
@@ -841,22 +879,28 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Input with Theme */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-            textAlign: 'center'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎭 Themed Input</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
               This input automatically adapts to the selected theme!
             </p>
-            
+
             <div style={{ maxWidth: '400px', margin: '0 auto' }}>
               <Input
-                placeholder={floatingLabel ? "Advanced themed input with floating label" : "🚀 Advanced Input - Try custom colors and gradients!"}
+                placeholder={
+                  floatingLabel
+                    ? 'Advanced themed input with floating label'
+                    : '🚀 Advanced Input - Try custom colors and gradients!'
+                }
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 variant={variant}
@@ -877,16 +921,26 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Input Customization Controls */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
-            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🔧 Input Customization</h3>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
+              🔧 Input Customization
+            </h3>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '16px',
+              }}
+            >
               {/* Basic Controls */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
@@ -899,7 +953,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Info', value: 'info' },
                     { label: 'Danger', value: 'danger' },
                     { label: 'Ghost', value: 'ghost' },
-                    { label: 'Outline', value: 'outline' }
+                    { label: 'Outline', value: 'outline' },
                   ]}
                   value={variant}
                   onChange={(value) => setVariant(value as any)}
@@ -916,7 +970,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Small', value: 'sm' },
                     { label: 'Medium', value: 'md' },
                     { label: 'Large', value: 'lg' },
-                    { label: 'Extra Large', value: 'xl' }
+                    { label: 'Extra Large', value: 'xl' },
                   ]}
                   value={size}
                   onChange={(value) => setSize(value as any)}
@@ -953,29 +1007,61 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Comprehensive Color Controls */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            border: '1px solid var(--color-border)', 
-            borderRadius: '8px', 
-            padding: '20px',
-            marginBottom: '20px'
-          }}>
-            <h4 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600', color: 'var(--color-text)' }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              border: '1px solid var(--color-border)',
+              borderRadius: '8px',
+              padding: '20px',
+              marginBottom: '20px',
+            }}
+          >
+            <h4
+              style={{
+                marginBottom: '16px',
+                fontSize: '16px',
+                fontWeight: '600',
+                color: 'var(--color-text)',
+              }}
+            >
               🎨 Comprehensive Color Controls
             </h4>
-            
+
             {/* Background Colors */}
             <div style={{ marginBottom: '24px' }}>
-              <h5 style={{ marginBottom: '16px', fontSize: '14px', fontWeight: '600', color: 'var(--color-text)' }}>🎨 Background Colors</h5>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
+              <h5
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
+                🎨 Background Colors
+              </h5>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '16px',
+                }}
+              >
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Background Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Background Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <input
                       type="color"
                       value={backgroundColor || '#ffffff'}
                       onChange={(e) => setBackgroundColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
                     <input
                       type="text"
@@ -989,11 +1075,14 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
                     <button
-                      onClick={() => { setBackgroundColor(''); setBackgroundColorGradient(''); }}
+                      onClick={() => {
+                        setBackgroundColor('');
+                        setBackgroundColorGradient('');
+                      }}
                       style={{
                         padding: '6px 8px',
                         border: '1px solid var(--color-border)',
@@ -1001,16 +1090,18 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
                     </button>
                   </div>
                 </div>
-                
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Background Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Background Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <input
                       type="text"
@@ -1024,7 +1115,7 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
                     <button
@@ -1036,7 +1127,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1045,19 +1136,42 @@ export const InteractiveThemeBuilder: Story = {
                 </div>
               </div>
             </div>
-            
+
             {/* Text Colors */}
             <div style={{ marginBottom: '24px' }}>
-              <h5 style={{ marginBottom: '16px', fontSize: '14px', fontWeight: '600', color: 'var(--color-text)' }}>📝 Text Colors</h5>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
+              <h5
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
+                📝 Text Colors
+              </h5>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '16px',
+                }}
+              >
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Text Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Text Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <input
                       type="color"
                       value={textColor || '#333333'}
                       onChange={(e) => setTextColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
                     <input
                       type="text"
@@ -1071,11 +1185,14 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
                     <button
-                      onClick={() => { setTextColor(''); setTextColorGradient(''); }}
+                      onClick={() => {
+                        setTextColor('');
+                        setTextColorGradient('');
+                      }}
                       style={{
                         padding: '6px 8px',
                         border: '1px solid var(--color-border)',
@@ -1083,16 +1200,18 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
                     </button>
                   </div>
                 </div>
-                
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Text Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Text Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <input
                       type="text"
@@ -1106,7 +1225,7 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
                     <button
@@ -1118,7 +1237,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1127,19 +1246,42 @@ export const InteractiveThemeBuilder: Story = {
                 </div>
               </div>
             </div>
-            
+
             {/* Border Colors */}
             <div style={{ marginBottom: '24px' }}>
-              <h5 style={{ marginBottom: '16px', fontSize: '14px', fontWeight: '600', color: 'var(--color-text)' }}>🔲 Border Colors</h5>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
+              <h5
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: 'var(--color-text)',
+                }}
+              >
+                🔲 Border Colors
+              </h5>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '16px',
+                }}
+              >
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Border Color:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Border Color:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <input
                       type="color"
                       value={borderColor || '#dddddd'}
                       onChange={(e) => setBorderColor(e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
                     <input
                       type="text"
@@ -1153,11 +1295,14 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
                     <button
-                      onClick={() => { setBorderColor(''); setBorderColorGradient(''); }}
+                      onClick={() => {
+                        setBorderColor('');
+                        setBorderColorGradient('');
+                      }}
                       style={{
                         padding: '6px 8px',
                         border: '1px solid var(--color-border)',
@@ -1165,16 +1310,18 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
                     </button>
                   </div>
                 </div>
-                
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Border Gradient:</label>
+                  <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                    Border Gradient:
+                  </label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <input
                       type="text"
@@ -1188,7 +1335,7 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
                     <button
@@ -1200,7 +1347,7 @@ export const InteractiveThemeBuilder: Story = {
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
                         fontSize: '12px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                       }}
                     >
                       Reset
@@ -1209,7 +1356,7 @@ export const InteractiveThemeBuilder: Story = {
                 </div>
               </div>
             </div>
-            
+
             {/* Reset All Button */}
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
               <button
@@ -1222,7 +1369,7 @@ export const InteractiveThemeBuilder: Story = {
                   color: 'var(--color-text)',
                   fontSize: '14px',
                   cursor: 'pointer',
-                  fontWeight: '500'
+                  fontWeight: '500',
                 }}
               >
                 Reset All Custom Colors
@@ -1231,22 +1378,35 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Advanced Gradient Builder */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            border: '1px solid var(--color-border)', 
-            borderRadius: '8px', 
-            padding: '20px',
-            marginBottom: '20px'
-          }}>
-            <h4 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600', color: 'var(--color-text)' }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              border: '1px solid var(--color-border)',
+              borderRadius: '8px',
+              padding: '20px',
+              marginBottom: '20px',
+            }}
+          >
+            <h4
+              style={{
+                marginBottom: '16px',
+                fontSize: '16px',
+                fontWeight: '600',
+                color: 'var(--color-text)',
+              }}
+            >
               🌈 Advanced Gradient Builder
             </h4>
-            
+
             {/* Gradient Type Selector */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Type:</label>
-              <select 
-                value={gradientType} 
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}
+            >
+              <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                Type:
+              </label>
+              <select
+                value={gradientType}
                 onChange={(e) => {
                   const newType = e.target.value;
                   setGradientType(newType);
@@ -1258,53 +1418,78 @@ export const InteractiveThemeBuilder: Story = {
                     setGradientDirection('from 0deg at center');
                   }
                 }}
-                style={{ 
-                  padding: '8px', 
-                  border: '1px solid var(--color-border)', 
-                  borderRadius: '4px', 
+                style={{
+                  padding: '8px',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '4px',
                   fontSize: '14px',
                   background: 'var(--color-background)',
-                  color: 'var(--color-text)'
+                  color: 'var(--color-text)',
                 }}
               >
                 <option value="linear">Linear</option>
                 <option value="radial">Radial</option>
                 <option value="conic">Conic</option>
               </select>
-              
-              <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>Direction:</label>
+
+              <label style={{ fontSize: '14px', minWidth: '80px', color: 'var(--color-text)' }}>
+                Direction:
+              </label>
               <input
                 type="text"
                 value={gradientDirection}
                 onChange={(e) => setGradientDirection(e.target.value)}
-                style={{ 
-                  width: '120px', 
-                  padding: '8px', 
-                  border: '1px solid var(--color-border)', 
-                  borderRadius: '4px', 
+                style={{
+                  width: '120px',
+                  padding: '8px',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '4px',
                   fontSize: '14px',
                   background: 'var(--color-background)',
-                  color: 'var(--color-text)'
+                  color: 'var(--color-text)',
                 }}
                 placeholder={
-                  gradientType === 'linear' ? '90deg' :
-                  gradientType === 'radial' ? 'circle at center' :
-                  'from 0deg at center'
+                  gradientType === 'linear'
+                    ? '90deg'
+                    : gradientType === 'radial'
+                      ? 'circle at center'
+                      : 'from 0deg at center'
                 }
               />
             </div>
-            
+
             {/* Color Picker Grid */}
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ fontSize: '14px', color: 'var(--color-text)', marginBottom: '8px', display: 'block' }}>Colors:</label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px' }}>
+              <label
+                style={{
+                  fontSize: '14px',
+                  color: 'var(--color-text)',
+                  marginBottom: '8px',
+                  display: 'block',
+                }}
+              >
+                Colors:
+              </label>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+                  gap: '8px',
+                }}
+              >
                 {gradientColors.map((color, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <input
                       type="color"
                       value={color}
                       onChange={(e) => updateColor(index, e.target.value)}
-                      style={{ width: '40px', height: '32px', border: '1px solid var(--color-border)', borderRadius: '4px', cursor: 'pointer' }}
+                      style={{
+                        width: '40px',
+                        height: '32px',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
                     />
                     <input
                       type="text"
@@ -1317,7 +1502,7 @@ export const InteractiveThemeBuilder: Story = {
                         borderRadius: '4px',
                         background: 'var(--color-background)',
                         color: 'var(--color-text)',
-                        fontSize: '12px'
+                        fontSize: '12px',
                       }}
                     />
                     {gradientColors.length > 2 && (
@@ -1330,7 +1515,7 @@ export const InteractiveThemeBuilder: Story = {
                           background: 'var(--color-background)',
                           color: 'var(--color-text)',
                           fontSize: '12px',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
                         }}
                       >
                         ×
@@ -1349,27 +1534,36 @@ export const InteractiveThemeBuilder: Story = {
                   background: 'var(--color-background)',
                   color: 'var(--color-text)',
                   fontSize: '12px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
               >
                 + Add Color
               </button>
             </div>
-            
+
             {/* Gradient Preview */}
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ fontSize: '14px', color: 'var(--color-text)', marginBottom: '8px', display: 'block' }}>Preview:</label>
+              <label
+                style={{
+                  fontSize: '14px',
+                  color: 'var(--color-text)',
+                  marginBottom: '8px',
+                  display: 'block',
+                }}
+              >
+                Preview:
+              </label>
               <div
                 style={{
                   width: '100%',
                   height: '40px',
                   background: generateGradient() || 'linear-gradient(90deg, #f43f5e, #3b82f6)',
                   borderRadius: '4px',
-                  border: '1px solid var(--color-border)'
+                  border: '1px solid var(--color-border)',
                 }}
               />
             </div>
-            
+
             {/* Apply Gradient Buttons */}
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               <button
@@ -1381,7 +1575,7 @@ export const InteractiveThemeBuilder: Story = {
                   background: 'var(--color-background)',
                   color: 'var(--color-text)',
                   cursor: 'pointer',
-                  fontSize: '12px'
+                  fontSize: '12px',
                 }}
               >
                 Background
@@ -1395,7 +1589,7 @@ export const InteractiveThemeBuilder: Story = {
                   background: 'var(--color-background)',
                   color: 'var(--color-text)',
                   cursor: 'pointer',
-                  fontSize: '12px'
+                  fontSize: '12px',
                 }}
               >
                 Text
@@ -1409,7 +1603,7 @@ export const InteractiveThemeBuilder: Story = {
                   background: 'var(--color-background)',
                   color: 'var(--color-text)',
                   cursor: 'pointer',
-                  fontSize: '12px'
+                  fontSize: '12px',
                 }}
               >
                 Border
@@ -1418,13 +1612,15 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Theme Preview */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎨 Theme Preview</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
               Current theme: <strong>{currentTheme}</strong>
@@ -1432,12 +1628,14 @@ export const InteractiveThemeBuilder: Story = {
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
               This input automatically adapts to the selected theme!
             </p>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', 
-              gap: '0.5rem',
-              marginTop: '1rem'
-            }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+                gap: '0.5rem',
+                marginTop: '1rem',
+              }}
+            >
               {Object.entries(availableThemes).map(([name, theme]) => (
                 <div
                   key={name}
@@ -1451,18 +1649,20 @@ export const InteractiveThemeBuilder: Story = {
                     fontSize: '12px',
                   }}
                 >
-                  <div style={{ 
-                    width: '20px', 
-                    height: '20px', 
-                    background: theme['color-primary'], 
-                    borderRadius: '50%',
-                    margin: '0 auto 0.25rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '10px'
-                  }}>
+                  <div
+                    style={{
+                      width: '20px',
+                      height: '20px',
+                      background: theme['color-primary'],
+                      borderRadius: '50%',
+                      margin: '0 auto 0.25rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      fontSize: '10px',
+                    }}
+                  >
                     {name.charAt(0).toUpperCase()}
                   </div>
                   <strong>{name}</strong>
@@ -1477,7 +1677,8 @@ export const InteractiveThemeBuilder: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive Theme Builder demonstrates how the Input component automatically adapts to different themes. Switch between themes to see how the component styling changes while maintaining its functionality.',
+        story:
+          'Interactive Theme Builder demonstrates how the Input component automatically adapts to different themes. Switch between themes to see how the component styling changes while maintaining its functionality.',
       },
     },
   },

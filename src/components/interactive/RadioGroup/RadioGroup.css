@@ -143,15 +143,27 @@
 }
 
 .radio-group-component--shadow-md {
-  --radio-group-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+  --radio-group-shadow: var(
+    --shadow-md,
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06)
+  );
 }
 
 .radio-group-component--shadow-lg {
-  --radio-group-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+  --radio-group-shadow: var(
+    --shadow-lg,
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05)
+  );
 }
 
 .radio-group-component--shadow-xl {
-  --radio-group-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04));
+  --radio-group-shadow: var(
+    --shadow-xl,
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04)
+  );
 }
 
 /* Hover effect variants */
@@ -162,7 +174,11 @@
 
 .radio-group-component--hover-lift {
   --radio-group-hover-transform: translateY(-2px);
-  --radio-group-hover-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+  --radio-group-hover-shadow: var(
+    --shadow-lg,
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05)
+  );
 }
 
 .radio-group-component--hover-glow {
@@ -199,7 +215,10 @@
 .radio-group-component__label {
   font-size: var(--radio-group-font-size);
   font-weight: 600;
-  color: var(--radio-group-label-color, var(--radio-group-text-color, var(--radio-group-color, #111827)));
+  color: var(
+    --radio-group-label-color,
+    var(--radio-group-text-color, var(--radio-group-color, #111827))
+  );
 }
 
 .radio-group-component__required {
@@ -333,7 +352,10 @@
 
 .radio-group-component__option-description {
   font-size: calc(var(--radio-group-font-size) * 0.875);
-  color: var(--radio-group-description-color, var(--radio-group-text-color, var(--color-text-secondary, #6b7280)));
+  color: var(
+    --radio-group-description-color,
+    var(--radio-group-text-color, var(--color-text-secondary, #6b7280))
+  );
   line-height: 1.4;
 }
 
@@ -375,7 +397,7 @@
   .radio-group-component--horizontal {
     flex-direction: column;
   }
-  
+
   .radio-group-component__option {
     padding: var(--spacing-md, 1rem);
   }
@@ -386,7 +408,7 @@
   .radio-group-component__radio {
     border-width: 3px;
   }
-  
+
   .radio-group-component__option:focus-within {
     outline-width: 3px;
   }
@@ -399,7 +421,7 @@
   .radio-group-component__radio {
     transition: none;
   }
-  
+
   .radio-group-component__option:hover:not(.disabled) {
     transform: none;
   }
@@ -415,7 +437,9 @@
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
 }
 
-.radio-group-component--hover-scale:hover:not(.radio-group-component--hover-lift):not(.radio-group-component--disabled) {
+.radio-group-component--hover-scale:hover:not(.radio-group-component--hover-lift):not(
+    .radio-group-component--disabled
+  ) {
   transform: scale(1.02);
 }
 
@@ -594,7 +618,7 @@
   .radio-group-component--horizontal {
     flex-direction: column;
   }
-  
+
   .radio-group-component--lg,
   .radio-group-component--xl {
     --radio-group-spacing: var(--spacing-md, 1rem);
@@ -615,12 +639,16 @@
 }
 
 /* Radio button gradient support */
-.radio-group-component--radio-gradient .radio-group-component__option.checked .radio-group-component__radio {
+.radio-group-component--radio-gradient
+  .radio-group-component__option.checked
+  .radio-group-component__radio {
   background: var(--radio-group-radio-bg) !important;
 }
 
 /* Radio dot gradient support */
-.radio-group-component--radio-dot-gradient .radio-group-component__option.checked .radio-group-component__radio::after {
+.radio-group-component--radio-dot-gradient
+  .radio-group-component__option.checked
+  .radio-group-component__radio::after {
   background: var(--radio-group-radio-dot-bg) !important;
 }
 
@@ -671,9 +699,10 @@
 }
 
 /* Border gradient support - only apply when there's actually a border gradient */
-.radio-group-component--border-gradient .radio-group-component__radio[style*="--radio-group-custom-border-gradient"] {
+.radio-group-component--border-gradient
+  .radio-group-component__radio[style*='--radio-group-custom-border-gradient'] {
   border: 2px solid transparent;
-  background-image: 
+  background-image:
     var(--radio-group-custom-border-gradient),
     var(--radio-group-radio-bg, var(--radio-group-bg, #ffffff));
   background-origin: border-box;

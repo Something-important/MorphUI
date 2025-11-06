@@ -1,6 +1,6 @@
 /**
  * MorphUI Theme System
- * 
+ *
  * Complete theming solution for MorphUI components.
  * Provides built-in themes, theme utilities, and theme provider.
  */
@@ -9,7 +9,7 @@
 export { ThemeProvider } from './ThemeProvider';
 
 // Built-in Themes
-export { 
+export {
   lightTheme,
   darkTheme,
   warmTheme,
@@ -23,7 +23,7 @@ export {
   isValidThemeName,
   mergeThemes,
   createThemeVariant,
-  getThemeInfo
+  getThemeInfo,
 } from './themes';
 
 // Theme Utilities (re-export from utils)
@@ -38,5 +38,5 @@ export {
   isValidGradient,
   type ThemeColors,
   type ThemeGradients,
-  type ThemeTokens
+  type ThemeTokens,
 } from '../../utils/theme';

@@ -51,7 +51,8 @@
   width: var(--toggle-track-width);
   height: var(--toggle-track-height);
   background: var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb)));
-  border: 2px solid var(--toggle-custom-border, var(--toggle-track-border, var(--color-gray-300, #d1d5db)));
+  border: 2px solid
+    var(--toggle-custom-border, var(--toggle-track-border, var(--color-gray-300, #d1d5db)));
   border-radius: var(--toggle-custom-border-radius, var(--border-radius-full, 9999px));
   transition: all var(--transition-normal, 0.2s ease-in-out);
   box-shadow: var(--toggle-custom-shadow, var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05)));
@@ -73,8 +74,14 @@
 
 /* Checked state */
 .toggle-component--checked .toggle-component__track {
-  background: var(--toggle-custom-bg, var(--toggle-track-bg-checked, var(--color-primary, #0070f3)));
-  border-color: var(--toggle-custom-border, var(--toggle-track-border-checked, var(--color-primary, #0070f3)));
+  background: var(
+    --toggle-custom-bg,
+    var(--toggle-track-bg-checked, var(--color-primary, #0070f3))
+  );
+  border-color: var(
+    --toggle-custom-border,
+    var(--toggle-track-border-checked, var(--color-primary, #0070f3))
+  );
 }
 
 .toggle-component--checked .toggle-component__thumb {
@@ -217,8 +224,12 @@
 }
 
 @keyframes toggle-spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 /* Size-specific spinner adjustments */
@@ -304,10 +315,12 @@
 }
 
 .toggle-component:active:not(.toggle-component--disabled) .toggle-component__thumb {
-  transform: translateX(calc(var(--toggle-track-width) - var(--toggle-thumb-size) - 4px)) scale(0.95);
+  transform: translateX(calc(var(--toggle-track-width) - var(--toggle-thumb-size) - 4px))
+    scale(0.95);
 }
 
-.toggle-component:active:not(.toggle-component--disabled):not(.toggle-component--checked) .toggle-component__thumb {
+.toggle-component:active:not(.toggle-component--disabled):not(.toggle-component--checked)
+  .toggle-component__thumb {
   transform: scale(0.95);
 }
 
@@ -316,7 +329,7 @@
   .toggle-component__track {
     border-width: 3px;
   }
-  
+
   .toggle-component__thumb {
     border: 2px solid var(--color-gray-900, #111827);
   }
@@ -329,11 +342,11 @@
   .toggle-component__thumb {
     transition: none;
   }
-  
+
   .toggle-component:hover:not(.toggle-component--disabled) .toggle-component__track {
     transform: none;
   }
-  
+
   .toggle-component:active:not(.toggle-component--disabled) .toggle-component__track,
   .toggle-component:active:not(.toggle-component--disabled) .toggle-component__thumb {
     transform: none;
@@ -399,8 +412,11 @@
 
 /* Border gradient support */
 .toggle-component--border-gradient .toggle-component__track {
-  background-image: 
-    linear-gradient(var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb))), var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb)))),
+  background-image:
+    linear-gradient(
+      var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb))),
+      var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb)))
+    ),
     var(--toggle-custom-border-gradient) !important;
   background-origin: border-box !important;
   background-clip: padding-box, border-box !important;
@@ -409,13 +425,25 @@
 
 /* Custom color fallback chains */
 .toggle-component__track {
-  background: var(--toggle-custom-track-color, var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb))));
-  border-color: var(--toggle-custom-border, var(--toggle-track-border, var(--color-gray-300, #d1d5db)));
+  background: var(
+    --toggle-custom-track-color,
+    var(--toggle-custom-bg, var(--toggle-track-bg, var(--color-gray-200, #e5e7eb)))
+  );
+  border-color: var(
+    --toggle-custom-border,
+    var(--toggle-track-border, var(--color-gray-300, #d1d5db))
+  );
 }
 
 .toggle-component--checked .toggle-component__track {
-  background: var(--toggle-custom-active-track-color, var(--toggle-custom-bg, var(--toggle-track-bg-checked, var(--color-primary, #0070f3))));
-  border-color: var(--toggle-custom-border, var(--toggle-track-border-checked, var(--color-primary, #0070f3)));
+  background: var(
+    --toggle-custom-active-track-color,
+    var(--toggle-custom-bg, var(--toggle-track-bg-checked, var(--color-primary, #0070f3)))
+  );
+  border-color: var(
+    --toggle-custom-border,
+    var(--toggle-track-border-checked, var(--color-primary, #0070f3))
+  );
 }
 
 .toggle-component__thumb {
@@ -423,7 +451,10 @@
 }
 
 .toggle-component--checked .toggle-component__thumb {
-  background: var(--toggle-custom-active-thumb-color, var(--toggle-custom-thumb-color, var(--toggle-thumb-bg, var(--color-white, #ffffff))));
+  background: var(
+    --toggle-custom-active-thumb-color,
+    var(--toggle-custom-thumb-color, var(--toggle-thumb-bg, var(--color-white, #ffffff)))
+  );
 }
 
 .toggle-component__label {
@@ -431,5 +462,8 @@
 }
 
 .toggle-component__icon {
-  color: var(--toggle-custom-icon-color, var(--toggle-custom-color, var(--color-text-muted, #6b7280)));
+  color: var(
+    --toggle-custom-icon-color,
+    var(--toggle-custom-color, var(--color-text-muted, #6b7280))
+  );
 }

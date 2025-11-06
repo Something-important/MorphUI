@@ -1,0 +1,89 @@
+/* Label.css */
+.label-component {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  font-family: var(--font-family, inherit);
+  cursor: pointer;
+  color: var(--label-custom-color, var(--label-color, var(--color-text)));
+  transition: color var(--transition-normal, 0.2s ease-in-out);
+}
+
+/* Size variants */
+.label-component--xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.label-component--sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.label-component--md {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.label-component--lg {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+/* Variant styles */
+.label-component--primary {
+  --label-color: var(--color-primary);
+}
+
+.label-component--secondary {
+  --label-color: var(--color-secondary);
+}
+
+.label-component--success {
+  --label-color: var(--color-success);
+}
+
+.label-component--warning {
+  --label-color: var(--color-warning);
+}
+
+.label-component--danger {
+  --label-color: var(--color-danger);
+}
+
+.label-component--info {
+  --label-color: var(--color-info);
+}
+
+/* Required indicator */
+.label-component__required {
+  color: var(--label-custom-required-color, var(--label-required-color, var(--color-danger)));
+  margin-left: 2px;
+  font-weight: 600;
+}
+
+/* Text gradient support */
+.label-component--text-gradient {
+  background: var(--label-custom-color, var(--label-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Required state */
+.label-component--required {
+  font-weight: 600;
+}
+
+/* Hover state */
+.label-component:hover:not(:disabled) {
+  color: var(--label-custom-color, var(--label-color, var(--color-text-hover)));
+}
+
+/* Disabled state */
+.label-component:disabled,
+.label-component--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

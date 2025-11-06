@@ -1,0 +1,331 @@
+/* Stepper.css */
+.stepper-component {
+  display: flex;
+  font-family: var(--font-family, system-ui, sans-serif);
+  width: 100%;
+}
+
+.stepper-component__list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Horizontal orientation */
+.stepper-component--horizontal .stepper-component__list {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.stepper-component--horizontal .stepper-component__step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.stepper-component--horizontal .stepper-component__connector {
+  position: absolute;
+  top: calc(var(--stepper-indicator-size, 24px) / 2);
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-border, #e5e7eb);
+  z-index: 0;
+  transform: translateY(-50%);
+}
+
+.stepper-component--horizontal .stepper-component__step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs, 0.25rem);
+  position: relative;
+  z-index: 1;
+}
+
+/* Vertical orientation */
+.stepper-component--vertical .stepper-component__list {
+  flex-direction: column;
+}
+
+.stepper-component--vertical .stepper-component__step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  min-height: 60px;
+}
+
+.stepper-component--vertical .stepper-component__connector {
+  position: absolute;
+  left: calc(var(--stepper-indicator-size, 24px) / 2);
+  top: var(--stepper-indicator-size, 24px);
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border, #e5e7eb);
+  z-index: 0;
+  transform: translateX(-50%);
+}
+
+.stepper-component--vertical .stepper-component__step-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-md, 1rem);
+  position: relative;
+  z-index: 1;
+}
+
+/* Step indicator */
+.stepper-component__indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--stepper-indicator-size, 24px);
+  height: var(--stepper-indicator-size, 24px);
+  border-radius: 50%;
+  background: var(--color-gray-200, #e5e7eb);
+  color: var(--color-text-muted, #6b7280);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--font-size-sm, 0.875rem);
+  flex-shrink: 0;
+  transition: all var(--transition-normal, 0.3s);
+  border: 2px solid var(--color-border, #e5e7eb);
+}
+
+.stepper-component__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepper-component__icon,
+.stepper-component__check-icon,
+.stepper-component__error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.stepper-component__check-icon {
+  color: var(--color-success, #10b981);
+}
+
+.stepper-component__error-icon {
+  color: var(--color-danger, #ef4444);
+}
+
+/* Active step */
+.stepper-component__step--active .stepper-component__indicator {
+  background: var(
+    --stepper-custom-active-color,
+    var(
+      --stepper-active-color,
+      var(--stepper-custom-color, var(--stepper-color, var(--color-primary, #0070f3)))
+    )
+  );
+  color: var(--color-white, #ffffff);
+  border-color: var(
+    --stepper-custom-active-color,
+    var(
+      --stepper-active-color,
+      var(--stepper-custom-color, var(--stepper-color, var(--color-primary, #0070f3)))
+    )
+  );
+  box-shadow: 0 0 0 4px rgba(var(--stepper-active-rgb, 0, 112, 243), 0.1);
+}
+
+/* Completed step */
+.stepper-component__step--completed .stepper-component__indicator {
+  background: var(
+    --stepper-custom-completed-color,
+    var(--stepper-completed-color, var(--color-success, #10b981))
+  );
+  color: var(--color-white, #ffffff);
+  border-color: var(
+    --stepper-custom-completed-color,
+    var(--stepper-completed-color, var(--color-success, #10b981))
+  );
+}
+
+.stepper-component__step--completed .stepper-component__connector {
+  background: var(
+    --stepper-custom-completed-color,
+    var(--stepper-completed-color, var(--color-success, #10b981))
+  );
+}
+
+/* Error step */
+.stepper-component__step--error .stepper-component__indicator {
+  background: var(
+    --stepper-custom-error-color,
+    var(--stepper-error-color, var(--color-danger, #ef4444))
+  );
+  color: var(--color-white, #ffffff);
+  border-color: var(
+    --stepper-custom-error-color,
+    var(--stepper-error-color, var(--color-danger, #ef4444))
+  );
+}
+
+/* Disabled step */
+.stepper-component__step--disabled .stepper-component__indicator {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.stepper-component__step--disabled .stepper-component__step-content {
+  cursor: not-allowed;
+}
+
+/* Clickable step */
+.stepper-component__step--clickable .stepper-component__step-content {
+  cursor: pointer;
+}
+
+.stepper-component__step--clickable
+  .stepper-component__step-content:hover
+  .stepper-component__indicator {
+  transform: scale(1.1);
+}
+
+.stepper-component__step--clickable .stepper-component__step-content:focus {
+  outline: 2px solid var(--color-primary, #0070f3);
+  outline-offset: 4px;
+  border-radius: var(--border-radius-md, 6px);
+}
+
+/* Label container */
+.stepper-component__label-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-xs, 0.25rem);
+}
+
+.stepper-component--vertical .stepper-component__label-container {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.stepper-component__label {
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--stepper-custom-text-color, var(--stepper-text-color, var(--color-text, #111827)));
+  font-size: var(--font-size-sm, 0.875rem);
+  line-height: var(--line-height-tight, 1.25);
+}
+
+.stepper-component__step--active .stepper-component__label {
+  font-weight: var(--font-weight-semibold, 600);
+  color: var(
+    --stepper-custom-active-color,
+    var(
+      --stepper-active-color,
+      var(--stepper-custom-color, var(--stepper-color, var(--color-primary, #0070f3)))
+    )
+  );
+}
+
+.stepper-component__step--disabled .stepper-component__label {
+  color: var(--color-text-muted, #6b7280);
+  opacity: 0.6;
+}
+
+.stepper-component__description {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-text-muted, #6b7280);
+  line-height: var(--line-height-relaxed, 1.625);
+}
+
+/* Sizes */
+.stepper-component--xs {
+  --stepper-indicator-size: 16px;
+}
+
+.stepper-component--xs .stepper-component__indicator {
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.stepper-component--xs .stepper-component__label {
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.stepper-component--sm {
+  --stepper-indicator-size: 20px;
+}
+
+.stepper-component--sm .stepper-component__indicator {
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.stepper-component--sm .stepper-component__label {
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+.stepper-component--md {
+  --stepper-indicator-size: 24px;
+}
+
+.stepper-component--md .stepper-component__indicator {
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.stepper-component--md .stepper-component__label {
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.stepper-component--lg {
+  --stepper-indicator-size: 32px;
+}
+
+.stepper-component--lg .stepper-component__indicator {
+  font-size: var(--font-size-base, 1rem);
+}
+
+.stepper-component--lg .stepper-component__label {
+  font-size: var(--font-size-base, 1rem);
+}
+
+/* Gradient support */
+.stepper-component--gradient .stepper-component__step--active .stepper-component__indicator {
+  background: var(--stepper-custom-color) !important;
+}
+
+/* Variants */
+.stepper-component--outline .stepper-component__step--active .stepper-component__indicator {
+  background: transparent;
+  color: var(
+    --stepper-custom-active-color,
+    var(
+      --stepper-active-color,
+      var(--stepper-custom-color, var(--stepper-color, var(--color-primary, #0070f3)))
+    )
+  );
+  border-width: 2px;
+}
+
+.stepper-component--ghost .stepper-component__step--active .stepper-component__indicator {
+  background: var(--color-gray-100, #f3f4f6);
+  color: var(
+    --stepper-custom-active-color,
+    var(
+      --stepper-active-color,
+      var(--stepper-custom-color, var(--stepper-color, var(--color-primary, #0070f3)))
+    )
+  );
+  border-color: transparent;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .stepper-component__indicator,
+  .stepper-component__step-content {
+    transition: none !important;
+  }
+}

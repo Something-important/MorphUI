@@ -10,9 +10,16 @@
   position: fixed;
   z-index: 1100;
   background: var(--tooltip-custom-bg, var(--tooltip-bg, var(--color-background, #ffffff)));
-  border: 1px solid var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
-  border-radius: var(--tooltip-custom-border-radius, var(--tooltip-border-radius, var(--border-radius-md, 6px)));
-  box-shadow: var(--tooltip-custom-shadow, var(--tooltip-shadow, var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1))));
+  border: 1px solid
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)));
+  border-radius: var(
+    --tooltip-custom-border-radius,
+    var(--tooltip-border-radius, var(--border-radius-md, 6px))
+  );
+  box-shadow: var(
+    --tooltip-custom-shadow,
+    var(--tooltip-shadow, var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1)))
+  );
   color: var(--tooltip-custom-text-color, var(--tooltip-text, var(--color-text, #111827)));
   max-width: var(--tooltip-custom-max-width, var(--tooltip-max-width, 300px));
   min-width: var(--tooltip-custom-min-width, var(--tooltip-min-width, 120px));
@@ -44,7 +51,7 @@
 /* Border Gradient Support */
 .tooltip-component--border-gradient .tooltip-component__content {
   border: 1px solid transparent !important;
-  background-image: 
+  background-image:
     var(--tooltip-custom-bg, var(--tooltip-bg, var(--color-background, #ffffff))),
     var(--tooltip-custom-border-color) !important;
   background-origin: border-box !important;
@@ -56,12 +63,12 @@
   border: 6px solid transparent !important;
   background: var(--tooltip-custom-arrow-color) !important;
   background-clip: padding-box !important;
-  mask: 
-    linear-gradient(#fff 0 0) padding-box, 
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
     linear-gradient(#fff 0 0) !important;
   mask-composite: xor !important;
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) padding-box, 
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
     linear-gradient(#fff 0 0) !important;
   -webkit-mask-composite: xor !important;
 }
@@ -80,7 +87,10 @@
 }
 
 /* Glassmorphism effect */
-.tooltip-component--glassmorphism .tooltip-component__content:not([style*="--tooltip-custom-bg"]):not([style*="--tooltip-custom-bg-pattern"]):not([style*="--tooltip-custom-bg-image"]) {
+.tooltip-component--glassmorphism
+  .tooltip-component__content:not([style*='--tooltip-custom-bg']):not(
+    [style*='--tooltip-custom-bg-pattern']
+  ):not([style*='--tooltip-custom-bg-image']) {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -100,76 +110,112 @@
   bottom: -6px;
   left: 50%;
   transform: translateX(-50%);
-  border-top-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-top-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--top-start {
   bottom: -6px;
   left: 16px;
-  border-top-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-top-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--top-end {
   bottom: -6px;
   right: 16px;
-  border-top-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-top-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--bottom {
   top: -6px;
   left: 50%;
   transform: translateX(-50%);
-  border-bottom-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-bottom-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--bottom-start {
   top: -6px;
   left: 16px;
-  border-bottom-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-bottom-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--bottom-end {
   top: -6px;
   right: 16px;
-  border-bottom-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-bottom-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--left {
   right: -6px;
   top: 50%;
   transform: translateY(-50%);
-  border-left-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-left-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--left-start {
   right: -6px;
   top: 16px;
-  border-left-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-left-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--left-end {
   right: -6px;
   bottom: 16px;
-  border-left-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-left-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--right {
   left: -6px;
   top: 50%;
   transform: translateY(-50%);
-  border-right-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-right-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--right-start {
   left: -6px;
   top: 16px;
-  border-right-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-right-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 .tooltip-component__arrow--right-end {
   left: -6px;
   bottom: 16px;
-  border-right-color: var(--tooltip-custom-arrow-color, var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db))));
+  border-right-color: var(
+    --tooltip-custom-arrow-color,
+    var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
+  );
 }
 
 /* Content Inner */
@@ -367,49 +413,73 @@
 
 /* Variant Styles */
 .tooltip-component--primary .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-primary, #0070f3)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-primary, #0070f3))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, var(--color-primary-subtle, #eff6ff));
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-primary-dark, #1e40af));
 }
 
 .tooltip-component--secondary .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-secondary, #6b7280)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-secondary, #6b7280))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, var(--color-secondary-subtle, #f9fafb));
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-secondary-dark, #374151));
 }
 
 .tooltip-component--success .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-success, #10b981)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-success, #10b981))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, var(--color-success-subtle, #ecfdf5));
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-success-dark, #047857));
 }
 
 .tooltip-component--warning .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-warning, #f59e0b)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-warning, #f59e0b))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, var(--color-warning-subtle, #fffbeb));
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-warning-dark, #d97706));
 }
 
 .tooltip-component--info .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-info, #3b82f6)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-info, #3b82f6))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, var(--color-info-subtle, #eff6ff));
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-info-dark, #1d4ed8));
 }
 
 .tooltip-component--danger .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-danger, #ef4444)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-danger, #ef4444))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, var(--color-danger-subtle, #fef2f2));
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-danger-dark, #dc2626));
 }
 
 .tooltip-component--ghost .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-ghost, #f3f4f6)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-ghost, #f3f4f6))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, var(--color-ghost, #f3f4f6));
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-text, #111827));
 }
 
 .tooltip-component--outline .tooltip-component__content {
-  --tooltip-border: var(--tooltip-custom-border-color, var(--tooltip-custom-border, var(--color-border, #d1d5db)));
+  --tooltip-border: var(
+    --tooltip-custom-border-color,
+    var(--tooltip-custom-border, var(--color-border, #d1d5db))
+  );
   --tooltip-bg: var(--tooltip-custom-bg, transparent);
   --tooltip-text: var(--tooltip-custom-text-color, var(--color-text, #111827));
 }
@@ -503,28 +573,28 @@
     min-width: 100px;
     margin: 0 1rem;
   }
-  
+
   .tooltip-component__content-inner {
     padding: 0.625rem 0.875rem;
     font-size: var(--font-size-sm, 0.875rem);
   }
-  
+
   .tooltip-component__arrow {
     border-width: 5px;
   }
-  
+
   .tooltip-component__arrow--top {
     bottom: -5px;
   }
-  
+
   .tooltip-component__arrow--bottom {
     top: -5px;
   }
-  
+
   .tooltip-component__arrow--left {
     right: -5px;
   }
-  
+
   .tooltip-component__arrow--right {
     left: -5px;
   }
@@ -535,23 +605,23 @@
   .tooltip-component__content {
     border-width: 2px;
   }
-  
+
   .tooltip-component__arrow {
     border-width: 8px;
   }
-  
+
   .tooltip-component__arrow--top {
     bottom: -8px;
   }
-  
+
   .tooltip-component__arrow--bottom {
     top: -8px;
   }
-  
+
   .tooltip-component__arrow--left {
     right: -8px;
   }
-  
+
   .tooltip-component__arrow--right {
     left: -8px;
   }
@@ -563,7 +633,7 @@
     animation: none;
     transition: none;
   }
-  
+
   .tooltip-component__trigger {
     transition: none;
   }
@@ -577,7 +647,7 @@
     border: 1px solid #000;
     page-break-inside: avoid;
   }
-  
+
   .tooltip-component__arrow {
     display: none;
   }
@@ -631,11 +701,11 @@
 }
 
 /* Accessibility improvements */
-.tooltip-component__content[aria-hidden="true"] {
+.tooltip-component__content[aria-hidden='true'] {
   display: none;
 }
 
-.tooltip-component__content[aria-expanded="false"] {
+.tooltip-component__content[aria-expanded='false'] {
   display: none;
 }
 

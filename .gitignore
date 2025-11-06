@@ -32,6 +32,9 @@ coverage/
 *.njsproj
 *.sln
 
+# Cursor AI files (keep local for now)
+.cursor/
+
 # Package files
 *.tgz
 *.tar.gz
@@ -40,9 +43,10 @@ coverage/
 .tmp/
 .temp/
 
-# Documentation files (ignored for now)
-*.md
-*.txt 
+# Local tracking/analysis files (keep local only)
+COMPONENT_STATUS.md
+COLOR_PRECEDENCE_ANALYSIS.md
+COLOR_PRECEDENCE_DETAILED.md
 
 # Other
 *.claude

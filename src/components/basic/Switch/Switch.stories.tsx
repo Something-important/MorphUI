@@ -92,7 +92,24 @@ const meta: Meta<typeof Switch> = {
     },
     backgroundBlend: {
       control: 'select',
-      options: ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'],
+      options: [
+        'normal',
+        'multiply',
+        'screen',
+        'overlay',
+        'darken',
+        'lighten',
+        'color-dodge',
+        'color-burn',
+        'hard-light',
+        'soft-light',
+        'difference',
+        'exclusion',
+        'hue',
+        'saturation',
+        'color',
+        'luminosity',
+      ],
       description: 'Background blend mode',
     },
     color: {
@@ -222,7 +239,7 @@ export const InteractiveExamples: Story = {
     });
 
     const handleToggle = (key: keyof typeof switches) => {
-      setSwitches(prev => ({ ...prev, [key]: !prev[key] }));
+      setSwitches((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
     return (
@@ -269,30 +286,37 @@ export const InteractiveThemeBuilder: Story = {
   render: () => {
     const [currentTheme, setCurrentTheme] = useState('default');
     const [isChecked, setIsChecked] = useState(false);
-    const [variant, setVariant] = useState<'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'>('primary');
+    const [variant, setVariant] = useState<
+      'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'danger' | 'ghost' | 'outline'
+    >('primary');
     const [size, setSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md');
-    const [labelPosition, setLabelPosition] = useState<'left' | 'right' | 'top' | 'bottom'>('right');
+    const [labelPosition, setLabelPosition] = useState<'left' | 'right' | 'top' | 'bottom'>(
+      'right',
+    );
     const [icon, setIcon] = useState('⚡');
     const [iconPosition, setIconPosition] = useState<'left' | 'right'>('right');
     const [ripple, setRipple] = useState(true);
     const [glassmorphism, setGlassmorphism] = useState(false);
-    
+
     const availableThemes = themes;
 
     return (
       <ThemeProvider theme={availableThemes[currentTheme as keyof typeof availableThemes]}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Theme Switcher */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎨 Theme Switcher</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
-              Current theme: <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
+              Current theme:{' '}
+              <strong style={{ color: 'var(--color-primary)' }}>{currentTheme}</strong>
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {Object.entries(availableThemes).map(([name, theme]) => (
@@ -312,19 +336,21 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Themed Switch Preview */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-            textAlign: 'center'
-          }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+            }}
+          >
             <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🎭 Themed Switch</h3>
             <p style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
               This switch automatically adapts to the selected theme!
             </p>
-            
+
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
               <Switch
                 checked={isChecked}
@@ -346,16 +372,26 @@ export const InteractiveThemeBuilder: Story = {
           </div>
 
           {/* Switch Customization Controls */}
-          <div style={{ 
-            background: 'var(--color-background)', 
-            padding: '20px', 
-            borderRadius: '12px', 
-            border: '1px solid var(--color-border)',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}>
-            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>🔧 Switch Customization</h3>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          <div
+            style={{
+              background: 'var(--color-background)',
+              padding: '20px',
+              borderRadius: '12px',
+              border: '1px solid var(--color-border)',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <h3 style={{ margin: '0 0 16px 0', color: 'var(--color-text)' }}>
+              🔧 Switch Customization
+            </h3>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '16px',
+              }}
+            >
               {/* Variant Control */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
@@ -368,7 +404,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Info', value: 'info' },
                     { label: 'Danger', value: 'danger' },
                     { label: 'Ghost', value: 'ghost' },
-                    { label: 'Outline', value: 'outline' }
+                    { label: 'Outline', value: 'outline' },
                   ]}
                   value={variant}
                   onChange={(value) => setVariant(value as any)}
@@ -386,7 +422,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Small', value: 'sm' },
                     { label: 'Medium', value: 'md' },
                     { label: 'Large', value: 'lg' },
-                    { label: 'Extra Large', value: 'xl' }
+                    { label: 'Extra Large', value: 'xl' },
                   ]}
                   value={size}
                   onChange={(value) => setSize(value as any)}
@@ -397,13 +433,15 @@ export const InteractiveThemeBuilder: Story = {
 
               {/* Label Position Control */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Label Position:</label>
+                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                  Label Position:
+                </label>
                 <Dropdown
                   options={[
                     { label: 'Left', value: 'left' },
                     { label: 'Right', value: 'right' },
                     { label: 'Top', value: 'top' },
-                    { label: 'Bottom', value: 'bottom' }
+                    { label: 'Bottom', value: 'bottom' },
                   ]}
                   value={labelPosition}
                   onChange={(value) => setLabelPosition(value as any)}
@@ -415,24 +453,24 @@ export const InteractiveThemeBuilder: Story = {
               {/* Icon Controls */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Icon:</label>
-                <input 
-                  type="text" 
-                  value={icon} 
+                <input
+                  type="text"
+                  value={icon}
                   onChange={(e) => setIcon(e.target.value)}
                   placeholder="Enter icon (emoji or text)"
-                  style={{ 
-                    padding: '8px', 
-                    borderRadius: '6px', 
+                  style={{
+                    padding: '8px',
+                    borderRadius: '6px',
                     border: '1px solid var(--color-border)',
                     background: 'var(--color-background)',
                     color: 'var(--color-text)',
-                    fontSize: '14px'
+                    fontSize: '14px',
                   }}
                 />
                 <Dropdown
                   options={[
                     { label: 'Left', value: 'left' },
-                    { label: 'Right', value: 'right' }
+                    { label: 'Right', value: 'right' },
                   ]}
                   value={iconPosition}
                   onChange={(value) => setIconPosition(value as any)}
@@ -443,20 +481,36 @@ export const InteractiveThemeBuilder: Story = {
 
               {/* Style Controls */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Style Options:</label>
+                <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>
+                  Style Options:
+                </label>
                 <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)' }}>
-                    <input 
-                      type="checkbox" 
-                      checked={ripple} 
+                  <label
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: 'var(--color-text)',
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={ripple}
                       onChange={(e) => setRipple(e.target.checked)}
                     />
                     Ripple Effect
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)' }}>
-                    <input 
-                      type="checkbox" 
-                      checked={glassmorphism} 
+                  <label
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: 'var(--color-text)',
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={glassmorphism}
                       onChange={(e) => setGlassmorphism(e.target.checked)}
                     />
                     Glassmorphism
@@ -467,7 +521,7 @@ export const InteractiveThemeBuilder: Story = {
 
             {/* Reset Button */}
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <Button 
+              <Button
                 onClick={() => {
                   setVariant('primary');
                   setSize('md');

@@ -91,7 +91,7 @@
   justify-content: center !important;
 }
 
-/* Hide text content in collapsed non-overlay mode, keep only icons */  
+/* Hide text content in collapsed non-overlay mode, keep only icons */
 .sidebar-root--collapsed:not(.sidebar-root--overlay) .sidebar-header > *:not(.sidebar-toggle) {
   display: none;
 }
@@ -161,8 +161,15 @@
   justify-content: space-between;
   padding: var(--sidebar-header-custom-padding, var(--sidebar-header-padding, var(--spacing-md)));
   background: var(--sidebar-header-custom-bg, var(--sidebar-header-bg, inherit));
-  color: var(--sidebar-header-custom-text, var(--sidebar-header-text, var(--sidebar-text, inherit)));
-  border-bottom: 1px solid var(--sidebar-header-custom-border, var(--sidebar-header-border, var(--sidebar-border, var(--color-border))));
+  color: var(
+    --sidebar-header-custom-text,
+    var(--sidebar-header-text, var(--sidebar-text, inherit))
+  );
+  border-bottom: 1px solid
+    var(
+      --sidebar-header-custom-border,
+      var(--sidebar-header-border, var(--sidebar-border, var(--color-border)))
+    );
 }
 
 /* ===== Sidebar Content ===== */
@@ -170,7 +177,10 @@
   flex: 1;
   padding: var(--sidebar-content-custom-padding, var(--sidebar-content-padding, var(--spacing-sm)));
   background: var(--sidebar-content-custom-bg, var(--sidebar-content-bg, inherit));
-  color: var(--sidebar-content-custom-text, var(--sidebar-content-text, var(--sidebar-text, inherit)));
+  color: var(
+    --sidebar-content-custom-text,
+    var(--sidebar-content-text, var(--sidebar-text, inherit))
+  );
 }
 
 .sidebar-content--scrollable {
@@ -205,7 +215,8 @@
   padding: var(--sidebar-footer-custom-padding, var(--sidebar-footer-padding, var(--spacing-md)));
   background: var(--sidebar-footer-custom-bg, var(--sidebar-footer-bg, inherit));
   color: var(--sidebar-footer-custom-text, var(--sidebar-footer-text, inherit));
-  border-top: 1px solid var(--sidebar-footer-custom-border, var(--sidebar-footer-border, var(--color-border)));
+  border-top: 1px solid
+    var(--sidebar-footer-custom-border, var(--sidebar-footer-border, var(--color-border)));
 }
 
 /* ===== Sidebar Items ===== */
@@ -329,8 +340,15 @@
 /* ===== Sidebar Separators ===== */
 .sidebar-separator {
   height: var(--sidebar-separator-custom-thickness, var(--sidebar-separator-thickness, 1px));
-  background: var(--sidebar-separator-custom-color, var(--sidebar-separator-color, var(--color-border)));
-  margin: var(--sidebar-separator-custom-spacing, var(--sidebar-separator-spacing, var(--spacing-sm))) 0;
+  background: var(
+    --sidebar-separator-custom-color,
+    var(--sidebar-separator-color, var(--color-border))
+  );
+  margin: var(
+      --sidebar-separator-custom-spacing,
+      var(--sidebar-separator-spacing, var(--spacing-sm))
+    )
+    0;
 }
 
 .sidebar-separator--gradient {
@@ -346,7 +364,7 @@
     height: auto;
     max-height: 50vh;
   }
-  
+
   .sidebar-root--overlay {
     width: 280px !important;
     min-width: 280px !important;

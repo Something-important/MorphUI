@@ -16,7 +16,9 @@
 }
 
 /* Glassmorphism effect - only apply when no custom background is set */
-.accordion-component--glassmorphism:not([style*="--accordion-custom-bg"]):not([style*="--accordion-custom-bg-pattern"]):not([style*="--accordion-custom-bg-image"]) {
+.accordion-component--glassmorphism:not([style*='--accordion-custom-bg']):not(
+    [style*='--accordion-custom-bg-pattern']
+  ):not([style*='--accordion-custom-bg-image']) {
   background: var(--color-primary-10);
   backdrop-filter: var(--backdrop-blur-lg);
   border: 1px solid var(--color-primary-20);
@@ -29,7 +31,10 @@
 }
 
 .accordion-component__default-icon {
-  color: var(--accordion-custom-icon-color, var(--accordion-icon-color, var(--color-primary))) !important;
+  color: var(
+    --accordion-custom-icon-color,
+    var(--accordion-icon-color, var(--color-primary))
+  ) !important;
 }
 
 /* Size variants */
@@ -386,8 +391,12 @@
 }
 
 @keyframes accordion-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Disabled state */
@@ -425,7 +434,7 @@
   .accordion-component {
     border-width: 2px;
   }
-  
+
   .accordion-component__header {
     border-bottom: 2px solid var(--accordion-border, var(--color-border));
   }

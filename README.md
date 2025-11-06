@@ -18,6 +18,7 @@ npm install morphui-react
 ```
 
 Or with yarn:
+
 ```bash
 yarn add morphui-react
 ```
@@ -48,12 +49,10 @@ import { ThemeProvider } from 'morphui';
 const customTheme = {
   'color-primary': '#ff6b6b',
   'color-success': '#51cf66',
-  'border-radius': '12px'
+  'border-radius': '12px',
 };
 
-<ThemeProvider theme={customTheme}>
-  {/* Your app components */}
-</ThemeProvider>
+<ThemeProvider theme={customTheme}>{/* Your app components */}</ThemeProvider>;
 ```
 
 ## 📚 Documentation
@@ -119,4 +118,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [GitHub Repository](https://github.com/yourusername/MorphUI)
 - [Issue Tracker](https://github.com/yourusername/MorphUI/issues)
-- [Documentation](https://github.com/yourusername/MorphUI#readme) 
+- [Documentation](https://github.com/yourusername/MorphUI#readme)

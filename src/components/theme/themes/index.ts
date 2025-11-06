@@ -1,6 +1,6 @@
 /**
  * Theme Registry
- * 
+ *
  * Centralized theme definitions for MorphUI.
  * Provides built-in themes and utilities for theme management.
  */
@@ -15,7 +15,7 @@ export { lightTheme, darkTheme, warmTheme, coolTheme, purpleTheme };
 
 /**
  * Built-in theme registry
- * 
+ *
  * Contains all available themes that users can use out of the box.
  * Users can also create their own themes and combine them with these.
  */
@@ -39,10 +39,10 @@ export type Theme = Record<string, string>;
 
 /**
  * Gets a theme by name
- * 
+ *
  * @param themeName - Name of the theme to retrieve
  * @returns Theme object or undefined if not found
- * 
+ *
  * @example
  * const darkTheme = getTheme('dark');
  * const customTheme = getTheme('my-custom-theme');
@@ -53,9 +53,9 @@ export const getTheme = (themeName: string): Theme | undefined => {
 
 /**
  * Gets all available built-in theme names
- * 
+ *
  * @returns Array of theme names
- * 
+ *
  * @example
  * const availableThemes = getAvailableThemes();
  * // Returns: ['default', 'dark', 'warm', 'cool']
@@ -66,10 +66,10 @@ export const getAvailableThemes = (): ThemeName[] => {
 
 /**
  * Validates if a theme name exists in built-in themes
- * 
+ *
  * @param themeName - Theme name to validate
  * @returns True if theme exists
- * 
+ *
  * @example
  * isValidThemeName('dark') // true
  * isValidThemeName('custom') // false
@@ -80,10 +80,10 @@ export const isValidThemeName = (themeName: string): themeName is ThemeName => {
 
 /**
  * Merges multiple themes into one
- * 
+ *
  * @param themeObjects - Array of theme objects to merge
  * @returns Merged theme object
- * 
+ *
  * @example
  * const combinedTheme = mergeThemes(lightTheme, { 'color-primary': '#ff0000' });
  */
@@ -93,11 +93,11 @@ export const mergeThemes = (...themeObjects: Theme[]): Theme => {
 
 /**
  * Creates a theme variant by extending a base theme
- * 
+ *
  * @param baseTheme - Base theme to extend
  * @param overrides - Theme overrides
  * @returns New theme object
- * 
+ *
  * @example
  * const myTheme = createThemeVariant(lightTheme, { 'color-primary': '#ff0000' });
  */
@@ -107,11 +107,11 @@ export const createThemeVariant = (baseTheme: Theme, overrides: Theme): Theme =>
 
 /**
  * Gets theme metadata
- * 
+ *
  * @param themeName - Name of the theme
  * @param theme - Theme object
  * @returns Theme metadata
- * 
+ *
  * @example
  * const info = getThemeInfo('dark', darkTheme);
  */

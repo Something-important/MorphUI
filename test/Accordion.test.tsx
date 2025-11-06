@@ -11,9 +11,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Accordion content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('Test Accordion')).toBeInTheDocument();
       expect(screen.getByText('Accordion content')).not.toBeVisible();
     });
@@ -24,9 +24,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Accordion content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const content = screen.getByText('Accordion content');
       expect(content).not.toBeVisible();
     });
@@ -37,9 +37,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" defaultOpen={true}>
             <p>Accordion content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const content = screen.getByText('Accordion content');
       expect(content).toBeVisible();
     });
@@ -54,9 +54,9 @@ describe('Accordion', () => {
               <button>Custom button</button>
             </div>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByTestId('custom-content')).toBeInTheDocument();
       expect(screen.getByText('Custom Header')).toBeInTheDocument();
       expect(screen.getByText('Custom paragraph')).toBeInTheDocument();
@@ -71,9 +71,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--primary');
     });
@@ -84,20 +84,20 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" variant="success">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       let accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--success');
-      
+
       rerender(
         <ThemeProvider>
           <Accordion title="Test Accordion" variant="danger">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--danger');
     });
@@ -108,9 +108,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" color="#ff0000">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveStyle({ '--accordion-custom-bg': '#ff0000' });
     });
@@ -122,9 +122,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" gradient={gradient}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveStyle({ '--accordion-custom-bg': gradient });
     });
@@ -137,9 +137,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--md');
     });
@@ -150,20 +150,20 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" size="sm">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       let accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--sm');
-      
+
       rerender(
         <ThemeProvider>
           <Accordion title="Test Accordion" size="lg">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--lg');
     });
@@ -176,9 +176,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--shadow-sm');
     });
@@ -189,20 +189,20 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" shadow="lg">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       let accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--shadow-lg');
-      
+
       rerender(
         <ThemeProvider>
           <Accordion title="Test Accordion" shadow="none">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--shadow-none');
     });
@@ -213,20 +213,20 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" hoverEffect="lift">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       let accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--hover-lift');
-      
+
       rerender(
         <ThemeProvider>
           <Accordion title="Test Accordion" hoverEffect="glow">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--hover-glow');
     });
@@ -239,9 +239,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" rounded={true}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--rounded');
     });
@@ -252,9 +252,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" bordered={true}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--bordered');
     });
@@ -265,9 +265,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" disabled={true}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--disabled');
     });
@@ -278,9 +278,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" loading={true}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--loading');
     });
@@ -293,10 +293,12 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
-      const defaultIcon = screen.getByRole('button').querySelector('.accordion-component__default-icon');
+
+      const defaultIcon = screen
+        .getByRole('button')
+        .querySelector('.accordion-component__default-icon');
       expect(defaultIcon).toBeInTheDocument();
     });
 
@@ -306,20 +308,20 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" iconPosition="left">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       let accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--icon-left');
-      
+
       rerender(
         <ThemeProvider>
           <Accordion title="Test Accordion" iconPosition="right">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--icon-right');
     });
@@ -330,9 +332,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" icon="⭐">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('⭐')).toBeInTheDocument();
     });
   });
@@ -344,9 +346,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--animation-slide');
     });
@@ -357,20 +359,20 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" animation="fade">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       let accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--animation-fade');
-      
+
       rerender(
         <ThemeProvider>
           <Accordion title="Test Accordion" animation="scale">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('accordion-component--animation-scale');
     });
@@ -381,9 +383,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" animationDuration={500}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveStyle({ '--accordion-animation-duration': '500ms' });
     });
@@ -396,19 +398,19 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Accordion content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       const content = screen.getByText('Accordion content');
-      
+
       // Initially closed
       expect(content).not.toBeVisible();
-      
+
       // Click to open
       fireEvent.click(button);
       expect(content).toBeVisible();
-      
+
       // Click to close
       fireEvent.click(button);
       expect(content).not.toBeVisible();
@@ -421,14 +423,14 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" onToggle={mockOnToggle}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
-      
+
       fireEvent.click(button);
       expect(mockOnToggle).toHaveBeenCalledWith(true);
-      
+
       fireEvent.click(button);
       expect(mockOnToggle).toHaveBeenCalledWith(false);
     });
@@ -440,12 +442,12 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" onOpen={mockOnOpen}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       fireEvent.click(button);
-      
+
       expect(mockOnOpen).toHaveBeenCalled();
     });
 
@@ -456,12 +458,12 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" defaultOpen={true} onClose={mockOnClose}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       fireEvent.click(button);
-      
+
       expect(mockOnClose).toHaveBeenCalled();
     });
 
@@ -472,12 +474,12 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" disabled={true} onToggle={mockOnToggle}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       fireEvent.click(button);
-      
+
       expect(mockOnToggle).not.toHaveBeenCalled();
     });
 
@@ -488,12 +490,12 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" loading={true} onToggle={mockOnToggle}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       fireEvent.click(button);
-      
+
       expect(mockOnToggle).not.toHaveBeenCalled();
     });
   });
@@ -505,14 +507,14 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       const content = screen.getByText('Content');
-      
+
       expect(content).not.toBeVisible();
-      
+
       fireEvent.keyDown(button, { key: 'Enter' });
       expect(content).toBeVisible();
     });
@@ -523,14 +525,14 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       const content = screen.getByText('Content');
-      
+
       expect(content).not.toBeVisible();
-      
+
       fireEvent.keyDown(button, { key: ' ' });
       expect(content).toBeVisible();
     });
@@ -541,14 +543,14 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       const content = screen.getByText('Content');
-      
+
       expect(content).not.toBeVisible();
-      
+
       fireEvent.keyDown(button, { key: 'ArrowDown' });
       expect(content).toBeVisible();
     });
@@ -559,14 +561,14 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" defaultOpen={true}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       const content = screen.getByText('Content');
-      
+
       expect(content).toBeVisible();
-      
+
       fireEvent.keyDown(button, { key: 'ArrowUp' });
       expect(content).not.toBeVisible();
     });
@@ -579,12 +581,12 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByRole('button');
       expect(button).toHaveAttribute('aria-expanded', 'false');
-      
+
       fireEvent.click(button);
       expect(button).toHaveAttribute('aria-expanded', 'true');
     });
@@ -595,9 +597,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" disabled={true}>
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByRole('button');
       expect(button).toHaveAttribute('disabled');
       expect(button).toHaveAttribute('tabIndex', '-1');
@@ -609,9 +611,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByRole('button');
       expect(button).toHaveAttribute('tabIndex', '0');
     });
@@ -624,9 +626,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" color="color-success">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveStyle({ '--accordion-custom-bg': 'var(--color-success)' });
     });
@@ -637,9 +639,9 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion" color="--color-primary">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveStyle({ '--accordion-custom-bg': 'var(--color-primary)' });
     });
@@ -649,16 +651,16 @@ describe('Accordion', () => {
     it('handles custom className and style props', () => {
       render(
         <ThemeProvider>
-          <Accordion 
-            title="Test Accordion" 
+          <Accordion
+            title="Test Accordion"
             className="custom-class"
             style={{ backgroundColor: 'red' }}
           >
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const accordion = screen.getByRole('button').closest('.accordion-component');
       expect(accordion).toHaveClass('custom-class');
       expect(accordion).toHaveAttribute('style');
@@ -668,12 +670,10 @@ describe('Accordion', () => {
     it('handles empty children', () => {
       render(
         <ThemeProvider>
-          <Accordion title="Test Accordion">
-            {null}
-          </Accordion>
-        </ThemeProvider>
+          <Accordion title="Test Accordion">{null}</Accordion>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       expect(button).toBeInTheDocument();
     });
@@ -691,9 +691,9 @@ describe('Accordion', () => {
               </ul>
             </div>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('Section Header')).toBeInTheDocument();
       expect(screen.getByText('Section content')).toBeInTheDocument();
       expect(screen.getByText('Item 1')).toBeInTheDocument();
@@ -706,17 +706,17 @@ describe('Accordion', () => {
           <Accordion title="Test Accordion">
             <p>Content</p>
           </Accordion>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const button = screen.getByText('Test Accordion');
       const content = screen.getByText('Content');
-      
+
       // Rapid clicks
       fireEvent.click(button);
       fireEvent.click(button);
       fireEvent.click(button);
-      
+
       // Should end up in a consistent state
       await waitFor(() => {
         expect(content).toBeVisible();

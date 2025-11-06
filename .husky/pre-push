@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run typecheck and tests before pushing (lightweight checks)
+echo "Running pre-push checks..."
+npm run format:check || exit 1
+npx tsc --noEmit || exit 1
+echo "✓ Pre-push checks passed"
+

@@ -11,7 +11,7 @@ const customTheme = {
   '--color-warning': '#f59e0b',
   '--color-danger': '#ef4444',
   '--color-secondary': '#6b7280',
-  '--color-info': '#3b82f6'
+  '--color-info': '#3b82f6',
 };
 
 describe('Modal', () => {
@@ -19,16 +19,12 @@ describe('Modal', () => {
     it('renders modal when open', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Modal Content')).toBeInTheDocument();
       expect(screen.getByText('Test Modal')).toBeInTheDocument();
@@ -37,16 +33,12 @@ describe('Modal', () => {
     it('does not render when closed', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={false}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={false} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
       expect(screen.queryByText('Modal Content')).not.toBeInTheDocument();
     });
@@ -54,17 +46,12 @@ describe('Modal', () => {
     it('renders with title and description', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Title"
-            description="Test Description"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Title" description="Test Description">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByText('Test Title')).toBeInTheDocument();
       expect(screen.getByText('Test Description')).toBeInTheDocument();
     });
@@ -72,15 +59,12 @@ describe('Modal', () => {
     it('renders without title and description', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-          >
+          <Modal isOpen={true} onClose={() => {}}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(screen.getByText('Modal Content')).toBeInTheDocument();
     });
@@ -88,33 +72,24 @@ describe('Modal', () => {
     it('renders close button by default', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByLabelText('Close')).toBeInTheDocument();
     });
 
     it('does not render close button when showCloseButton is false', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            showCloseButton={false}
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" showCloseButton={false}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.queryByLabelText('Close')).not.toBeInTheDocument();
     });
   });
@@ -123,16 +98,12 @@ describe('Modal', () => {
     it('renders with primary variant by default', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--primary');
     });
@@ -140,49 +111,34 @@ describe('Modal', () => {
     it('renders with different variants', () => {
       const { rerender } = render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            variant="success"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" variant="success">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--success');
-      
+
       rerender(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            variant="warning"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" variant="warning">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--warning');
     });
 
     it('applies custom color when provided', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            color="#ff0000"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" color="#ff0000">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveStyle({ '--modal-custom-bg': '#ff0000' });
     });
@@ -191,17 +147,12 @@ describe('Modal', () => {
       const gradient = 'linear-gradient(90deg, #ff0000 0%, #00ff00 100%)';
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            gradient={gradient}
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" gradient={gradient}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveStyle({ '--modal-custom-bg': gradient });
     });
@@ -211,16 +162,12 @@ describe('Modal', () => {
     it('renders with medium size by default', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--md');
     });
@@ -228,49 +175,34 @@ describe('Modal', () => {
     it('renders with different sizes', () => {
       const { rerender } = render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            size="sm"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" size="sm">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--sm');
-      
+
       rerender(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            size="lg"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" size="lg">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--lg');
     });
 
     it('applies fullscreen class when fullscreen is true', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            fullscreen
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" fullscreen>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--fullscreen');
     });
@@ -280,16 +212,12 @@ describe('Modal', () => {
     it('renders with dark backdrop by default', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const overlay = screen.getByRole('dialog').parentElement;
       expect(overlay).toHaveClass('modal-component__overlay--dark');
     });
@@ -297,49 +225,35 @@ describe('Modal', () => {
     it('renders with different backdrop styles', () => {
       const { rerender } = render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            backdrop="light"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" backdrop="light">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const overlay = screen.getByRole('dialog').parentElement;
       expect(overlay).toHaveClass('modal-component__overlay--light');
-      
+
       rerender(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            backdrop="blur"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" backdrop="blur">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(overlay).toHaveClass('modal-component__overlay--blur');
     });
 
     it('renders with fade animation by default', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--fade');
     });
@@ -347,32 +261,22 @@ describe('Modal', () => {
     it('renders with different animations', () => {
       const { rerender } = render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            animation="slide"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" animation="slide">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--slide');
-      
+
       rerender(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            animation="scale"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" animation="scale">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--scale');
     });
   });
@@ -381,16 +285,12 @@ describe('Modal', () => {
     it('renders with center position by default', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--center');
     });
@@ -398,32 +298,22 @@ describe('Modal', () => {
     it('renders with different positions', () => {
       const { rerender } = render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            position="top"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" position="top">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--top');
-      
+
       rerender(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            position="bottom-right"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" position="bottom-right">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--bottom-right');
     });
   });
@@ -432,16 +322,12 @@ describe('Modal', () => {
     it('renders with large shadow by default', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--shadow-lg');
     });
@@ -449,32 +335,22 @@ describe('Modal', () => {
     it('renders with different shadow levels', () => {
       const { rerender } = render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            shadow="none"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" shadow="none">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--shadow-none');
-      
+
       rerender(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            shadow="xl"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" shadow="xl">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByRole('dialog')).toHaveClass('modal-component--shadow-xl');
     });
   });
@@ -483,17 +359,12 @@ describe('Modal', () => {
     it('applies draggable class when draggable is true', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            draggable
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" draggable>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--draggable');
     });
@@ -501,17 +372,12 @@ describe('Modal', () => {
     it('applies resizable class when resizable is true', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            resizable
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" resizable>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--resizable');
     });
@@ -528,9 +394,9 @@ describe('Modal', () => {
           >
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveStyle({ maxWidth: '800px', minHeight: '400px' });
     });
@@ -538,17 +404,12 @@ describe('Modal', () => {
     it('applies custom z-index when provided', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            zIndex={2000}
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" zIndex={2000}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveStyle({ zIndex: 2000 });
     });
@@ -559,19 +420,15 @@ describe('Modal', () => {
       const mockOnClose = jest.fn();
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={mockOnClose}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={mockOnClose} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const closeButton = screen.getByLabelText('Close');
       fireEvent.click(closeButton);
-      
+
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
@@ -579,20 +436,15 @@ describe('Modal', () => {
       const mockOnClose = jest.fn();
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={mockOnClose}
-            title="Test Modal"
-            closeOnOverlayClick={true}
-          >
+          <Modal isOpen={true} onClose={mockOnClose} title="Test Modal" closeOnOverlayClick={true}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const overlay = screen.getByRole('dialog').parentElement;
       fireEvent.click(overlay!);
-      
+
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
@@ -600,20 +452,15 @@ describe('Modal', () => {
       const mockOnClose = jest.fn();
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={mockOnClose}
-            title="Test Modal"
-            closeOnOverlayClick={false}
-          >
+          <Modal isOpen={true} onClose={mockOnClose} title="Test Modal" closeOnOverlayClick={false}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const overlay = screen.getByRole('dialog').parentElement;
       fireEvent.click(overlay!);
-      
+
       expect(mockOnClose).not.toHaveBeenCalled();
     });
 
@@ -621,19 +468,14 @@ describe('Modal', () => {
       const mockOnClose = jest.fn();
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={mockOnClose}
-            title="Test Modal"
-            closeOnEsc={true}
-          >
+          <Modal isOpen={true} onClose={mockOnClose} title="Test Modal" closeOnEsc={true}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       fireEvent.keyDown(document, { key: 'Escape' });
-      
+
       await waitFor(() => {
         expect(mockOnClose).toHaveBeenCalledTimes(1);
       });
@@ -643,19 +485,14 @@ describe('Modal', () => {
       const mockOnClose = jest.fn();
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={mockOnClose}
-            title="Test Modal"
-            closeOnEsc={false}
-          >
+          <Modal isOpen={true} onClose={mockOnClose} title="Test Modal" closeOnEsc={false}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       fireEvent.keyDown(document, { key: 'Escape' });
-      
+
       await waitFor(() => {
         expect(mockOnClose).not.toHaveBeenCalled();
       });
@@ -666,17 +503,12 @@ describe('Modal', () => {
     it('has proper ARIA attributes', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            description="Test Description"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" description="Test Description">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveAttribute('aria-modal', 'true');
       expect(modal).toHaveAttribute('aria-labelledby', 'modal-title');
@@ -686,16 +518,12 @@ describe('Modal', () => {
     it('has proper role and aria-modal attributes', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveAttribute('role', 'dialog');
       expect(modal).toHaveAttribute('aria-modal', 'true');
@@ -704,16 +532,12 @@ describe('Modal', () => {
     it('has proper focus management', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const overlay = screen.getByRole('dialog').parentElement;
       expect(overlay).toHaveAttribute('tabIndex', '-1');
     });
@@ -723,17 +547,12 @@ describe('Modal', () => {
     it('integrates with theme system', () => {
       render(
         <ThemeProvider theme={customTheme}>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            color="color-success"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" color="color-success">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveStyle({ '--modal-custom-bg': 'var(--color-success)' });
     });
@@ -741,17 +560,12 @@ describe('Modal', () => {
     it('resolves theme values correctly', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            title="Test Modal"
-            color="--color-primary"
-          >
+          <Modal isOpen={true} onClose={() => {}} title="Test Modal" color="--color-primary">
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveStyle({ '--modal-custom-bg': 'var(--color-primary)' });
     });
@@ -770,9 +584,9 @@ describe('Modal', () => {
           >
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('custom-class');
       // Check that the style is applied to the modal element
@@ -793,9 +607,9 @@ describe('Modal', () => {
           >
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const closeButton = screen.getByLabelText('Close Modal');
       expect(closeButton).toBeInTheDocument();
       expect(closeButton).toHaveTextContent('✕');
@@ -804,20 +618,15 @@ describe('Modal', () => {
     it('renders with custom header and footer', () => {
       const customHeader = <div data-testid="custom-header">Custom Header</div>;
       const customFooter = <div data-testid="custom-footer">Custom Footer</div>;
-      
+
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            header={customHeader}
-            footer={customFooter}
-          >
+          <Modal isOpen={true} onClose={() => {}} header={customHeader} footer={customFooter}>
             <p>Modal Content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       expect(screen.getByTestId('custom-header')).toBeInTheDocument();
       expect(screen.getByTestId('custom-footer')).toBeInTheDocument();
     });
@@ -825,16 +634,12 @@ describe('Modal', () => {
     it('applies glassmorphism effect when enabled', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            glassmorphism={true}
-          >
+          <Modal isOpen={true} onClose={() => {}} glassmorphism={true}>
             <p>Modal content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--glassmorphism');
     });
@@ -849,9 +654,9 @@ describe('Modal', () => {
           >
             <p>Modal content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--pattern');
     });
@@ -859,16 +664,12 @@ describe('Modal', () => {
     it('applies background image when provided', () => {
       render(
         <ThemeProvider>
-          <Modal
-            isOpen={true}
-            onClose={() => {}}
-            backgroundImage="https://example.com/image.jpg"
-          >
+          <Modal isOpen={true} onClose={() => {}} backgroundImage="https://example.com/image.jpg">
             <p>Modal content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveClass('modal-component--image-bg');
     });
@@ -886,9 +687,9 @@ describe('Modal', () => {
           >
             <p>Modal content</p>
           </Modal>
-        </ThemeProvider>
+        </ThemeProvider>,
       );
-      
+
       const modal = screen.getByRole('dialog');
       expect(modal).toHaveStyle({ '--modal-custom-bg': '#ff0000' });
       expect(modal).toHaveStyle({ '--modal-custom-bg': '#ff0000' }); // This will be the last one applied

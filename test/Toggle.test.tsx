@@ -10,7 +10,7 @@ const renderToggle = (props = {}) => {
   return render(
     <ThemeProvider>
       <Toggle {...props} />
-    </ThemeProvider>
+    </ThemeProvider>,
   );
 };
 
@@ -61,42 +61,36 @@ describe('Toggle Component', () => {
     test('calls onChange when clicked', () => {
       const handleChange = jest.fn();
       renderToggle({ onChange: handleChange });
-      
+
       const toggle = screen.getByRole('switch');
       fireEvent.click(toggle);
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
     });
 
     test('toggles state when clicked', () => {
       const handleChange = jest.fn();
       renderToggle({ defaultChecked: false, onChange: handleChange });
-      
+
       const toggle = screen.getByRole('switch');
       fireEvent.click(toggle);
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
-      
+
       fireEvent.click(toggle);
       expect(handleChange).toHaveBeenCalledWith(false);
     });
   });
 
   describe('Variants', () => {
-    test.each([
-      'primary',
-      'secondary',
-      'success',
-      'warning',
-      'danger',
-      'info',
-      'ghost',
-      'outline'
-    ])('renders %s variant correctly', (variant) => {
-      renderToggle({ variant: variant as any });
-      const toggle = screen.getByRole('switch');
-      expect(toggle).toHaveClass(`toggle-component--${variant}`);
-    });
+    test.each(['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'ghost', 'outline'])(
+      'renders %s variant correctly',
+      (variant) => {
+        renderToggle({ variant: variant as any });
+        const toggle = screen.getByRole('switch');
+        expect(toggle).toHaveClass(`toggle-component--${variant}`);
+      },
+    );
   });
 
   describe('Sizes', () => {
@@ -116,11 +110,14 @@ describe('Toggle Component', () => {
   });
 
   describe('Label Positions', () => {
-    test.each(['left', 'right', 'top', 'bottom'])('renders %s label position correctly', (position) => {
-      renderToggle({ label: 'Test', labelPosition: position as any });
-      const toggle = screen.getByRole('switch');
-      expect(toggle).toHaveClass(`toggle-component--label-${position}`);
-    });
+    test.each(['left', 'right', 'top', 'bottom'])(
+      'renders %s label position correctly',
+      (position) => {
+        renderToggle({ label: 'Test', labelPosition: position as any });
+        const toggle = screen.getByRole('switch');
+        expect(toggle).toHaveClass(`toggle-component--label-${position}`);
+      },
+    );
   });
 
   describe('Icon Positions', () => {
@@ -142,10 +139,10 @@ describe('Toggle Component', () => {
     test('does not call onChange when disabled', () => {
       const handleChange = jest.fn();
       renderToggle({ disabled: true, onChange: handleChange });
-      
+
       const toggle = screen.getByRole('switch');
       fireEvent.click(toggle);
-      
+
       expect(handleChange).not.toHaveBeenCalled();
     });
 
@@ -172,10 +169,10 @@ describe('Toggle Component', () => {
     test('does not call onChange when loading', () => {
       const handleChange = jest.fn();
       renderToggle({ loading: true, onChange: handleChange });
-      
+
       const toggle = screen.getByRole('switch');
       fireEvent.click(toggle);
-      
+
       expect(handleChange).not.toHaveBeenCalled();
     });
   });
@@ -190,9 +187,9 @@ describe('Toggle Component', () => {
     test('creates ripple element on click', () => {
       renderToggle({ ripple: true });
       const toggle = screen.getByRole('switch');
-      
+
       fireEvent.mouseDown(toggle);
-      
+
       // Check if ripple element was created
       const ripple = toggle.querySelector('[style*="animation: toggle-ripple"]');
       expect(ripple).toBeInTheDocument();
@@ -203,31 +200,31 @@ describe('Toggle Component', () => {
     test('toggles on Enter key', () => {
       const handleChange = jest.fn();
       renderToggle({ onChange: handleChange });
-      
+
       const toggle = screen.getByRole('switch');
       fireEvent.keyDown(toggle, { key: 'Enter' });
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
     });
 
     test('toggles on Space key', () => {
       const handleChange = jest.fn();
       renderToggle({ onChange: handleChange });
-      
+
       const toggle = screen.getByRole('switch');
       fireEvent.keyDown(toggle, { key: ' ' });
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
     });
 
     test('handles Enter key correctly', () => {
       const handleChange = jest.fn();
       renderToggle({ onChange: handleChange });
-      
+
       const toggle = screen.getByRole('switch');
-      
+
       fireEvent.keyDown(toggle, { key: 'Enter' });
-      
+
       expect(handleChange).toHaveBeenCalledWith(true);
     });
   });
