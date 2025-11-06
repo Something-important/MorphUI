@@ -128,10 +128,9 @@ describe('Label Component', () => {
       const label = screen.getByText('Test Label');
       // User style should take precedence
       expect(label).toHaveStyle({ fontSize: '20px' });
-      // Color is normalized by browser, check for red in any form
-      expect(label).toHaveStyle({
-        color: expect.stringMatching(/red|rgb\(255,\s*0,\s*0\)|#ff0000/i),
-      });
+      // Check style attribute directly for color (inline styles override CSS)
+      const styleAttr = label.getAttribute('style') || '';
+      expect(styleAttr).toMatch(/color:\s*red/i);
       // Component custom property should still be set
       expect(label.style.getPropertyValue('--label-custom-color')).toBe('#10b981');
     });
@@ -145,10 +144,9 @@ describe('Label Component', () => {
         />,
       );
       const label = screen.getByText('Test Label');
-      // Direct style color should win (check for orange in any form)
-      expect(label).toHaveStyle({
-        color: expect.stringMatching(/orange|rgb\(255,\s*165,\s*0\)|#ffa500/i),
-      });
+      // Check style attribute directly for color (inline styles override CSS)
+      const styleAttr = label.getAttribute('style') || '';
+      expect(styleAttr).toMatch(/color:\s*orange/i);
       // Custom property from style should override component prop
       expect(label.style.getPropertyValue('--label-custom-color')).toBe('purple');
     });
