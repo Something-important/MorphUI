@@ -1,7 +1,7 @@
 // Stepper.stories.tsx
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Stepper } from './Stepper';
+import { Stepper, type StepperStep } from './Stepper';
 import { Button } from '../Button';
 import { ThemeProvider, themes, type ThemeName } from '../../theme';
 
@@ -324,10 +324,12 @@ export const InteractiveWizard: Story = {
     const currentStep = steps[activeStep];
     const remainingSteps = steps.slice(activeStep + 1);
 
-    const displaySteps = [...completedSteps, currentStep, ...remainingSteps].map((step, index) => ({
-      ...step,
-      id: step.id,
-    }));
+    const displaySteps: StepperStep[] = [...completedSteps, currentStep, ...remainingSteps].map(
+      (step, index) => ({
+        ...step,
+        id: step.id,
+      }),
+    );
 
     return (
       <div>

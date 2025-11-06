@@ -55,7 +55,12 @@ export const SingleValue: Story = {
     const [value, setValue] = useState(50);
     return (
       <div style={{ padding: '2rem', maxWidth: '500px' }}>
-        <Slider value={value} onChange={setValue} label="Volume" showValue />
+        <Slider
+          value={value}
+          onChange={(val) => setValue(val as number)}
+          label="Volume"
+          showValue
+        />
         <p style={{ marginTop: '1rem', color: '#666', fontSize: '0.875rem' }}>
           Current value: {value}
         </p>
@@ -70,7 +75,13 @@ export const RangeSlider: Story = {
     const [value, setValue] = useState<[number, number]>([25, 75]);
     return (
       <div style={{ padding: '2rem', maxWidth: '500px' }}>
-        <Slider range value={value} onChange={setValue} label="Price Range" showValue />
+        <Slider
+          range
+          value={value}
+          onChange={(val) => setValue(val as [number, number])}
+          label="Price Range"
+          showValue
+        />
         <p style={{ marginTop: '1rem', color: '#666', fontSize: '0.875rem' }}>
           Range: ${value[0]} - ${value[1]}
         </p>
@@ -130,10 +141,16 @@ export const WithMarks: Story = {
     const [value, setValue] = useState(50);
     return (
       <div style={{ padding: '2rem', maxWidth: '500px' }}>
-        <Slider value={value} onChange={setValue} label="With Step Marks" marks step={10} />
         <Slider
           value={value}
-          onChange={setValue}
+          onChange={(val) => setValue(val as number)}
+          label="With Step Marks"
+          marks
+          step={10}
+        />
+        <Slider
+          value={value}
+          onChange={(val) => setValue(val as number)}
           label="With Custom Marks"
           marks={[
             { value: 0, label: 'Min' },
@@ -266,14 +283,14 @@ export const ThemeSwitching: Story = {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '500px' }}>
             <Slider
               value={value1}
-              onChange={setValue1}
+              onChange={(val) => setValue1(val as number)}
               variant="primary"
               label="Primary Slider"
               showValue
             />
             <Slider
               value={value2}
-              onChange={setValue2}
+              onChange={(val) => setValue2(val as number)}
               variant="success"
               label="Success Slider"
               showValue
@@ -281,7 +298,7 @@ export const ThemeSwitching: Story = {
             <Slider
               range
               value={range}
-              onChange={setRange}
+              onChange={(val) => setRange(val as [number, number])}
               variant="warning"
               label="Range Slider"
               showValue
@@ -304,14 +321,21 @@ export const InteractiveExamples: Story = {
       <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         <div>
           <h3 style={{ marginBottom: '1rem' }}>Volume Control</h3>
-          <Slider value={volume} onChange={setVolume} min={0} max={100} label="Volume" showValue />
+          <Slider
+            value={volume}
+            onChange={(val) => setVolume(val as number)}
+            min={0}
+            max={100}
+            label="Volume"
+            showValue
+          />
         </div>
 
         <div>
           <h3 style={{ marginBottom: '1rem' }}>Brightness</h3>
           <Slider
             value={brightness}
-            onChange={setBrightness}
+            onChange={(val) => setBrightness(val as number)}
             min={0}
             max={100}
             label="Brightness (%)"
@@ -325,7 +349,7 @@ export const InteractiveExamples: Story = {
           <Slider
             range
             value={priceRange}
-            onChange={setPriceRange}
+            onChange={(val) => setPriceRange(val as [number, number])}
             min={0}
             max={100}
             label="Price Range ($)"
@@ -379,12 +403,19 @@ export const StepSize: Story = {
     return (
       <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         <div>
-          <Slider value={value1} onChange={setValue1} step={10} marks label="Step: 10" showValue />
+          <Slider
+            value={value1}
+            onChange={(val) => setValue1(val as number)}
+            step={10}
+            marks
+            label="Step: 10"
+            showValue
+          />
         </div>
         <div>
           <Slider
             value={value2}
-            onChange={setValue2}
+            onChange={(val) => setValue2(val as number)}
             min={0}
             max={10}
             step={0.5}

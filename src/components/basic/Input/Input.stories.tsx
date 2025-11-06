@@ -1636,7 +1636,7 @@ export const InteractiveThemeBuilder: Story = {
                 marginTop: '1rem',
               }}
             >
-              {Object.keys(availableThemes).map((name) => (
+              {Object.entries(availableThemes).map(([name, theme]) => (
                 <div
                   key={name}
                   style={{

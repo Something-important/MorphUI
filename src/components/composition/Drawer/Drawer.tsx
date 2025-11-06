@@ -200,7 +200,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     // Build component style object with CSS custom properties (match Button pattern)
     const componentStyle: React.CSSProperties & Record<string, string> = {
-      zIndex,
+      zIndex: String(zIndex),
       ...(position === 'left' || position === 'right'
         ? {
             width: width ? (typeof width === 'number' ? `${width}px` : width) : undefined,
