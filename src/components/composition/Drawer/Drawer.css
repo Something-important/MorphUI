@@ -1,0 +1,323 @@
+/* Drawer.css */
+.drawer-component__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  transition: opacity var(--transition-normal, 0.3s ease);
+}
+
+.drawer-component__backdrop--animated {
+  animation: drawerBackdropIn var(--transition-normal, 0.3s ease);
+}
+
+@keyframes drawerBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Drawer container */
+.drawer-component {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background: var(--drawer-custom-bg, var(--drawer-bg, var(--color-background, #ffffff)));
+  color: var(--drawer-custom-text-color, var(--drawer-text-color, var(--color-text, #111827)));
+  box-shadow: var(
+    --shadow-xl,
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04)
+  );
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Position: Left */
+.drawer-component--left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 90vw;
+  border-top-right-radius: var(--border-radius-lg, 8px);
+  border-bottom-right-radius: var(--border-radius-lg, 8px);
+}
+
+.drawer-component--animated.drawer-component--left {
+  transform: translateX(-100%);
+  animation: drawerSlideInLeft var(--transition-normal, 0.3s ease) forwards;
+}
+
+@keyframes drawerSlideInLeft {
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Position: Right */
+.drawer-component--right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 90vw;
+  border-top-left-radius: var(--border-radius-lg, 8px);
+  border-bottom-left-radius: var(--border-radius-lg, 8px);
+}
+
+.drawer-component--animated.drawer-component--right {
+  transform: translateX(100%);
+  animation: drawerSlideInRight var(--transition-normal, 0.3s ease) forwards;
+}
+
+@keyframes drawerSlideInRight {
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Position: Top */
+.drawer-component--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  max-height: 90vh;
+  border-bottom-left-radius: var(--border-radius-lg, 8px);
+  border-bottom-right-radius: var(--border-radius-lg, 8px);
+}
+
+.drawer-component--animated.drawer-component--top {
+  transform: translateY(-100%);
+  animation: drawerSlideInTop var(--transition-normal, 0.3s ease) forwards;
+}
+
+@keyframes drawerSlideInTop {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Position: Bottom */
+.drawer-component--bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  max-height: 90vh;
+  border-top-left-radius: var(--border-radius-lg, 8px);
+  border-top-right-radius: var(--border-radius-lg, 8px);
+}
+
+.drawer-component--animated.drawer-component--bottom {
+  transform: translateY(100%);
+  animation: drawerSlideInBottom var(--transition-normal, 0.3s ease) forwards;
+}
+
+@keyframes drawerSlideInBottom {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Sizes */
+.drawer-component--xs.drawer-component--left,
+.drawer-component--xs.drawer-component--right {
+  width: 256px;
+}
+
+.drawer-component--xs.drawer-component--top,
+.drawer-component--xs.drawer-component--bottom {
+  height: 256px;
+}
+
+.drawer-component--sm.drawer-component--left,
+.drawer-component--sm.drawer-component--right {
+  width: 320px;
+}
+
+.drawer-component--sm.drawer-component--top,
+.drawer-component--sm.drawer-component--bottom {
+  height: 320px;
+}
+
+.drawer-component--md.drawer-component--left,
+.drawer-component--md.drawer-component--right {
+  width: 384px;
+}
+
+.drawer-component--md.drawer-component--top,
+.drawer-component--md.drawer-component--bottom {
+  height: 384px;
+}
+
+.drawer-component--lg.drawer-component--left,
+.drawer-component--lg.drawer-component--right {
+  width: 512px;
+}
+
+.drawer-component--lg.drawer-component--top,
+.drawer-component--lg.drawer-component--bottom {
+  height: 512px;
+}
+
+.drawer-component--xl.drawer-component--left,
+.drawer-component--xl.drawer-component--right {
+  width: 640px;
+}
+
+.drawer-component--xl.drawer-component--top,
+.drawer-component--xl.drawer-component--bottom {
+  height: 640px;
+}
+
+.drawer-component--full.drawer-component--left,
+.drawer-component--full.drawer-component--right {
+  width: 100vw;
+  max-width: 100vw;
+  border-radius: 0;
+}
+
+.drawer-component--full.drawer-component--top,
+.drawer-component--full.drawer-component--bottom {
+  height: 100vh;
+  max-height: 100vh;
+  border-radius: 0;
+}
+
+/* Close button */
+.drawer-component__close {
+  position: absolute;
+  top: var(--spacing-md, 1rem);
+  right: var(--spacing-md, 1rem);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--drawer-custom-text-color, var(--drawer-text-color, var(--color-text, #111827)));
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--border-radius-md, 6px);
+  transition: all var(--transition-fast, 0.15s);
+  z-index: 10;
+}
+
+.drawer-component__close:hover {
+  background: var(--color-gray-100, #f3f4f6);
+}
+
+.drawer-component__close:focus {
+  outline: 2px solid var(--color-primary, #0070f3);
+  outline-offset: 2px;
+}
+
+/* Header */
+.drawer-component__header {
+  padding: var(--spacing-lg, 1.5rem);
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  background: var(
+    --drawer-custom-header-bg,
+    var(--drawer-header-bg, var(--color-gray-50, #f9fafb))
+  );
+  flex-shrink: 0;
+}
+
+.drawer-component__title {
+  margin: 0 0 var(--spacing-xs, 0.25rem) 0;
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-tight, 1.25);
+  color: var(--drawer-custom-text-color, var(--drawer-text-color, var(--color-text, #111827)));
+}
+
+.drawer-component__description {
+  margin: 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-muted, #6b7280);
+  line-height: var(--line-height-relaxed, 1.625);
+}
+
+/* Content */
+.drawer-component__content {
+  flex: 1;
+  padding: var(--spacing-lg, 1.5rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Footer */
+.drawer-component__footer {
+  padding: var(--spacing-lg, 1.5rem);
+  border-top: 1px solid var(--color-border, #e5e7eb);
+  background: var(
+    --drawer-custom-footer-bg,
+    var(--drawer-footer-bg, var(--color-gray-50, #f9fafb))
+  );
+  flex-shrink: 0;
+}
+
+/* Glassmorphism */
+.drawer-component--glassmorphism {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.drawer-component--glassmorphism.drawer-component__header,
+.drawer-component--glassmorphism .drawer-component__header {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.drawer-component--glassmorphism.drawer-component__footer,
+.drawer-component--glassmorphism .drawer-component__footer {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Gradient support */
+.drawer-component--gradient {
+  background: var(--drawer-custom-bg) !important;
+}
+
+/* Shadow variants */
+.drawer-component--shadow-none {
+  box-shadow: none;
+}
+
+.drawer-component--shadow-sm {
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+}
+
+.drawer-component--shadow-md {
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+.drawer-component--shadow-lg {
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+}
+
+.drawer-component--shadow-xl {
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1));
+}
+
+.drawer-component--shadow-2xl {
+  box-shadow: var(--shadow-2xl, 0 25px 50px -12px rgba(0, 0, 0, 0.25));
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .drawer-component--animated,
+  .drawer-component__backdrop--animated {
+    animation: none !important;
+    transform: none !important;
+  }
+}

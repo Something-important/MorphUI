@@ -489,7 +489,12 @@ export const InteractiveThemeBuilder: Story = {
             {Object.entries(themes).map(([name, theme]) => (
               <button
                 key={name}
-                onClick={() => setCurrentTheme(name)}
+                onClick={() => {
+                  Object.entries(theme).forEach(([key, value]) => {
+                    document.documentElement.style.setProperty(`--${key}`, String(value));
+                  });
+                  setCurrentTheme(name);
+                }}
                 style={{
                   background:
                     currentTheme === name ? 'var(--color-primary)' : 'var(--color-background)',

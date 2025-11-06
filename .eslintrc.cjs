@@ -63,11 +63,13 @@ module.exports = {
       files: ['**/*.test.tsx', '**/*.test.ts', '**/*.spec.tsx', '**/*.spec.ts'],
       rules: {
         'testing-library/no-node-access': 'off',
+        'testing-library/no-container': 'off',
         'testing-library/no-wait-for-multiple-assertions': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/no-explicit-any': 'warn',
         '@typescript-eslint/no-require-imports': 'warn',
         'jest/no-disabled-tests': 'warn',
+        'jest/no-conditional-expect': 'warn',
         'jsx-a11y/click-events-have-key-events': 'off',
         'jsx-a11y/no-static-element-interactions': 'off',
       },

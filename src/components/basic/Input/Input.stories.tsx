@@ -864,6 +864,9 @@ export const InteractiveThemeBuilder: Story = {
                 <Button
                   key={name}
                   onClick={() => {
+                    Object.entries(theme).forEach(([key, value]) => {
+                      document.documentElement.style.setProperty(`--${key}`, String(value));
+                    });
                     setCurrentTheme(name);
                   }}
                   variant={currentTheme === name ? 'primary' : 'outline'}
@@ -1633,7 +1636,7 @@ export const InteractiveThemeBuilder: Story = {
                 marginTop: '1rem',
               }}
             >
-              {Object.entries(availableThemes).map(([name, theme]) => (
+              {Object.keys(availableThemes).map((name) => (
                 <div
                   key={name}
                   style={{
