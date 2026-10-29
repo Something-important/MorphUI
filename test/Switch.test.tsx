@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { Switch } from '../src/components/basic/Switch/Switch';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
@@ -480,7 +480,10 @@ describe('Switch Component', () => {
       rerender(<Switch checked={true} onChange={() => {}} />);
       expect(container.querySelector('.switch-component--animating')).toBeInTheDocument();
       // After 150ms, animation class should be removed
-      jest.advanceTimersByTime(200);
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+      expect(container.querySelector('.switch-component--animating')).not.toBeInTheDocument();
       jest.useRealTimers();
     });
   });
