@@ -6,7 +6,7 @@ A flexible, adaptable React + TypeScript UI component library for modern web app
 
 ## ✨ Features
 
-- ⚡ **Reusable Components**: Button, Accordion, Card, Dropdown, Input, Modal, RadioGroup, Sidebar, Table, Tabs, Tooltip, and more
+- ⚡ **Reusable Components**: Button, Accordion, Card, Dropdown, Input, Modal, RadioGroup, Sidebar, Table, Tabs, Toast, Tooltip, and more
 - 🎨 **Flexible Theming**: CSS custom properties with runtime theme switching across 5 built-in themes (light, dark, cool, warm, purple)
 - 🧪 **Type Safe**: Full TypeScript support with comprehensive type definitions
 - ♿ **Accessible**: Built following WCAG guidelines and accessibility best practices
@@ -63,6 +63,34 @@ const customTheme = {
 ```
 
 See the [Theme Showcase story](https://something-important.github.io/MorphUI/?path=/story/theme-theme-showcase--theme-showcase) for a live preview of all built-in themes.
+
+## 🔔 Toast Notifications
+
+Wrap your app in a `ToastProvider` and fire notifications from anywhere with the `useToast()` hook:
+
+```tsx
+import { ToastProvider, useToast, Button } from 'morphui-react';
+
+function SaveButton() {
+  const { toast } = useToast();
+
+  return (
+    <Button onClick={() => toast.success('Saved', 'Your changes were stored.')}>
+      Save
+    </Button>
+  );
+}
+
+function App() {
+  return (
+    <ToastProvider position="bottom-right" duration={4000} maxToasts={3}>
+      <SaveButton />
+    </ToastProvider>
+  );
+}
+```
+
+Features: six variants (`success` / `error` / `warning` / `info` / `primary` / `secondary`), six screen positions, auto-dismiss with **pause-on-hover**, stacked viewport with `maxToasts`, optional action buttons, `duration: 0` for sticky toasts, and full theming support. A presentational `Toast` component is also exported for direct use without a provider.
 
 ## 📚 Documentation
 
