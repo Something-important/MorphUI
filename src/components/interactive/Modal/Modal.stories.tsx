@@ -1,6 +1,6 @@
 // Modal.stories.tsx
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import { Modal, Button, Dropdown, Checkbox, ThemeProvider, themes } from '../../index';
 
 export default {

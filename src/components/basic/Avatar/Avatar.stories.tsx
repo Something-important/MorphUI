@@ -3,7 +3,6 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Avatar } from './Avatar';
 import { ThemeProvider, themes, type ThemeName } from '../../theme';
-import { Button } from '../Button';
 
 export default {
   title: 'Components/Avatar',

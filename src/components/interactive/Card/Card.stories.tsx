@@ -1,6 +1,6 @@
 // Card.stories.tsx
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import { Card, Button, Dropdown, Checkbox, ThemeProvider, themes } from '../../index';
 
 export default {

@@ -4,7 +4,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Skeleton } from './Skeleton';
 import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Card } from '../../interactive/Card';
-import { Avatar } from '../Avatar';
 
 export default {
   title: 'Components/Skeleton',

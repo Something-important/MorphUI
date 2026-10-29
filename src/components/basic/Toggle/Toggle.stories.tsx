@@ -1,6 +1,6 @@
 // Toggle.stories.tsx
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import { Toggle, Button, Dropdown, ThemeProvider, themes } from '../../index';
 
 // Mock icons for stories

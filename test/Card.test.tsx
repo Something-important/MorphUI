@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Card } from '../src/components/interactive/Card/Card';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
