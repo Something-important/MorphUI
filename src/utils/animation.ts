@@ -191,7 +191,7 @@ export const staggerAnimation = (
  * const debouncedResize = debounce(handleResize, 250);
  * window.addEventListener('resize', debouncedResize);
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: never[]) => unknown>(
   func: T,
   wait: number,
 ): ((...args: Parameters<T>) => void) => {
@@ -214,7 +214,7 @@ export const debounce = <T extends (...args: any[]) => any>(
  * const throttledScroll = throttle(handleScroll, 100);
  * window.addEventListener('scroll', throttledScroll);
  */
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: never[]) => unknown>(
   func: T,
   limit: number,
 ): ((...args: Parameters<T>) => void) => {
