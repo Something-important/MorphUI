@@ -3,6 +3,20 @@ import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
 import { Toggle, Button, Dropdown, ThemeProvider, themes } from '../../index';
 
+type PlaygroundVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+type PlaygroundSize = 'sm' | 'md' | 'lg';
+type PlaygroundShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
+type PlaygroundLabelPosition = 'left' | 'right' | 'top' | 'bottom';
+type PlaygroundIconPosition = 'left' | 'right';
+
 // Mock icons for stories
 const PowerIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -99,7 +113,7 @@ export default {
     },
   },
   decorators: [
-    (Story: any) => (
+    (Story: React.FC) => (
       <ThemeProvider>
         <div style={{ padding: '20px', maxWidth: '800px' }}>
           <Story />
@@ -760,7 +774,7 @@ export const InteractivePlayground: Story = {
                   { label: 'Outline', value: 'outline' },
                 ]}
                 value={variant}
-                onChange={(value) => setVariant(value as any)}
+                onChange={(value) => setVariant(value as PlaygroundVariant)}
                 placeholder="Select variant"
                 size="sm"
               />
@@ -784,7 +798,7 @@ export const InteractivePlayground: Story = {
                   { label: 'Large', value: 'lg' },
                 ]}
                 value={size}
-                onChange={(value) => setSize(value as any)}
+                onChange={(value) => setSize(value as PlaygroundSize)}
                 placeholder="Select size"
                 size="sm"
               />
@@ -810,7 +824,7 @@ export const InteractivePlayground: Story = {
                   { label: 'Extra Large', value: 'xl' },
                 ]}
                 value={shadow}
-                onChange={(value) => setShadow(value as any)}
+                onChange={(value) => setShadow(value as PlaygroundShadow)}
                 placeholder="Select shadow"
                 size="sm"
               />
@@ -835,7 +849,7 @@ export const InteractivePlayground: Story = {
                   { label: 'Bottom', value: 'bottom' },
                 ]}
                 value={labelPosition}
-                onChange={(value) => setLabelPosition(value as any)}
+                onChange={(value) => setLabelPosition(value as PlaygroundLabelPosition)}
                 placeholder="Select label position"
                 size="sm"
               />
@@ -858,7 +872,7 @@ export const InteractivePlayground: Story = {
                   { label: 'Right', value: 'right' },
                 ]}
                 value={iconPosition}
-                onChange={(value) => setIconPosition(value as any)}
+                onChange={(value) => setIconPosition(value as PlaygroundIconPosition)}
                 placeholder="Select icon position"
                 size="sm"
               />

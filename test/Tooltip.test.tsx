@@ -776,20 +776,26 @@ describe('Tooltip Component', () => {
   describe('Cleanup', () => {
     it('clears show timeout on unmount', () => {
       jest.useFakeTimers();
+      const clearTimeoutSpy = jest.spyOn(global, 'clearTimeout');
       const { container, unmount } = renderTooltip({ trigger: 'hover', delay: 200 });
       const triggerEl = container.querySelector('.tooltip-component__trigger')!;
       fireEvent.mouseEnter(triggerEl);
+      clearTimeoutSpy.mockClear();
       // Unmount before timer fires
       unmount();
+      // Cleanup effect should have cleared the pending show timeout
+      expect(clearTimeoutSpy).toHaveBeenCalled();
       // Should not throw when advancing timers
       act(() => {
         jest.advanceTimersByTime(300);
       });
+      clearTimeoutSpy.mockRestore();
       jest.useRealTimers();
     });
 
     it('clears hide timeout on unmount', () => {
       jest.useFakeTimers();
+      const clearTimeoutSpy = jest.spyOn(global, 'clearTimeout');
       const { container, unmount } = renderTooltip({
         trigger: 'hover',
         delay: 100,
@@ -801,10 +807,14 @@ describe('Tooltip Component', () => {
         jest.advanceTimersByTime(100);
       });
       fireEvent.mouseLeave(triggerEl);
+      clearTimeoutSpy.mockClear();
       unmount();
+      // Cleanup effect should have cleared the pending hide timeout
+      expect(clearTimeoutSpy).toHaveBeenCalled();
       act(() => {
         jest.advanceTimersByTime(300);
       });
+      clearTimeoutSpy.mockRestore();
       jest.useRealTimers();
     });
   });

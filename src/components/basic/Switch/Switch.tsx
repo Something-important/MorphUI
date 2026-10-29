@@ -84,7 +84,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       labelPosition = 'right',
       icon,
       iconPosition = 'left',
-      ripple = false,
+      // Ripple is accepted for API compatibility but not applied in Switch
+      ripple: _ripple = false,
 
       // Advanced styling
       glassmorphism = false,
@@ -108,7 +109,6 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
     const [isFocused, setIsFocused] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
-    const [isPressed, setIsPressed] = useState(false);
 
     // Refs
     const inputRef = useRef<HTMLInputElement>(null);
@@ -135,7 +135,6 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       invalid && 'switch-component--invalid',
       readOnly && 'switch-component--readonly',
       isFocused && 'switch-component--focused',
-      isPressed && 'switch-component--pressed',
       isAnimating && 'switch-component--animating',
       glassmorphism && 'switch-component--glassmorphism',
       labelPosition && `switch-component--label-${labelPosition}`,
@@ -186,7 +185,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
 
     // ARIA attributes
     const ariaProps = getAriaProps({
-      label: label || 'Switch',
+      label: ariaLabel || label || 'Switch',
       required,
       invalid,
       disabled,
@@ -210,12 +209,12 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     };
 
     // Handle focus
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleFocus = () => {
       setIsFocused(true);
     };
 
     // Handle blur
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = () => {
       setIsFocused(false);
     };
 
@@ -280,6 +279,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
 
     return (
       <div className={classes} style={finalStyle}>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions --
+            the label wraps the checkbox input, so clicks are forwarded natively;
+            the handler only prevents double-triggering */}
         <label ref={labelRef} className="switch-component__label" onClick={handleLabelClick}>
           {/* Icon (left position) */}
           {icon && iconPosition === 'left' && (
@@ -317,6 +319,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             />
 
             {/* Switch Visual */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions --
+                purely visual toggle inside the label; the real checkbox handles keyboard interaction */}
             <div
               className="switch-component__switch"
               onClick={handleSwitchClick}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { Switch } from '../src/components/basic/Switch/Switch';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
@@ -480,7 +480,10 @@ describe('Switch Component', () => {
       rerender(<Switch checked={true} onChange={() => {}} />);
       expect(container.querySelector('.switch-component--animating')).toBeInTheDocument();
       // After 150ms, animation class should be removed
-      jest.advanceTimersByTime(200);
+      act(() => {
+        jest.advanceTimersByTime(200);
+      });
+      expect(container.querySelector('.switch-component--animating')).not.toBeInTheDocument();
       jest.useRealTimers();
     });
   });
@@ -538,9 +541,16 @@ describe('Switch Component', () => {
     it('uses custom ariaLabel when provided', () => {
       const { container } = renderSwitch({ ariaLabel: 'Toggle dark mode' });
       const input = container.querySelector('input');
-      // Note: the component currently uses label || 'Switch' for aria-label,
-      // not the ariaLabel prop directly. This test verifies the actual behavior.
-      expect(input).toHaveAttribute('aria-label', 'Switch');
+      expect(input).toHaveAttribute('aria-label', 'Toggle dark mode');
+    });
+
+    it('prefers ariaLabel over label when both are provided', () => {
+      const { container } = renderSwitch({
+        ariaLabel: 'Accessibility name',
+        label: 'Visible label',
+      });
+      const input = container.querySelector('input');
+      expect(input).toHaveAttribute('aria-label', 'Accessibility name');
     });
 
     it('uses label as aria-label when no ariaLabel provided', () => {

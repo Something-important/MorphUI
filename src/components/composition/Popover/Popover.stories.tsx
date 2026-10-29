@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Popover, Button, Dropdown, ThemeProvider, themes } from '../../index';
 
+type PopoverPosition = NonNullable<React.ComponentProps<typeof Popover>['position']>;
+type PopoverTrigger = NonNullable<React.ComponentProps<typeof Popover>['trigger']>;
+type PopoverVariant = NonNullable<React.ComponentProps<typeof Popover>['variant']>;
+type PopoverSize = NonNullable<React.ComponentProps<typeof Popover>['size']>;
+
 const meta: Meta<typeof Popover> = {
   title: 'Components/Popover',
   component: Popover,
@@ -429,7 +434,7 @@ export const Positions: Story = {
       { pos: 'bottom', label: 'Bottom', color: '#10b981' },
       { pos: 'left', label: 'Left', color: '#f59e0b' },
       { pos: 'right', label: 'Right', color: '#ef4444' },
-    ];
+    ] as const;
 
     return (
       <div style={{ padding: '2rem' }}>
@@ -459,7 +464,7 @@ export const Positions: Story = {
                     </p>
                   </div>
                 }
-                position={pos as any}
+                position={pos}
                 variant="primary"
               >
                 <button
@@ -491,7 +496,7 @@ export const TriggerTypes: Story = {
       { type: 'click', label: 'Click Trigger', color: '#0070f3', description: 'Opens on click' },
       { type: 'hover', label: 'Hover Trigger', color: '#10b981', description: 'Opens on hover' },
       { type: 'focus', label: 'Focus Trigger', color: '#f59e0b', description: 'Opens on focus' },
-    ];
+    ] as const;
 
     return (
       <div style={{ padding: '2rem' }}>
@@ -511,7 +516,7 @@ export const TriggerTypes: Story = {
                     </p>
                   </div>
                 }
-                trigger={type as any}
+                trigger={type}
                 position="bottom"
                 variant="primary"
               >
@@ -551,7 +556,7 @@ export const Variants: Story = {
       { variant: 'warning', label: 'Warning', color: '#f59e0b' },
       { variant: 'danger', label: 'Danger', color: '#ef4444' },
       { variant: 'outline', label: 'Outline', color: '#6b7280' },
-    ];
+    ] as const;
 
     return (
       <div style={{ padding: '2rem' }}>
@@ -571,7 +576,7 @@ export const Variants: Story = {
                   <p>It has custom colors and styling.</p>
                 </div>
               }
-              variant={variant as any}
+              variant={variant}
               position="bottom"
             >
               <button
@@ -604,7 +609,7 @@ export const Sizes: Story = {
       { size: 'md', label: 'Medium', color: '#f59e0b' },
       { size: 'lg', label: 'Large', color: '#ef4444' },
       { size: 'xl', label: 'Extra Large', color: '#8b5cf6' },
-    ];
+    ] as const;
 
     return (
       <div style={{ padding: '2rem' }}>
@@ -624,7 +629,7 @@ export const Sizes: Story = {
                   <p>This popover is sized accordingly.</p>
                 </div>
               }
-              size={size as any}
+              size={size}
               position="bottom"
               variant="primary"
             >
@@ -684,12 +689,14 @@ export const InteractiveThemeBuilder: Story = {
     const [textColorGradient, setTextColorGradient] = useState('');
     const [borderColor, setBorderColor] = useState('');
     const [borderColorGradient, setBorderColorGradient] = useState('');
-    const [headerBackgroundColor, setHeaderBackgroundColor] = useState('');
-    const [headerBackgroundColorGradient, setHeaderBackgroundColorGradient] = useState('');
-    const [footerBackgroundColor, setFooterBackgroundColor] = useState('');
-    const [footerBackgroundColorGradient, setFooterBackgroundColorGradient] = useState('');
-    const [contentBackgroundColor, setContentBackgroundColor] = useState('');
-    const [contentBackgroundColorGradient, setContentBackgroundColorGradient] = useState('');
+    // Popover does not support header/footer/content background props yet;
+    // these states only feed the reset controls until that feature lands.
+    const [_headerBackgroundColor, setHeaderBackgroundColor] = useState('');
+    const [_headerBackgroundColorGradient, setHeaderBackgroundColorGradient] = useState('');
+    const [_footerBackgroundColor, setFooterBackgroundColor] = useState('');
+    const [_footerBackgroundColorGradient, setFooterBackgroundColorGradient] = useState('');
+    const [_contentBackgroundColor, setContentBackgroundColor] = useState('');
+    const [_contentBackgroundColorGradient, setContentBackgroundColorGradient] = useState('');
 
     // Gradient builder states
     const [gradientType, setGradientType] = useState('linear');
@@ -957,7 +964,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Auto', value: 'auto' },
                   ]}
                   value={position}
-                  onChange={(value) => setPosition(value as any)}
+                  onChange={(value) => setPosition(value as PopoverPosition)}
                   placeholder="Select position"
                   size="sm"
                 />
@@ -978,7 +985,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Outline', value: 'outline' },
                   ]}
                   value={variant}
-                  onChange={(value) => setVariant(value as any)}
+                  onChange={(value) => setVariant(value as PopoverVariant)}
                   placeholder="Select variant"
                   size="sm"
                 />
@@ -996,7 +1003,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Extra Large', value: 'xl' },
                   ]}
                   value={size}
-                  onChange={(value) => setSize(value as any)}
+                  onChange={(value) => setSize(value as PopoverSize)}
                   placeholder="Select size"
                   size="sm"
                 />
@@ -1013,7 +1020,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Manual', value: 'manual' },
                   ]}
                   value={trigger}
-                  onChange={(value) => setTrigger(value as any)}
+                  onChange={(value) => setTrigger(value as PopoverTrigger)}
                   placeholder="Select trigger"
                   size="sm"
                 />

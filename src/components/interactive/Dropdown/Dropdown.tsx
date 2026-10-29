@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { resolveThemeValue, getAriaProps, getKeyboardHandler } from '../../../utils';
 import './Dropdown.css';
 
@@ -10,7 +10,7 @@ export interface DropdownOption {
   description?: string;
   group?: string;
   tags?: string[];
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface DropdownOptionGroup {
@@ -116,17 +116,6 @@ export const Dropdown = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
-  // Gradient presets
-  const gradientPresets = {
-    'gradient-sunset': 'linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)',
-    'gradient-ocean': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'gradient-forest': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'gradient-sunrise': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    'gradient-purple': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    'gradient-gold': 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-  };
-
-  // Resolve theme values
   const resolvedColor = resolveThemeValue(color);
   const resolvedTextColor = resolveThemeValue(textColor);
   const resolvedBorderColor = resolveThemeValue(borderColor);
@@ -139,27 +128,28 @@ export const Dropdown = ({
   const resolvedOptionSelectedBackground = resolveThemeValue(optionSelectedBackground);
 
   // Handle open state changes
-  const handleOpenChange = (newOpen: boolean) => {
-    console.log('Dropdown open state changing to:', newOpen);
-    setIsOpen(newOpen);
-    onOpenChange?.(newOpen);
-    if (!newOpen) {
-      setFocusedIndex(-1);
-      setSearch('');
-    }
-  };
+  const handleOpenChange = useCallback(
+    (newOpen: boolean) => {
+      setIsOpen(newOpen);
+      onOpenChange?.(newOpen);
+      if (!newOpen) {
+        setFocusedIndex(-1);
+        setSearch('');
+      }
+    },
+    [onOpenChange],
+  );
 
   // Close dropdown if clicked outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        console.log('Click outside detected, closing dropdown');
         handleOpenChange(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onOpenChange]);
+  }, [handleOpenChange]);
 
   // Handle keyboard navigation focus
   useEffect(() => {
@@ -196,22 +186,16 @@ export const Dropdown = ({
     event.stopPropagation();
     if (disabled) return;
 
-    console.log('Option clicked:', val, 'multiSelect:', multiSelect, 'current value:', value);
-
     if (multiSelect) {
       const selected = Array.isArray(value) ? value : [];
-      console.log('Multi select - current selected:', selected);
       if (selected.includes(val)) {
         const newSelected = selected.filter((v) => v !== val);
-        console.log('Removing value, new selected:', newSelected);
         onChange(newSelected);
       } else if (!maxSelections || selected.length < maxSelections) {
         const newSelected = [...selected, val];
-        console.log('Adding value, new selected:', newSelected);
         onChange(newSelected);
       }
     } else {
-      console.log('Single select - setting value to:', val);
       onChange(val);
       handleOpenChange(false);
     }
@@ -219,20 +203,9 @@ export const Dropdown = ({
 
   const handleSelectAll = (event: React.MouseEvent) => {
     event.stopPropagation();
-    console.log('Select all clicked, multiSelect:', multiSelect, 'disabled:', disabled);
     if (multiSelect && !disabled) {
       const allValues = filteredOptions.map((opt) => opt.value);
       const newValues = maxSelections ? allValues.slice(0, maxSelections) : allValues;
-
-      console.log('Select all - new values:', newValues, 'filtered options:', filteredOptions);
-
-      // If we're limited by maxSelections, log a helpful message
-      if (maxSelections && allValues.length > maxSelections) {
-        console.log(
-          `Select All: Limited to ${maxSelections} selections out of ${allValues.length} available options`,
-        );
-      }
-
       onChange(newValues);
     }
   };
@@ -247,7 +220,6 @@ export const Dropdown = ({
       const shuffled = [...availableOptions].sort(() => Math.random() - 0.5);
       const randomValues = shuffled.slice(0, count).map((opt) => opt.value);
 
-      console.log('Random select - selected values:', randomValues, 'count:', count);
       onChange(randomValues);
     }
   };
@@ -381,20 +353,6 @@ export const Dropdown = ({
     .filter(Boolean)
     .join(' ');
 
-  // Determine the final background value with proper precedence
-  const finalBackground = resolvedGradient || resolvedBackground || resolvedColor;
-
-  // Debug logging
-  console.log('Dropdown Debug:', {
-    gradient,
-    background,
-    color,
-    resolvedGradient,
-    resolvedBackground,
-    resolvedColor,
-    finalBackground,
-  });
-
   // Build component style object with CSS custom properties (match Button pattern)
   const componentStyle: React.CSSProperties & Record<string, string> = {
     // Main background: gradient > color > backgroundColor (gradients take precedence)
@@ -465,12 +423,13 @@ export const Dropdown = ({
   };
 
   return (
+    // the container carries role="combobox", tabIndex, and onKeyDown for full keyboard support
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={classes}
       style={containerStyle}
       tabIndex={disabled ? -1 : 0}
       onClick={() => {
-        console.log('Dropdown main container clicked');
         if (!disabled) handleOpenChange(!isOpen);
       }}
       onKeyDown={handleKeyDown}
@@ -537,6 +496,8 @@ export const Dropdown = ({
                   placeholder="Search options..."
                   onClick={(e) => e.stopPropagation()}
                   aria-label="Search options"
+                  // intentional: lets users type immediately when the searchable dropdown opens
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
                 />
               </div>
@@ -567,6 +528,8 @@ export const Dropdown = ({
                               !search || opt.label.toLowerCase().includes(search.toLowerCase()),
                           )
                           .map((opt, index) => (
+                            // keyboard selection is handled by the combobox container's onKeyDown
+                            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                             <li
                               key={opt.value}
                               role="option"
@@ -602,6 +565,8 @@ export const Dropdown = ({
                   ))
                 : // Render regular options
                   filteredOptions.map((opt, index) => (
+                    // keyboard selection is handled by the combobox container's onKeyDown
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                     <li
                       key={opt.value}
                       role="option"
