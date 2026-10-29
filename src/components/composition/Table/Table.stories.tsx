@@ -282,21 +282,23 @@ export const CustomRendering: Story = {
         key: 'price',
         label: 'Price',
         sortable: true,
-        render: (value) => `$${value.toFixed(2)}`,
+        render: (value) => `$${Number(value).toFixed(2)}`,
         align: 'right',
       },
       {
         key: 'stock',
         label: 'Stock',
         render: (value) => (
-          <span style={{ color: value < 50 ? '#ef4444' : '#10b981' }}>{value} units</span>
+          <span style={{ color: Number(value) < 50 ? '#ef4444' : '#10b981' }}>
+            {String(value)} units
+          </span>
         ),
         align: 'center',
       },
       {
         key: 'rating',
         label: 'Rating',
-        render: (value) => '⭐'.repeat(Math.round(value)),
+        render: (value) => '⭐'.repeat(Math.round(Number(value))),
         align: 'center',
       },
     ];
@@ -457,7 +459,7 @@ export const Interactive: Story = {
               fontSize: '0.875rem',
             }}
           >
-            {value}
+            {String(value)}
           </span>
         ),
       },

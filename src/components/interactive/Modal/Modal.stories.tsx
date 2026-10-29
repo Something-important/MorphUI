@@ -3,6 +3,13 @@ import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
 import { Modal, Button, Dropdown, Checkbox, ThemeProvider, themes } from '../../index';
 
+type ModalVariant = NonNullable<React.ComponentProps<typeof Modal>['variant']>;
+type ModalSize = NonNullable<React.ComponentProps<typeof Modal>['size']>;
+type ModalPosition = NonNullable<React.ComponentProps<typeof Modal>['position']>;
+type ModalBackdrop = NonNullable<React.ComponentProps<typeof Modal>['backdrop']>;
+type ModalAnimation = NonNullable<React.ComponentProps<typeof Modal>['animation']>;
+type ModalShadow = NonNullable<React.ComponentProps<typeof Modal>['shadow']>;
+
 export default {
   title: 'Components/Modal',
   component: Modal,
@@ -115,7 +122,7 @@ export default {
     },
   },
   decorators: [
-    (Story: any) => (
+    (Story: React.FC) => (
       <div style={{ padding: '20px', maxWidth: '1200px' }}>
         <Story />
       </div>
@@ -140,7 +147,7 @@ export const Default: StoryObj<typeof Modal> = {
       </div>
     ),
   },
-  render: (args: any) => {
+  render: (args) => {
     const [isOpen, setIsOpen] = useState(args.isOpen);
     return (
       <div>
@@ -154,29 +161,34 @@ export const Default: StoryObj<typeof Modal> = {
 // Variants
 export const Variants: StoryObj<typeof Modal> = {
   render: () => {
-    const [openVariant, setOpenVariant] = useState<string | null>(null);
+    const [openVariant, setOpenVariant] = useState<ModalVariant | null>(null);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {['primary', 'secondary', 'success', 'warning', 'info', 'danger', 'ghost', 'outline'].map(
-            (variant) => (
-              <Button
-                key={variant}
-                variant={variant as any}
-                onClick={() => setOpenVariant(variant)}
-              >
-                {variant.charAt(0).toUpperCase() + variant.slice(1)} Modal
-              </Button>
-            ),
-          )}
+          {(
+            [
+              'primary',
+              'secondary',
+              'success',
+              'warning',
+              'info',
+              'danger',
+              'ghost',
+              'outline',
+            ] as const
+          ).map((variant) => (
+            <Button key={variant} variant={variant} onClick={() => setOpenVariant(variant)}>
+              {variant.charAt(0).toUpperCase() + variant.slice(1)} Modal
+            </Button>
+          ))}
         </div>
 
         {openVariant && (
           <Modal
             isOpen={true}
             onClose={() => setOpenVariant(null)}
-            variant={openVariant as any}
+            variant={openVariant}
             title={`${openVariant.charAt(0).toUpperCase() + openVariant.slice(1)} Modal`}
             description={`This is a ${openVariant} variant modal`}
           >
@@ -196,12 +208,12 @@ export const Variants: StoryObj<typeof Modal> = {
 // Sizes
 export const Sizes: StoryObj<typeof Modal> = {
   render: () => {
-    const [openSize, setOpenSize] = useState<string | null>(null);
+    const [openSize, setOpenSize] = useState<ModalSize | null>(null);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {['xs', 'sm', 'md', 'lg', 'xl', 'full'].map((size) => (
+          {(['xs', 'sm', 'md', 'lg', 'xl', 'full'] as const).map((size) => (
             <Button key={size} onClick={() => setOpenSize(size)}>
               {size.toUpperCase()} Size
             </Button>
@@ -212,7 +224,7 @@ export const Sizes: StoryObj<typeof Modal> = {
           <Modal
             isOpen={true}
             onClose={() => setOpenSize(null)}
-            size={openSize as any}
+            size={openSize}
             title={`${openSize.toUpperCase()} Size Modal`}
             description={`This modal uses the ${openSize} size`}
           >
@@ -232,22 +244,24 @@ export const Sizes: StoryObj<typeof Modal> = {
 // Positions
 export const Positions: StoryObj<typeof Modal> = {
   render: () => {
-    const [openPosition, setOpenPosition] = useState<string | null>(null);
+    const [openPosition, setOpenPosition] = useState<ModalPosition | null>(null);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {[
-            'center',
-            'top',
-            'bottom',
-            'left',
-            'right',
-            'top-left',
-            'top-right',
-            'bottom-left',
-            'bottom-right',
-          ].map((position) => (
+          {(
+            [
+              'center',
+              'top',
+              'bottom',
+              'left',
+              'right',
+              'top-left',
+              'top-right',
+              'bottom-left',
+              'bottom-right',
+            ] as const
+          ).map((position) => (
             <Button key={position} onClick={() => setOpenPosition(position)}>
               {position.charAt(0).toUpperCase() + position.slice(1)}
             </Button>
@@ -375,7 +389,7 @@ export const Positions: StoryObj<typeof Modal> = {
           <Modal
             isOpen={true}
             onClose={() => setOpenPosition(null)}
-            position={openPosition as any}
+            position={openPosition}
             title={`${openPosition.charAt(0).toUpperCase() + openPosition.slice(1)} Position`}
             description={`This modal is positioned at ${openPosition}. Close this modal and try other positions!`}
             size="sm"
@@ -443,41 +457,57 @@ export const Effects: StoryObj<typeof Modal> = {
             Different animation effects for modal entrance and exit:
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {['fade', 'slide', 'scale', 'slide-up', 'slide-down', 'slide-left', 'slide-right'].map(
-              (animation) => (
-                <Button
-                  key={animation}
-                  variant="outline"
-                  onClick={() => openModal(`animation-${animation}`)}
-                >
-                  {animation.charAt(0).toUpperCase() + animation.slice(1)}
-                </Button>
-              ),
-            )}
+            {(
+              [
+                'fade',
+                'slide',
+                'scale',
+                'slide-up',
+                'slide-down',
+                'slide-left',
+                'slide-right',
+              ] as const
+            ).map((animation) => (
+              <Button
+                key={animation}
+                variant="outline"
+                onClick={() => openModal(`animation-${animation}`)}
+              >
+                {animation.charAt(0).toUpperCase() + animation.slice(1)}
+              </Button>
+            ))}
           </div>
 
-          {['fade', 'slide', 'scale', 'slide-up', 'slide-down', 'slide-left', 'slide-right'].map(
-            (animation) => (
-              <Modal
-                key={animation}
-                isOpen={openModals[`animation-${animation}`] || false}
-                onClose={() => closeModal(`animation-${animation}`)}
-                animation={animation as any}
-                title={`${animation.charAt(0).toUpperCase() + animation.slice(1)} Animation`}
-                description={`Modal with ${animation} animation effect`}
-              >
-                <div style={{ textAlign: 'center', padding: '20px 0' }}>
-                  <h4 style={{ marginBottom: '12px', color: '#333' }}>
-                    ✨ {animation.charAt(0).toUpperCase() + animation.slice(1)} Effect
-                  </h4>
-                  <p style={{ color: '#666' }}>
-                    This modal uses the <strong>{animation}</strong> animation. Notice how it enters
-                    and exits with a smooth transition!
-                  </p>
-                </div>
-              </Modal>
-            ),
-          )}
+          {(
+            [
+              'fade',
+              'slide',
+              'scale',
+              'slide-up',
+              'slide-down',
+              'slide-left',
+              'slide-right',
+            ] as const
+          ).map((animation) => (
+            <Modal
+              key={animation}
+              isOpen={openModals[`animation-${animation}`] || false}
+              onClose={() => closeModal(`animation-${animation}`)}
+              animation={animation}
+              title={`${animation.charAt(0).toUpperCase() + animation.slice(1)} Animation`}
+              description={`Modal with ${animation} animation effect`}
+            >
+              <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                <h4 style={{ marginBottom: '12px', color: '#333' }}>
+                  ✨ {animation.charAt(0).toUpperCase() + animation.slice(1)} Effect
+                </h4>
+                <p style={{ color: '#666' }}>
+                  This modal uses the <strong>{animation}</strong> animation. Notice how it enters
+                  and exits with a smooth transition!
+                </p>
+              </div>
+            </Modal>
+          ))}
         </div>
 
         {/* Backdrops */}
@@ -489,7 +519,7 @@ export const Effects: StoryObj<typeof Modal> = {
             Different backdrop styles for the modal overlay:
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {['dark', 'light', 'blur', 'none'].map((backdrop) => (
+            {(['dark', 'light', 'blur', 'none'] as const).map((backdrop) => (
               <Button
                 key={backdrop}
                 variant="outline"
@@ -500,12 +530,12 @@ export const Effects: StoryObj<typeof Modal> = {
             ))}
           </div>
 
-          {['dark', 'light', 'blur', 'none'].map((backdrop) => (
+          {(['dark', 'light', 'blur', 'none'] as const).map((backdrop) => (
             <Modal
               key={backdrop}
               isOpen={openModals[`backdrop-${backdrop}`] || false}
               onClose={() => closeModal(`backdrop-${backdrop}`)}
-              backdrop={backdrop as any}
+              backdrop={backdrop}
               title={`${backdrop.charAt(0).toUpperCase() + backdrop.slice(1)} Backdrop`}
               description={`Modal with ${backdrop} backdrop effect`}
             >
@@ -532,19 +562,19 @@ export const Effects: StoryObj<typeof Modal> = {
             Different shadow intensities for the modal:
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {['none', 'sm', 'md', 'lg', 'xl'].map((shadow) => (
+            {(['none', 'sm', 'md', 'lg', 'xl'] as const).map((shadow) => (
               <Button key={shadow} variant="outline" onClick={() => openModal(`shadow-${shadow}`)}>
                 {shadow === 'none' ? 'No Shadow' : `${shadow.toUpperCase()} Shadow`}
               </Button>
             ))}
           </div>
 
-          {['none', 'sm', 'md', 'lg', 'xl'].map((shadow) => (
+          {(['none', 'sm', 'md', 'lg', 'xl'] as const).map((shadow) => (
             <Modal
               key={shadow}
               isOpen={openModals[`shadow-${shadow}`] || false}
               onClose={() => closeModal(`shadow-${shadow}`)}
-              shadow={shadow as any}
+              shadow={shadow}
               title={`${shadow === 'none' ? 'No Shadow' : shadow.toUpperCase() + ' Shadow'}`}
               description={`Modal with ${shadow} shadow effect`}
             >
@@ -1018,7 +1048,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Modal> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
                 <Dropdown
                   value={variant}
-                  onChange={(value) => setVariant(value as any)}
+                  onChange={(value) => setVariant(value as ModalVariant)}
                   options={[
                     { value: 'primary', label: 'Primary' },
                     { value: 'secondary', label: 'Secondary' },
@@ -1039,7 +1069,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Modal> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Size:</label>
                 <Dropdown
                   value={size}
-                  onChange={(value) => setSize(value as any)}
+                  onChange={(value) => setSize(value as ModalSize)}
                   options={[
                     { value: 'xs', label: 'Extra Small' },
                     { value: 'sm', label: 'Small' },
@@ -1058,7 +1088,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Modal> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Backdrop:</label>
                 <Dropdown
                   value={backdrop}
-                  onChange={(value) => setBackdrop(value as any)}
+                  onChange={(value) => setBackdrop(value as ModalBackdrop)}
                   options={[
                     { value: 'dark', label: 'Dark' },
                     { value: 'light', label: 'Light' },
@@ -1075,7 +1105,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Modal> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Position:</label>
                 <Dropdown
                   value={position}
-                  onChange={(value) => setPosition(value as any)}
+                  onChange={(value) => setPosition(value as ModalPosition)}
                   options={[
                     { value: 'center', label: 'Center' },
                     { value: 'top', label: 'Top' },
@@ -1097,7 +1127,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Modal> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Animation:</label>
                 <Dropdown
                   value={animation}
-                  onChange={(value) => setAnimation(value as any)}
+                  onChange={(value) => setAnimation(value as ModalAnimation)}
                   options={[
                     { value: 'fade', label: 'Fade' },
                     { value: 'slide', label: 'Slide' },
@@ -1117,7 +1147,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Modal> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Shadow:</label>
                 <Dropdown
                   value={shadow}
-                  onChange={(value) => setShadow(value as any)}
+                  onChange={(value) => setShadow(value as ModalShadow)}
                   options={[
                     { value: 'none', label: 'None' },
                     { value: 'sm', label: 'Small' },

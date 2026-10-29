@@ -3,6 +3,11 @@ import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
 import { Card, Button, Dropdown, Checkbox, ThemeProvider, themes } from '../../index';
 
+type CardVariant = NonNullable<React.ComponentProps<typeof Card>['variant']>;
+type CardSize = NonNullable<React.ComponentProps<typeof Card>['size']>;
+type CardHoverEffect = NonNullable<React.ComponentProps<typeof Card>['hoverEffect']>;
+type CardShadow = NonNullable<React.ComponentProps<typeof Card>['shadow']>;
+
 export default {
   title: 'Components/Card',
   component: Card,
@@ -53,7 +58,7 @@ export default {
     minHeight: { control: { type: 'text' } },
   },
   decorators: [
-    (Story: any) => (
+    (Story: React.FC) => (
       <div style={{ padding: '20px', maxWidth: '1200px' }}>
         <Story />
       </div>
@@ -69,7 +74,7 @@ export const Default: StoryObj<typeof Card> = {
     description: 'This is a basic card with title, subtitle, and description.',
     children: <p>This is the main content area of the card. You can put any content here.</p>,
   },
-  render: (args: any) => <Card {...args} />,
+  render: (args) => <Card {...args} />,
 };
 
 // Variants showcase
@@ -84,7 +89,7 @@ export const Variants: StoryObj<typeof Card> = {
       'info',
       'ghost',
       'outline',
-    ];
+    ] as const;
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -109,11 +114,10 @@ export const Variants: StoryObj<typeof Card> = {
           {variants.map((variant) => (
             <Card
               key={variant}
-              variant={variant as any}
+              variant={variant}
               title={`${variant.charAt(0).toUpperCase() + variant.slice(1)} Card`}
               subtitle={`${variant} variant example`}
               description={`This card demonstrates the ${variant} variant with its unique styling.`}
-              badge={variant === 'new' ? 'NEW' : undefined}
               actions={
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <Button size="sm" variant="outline">
@@ -147,7 +151,7 @@ export const Sizes: StoryObj<typeof Card> = {
       { key: 'md', label: 'Medium', width: '400px' },
       { key: 'lg', label: 'Large', width: '480px' },
       { key: 'xl', label: 'Extra Large', width: '560px' },
-    ];
+    ] as const;
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -166,7 +170,7 @@ export const Sizes: StoryObj<typeof Card> = {
           {sizes.map((size) => (
             <Card
               key={size.key}
-              size={size.key as any}
+              size={size.key}
               title={`${size.label} Card`}
               subtitle={`${size.label.toLowerCase()} size variant`}
               description={`This card demonstrates the ${size.label.toLowerCase()} size with appropriate dimensions.`}
@@ -191,7 +195,7 @@ export const HoverEffects: StoryObj<typeof Card> = {
       { key: 'glow', label: 'Glow', description: 'Card glows on hover' },
       { key: 'scale', label: 'Scale', description: 'Card scales up on hover' },
       { key: 'slide', label: 'Slide', description: 'Card slides right on hover' },
-    ];
+    ] as const;
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -216,7 +220,7 @@ export const HoverEffects: StoryObj<typeof Card> = {
           {effects.map((effect) => (
             <Card
               key={effect.key}
-              hoverEffect={effect.key as any}
+              hoverEffect={effect.key}
               clickable
               title={effect.label}
               subtitle="Hover to see effect"
@@ -244,7 +248,7 @@ export const ImagePositioning: StoryObj<typeof Card> = {
       { key: 'bottom', label: 'Bottom', description: 'Image below content' },
       { key: 'left', label: 'Left', description: 'Image to the left of content' },
       { key: 'right', label: 'Right', description: 'Image to the right of content' },
-    ];
+    ] as const;
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -269,7 +273,7 @@ export const ImagePositioning: StoryObj<typeof Card> = {
           {positions.map((position) => (
             <Card
               key={position.key}
-              imagePosition={position.key as any}
+              imagePosition={position.key}
               title={`${position.label} Image Card`}
               subtitle={`Image positioned at ${position.label.toLowerCase()}`}
               description={`This card demonstrates image positioning at the ${position.label.toLowerCase()}.`}
@@ -425,7 +429,7 @@ export const Simple: StoryObj<typeof Card> = {
       </div>
     ),
   },
-  render: (args: any) => <Card {...args} />,
+  render: (args) => <Card {...args} />,
 };
 
 // Card with custom styling
@@ -445,7 +449,7 @@ export const CustomStyling: StoryObj<typeof Card> = {
     shadow: 'xl',
     hoverEffect: 'glow',
   },
-  render: (args: any) => <Card {...args} />,
+  render: (args) => <Card {...args} />,
 };
 
 // Interactive Theme Builder
@@ -463,7 +467,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#ff0000', '#00ff00']);
-    const [generatedGradient, setGeneratedGradient] = useState('');
+    const [_generatedGradient, setGeneratedGradient] = useState('');
 
     // Other controls
     const [shadow, setShadow] = useState<'none' | 'sm' | 'md' | 'lg' | 'xl'>('md');
@@ -680,7 +684,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                       { label: 'Outline', value: 'outline' },
                     ]}
                     value={variant}
-                    onChange={(value) => setVariant(value as any)}
+                    onChange={(value) => setVariant(value as CardVariant)}
                     placeholder="Select variant"
                     size="sm"
                   />
@@ -1242,7 +1246,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                       { label: 'Extra Large', value: 'xl' },
                     ]}
                     value={shadow}
-                    onChange={(value) => setShadow(value as any)}
+                    onChange={(value) => setShadow(value as CardShadow)}
                     placeholder="Select shadow"
                     size="sm"
                   />
@@ -1268,7 +1272,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                       { label: 'Slide', value: 'slide' },
                     ]}
                     value={hoverEffect}
-                    onChange={(value) => setHoverEffect(value as any)}
+                    onChange={(value) => setHoverEffect(value as CardHoverEffect)}
                     placeholder="Select hover effect"
                     size="sm"
                   />
@@ -1294,7 +1298,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Card> = {
                       { label: 'Extra Large', value: 'xl' },
                     ]}
                     value={size}
-                    onChange={(value) => setSize(value as any)}
+                    onChange={(value) => setSize(value as CardSize)}
                     placeholder="Select size"
                     size="sm"
                   />
