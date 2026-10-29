@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tooltip, Button, Dropdown, Checkbox, ThemeProvider, themes } from '../../index';
+import { Tooltip, Button, Dropdown, ThemeProvider, themes } from '../../index';
 
 const meta: Meta<typeof Tooltip> = {
   title: 'Components/Tooltip',

@@ -1,5 +1,4 @@
 import React, { forwardRef, useCallback } from 'react';
-import { Button } from '../../basic/Button';
 import { resolveThemeValue } from '../../../utils';
 import { useSidebarContext } from './SidebarContext';
 

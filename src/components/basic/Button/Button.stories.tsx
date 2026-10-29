@@ -1,6 +1,6 @@
 // Button.stories.tsx
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import { Button } from './Button';
 import { ThemeProvider, themes, type ThemeName } from '../../theme';
 

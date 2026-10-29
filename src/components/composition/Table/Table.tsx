@@ -171,7 +171,6 @@ export const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     const selectedRows = isControlledSelection ? controlledSelectedRows : internalSelectedRows;
     const sortColumn = internalSortColumn;
     const sortDirection = internalSortDirection;
-    const filters = isControlledFilters ? controlledFilters : internalFilters;
     const currentPage = isControlledPagination ? controlledCurrentPage : internalCurrentPage;
 
     // Resolve theme values

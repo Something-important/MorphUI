@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tabs, Tab, TabPanel, Button, Dropdown, ThemeProvider, themes } from '../../index';
+import { Tabs, Dropdown, ThemeProvider, themes } from '../../index';
 
 const meta: Meta<typeof Tabs> = {
   title: 'Components/Tabs',

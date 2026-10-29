@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, useRef, useEffect } from 'react';
-import { resolveThemeValue, getAriaProps, createRipple } from '../../../utils';
+import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Checkbox.css';
 
 export interface CheckboxProps {

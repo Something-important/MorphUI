@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { resolveThemeValue, createRipple, getAriaProps, getKeyboardHandler } from '../../../utils';
+import { resolveThemeValue, getAriaProps, getKeyboardHandler } from '../../../utils';
 import './Dropdown.css';
 
 export interface DropdownOption {
