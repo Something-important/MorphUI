@@ -74,11 +74,7 @@ import { ToastProvider, useToast, Button } from 'morphui-react';
 function SaveButton() {
   const { toast } = useToast();
 
-  return (
-    <Button onClick={() => toast.success('Saved', 'Your changes were stored.')}>
-      Save
-    </Button>
-  );
+  return <Button onClick={() => toast.success('Saved', 'Your changes were stored.')}>Save</Button>;
 }
 
 function App() {

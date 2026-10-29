@@ -65,8 +65,7 @@
   padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
   background: var(--toast-custom-bg, var(--toast-bg, var(--color-background, #ffffff)));
   color: var(--toast-custom-color, var(--toast-color, var(--color-text, #111827)));
-  border: 1px solid
-    var(--toast-custom-border, var(--toast-border, var(--color-border, #d1d5db)));
+  border: 1px solid var(--toast-custom-border, var(--toast-border, var(--color-border, #d1d5db)));
   border-radius: var(
     --toast-custom-border-radius,
     var(--toast-border-radius, var(--border-radius-md, 8px))
@@ -77,8 +76,7 @@
   );
   font-family: var(--font-family, system-ui, -apple-system, sans-serif);
   /* Accent bar (variant color) on the leading edge */
-  border-left: 4px solid
-    var(--toast-custom-accent, var(--toast-accent, var(--color-info, #3b82f6)));
+  border-left: 4px solid var(--toast-custom-accent, var(--toast-accent, var(--color-info, #3b82f6)));
   opacity: 0;
   transform: translateY(10px);
   pointer-events: none;
@@ -196,7 +194,10 @@
 }
 
 .toast-component__message {
-  color: var(--toast-custom-color, var(--toast-color-secondary, var(--color-text-secondary, #6b7280)));
+  color: var(
+    --toast-custom-color,
+    var(--toast-color-secondary, var(--color-text-secondary, #6b7280))
+  );
   line-height: 1.45;
   overflow-wrap: break-word;
 }
@@ -234,8 +235,7 @@
 }
 
 .toast-component__action-button:focus-visible {
-  outline: 2px solid
-    var(--toast-custom-accent, var(--toast-accent, var(--color-primary, #0070f3)));
+  outline: 2px solid var(--toast-custom-accent, var(--toast-accent, var(--color-primary, #0070f3)));
   outline-offset: 1px;
 }
 
