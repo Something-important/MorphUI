@@ -538,9 +538,16 @@ describe('Switch Component', () => {
     it('uses custom ariaLabel when provided', () => {
       const { container } = renderSwitch({ ariaLabel: 'Toggle dark mode' });
       const input = container.querySelector('input');
-      // Note: the component currently uses label || 'Switch' for aria-label,
-      // not the ariaLabel prop directly. This test verifies the actual behavior.
-      expect(input).toHaveAttribute('aria-label', 'Switch');
+      expect(input).toHaveAttribute('aria-label', 'Toggle dark mode');
+    });
+
+    it('prefers ariaLabel over label when both are provided', () => {
+      const { container } = renderSwitch({
+        ariaLabel: 'Accessibility name',
+        label: 'Visible label',
+      });
+      const input = container.querySelector('input');
+      expect(input).toHaveAttribute('aria-label', 'Accessibility name');
     });
 
     it('uses label as aria-label when no ariaLabel provided', () => {
