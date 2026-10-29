@@ -160,28 +160,37 @@ export const Variants: Story = {
       </p>
 
       <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-        {['primary', 'secondary', 'success', 'warning', 'info', 'danger', 'ghost', 'outline'].map(
-          (variant) => (
-            <div key={variant} style={{ textAlign: 'center' }}>
-              <h4
-                style={{
-                  color: 'var(--color-text)',
-                  fontSize: '14px',
-                  marginBottom: '8px',
-                  textTransform: 'capitalize',
-                }}
-              >
-                {variant}
-              </h4>
-              <Tabs
-                items={sampleItems.slice(0, 2)}
-                defaultActiveTab="overview"
-                variant={variant as any}
-                size="sm"
-              />
-            </div>
-          ),
-        )}
+        {(
+          [
+            'primary',
+            'secondary',
+            'success',
+            'warning',
+            'info',
+            'danger',
+            'ghost',
+            'outline',
+          ] as const
+        ).map((variant) => (
+          <div key={variant} style={{ textAlign: 'center' }}>
+            <h4
+              style={{
+                color: 'var(--color-text)',
+                fontSize: '14px',
+                marginBottom: '8px',
+                textTransform: 'capitalize',
+              }}
+            >
+              {variant}
+            </h4>
+            <Tabs
+              items={sampleItems.slice(0, 2)}
+              defaultActiveTab="overview"
+              variant={variant}
+              size="sm"
+            />
+          </div>
+        ))}
       </div>
     </div>
   ),
@@ -215,7 +224,7 @@ export const Sizes: Story = {
       <div
         style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'center' }}
       >
-        {['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
+        {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
           <div key={size} style={{ textAlign: 'center', width: '100%', maxWidth: '600px' }}>
             <h4
               style={{
@@ -227,12 +236,7 @@ export const Sizes: Story = {
             >
               {size}
             </h4>
-            <Tabs
-              items={sampleItems}
-              defaultActiveTab="overview"
-              variant="primary"
-              size={size as any}
-            />
+            <Tabs items={sampleItems} defaultActiveTab="overview" variant="primary" size={size} />
           </div>
         ))}
       </div>
@@ -321,14 +325,14 @@ export const InteractiveThemeBuilder: Story = {
     const [textColor, setTextColor] = useState('#111827');
     const [borderColor, setBorderColor] = useState('#d1d5db');
 
-    // Gradient states
-    const [tabGradient, setTabGradient] = useState('');
-    const [activeTabGradient, setActiveTabGradient] = useState('');
-    const [hoverTabGradient, setHoverTabGradient] = useState('');
-    const [contentGradient, setContentGradient] = useState('');
-    const [indicatorGradient, setIndicatorGradient] = useState('');
-    const [badgeGradient, setBadgeGradient] = useState('');
-    const [iconGradient, setIconGradient] = useState('');
+    // Gradient states (values reserved for upcoming gradient prop wiring; setters drive the reset controls)
+    const [_tabGradient, setTabGradient] = useState('');
+    const [_activeTabGradient, setActiveTabGradient] = useState('');
+    const [_hoverTabGradient, setHoverTabGradient] = useState('');
+    const [_contentGradient, setContentGradient] = useState('');
+    const [_indicatorGradient, setIndicatorGradient] = useState('');
+    const [_badgeGradient, setBadgeGradient] = useState('');
+    const [_iconGradient, setIconGradient] = useState('');
     const [textGradient, setTextGradient] = useState('');
     const [borderGradient, setBorderGradient] = useState('');
 

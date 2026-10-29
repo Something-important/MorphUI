@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import type React from 'react';
 import { useState } from 'react';
 import { RadioGroup, Button, Dropdown, ThemeProvider, themes } from '../../index';
 
@@ -164,7 +165,7 @@ const meta: Meta<typeof RadioGroup> = {
     },
   },
   decorators: [
-    (Story: any) => (
+    (Story: React.FC) => (
       <ThemeProvider>
         <div style={{ padding: '20px', maxWidth: '800px' }}>
           <Story />
@@ -207,7 +208,7 @@ export const Variants: Story = {
       'danger',
       'ghost',
       'outline',
-    ];
+    ] as const;
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -244,7 +245,7 @@ export const Variants: Story = {
                   setSelectedValues((prev) => ({ ...prev, [variant]: value as string }))
                 }
                 name={`variant-${variant}`}
-                variant={variant as any}
+                variant={variant}
                 label={`${variant.charAt(0).toUpperCase() + variant.slice(1)} Options`}
                 description={`This is the ${variant} variant`}
               />
@@ -260,7 +261,7 @@ export const Sizes: Story = {
   render: () => {
     const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
 
-    const sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+    const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -297,7 +298,7 @@ export const Sizes: Story = {
                   setSelectedValues((prev) => ({ ...prev, [size]: value as string }))
                 }
                 name={`size-${size}`}
-                size={size as any}
+                size={size}
                 label={`${size.toUpperCase()} Size Options`}
                 description={`This is the ${size} size variant`}
               />
@@ -483,7 +484,7 @@ export const Effects: Story = {
               gap: '16px',
             }}
           >
-            {['none', 'sm', 'md', 'lg', 'xl'].map((shadow) => (
+            {(['none', 'sm', 'md', 'lg', 'xl'] as const).map((shadow) => (
               <div
                 key={shadow}
                 style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}
@@ -509,7 +510,7 @@ export const Effects: Story = {
                     }))
                   }
                   name={`shadow-${shadow}`}
-                  shadow={shadow as any}
+                  shadow={shadow}
                   label={`${shadow === 'none' ? 'No Shadow' : shadow.toUpperCase() + ' Shadow'}`}
                 />
               </div>
@@ -529,7 +530,7 @@ export const Effects: Story = {
               gap: '16px',
             }}
           >
-            {['none', 'lift', 'glow', 'scale'].map((effect) => (
+            {(['none', 'lift', 'glow', 'scale'] as const).map((effect) => (
               <div
                 key={effect}
                 style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}
@@ -552,7 +553,7 @@ export const Effects: Story = {
                     setSelectedValues((prev) => ({ ...prev, [`hover-${effect}`]: value as string }))
                   }
                   name={`hover-${effect}`}
-                  hoverEffect={effect as any}
+                  hoverEffect={effect}
                   label={`${effect.charAt(0).toUpperCase() + effect.slice(1)} Hover Effect`}
                 />
               </div>
@@ -619,7 +620,7 @@ export const InteractiveThemeBuilder: Story = {
     const [selectedValue, setSelectedValue] = useState('option1');
 
     // Advanced color states
-    const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+    const [_backgroundColor, setBackgroundColor] = useState('#ffffff');
     const [textColor, setTextColor] = useState('#111827');
     const [borderColor, setBorderColor] = useState('#d1d5db');
     const [containerColor, setContainerColor] = useState('#ffffff');
@@ -632,7 +633,7 @@ export const InteractiveThemeBuilder: Story = {
     const [noOptionsColor, setNoOptionsColor] = useState('#6b7280');
 
     // Gradient states
-    const [backgroundColorGradient, setBackgroundColorGradient] = useState('');
+    const [_backgroundColorGradient, setBackgroundColorGradient] = useState('');
     const [containerColorGradient, setContainerColorGradient] = useState('');
     const [optionColorGradient, setOptionColorGradient] = useState('');
     const [radioColorGradient, setRadioColorGradient] = useState('');

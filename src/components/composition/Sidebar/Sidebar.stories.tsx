@@ -13,6 +13,21 @@ import {
 } from './index';
 import { Button, Badge, Dropdown, Checkbox, Input, ThemeProvider, themes } from '../../index';
 
+type PlaygroundVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+type PlaygroundSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type PlaygroundShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
+type PlaygroundPosition = 'left' | 'right';
+type PlaygroundToggleMode = 'auto' | 'persistent' | 'floating' | 'none';
+type PlaygroundContentComplexity = 'minimal' | 'standard' | 'rich';
+
 // Mock icons for stories
 const HomeIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1895,7 +1910,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('135deg');
     const [gradientColors, setGradientColors] = useState(['#667eea', '#764ba2']);
-    const [activeGradientBuilder, setActiveGradientBuilder] = useState<string | null>(null);
+    const [_activeGradientBuilder, setActiveGradientBuilder] = useState<string | null>(null);
 
     // New component configuration states
     const [showHeader, setShowHeader] = useState(true);
@@ -1949,61 +1964,6 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
 
     const addColor = () => {
       setGradientColors([...gradientColors, '#000000']);
-    };
-
-    // Content generators based on complexity
-    const generateContent = () => {
-      const minimal = [
-        { icon: <HomeIcon />, label: 'Home', id: 'home' },
-        { icon: <ChartIcon />, label: 'Data', id: 'data' },
-        { icon: <SettingsIcon />, label: 'Settings', id: 'settings' },
-      ];
-
-      const standard = [
-        { icon: <HomeIcon />, label: 'Dashboard', id: 'dashboard' },
-        { icon: <ChartIcon />, label: 'Analytics', id: 'analytics', badge: '5' },
-        { icon: <UsersIcon />, label: 'Users', id: 'users' },
-        { icon: <FolderIcon />, label: 'Projects', id: 'projects', badge: '12' },
-        { icon: <SettingsIcon />, label: 'Settings', id: 'settings' },
-      ];
-
-      if (contentComplexity === 'minimal') return minimal;
-      if (contentComplexity === 'standard') return standard;
-
-      // Rich content with groups
-      return (
-        <>
-          <SidebarSection title="Main">
-            {standard.slice(0, 2).map((item) => (
-              <SidebarItem
-                key={item.id}
-                id={item.id}
-                badge={item.badge}
-                active={item.id === 'dashboard'}
-              >
-                {item.icon}
-                {item.label}
-              </SidebarItem>
-            ))}
-          </SidebarSection>
-          <SidebarSeparator />
-          <SidebarGroup id="management" title="Management" icon={<UsersIcon />}>
-            {standard.slice(2, 4).map((item) => (
-              <SidebarItem key={item.id} id={item.id} badge={item.badge}>
-                {item.icon}
-                {item.label}
-              </SidebarItem>
-            ))}
-          </SidebarGroup>
-          <SidebarSeparator />
-          <SidebarSection title="System">
-            <SidebarItem id="settings">
-              <SettingsIcon />
-              Settings
-            </SidebarItem>
-          </SidebarSection>
-        </>
-      );
     };
 
     // Determine toggle props based on mode
@@ -2265,7 +2225,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
                 <Dropdown
                   value={variant}
-                  onChange={(value) => setVariant(value as any)}
+                  onChange={(value) => setVariant(value as PlaygroundVariant)}
                   options={[
                     { value: 'primary', label: 'Primary' },
                     { value: 'secondary', label: 'Secondary' },
@@ -2286,7 +2246,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Size:</label>
                 <Dropdown
                   value={size}
-                  onChange={(value) => setSize(value as any)}
+                  onChange={(value) => setSize(value as PlaygroundSize)}
                   options={[
                     { value: 'xs', label: 'Extra Small' },
                     { value: 'sm', label: 'Small' },
@@ -2304,7 +2264,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Shadow:</label>
                 <Dropdown
                   value={shadow}
-                  onChange={(value) => setShadow(value as any)}
+                  onChange={(value) => setShadow(value as PlaygroundShadow)}
                   options={[
                     { value: 'none', label: 'None' },
                     { value: 'sm', label: 'Small' },
@@ -2322,7 +2282,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Position:</label>
                 <Dropdown
                   value={position}
-                  onChange={(value) => setPosition(value as any)}
+                  onChange={(value) => setPosition(value as PlaygroundPosition)}
                   options={[
                     { value: 'left', label: 'Left' },
                     { value: 'right', label: 'Right' },
@@ -2417,7 +2377,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
                   </label>
                   <Dropdown
                     value={toggleMode}
-                    onChange={(value) => setToggleMode(value as any)}
+                    onChange={(value) => setToggleMode(value as PlaygroundToggleMode)}
                     options={[
                       { value: 'auto', label: '🎯 Auto (Recommended)' },
                       { value: 'persistent', label: '📌 Always Visible' },
@@ -2434,7 +2394,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof SidebarRoot> = {
                   <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Content:</label>
                   <Dropdown
                     value={contentComplexity}
-                    onChange={(value) => setContentComplexity(value as any)}
+                    onChange={(value) => setContentComplexity(value as PlaygroundContentComplexity)}
                     options={[
                       { value: 'minimal', label: '📋 Minimal (3 items)' },
                       { value: 'standard', label: '📊 Standard (5 items)' },
