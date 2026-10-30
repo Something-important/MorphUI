@@ -274,6 +274,120 @@ describe('Table Component', () => {
       const wrapper = screen.getByRole('table').closest('.table-component__wrapper');
       expect(wrapper).toHaveAttribute('aria-label', 'User data table');
     });
+
+    it('sets aria-sort="none" on sortable columns by default', () => {
+      render(<Table data={testData} columns={testColumns} />);
+      const headers = screen.getAllByRole('columnheader');
+      // sortable columns get aria-sort="none"; the first header is the checkbox column-less
+      expect(headers[0]).toHaveAttribute('aria-sort', 'none');
+    });
+
+    it('sets aria-sort="ascending" then "descending" when sorted', () => {
+      render(<Table data={testData} columns={testColumns} />);
+      const sortButton = screen.getByLabelText('Sort by Name');
+      fireEvent.click(sortButton);
+      const nameHeader = screen.getByText('Name').closest('th');
+      expect(nameHeader).toHaveAttribute('aria-sort', 'ascending');
+      fireEvent.click(sortButton);
+      expect(nameHeader).toHaveAttribute('aria-sort', 'descending');
+    });
+
+    it('sets aria-selected on rows when selectable', () => {
+      render(<Table data={testData} columns={testColumns} selectable rowKey={(r) => r.id} />);
+      const rows = screen.getAllByRole('row');
+      // rows[0] is the header row; body rows start at index 1
+      expect(rows[1]).toHaveAttribute('aria-selected', 'false');
+      const checkbox = rows[1].querySelector('input[type="checkbox"]') as HTMLElement;
+      fireEvent.click(checkbox);
+      expect(rows[1]).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('makes rows focusable and keyboard-activatable when onRowClick is set', () => {
+      const onRowClick = jest.fn();
+      render(<Table data={testData} columns={testColumns} onRowClick={onRowClick} />);
+      const rows = screen.getAllByRole('row');
+      const bodyRow = rows[1];
+      expect(bodyRow).toHaveAttribute('tabindex', '0');
+      bodyRow.focus();
+      fireEvent.keyDown(bodyRow, { key: 'Enter' });
+      expect(onRowClick).toHaveBeenCalledWith(testData[0], 0);
+    });
+
+    it('does not make rows focusable when onRowClick is not set', () => {
+      render(<Table data={testData} columns={testColumns} />);
+      const rows = screen.getAllByRole('row');
+      expect(rows[1]).not.toHaveAttribute('tabindex');
+    });
+  });
+
+  // Filtering
+  describe('Filtering', () => {
+    it('renders filter inputs when filterable is true', () => {
+      render(<Table data={testData} columns={testColumns} filterable />);
+      const filterInputs = screen
+        .getAllByRole('textbox')
+        .filter((el) => el.classList.contains('table-component__filter-input'));
+      expect(filterInputs).toHaveLength(testColumns.length);
+    });
+
+    it('does not render filter inputs when filterable is false', () => {
+      render(<Table data={testData} columns={testColumns} />);
+      expect(screen.queryAllByLabelText(/Filter by/)).toHaveLength(0);
+    });
+
+    it('hides the filter for a column when column.filterable is false', () => {
+      const columns: TableColumn<TestUser>[] = [
+        { key: 'name', label: 'Name', filterable: false },
+        { key: 'role', label: 'Role' },
+      ];
+      render(<Table data={testData} columns={columns} filterable />);
+      expect(screen.queryByLabelText('Filter by Name')).toBeNull();
+      expect(screen.getByLabelText('Filter by Role')).toBeInTheDocument();
+    });
+
+    it('filters rows by name (case-insensitive)', () => {
+      render(<Table data={testData} columns={testColumns} filterable />);
+      const nameFilter = screen.getByLabelText('Filter by Name');
+      fireEvent.change(nameFilter, { target: { value: 'jane' } });
+      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+      expect(screen.queryByText('John Doe')).toBeNull();
+      expect(screen.queryByText('Bob Johnson')).toBeNull();
+    });
+
+    it('filters rows by role', () => {
+      render(<Table data={testData} columns={testColumns} filterable />);
+      const roleFilter = screen.getByLabelText('Filter by Role');
+      fireEvent.change(roleFilter, { target: { value: 'admin' } });
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+      expect(screen.queryByText('Jane Smith')).toBeNull();
+    });
+
+    it('calls onFilterChange with the new filters', () => {
+      const onFilterChange = jest.fn();
+      render(
+        <Table data={testData} columns={testColumns} filterable onFilterChange={onFilterChange} />,
+      );
+      fireEvent.change(screen.getByLabelText('Filter by Email'), {
+        target: { value: 'example.com' },
+      });
+      expect(onFilterChange).toHaveBeenCalledWith({ email: 'example.com' });
+    });
+
+    it('respects controlled filters prop', () => {
+      render(<Table data={testData} columns={testColumns} filterable filters={{ name: 'bob' }} />);
+      expect(screen.getByText('Bob Johnson')).toBeInTheDocument();
+      expect(screen.queryByText('John Doe')).toBeNull();
+      // the filter input reflects the controlled value
+      expect(screen.getByLabelText('Filter by Name')).toHaveValue('bob');
+    });
+
+    it('shows empty message when no rows match the filter', () => {
+      render(<Table data={testData} columns={testColumns} filterable emptyMessage="No matches" />);
+      fireEvent.change(screen.getByLabelText('Filter by Name'), {
+        target: { value: 'nonexistent' },
+      });
+      expect(screen.getByText('No matches')).toBeInTheDocument();
+    });
   });
 
   // Theme integration

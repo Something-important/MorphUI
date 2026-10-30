@@ -105,10 +105,10 @@ function TableInner<T>(
     defaultSortDirection = null,
     onSort: controlledOnSort,
 
-    // Filtering (UI not yet implemented; props reserved for the filtering feature)
-    filterable: _globalFilterable = false,
-    filters: _controlledFilters,
-    onFilterChange: _onFilterChange,
+    // Filtering
+    filterable = false,
+    filters: controlledFilters,
+    onFilterChange,
 
     // Pagination
     pagination = false,
@@ -162,6 +162,7 @@ function TableInner<T>(
   const [internalSortDirection, setInternalSortDirection] =
     useState<SortDirection>(defaultSortDirection);
   const [internalCurrentPage, setInternalCurrentPage] = useState(1);
+  const [internalFilters, setInternalFilters] = useState<Record<string, string>>({});
 
   // Determine if controlled
   const isControlledSelection = controlledSelectedRows !== undefined;
@@ -173,6 +174,11 @@ function TableInner<T>(
   const sortColumn = internalSortColumn;
   const sortDirection = internalSortDirection;
   const currentPage = isControlledPagination ? controlledCurrentPage : internalCurrentPage;
+
+  const isControlledFilters = controlledFilters !== undefined;
+  const filters = isControlledFilters
+    ? (controlledFilters as Record<string, string>)
+    : internalFilters;
 
   // Resolve theme values
   const resolvedColor = resolveThemeValue(color);
@@ -221,14 +227,41 @@ function TableInner<T>(
       : record[column.key as keyof T & string];
   }, []);
 
+  // Handle filter changes (controlled + uncontrolled)
+  const handleFilterChange = useCallback(
+    (columnKey: string, value: string) => {
+      const newFilters = { ...filters, [columnKey]: value };
+      if (!isControlledFilters) {
+        setInternalFilters(newFilters);
+      }
+      onFilterChange?.(newFilters);
+    },
+    [filters, isControlledFilters, onFilterChange],
+  );
+
+  // Filter data (per-column case-insensitive text search)
+  const filteredData = useMemo(() => {
+    const activeFilters = Object.entries(filters).filter(([, v]) => v);
+    if (activeFilters.length === 0) return data;
+    return data.filter((row) =>
+      activeFilters.every(([key, value]) => {
+        const column = columns.find((col) => col.key === key);
+        if (!column) return true;
+        const cellValue = getCellValue(row, column);
+        if (cellValue == null) return false;
+        return String(cellValue).toLowerCase().includes(String(value).toLowerCase());
+      }),
+    );
+  }, [data, columns, filters, getCellValue]);
+
   // Sort data
   const sortedData = useMemo(() => {
-    if (!sortColumn || !sortDirection) return data;
+    if (!sortColumn || !sortDirection) return filteredData;
 
     const column = columns.find((col) => col.key === sortColumn);
-    if (!column || !column.sortable) return data;
+    if (!column || !column.sortable) return filteredData;
 
-    return [...data].sort((a, b) => {
+    return [...filteredData].sort((a, b) => {
       const aValue = getCellValue(a, column);
       const bValue = getCellValue(b, column);
 
@@ -249,7 +282,7 @@ function TableInner<T>(
 
       return sortDirection === 'asc' ? comparison : -comparison;
     });
-  }, [data, columns, sortColumn, sortDirection, getCellValue]);
+  }, [filteredData, columns, sortColumn, sortDirection, getCellValue]);
 
   // Paginate data
   const paginatedData = useMemo(() => {
@@ -440,34 +473,57 @@ function TableInner<T>(
                     />
                   </th>
                 )}
-                {columns.map((column) => (
-                  <th
-                    key={column.key}
-                    className={`table-component__th ${column.className || ''}`}
-                    style={{
-                      width: column.width,
-                      textAlign: column.headerAlign || column.align || 'left',
-                    }}
-                  >
-                    <div className="table-component__th-content">
-                      <span>{column.label}</span>
-                      {globalSortable && column.sortable !== false && (
-                        <button
-                          type="button"
-                          className={`table-component__sort ${
-                            sortColumn === column.key
-                              ? `table-component__sort--${sortDirection}`
-                              : ''
-                          }`}
-                          onClick={() => handleSort(column.key)}
-                          aria-label={`Sort by ${column.label}`}
-                        >
-                          <span className="table-component__sort-icon">⇅</span>
-                        </button>
-                      )}
-                    </div>
-                  </th>
-                ))}
+                {columns.map((column) => {
+                  const isSortable = globalSortable && column.sortable !== false;
+                  return (
+                    <th
+                      key={column.key}
+                      className={`table-component__th ${column.className || ''}`}
+                      style={{
+                        width: column.width,
+                        textAlign: column.headerAlign || column.align || 'left',
+                      }}
+                      aria-sort={
+                        isSortable
+                          ? sortColumn === column.key
+                            ? sortDirection === 'asc'
+                              ? 'ascending'
+                              : 'descending'
+                            : 'none'
+                          : undefined
+                      }
+                    >
+                      <div className="table-component__th-content">
+                        <span>{column.label}</span>
+                        {isSortable && (
+                          <button
+                            type="button"
+                            className={`table-component__sort ${
+                              sortColumn === column.key
+                                ? `table-component__sort--${sortDirection}`
+                                : ''
+                            }`}
+                            onClick={() => handleSort(column.key)}
+                            aria-label={`Sort by ${column.label}`}
+                          >
+                            <span className="table-component__sort-icon">⇅</span>
+                          </button>
+                        )}
+                        {filterable && column.filterable !== false && (
+                          <input
+                            type="text"
+                            className="table-component__filter-input"
+                            placeholder={`Filter`}
+                            value={filters[column.key] || ''}
+                            onChange={(e) => handleFilterChange(column.key, e.target.value)}
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label={`Filter by ${column.label}`}
+                          />
+                        )}
+                      </div>
+                    </th>
+                  );
+                })}
               </tr>
             </thead>
             <tbody className="table-component__tbody">
@@ -489,7 +545,19 @@ function TableInner<T>(
                     <tr
                       key={key}
                       className={`table-component__tr ${isSelected ? 'table-component__tr--selected' : ''}`}
-                      onClick={() => onRowClick?.(row, rowIndex)}
+                      onClick={onRowClick ? () => onRowClick(row, rowIndex) : undefined}
+                      tabIndex={onRowClick ? 0 : undefined}
+                      onKeyDown={
+                        onRowClick
+                          ? (e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                onRowClick(row, rowIndex);
+                              }
+                            }
+                          : undefined
+                      }
+                      aria-selected={selectable ? isSelected : undefined}
                     >
                       {selectable && (
                         <td className="table-component__td table-component__td--checkbox">
