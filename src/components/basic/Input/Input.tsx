@@ -619,8 +619,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {filteredSuggestions.map((suggestion, index) => (
               <div
                 key={index}
+                role="option"
+                aria-selected={false}
+                tabIndex={0}
                 className="input-suggestion-item"
                 onClick={() => handleSuggestionClick(suggestion)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleSuggestionClick(suggestion);
+                  }
+                }}
               >
                 {suggestion}
               </div>

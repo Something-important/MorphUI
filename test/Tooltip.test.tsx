@@ -425,8 +425,8 @@ describe('Tooltip Component', () => {
   describe('Close on Escape', () => {
     it('closes on Escape key when closeOnEscape is true', () => {
       const { container } = renderTooltip({ isVisible: true, closeOnEscape: true });
-      const root = container.querySelector('.tooltip-component')!;
-      fireEvent.keyDown(root, { key: 'Escape' });
+      const triggerEl = container.querySelector('.tooltip-component__trigger')!;
+      fireEvent.keyDown(triggerEl, { key: 'Escape' });
       // In controlled mode, calls onVisibilityChange(false)
       expect(container.querySelector('.tooltip-component__content')).toBeInTheDocument(); // still rendered because controlled
     });
@@ -440,8 +440,7 @@ describe('Tooltip Component', () => {
       fireEvent.click(triggerEl);
       expect(container.querySelector('.tooltip-component__content')).toBeInTheDocument();
 
-      const root = container.querySelector('.tooltip-component')!;
-      fireEvent.keyDown(root, { key: 'Escape' });
+      fireEvent.keyDown(triggerEl, { key: 'Escape' });
       expect(container.querySelector('.tooltip-component__content')).not.toBeInTheDocument();
     });
 
@@ -452,8 +451,7 @@ describe('Tooltip Component', () => {
       });
       const triggerEl = container.querySelector('.tooltip-component__trigger')!;
       fireEvent.click(triggerEl);
-      const root = container.querySelector('.tooltip-component')!;
-      fireEvent.keyDown(root, { key: 'Escape' });
+      fireEvent.keyDown(triggerEl, { key: 'Escape' });
       expect(container.querySelector('.tooltip-component__content')).toBeInTheDocument();
     });
 
@@ -464,8 +462,7 @@ describe('Tooltip Component', () => {
       });
       const triggerEl = container.querySelector('.tooltip-component__trigger')!;
       fireEvent.click(triggerEl);
-      const root = container.querySelector('.tooltip-component')!;
-      fireEvent.keyDown(root, { key: 'Enter' });
+      fireEvent.keyDown(triggerEl, { key: 'Enter' });
       expect(container.querySelector('.tooltip-component__content')).toBeInTheDocument();
     });
   });

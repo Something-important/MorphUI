@@ -208,6 +208,7 @@ const SidebarContainer = forwardRef<
         {overlay && backdrop && !collapsed && (
           <div
             className="sidebar-root__backdrop"
+            role="presentation"
             style={{
               position: 'fixed',
               top: 0,
@@ -219,6 +220,11 @@ const SidebarContainer = forwardRef<
               transition: animated ? 'opacity var(--transition-normal)' : 'none',
             }}
             onClick={() => !collapsed && setCollapsed(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape' || e.key === 'Enter') {
+                setCollapsed(true);
+              }
+            }}
           />
         )}
 

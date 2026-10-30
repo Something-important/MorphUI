@@ -455,7 +455,13 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
         {overlay && backdrop && (
           <div
             className="sidebar-component__backdrop"
+            role="presentation"
             onClick={() => overlay && setCollapsed(true)}
+            onKeyDown={(e) => {
+              if (overlay && (e.key === 'Escape' || e.key === 'Enter')) {
+                setCollapsed(true);
+              }
+            }}
             style={{
               position: 'fixed',
               top: 0,

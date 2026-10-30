@@ -285,37 +285,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     };
 
     // Handle label click
-    const handleLabelClick = (e: React.MouseEvent) => {
-      if (disabled || loading) return;
-
-      // Prevent double-triggering if clicking directly on the input
-      if (e.target === inputRef.current) return;
-
-      // Focus and trigger the input
-      inputRef.current?.focus();
-      if (!readOnly) {
-        const newChecked = !checked;
-        if (!isControlled) {
-          setInternalChecked(newChecked);
-        }
-        onChange?.(newChecked);
-      }
-    };
-
     // Handle checkbox visual click
-    const handleCheckboxClick = (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (disabled || loading || readOnly) return;
-
-      const newChecked = !checked;
-      if (!isControlled) {
-        setInternalChecked(newChecked);
-      }
-      onChange?.(newChecked);
-    };
-
     // Set indeterminate state on the input element
     useEffect(() => {
       if (inputRef.current) {
@@ -334,7 +304,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     return (
       <div className={classes} style={finalStyle}>
-        <label ref={labelRef} className="checkbox-component__label" onClick={handleLabelClick}>
+        <label ref={labelRef} className="checkbox-component__label">
           <div className="checkbox-component__input-wrapper">
             <input
               ref={ref || inputRef}
@@ -358,7 +328,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
             <div
               className="checkbox-component__checkbox"
-              onClick={handleCheckboxClick}
+              aria-hidden="true"
               style={{ cursor: disabled || loading ? 'not-allowed' : 'pointer' }}
             >
               {/* Checkmark icon */}
