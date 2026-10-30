@@ -175,7 +175,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const [isFocused, setIsFocused] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
+    const [, setIsHovered] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
     const [validationError, setValidationError] = useState<string | null>(null);

@@ -1,5 +1,5 @@
 // Button.tsx
-import React, { ReactNode, ButtonHTMLAttributes, ElementType, forwardRef } from 'react';
+import React, { ReactNode, ElementType, forwardRef } from 'react';
 import { resolveThemeValue, createRipple, getAriaProps } from '../../../utils';
 import './Button.css';
 

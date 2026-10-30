@@ -1,5 +1,5 @@
 // Toggle.tsx
-import React, { forwardRef, useState, useEffect } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { resolveThemeValue } from '../../../utils';
 import './Toggle.css';
 
@@ -107,7 +107,7 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
     ref,
   ) => {
     const [internalChecked, setInternalChecked] = useState(defaultChecked);
-    const [isPressed, setIsPressed] = useState(false);
+    const [, setIsPressed] = useState(false);
 
     // Determine if this is a controlled or uncontrolled component
     const isControlled = controlledChecked !== undefined;

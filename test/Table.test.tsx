@@ -187,10 +187,9 @@ describe('Table Component', () => {
       const onRowClick = jest.fn();
       render(<Table data={testData} columns={testColumns} onRowClick={onRowClick} />);
       const row = screen.getByText('John Doe').closest('tr');
-      if (row) {
-        fireEvent.click(row);
-        expect(onRowClick).toHaveBeenCalledWith(testData[0], 0);
-      }
+      expect(row).not.toBeNull();
+      fireEvent.click(row!);
+      expect(onRowClick).toHaveBeenCalledWith(testData[0], 0);
     });
   });
 

@@ -108,7 +108,7 @@ describe('Slider Component', () => {
     });
 
     it('renders custom marks', () => {
-      const { container } = render(
+      render(
         <Slider
           value={50}
           marks={[

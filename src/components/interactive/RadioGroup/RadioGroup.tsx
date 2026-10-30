@@ -1,5 +1,5 @@
-import React, { forwardRef, ReactNode } from 'react';
-import { resolveThemeValue, getAriaProps, createRipple } from '../../../utils';
+import React, { forwardRef } from 'react';
+import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './RadioGroup.css';
 
 export interface RadioOption {
@@ -96,7 +96,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       rounded = false,
       disabled = false,
       direction = 'vertical',
-      ripple = false,
+      ripple: _ripple = false,
       required = false,
       invalid = false,
       label,
@@ -326,25 +326,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     });
 
     // Handle radio change with ripple effect
-    const handleRadioChange = (
-      optionValue: string | number,
-      event: React.MouseEvent<HTMLSpanElement>,
-    ) => {
-      if (isDisabled || options.find((opt) => opt.value === optionValue)?.disabled) return;
-
-      if (ripple) {
-        const removeRipple = createRipple(event, {
-          color: 'rgba(59, 130, 246, 0.3)',
-          duration: 600,
-        });
-
-        // Auto-cleanup after animation
-        setTimeout(removeRipple, 600);
-      }
-
-      onChange(optionValue);
-    };
-
     // Handle keyboard navigation
     const handleKeyDown = (event: React.KeyboardEvent, currentValue: string | number) => {
       if (isDisabled) return;

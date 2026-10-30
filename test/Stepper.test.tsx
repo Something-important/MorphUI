@@ -240,10 +240,9 @@ describe('Stepper Component', () => {
       const onStepClick = jest.fn();
       render(<Stepper steps={defaultSteps} activeStep={0} clickable onStepClick={onStepClick} />);
       const stepContent = screen.getByText('Step 2').closest('.stepper-component__step-content');
-      if (stepContent) {
-        fireEvent.click(stepContent);
-        expect(onStepClick).toHaveBeenCalledWith('2', 1);
-      }
+      expect(stepContent).not.toBeNull();
+      fireEvent.click(stepContent!);
+      expect(onStepClick).toHaveBeenCalledWith('2', 1);
     });
 
     it('does not call onStepClick for disabled steps', () => {
@@ -254,20 +253,18 @@ describe('Stepper Component', () => {
       const onStepClick = jest.fn();
       render(<Stepper steps={steps} activeStep={0} clickable onStepClick={onStepClick} />);
       const stepContent = screen.getByText('Step 2').closest('.stepper-component__step-content');
-      if (stepContent) {
-        fireEvent.click(stepContent);
-        expect(onStepClick).not.toHaveBeenCalled();
-      }
+      expect(stepContent).not.toBeNull();
+      fireEvent.click(stepContent!);
+      expect(onStepClick).not.toHaveBeenCalled();
     });
 
     it('handles keyboard navigation for clickable steps', () => {
       const onStepClick = jest.fn();
       render(<Stepper steps={defaultSteps} activeStep={0} clickable onStepClick={onStepClick} />);
       const stepContent = screen.getByText('Step 2').closest('.stepper-component__step-content');
-      if (stepContent) {
-        fireEvent.keyDown(stepContent, { key: 'Enter' });
-        expect(onStepClick).toHaveBeenCalledWith('2', 1);
-      }
+      expect(stepContent).not.toBeNull();
+      fireEvent.keyDown(stepContent!, { key: 'Enter' });
+      expect(onStepClick).toHaveBeenCalledWith('2', 1);
     });
   });
 

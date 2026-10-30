@@ -379,7 +379,7 @@ export const InteractiveThemeBuilder: Story = {
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#f43f5e', '#3b82f6']);
-    const [activeGradientBuilder, setActiveGradientBuilder] = useState<string | null>(null);
+    const [, setActiveGradientBuilder] = useState<string | null>(null);
 
     const availableThemes = themes;
 
@@ -425,57 +425,6 @@ export const InteractiveThemeBuilder: Story = {
       newColors[index] = color;
       setGradientColors(newColors);
     };
-
-    const themeContent = (
-      <div>
-        <h4>🎨 Theme Preview</h4>
-        <p>
-          Current theme: <strong>{currentTheme}</strong>
-        </p>
-        <p>This badge automatically adapts to the selected theme!</p>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
-            gap: '0.5rem',
-            marginTop: '1rem',
-          }}
-        >
-          {Object.entries(availableThemes).map(([name, theme]) => (
-            <div
-              key={name}
-              style={{
-                padding: '0.5rem',
-                background: theme['color-background'],
-                border: `2px solid ${theme['color-border']}`,
-                borderRadius: '6px',
-                textAlign: 'center',
-                color: theme['color-text'],
-                fontSize: '12px',
-              }}
-            >
-              <div
-                style={{
-                  width: '20px',
-                  height: '20px',
-                  background: theme['color-primary'],
-                  borderRadius: '50%',
-                  margin: '0 auto 0.25rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '10px',
-                }}
-              >
-                {name.charAt(0).toUpperCase()}
-              </div>
-              <strong>{name}</strong>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
 
     return (
       <ThemeProvider theme={availableThemes[currentTheme as keyof typeof availableThemes]}>

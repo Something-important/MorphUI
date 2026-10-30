@@ -325,7 +325,7 @@ export const InteractiveWizard: Story = {
     const remainingSteps = steps.slice(activeStep + 1);
 
     const displaySteps: StepperStep[] = [...completedSteps, currentStep, ...remainingSteps].map(
-      (step, index) => ({
+      (step, _index) => ({
         ...step,
         id: step.id,
       }),
