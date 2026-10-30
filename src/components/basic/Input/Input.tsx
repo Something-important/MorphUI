@@ -3,6 +3,33 @@ import React, { forwardRef, useState, useEffect, useRef } from 'react';
 import { resolveThemeValue, createRipple, getAriaProps } from '../../../utils';
 import './Input.css';
 
+export type InputVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+export type InputType =
+  | 'text'
+  | 'password'
+  | 'email'
+  | 'number'
+  | 'search'
+  | 'tel'
+  | 'url'
+  | 'date'
+  | 'time'
+  | 'datetime-local'
+  | 'month'
+  | 'week'
+  | 'color'
+  | 'file'
+  | 'range';
+export type InputSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 export interface InputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -11,22 +38,7 @@ export interface InputProps
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  type?:
-    | 'text'
-    | 'password'
-    | 'email'
-    | 'number'
-    | 'search'
-    | 'tel'
-    | 'url'
-    | 'date'
-    | 'time'
-    | 'datetime-local'
-    | 'month'
-    | 'week'
-    | 'color'
-    | 'file'
-    | 'range';
+  type?: InputType;
   id?: string;
   name?: string;
   disabled?: boolean;
@@ -38,16 +50,8 @@ export interface InputProps
   loading?: boolean;
 
   // Core API - Match Button exactly
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'info'
-    | 'danger'
-    | 'ghost'
-    | 'outline';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: InputVariant;
+  size?: InputSize;
   color?: string;
   gradient?: string;
   textColor?: string;

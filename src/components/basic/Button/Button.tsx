@@ -3,18 +3,21 @@ import React, { ReactNode, ElementType, forwardRef } from 'react';
 import { resolveThemeValue, createRipple, getAriaProps } from '../../../utils';
 import './Button.css';
 
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 export interface ButtonProps {
   children: React.ReactNode;
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'info'
-    | 'danger'
-    | 'ghost'
-    | 'outline';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   color?: string;
   gradient?: string;
   textColor?: string;

@@ -2,6 +2,17 @@ import React, { forwardRef, useState, useEffect, useRef } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Switch.css';
 
+export type SwitchVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+export type SwitchSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 export interface SwitchProps {
   // Core props
   checked?: boolean;
@@ -14,16 +25,8 @@ export interface SwitchProps {
   invalid?: boolean;
 
   // Styling
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'info'
-    | 'danger'
-    | 'ghost'
-    | 'outline';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: SwitchVariant;
+  size?: SwitchSize;
   color?: string;
   gradient?: string;
   textColor?: string;

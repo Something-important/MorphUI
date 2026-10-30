@@ -3,6 +3,17 @@ import React, { forwardRef, useState } from 'react';
 import { resolveThemeValue } from '../../../utils';
 import './Toggle.css';
 
+export type ToggleVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+export type ToggleSize = 'sm' | 'md' | 'lg';
+
 export interface ToggleProps {
   // Core props
   checked?: boolean;
@@ -12,16 +23,8 @@ export interface ToggleProps {
   loading?: boolean;
 
   // Styling
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'info'
-    | 'danger'
-    | 'ghost'
-    | 'outline';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: ToggleVariant;
+  size?: ToggleSize;
   color?: string;
   gradient?: string;
   textColor?: string;

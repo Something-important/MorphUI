@@ -1,13 +1,24 @@
 // Basic Components
-export { Button, type ButtonProps } from './basic/Button';
-export { Badge, type BadgeProps } from './basic/Badge';
+export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './basic/Button';
+export { Badge, type BadgeProps, type BadgeVariant, type BadgeSize } from './basic/Badge';
 export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './basic/Breadcrumb';
-export { Checkbox, type CheckboxProps } from './basic/Checkbox';
+export {
+  Checkbox,
+  type CheckboxProps,
+  type CheckboxVariant,
+  type CheckboxSize,
+} from './basic/Checkbox';
 export { Divider, type DividerProps } from './basic/Divider';
-export { Input, type InputProps } from './basic/Input';
-export { Label, type LabelProps } from './basic/Label';
-export { Toggle, type ToggleProps } from './basic/Toggle';
-export { Switch, type SwitchProps } from './basic/Switch';
+export {
+  Input,
+  type InputProps,
+  type InputVariant,
+  type InputType,
+  type InputSize,
+} from './basic/Input';
+export { Label, type LabelProps, type LabelVariant, type LabelSize } from './basic/Label';
+export { Toggle, type ToggleProps, type ToggleVariant, type ToggleSize } from './basic/Toggle';
+export { Switch, type SwitchProps, type SwitchVariant, type SwitchSize } from './basic/Switch';
 export {
   Spinner,
   type SpinnerProps,
@@ -46,7 +57,13 @@ export {
 } from './interactive/Dropdown';
 export { Modal } from './interactive/Modal';
 export { Card } from './interactive/Card';
-export { Accordion } from './interactive/Accordion';
+export {
+  Accordion,
+  type AccordionProps,
+  type AccordionVariant,
+  type AccordionSize,
+  type AccordionAnimation,
+} from './interactive/Accordion';
 export { RadioGroup } from './interactive/RadioGroup';
 export {
   Slider,

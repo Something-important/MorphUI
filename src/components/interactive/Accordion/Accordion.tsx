@@ -2,20 +2,24 @@ import React, { ReactNode, forwardRef, useState, useRef, useEffect } from 'react
 import { resolveThemeValue, createRipple } from '../../../utils';
 import './Accordion.css';
 
+export type AccordionVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+export type AccordionSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type AccordionAnimation = 'slide' | 'fade' | 'scale' | 'none';
+
 export interface AccordionProps {
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
-  variant?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | 'info'
-    | 'ghost'
-    | 'outline';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: AccordionVariant;
+  size?: AccordionSize;
   color?: string;
   gradient?: string;
   textColor?: string;
@@ -34,7 +38,7 @@ export interface AccordionProps {
   loading?: boolean;
   icon?: ReactNode;
   iconPosition?: 'left' | 'right';
-  animation?: 'slide' | 'fade' | 'scale' | 'none';
+  animation?: AccordionAnimation;
   animationDuration?: number;
   maxHeight?: string;
   glassmorphism?: boolean;
