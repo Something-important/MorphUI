@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/Something-important/MorphUI/compare/v0.5.0...v0.6.0) (2026-10-30)
+
+
+### Features
+
+* **combobox:** add Combobox component with ARIA combobox pattern ([dd0e153](https://github.com/Something-important/MorphUI/commit/dd0e153d372c56982942b2c0206079bafbeece8b))
+
 ## [0.5.0](https://github.com/Something-important/MorphUI/compare/v0.4.1...v0.5.0) (2026-10-30)
 
 
