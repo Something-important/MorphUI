@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Input } from '../src/components/basic/Input/Input';
+import { createRipple, getAriaProps } from '../src/utils';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 // Mock the utilities
@@ -169,10 +170,8 @@ describe('Input Component', () => {
       expect(input).toHaveAttribute('type', 'password');
 
       fireEvent.click(toggleButton);
-      await waitFor(() => {
-        expect(input).toHaveAttribute('type', 'text');
-        expect(toggleButton).toHaveAttribute('aria-label', 'Hide password');
-      });
+      await waitFor(() => expect(input).toHaveAttribute('type', 'text'));
+      await waitFor(() => expect(toggleButton).toHaveAttribute('aria-label', 'Hide password'));
     });
   });
 
@@ -347,11 +346,9 @@ describe('Input Component', () => {
       const input = screen.getByPlaceholderText('Test placeholder');
 
       fireEvent.focus(input);
-      await waitFor(() => {
-        expect(screen.getByText('React')).toBeInTheDocument();
-        expect(screen.getByText('TypeScript')).toBeInTheDocument();
-        expect(screen.getByText('JavaScript')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('React')).toBeInTheDocument();
+      expect(await screen.findByText('TypeScript')).toBeInTheDocument();
+      expect(await screen.findByText('JavaScript')).toBeInTheDocument();
     });
 
     it('filters suggestions based on input', async () => {
@@ -367,11 +364,9 @@ describe('Input Component', () => {
       // Type to filter
       fireEvent.change(input, { target: { value: 'Re' } });
 
-      await waitFor(() => {
-        expect(screen.getByText('React')).toBeInTheDocument();
-        expect(screen.queryByText('TypeScript')).not.toBeInTheDocument();
-        expect(screen.queryByText('JavaScript')).not.toBeInTheDocument();
-      });
+      await screen.findByText('React');
+      await waitFor(() => expect(screen.queryByText('TypeScript')).not.toBeInTheDocument());
+      await waitFor(() => expect(screen.queryByText('JavaScript')).not.toBeInTheDocument());
     });
 
     it('calls onSuggestionSelect when suggestion is clicked', async () => {
@@ -476,7 +471,6 @@ describe('Input Component', () => {
     });
 
     it('creates ripple effect on click', async () => {
-      const { createRipple } = require('../src/utils');
       renderWithTheme(<Input {...defaultProps} ripple />);
       const input = screen.getByPlaceholderText('Test placeholder');
 
@@ -539,7 +533,6 @@ describe('Input Component', () => {
 
   describe('Accessibility', () => {
     it('applies proper ARIA attributes', () => {
-      const { getAriaProps } = require('../src/utils');
       renderWithTheme(<Input {...defaultProps} ariaLabel="Test input" required error />);
 
       expect(getAriaProps).toHaveBeenCalledWith({

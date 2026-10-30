@@ -1,5 +1,5 @@
 // Alert.tsx
-import React, { forwardRef, useEffect, useState, useRef } from 'react';
+import React, { forwardRef, useEffect, useState, useRef, useCallback } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Alert.css';
 
@@ -155,7 +155,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         resolvedTextColor.includes('conic-gradient'));
 
     // Handle close
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
       if (isAnimating) return;
 
       setIsAnimating(true);
@@ -167,7 +167,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         setIsAnimating(false);
         onClose?.();
       }, 300); // Animation duration
-    };
+    }, [isAnimating, isControlled, onClose]);
 
     // Auto-dismiss effect
     useEffect(() => {

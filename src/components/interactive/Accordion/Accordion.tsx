@@ -1,5 +1,5 @@
 import React, { ReactNode, forwardRef, useState, useRef, useEffect } from 'react';
-import { resolveThemeValue, getAriaProps, createRipple } from '../../../utils';
+import { resolveThemeValue, createRipple } from '../../../utils';
 import './Accordion.css';
 
 export interface AccordionProps {
@@ -234,13 +234,6 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     }, []);
 
     // ARIA attributes
-    const ariaProps = getAriaProps({
-      label: title,
-      expanded: isOpen,
-      disabled,
-      hasPopup: 'dialog',
-    });
-
     // Core toggle logic (event-agnostic) — used by both click and keyboard activation
     const toggle = async () => {
       if (disabled || loading) return;

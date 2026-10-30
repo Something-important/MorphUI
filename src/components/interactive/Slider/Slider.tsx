@@ -118,6 +118,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
     ];
 
     // Ensure min <= max for range sliders
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- normalizedValues is a derived conditional value; callbacks depending on it are intentional
     const normalizedValues: [number, number] = range
       ? [Math.min(clampedValues[0], clampedValues[1]), Math.max(clampedValues[0], clampedValues[1])]
       : clampedValues;

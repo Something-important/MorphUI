@@ -46,7 +46,11 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': [
       'warn',
-      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        ignoreRestSiblings: true,
+      },
     ],
     '@typescript-eslint/no-explicit-any': 'warn',
     'testing-library/no-node-access': 'warn',

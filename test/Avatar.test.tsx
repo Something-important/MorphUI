@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { Avatar } from '../src/components/basic/Avatar/Avatar';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
@@ -332,6 +332,3 @@ describe('Avatar Component', () => {
     });
   });
 });
-
-// Helper function for fireEvent
-import { fireEvent } from '@testing-library/react';

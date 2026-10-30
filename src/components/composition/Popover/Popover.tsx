@@ -172,7 +172,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
     // Internal state
     const [internalIsOpen, setInternalIsOpen] = useState(false);
     const [currentPosition, setCurrentPosition] = useState<PopoverPosition>(position);
-    const [isAnimating, setIsAnimating] = useState(false);
+    const [isAnimating] = useState(false);
     const [showTimeout, setShowTimeout] = useState<NodeJS.Timeout | null>(null);
     const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
 

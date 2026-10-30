@@ -292,16 +292,6 @@ export const InteractiveThemeBuilder: Story = {
 
     const availableThemes = themes;
 
-    const applyTheme = (themeName: string) => {
-      const theme = availableThemes[themeName as keyof typeof availableThemes];
-      if (theme) {
-        Object.entries(theme).forEach(([key, value]) => {
-          document.documentElement.style.setProperty(`--${key}`, String(value));
-        });
-        setCurrentTheme(themeName);
-      }
-    };
-
     // Helper functions
     const generateGradient = () => {
       if (gradientColors.length < 2) return '';

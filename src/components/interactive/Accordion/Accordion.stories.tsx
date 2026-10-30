@@ -526,7 +526,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
     const [gradientType, setGradientType] = useState('linear');
     const [gradientDirection, setGradientDirection] = useState('90deg');
     const [gradientColors, setGradientColors] = useState(['#f43f5e', '#3b82f6']);
-    const [activeGradientBuilder, setActiveGradientBuilder] = useState<string | null>(null);
+    const [, setActiveGradientBuilder] = useState<string | null>(null);
 
     // Use centralized themes from the theme system
     const availableThemes = themes;
