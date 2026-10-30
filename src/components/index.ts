@@ -139,6 +139,13 @@ export {
   type FormSize,
   type FormFieldProps,
 } from './composition/Form';
+export {
+  Combobox,
+  type ComboboxProps,
+  type ComboboxOption,
+  type ComboboxVariant,
+  type ComboboxSize,
+} from './composition/Combobox';
 
 // Theme System
 export * from './theme';
