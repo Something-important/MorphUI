@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/Something-important/MorphUI/compare/v0.7.0...v0.8.0) (2026-10-30)
+
+
+### Features
+
+* **context-menu:** add ContextMenu component ([a36fd49](https://github.com/Something-important/MorphUI/commit/a36fd4910352efc679b84691a401634bda1cfe73))
+
 ## [0.7.0](https://github.com/Something-important/MorphUI/compare/v0.6.0...v0.7.0) (2026-10-30)
 
 
