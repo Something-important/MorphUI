@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/Something-important/MorphUI/compare/v0.6.0...v0.7.0) (2026-10-30)
+
+
+### Features
+
+* **datepicker:** add DatePicker with calendar grid + keyboard nav ([1ebc7d0](https://github.com/Something-important/MorphUI/commit/1ebc7d05a1c68e6cc74d5a62a0e710b68160a022))
+
 ## [0.6.0](https://github.com/Something-important/MorphUI/compare/v0.5.0...v0.6.0) (2026-10-30)
 
 
