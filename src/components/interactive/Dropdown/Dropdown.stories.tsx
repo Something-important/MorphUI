@@ -876,7 +876,7 @@ export const HoverEffects: Story = {
                     setSelectedValues((prev) => ({ ...prev, [`hover-${effect}`]: value as string }))
                   }
                   placeholder={`${effect.charAt(0).toUpperCase() + effect.slice(1)} Hover Effect`}
-                  hoverEffect={effect as any}
+                  hoverEffect={effect as React.ComponentProps<typeof Dropdown>['hoverEffect']}
                   background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
                   textColor="white"
                   shadow="md"
@@ -925,7 +925,7 @@ export const HoverEffects: Story = {
                   }
                   placeholder={`${shadow.toUpperCase()} Shadow + Lift`}
                   hoverEffect="lift"
-                  shadow={shadow as any}
+                  shadow={shadow as React.ComponentProps<typeof Dropdown>['shadow']}
                   background="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
                   textColor="white"
                 />
@@ -972,7 +972,7 @@ export const HoverEffects: Story = {
                     }))
                   }
                   placeholder={`${variant.charAt(0).toUpperCase() + variant.slice(1)} + Glow`}
-                  variant={variant as any}
+                  variant={variant as React.ComponentProps<typeof Dropdown>['variant']}
                   hoverEffect="glow"
                   shadow="lg"
                   background="linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)"

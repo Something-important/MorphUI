@@ -241,18 +241,9 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       hasPopup: 'dialog',
     });
 
-    // Handle toggle with animation
-    const handleToggle = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Core toggle logic (event-agnostic) — used by both click and keyboard activation
+    const toggle = async () => {
       if (disabled || loading) return;
-
-      // Create ripple effect
-      const removeRipple = createRipple(e, {
-        color: 'var(--color-primary-30)',
-        duration: 600,
-      });
-
-      // Auto-cleanup after animation
-      setTimeout(removeRipple, 600);
 
       const newIsOpen = !isOpen;
       setIsOpen(newIsOpen);
@@ -272,6 +263,22 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       }
     };
 
+    // Handle toggle with click (adds ripple effect)
+    const handleToggle = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled || loading) return;
+
+      // Create ripple effect
+      const removeRipple = createRipple(e, {
+        color: 'var(--color-primary-30)',
+        duration: 600,
+      });
+
+      // Auto-cleanup after animation
+      setTimeout(removeRipple, 600);
+
+      await toggle();
+    };
+
     // Handle keyboard events
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (disabled || loading) return;
@@ -280,18 +287,18 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
         case 'Enter':
         case ' ':
           e.preventDefault();
-          handleToggle(e as any);
+          void toggle();
           break;
         case 'ArrowDown':
           e.preventDefault();
           if (!isOpen) {
-            handleToggle(e as any);
+            void toggle();
           }
           break;
         case 'ArrowUp':
           e.preventDefault();
           if (isOpen) {
-            handleToggle(e as any);
+            void toggle();
           }
           break;
       }

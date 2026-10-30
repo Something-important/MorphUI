@@ -59,7 +59,7 @@ export default {
     },
   },
   decorators: [
-    (Story: any) => (
+    (Story: React.FC) => (
       <div style={{ minHeight: '100vh', padding: '20px', position: 'relative' }}>
         <Story />
       </div>

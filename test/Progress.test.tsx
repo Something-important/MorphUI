@@ -160,7 +160,7 @@ describe('Progress Component', () => {
         <Progress
           value={50}
           color="#8b5cf6"
-          style={{ '--progress-custom-color': 'purple' } as any}
+          style={{ '--progress-custom-color': 'purple' } as React.CSSProperties}
         />,
       );
       const progress = container.querySelector('.progress-component');
