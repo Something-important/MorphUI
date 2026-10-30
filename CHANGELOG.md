@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/Something-important/MorphUI/compare/v0.4.0...v0.4.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* **build:** correct types path, add sideEffects + exports for tree-shaking ([7c5e3e3](https://github.com/Something-important/MorphUI/commit/7c5e3e3105ef9d3bedbff2773d3b7d26bef05733))
+
 ## [0.4.0](https://github.com/Something-important/MorphUI/compare/v0.3.1...v0.4.0) (2026-10-30)
 
 
