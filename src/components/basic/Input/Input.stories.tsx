@@ -770,16 +770,6 @@ export const InteractiveThemeBuilder: Story = {
     const availableThemes = themes;
 
     // Utility functions
-    const applyTheme = (themeName: string) => {
-      const theme = availableThemes[themeName as keyof typeof availableThemes];
-      if (theme) {
-        Object.entries(theme).forEach(([key, value]) => {
-          document.documentElement.style.setProperty(`--${key}`, String(value));
-        });
-        setCurrentTheme(themeName);
-      }
-    };
-
     const addColor = () => {
       setGradientColors([...gradientColors, '#000000']);
     };

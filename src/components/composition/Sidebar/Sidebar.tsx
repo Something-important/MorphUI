@@ -162,8 +162,8 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
       collapsible = false,
       defaultCollapsed = false,
       animated = true,
-      showIcons = true,
-      showBadges = true,
+      showIcons: _showIcons = true,
+      showBadges: _showBadges = true,
       expandable = true,
       defaultExpandedItems = [],
 
@@ -423,6 +423,7 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
           onChange(newActiveItem);
         }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- onChange intentionally omitted (parent may pass a new function identity each render)
     }, [items, currentActiveItem, isControlled]);
 
     // Render sidebar items recursively
@@ -543,6 +544,7 @@ export const SidebarItemComponent = forwardRef<HTMLDivElement, SidebarItemProps>
 
       // Call custom onClick if provided
       item.onClick?.(item.id);
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- item intentionally omitted; stable primitive fields are listed instead
     }, [item.disabled, item.id, item.onClick, hasChildren, onToggle, onClick]);
 
     const handleToggle = React.useCallback(

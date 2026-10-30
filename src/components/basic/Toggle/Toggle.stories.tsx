@@ -392,20 +392,12 @@ export const ShadowLevels: Story = {
 
 export const LoadingStates: Story = {
   render: () => {
-    const [loadingStates, setLoadingStates] = useState({
+    const [loadingStates] = useState({
       primary: false,
       success: false,
       warning: false,
       danger: false,
     });
-
-    const handleToggle = (key: string) => () => {
-      setLoadingStates((prev) => ({ ...prev, [key]: true }));
-      // Simulate async operation
-      setTimeout(() => {
-        setLoadingStates((prev) => ({ ...prev, [key]: false }));
-      }, 2000);
-    };
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

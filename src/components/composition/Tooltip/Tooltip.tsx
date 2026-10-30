@@ -171,7 +171,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     // Internal state
     const [internalIsVisible, setInternalIsVisible] = useState(false);
     const [currentPosition, setCurrentPosition] = useState<TooltipPosition>(position);
-    const [isAnimating, setIsAnimating] = useState(false);
+    const [isAnimating] = useState(false);
     const [showTimeout, setShowTimeout] = useState<NodeJS.Timeout | null>(null);
     const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
 

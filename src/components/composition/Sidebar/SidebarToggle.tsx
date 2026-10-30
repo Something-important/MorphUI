@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useContext, useEffect, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../../basic/Button';
 import { useSidebarContext } from './SidebarContext';

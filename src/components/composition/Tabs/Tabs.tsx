@@ -509,7 +509,7 @@ Tabs.displayName = 'Tabs';
 
 // Individual Tab Component (for more complex usage)
 export const Tab = forwardRef<HTMLDivElement, TabProps>(
-  ({ id, label, disabled = false, icon, badge, children, ...rest }, ref) => {
+  ({ id, label, disabled: _disabled = false, icon, badge, children, ...rest }, ref) => {
     const { registerTab, unregisterTab } = useTabsContext();
 
     useEffect(() => {

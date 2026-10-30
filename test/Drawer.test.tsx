@@ -178,10 +178,9 @@ describe('Drawer Component', () => {
         </Drawer>,
       );
       const backdrop = container.querySelector('.drawer-component__backdrop');
-      if (backdrop) {
-        fireEvent.click(backdrop);
-        expect(onClose).toHaveBeenCalledTimes(1);
-      }
+      expect(backdrop).not.toBeNull();
+      fireEvent.click(backdrop!);
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
 
     it('does not call onClose when backdrop is clicked and closeOnBackdropClick is false', () => {
@@ -192,10 +191,9 @@ describe('Drawer Component', () => {
         </Drawer>,
       );
       const backdrop = container.querySelector('.drawer-component__backdrop');
-      if (backdrop) {
-        fireEvent.click(backdrop);
-        expect(onClose).not.toHaveBeenCalled();
-      }
+      expect(backdrop).not.toBeNull();
+      fireEvent.click(backdrop!);
+      expect(onClose).not.toHaveBeenCalled();
     });
   });
 
