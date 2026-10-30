@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/Something-important/MorphUI/compare/v0.4.1...v0.5.0) (2026-10-30)
+
+
+### Features
+
+* **form:** add Form + FormField components ([b43b173](https://github.com/Something-important/MorphUI/commit/b43b173768717a79fc239318ed512f292df1ffef))
+* **table:** implement filtering + improve a11y (aria-sort, aria-selected, row keyboard) ([a9db710](https://github.com/Something-important/MorphUI/commit/a9db7107a88c99daa8d215630cf9817a11492b0a))
+
 ## [0.4.1](https://github.com/Something-important/MorphUI/compare/v0.4.0...v0.4.1) (2026-10-30)
 
 
