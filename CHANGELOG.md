@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1](https://github.com/Something-important/MorphUI/compare/v0.3.0...v0.3.1) (2026-10-30)
+
+### Bug Fixes
+
+- **a11y:** clear all jsx-a11y warnings with real keyboard/role fixes ([05b6a25](https://github.com/Something-important/MorphUI/commit/05b6a251a997a6b50765e3ddc36121f8f6ab8a61))
+
 ## [0.3.0](https://github.com/Something-important/MorphUI/compare/v0.2.0...v0.3.0) (2026-10-30)
 
 ### Features
