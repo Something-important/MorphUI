@@ -152,6 +152,11 @@ export {
   type DatePickerVariant,
   type DatePickerSize,
 } from './composition/DatePicker';
+export {
+  ContextMenu,
+  type ContextMenuProps,
+  type ContextMenuItem,
+} from './composition/ContextMenu';
 
 // Theme System
 export * from './theme';
