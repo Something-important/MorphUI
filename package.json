@@ -4,7 +4,7 @@
   "description": "MorphUI: A flexible, adaptable React + TypeScript UI component library for modern web apps.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/components/index.d.ts",
   "files": [
     "dist"
   ],
@@ -99,5 +99,17 @@
     "storybook": "^9.0.12",
     "ts-jest": "^29.4.0",
     "typescript": "^5.0.0"
-  }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
 }
