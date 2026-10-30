@@ -400,6 +400,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       <div
         ref={overlayRef}
         className={`modal-component__overlay modal-component__overlay--${backdrop} modal-component__overlay--position-${position}`}
+        role="presentation"
         onClick={handleOverlayClick}
         onKeyDown={handleKeyDown}
         tabIndex={-1}
