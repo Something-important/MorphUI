@@ -3,12 +3,15 @@ import React, { forwardRef } from 'react';
 import { resolveThemeValue } from '../../../utils';
 import './Label.css';
 
+export type LabelVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+export type LabelSize = 'xs' | 'sm' | 'md' | 'lg';
+
 export interface LabelProps {
   children: React.ReactNode;
   htmlFor?: string;
   required?: boolean;
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  variant?: LabelVariant;
+  size?: LabelSize;
   color?: string;
   textColor?: string;
   requiredColor?: string;
