@@ -596,7 +596,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
         ref={ref || triggerRef}
         className={finalClasses}
         style={finalStyle}
-        onKeyDown={handleKeyDown}
         {...ariaProps}
         {...rest}
       >
@@ -604,12 +603,13 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
         <div
           className="popover-component__trigger"
           onClick={handleClick}
+          onKeyDown={handleKeyDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          tabIndex={trigger === 'focus' ? 0 : undefined}
-          role={trigger === 'focus' ? 'button' : undefined}
+          tabIndex={trigger === 'focus' || trigger === 'click' ? 0 : undefined}
+          role={trigger === 'focus' || trigger === 'click' ? 'button' : undefined}
         >
           {children}
         </div>

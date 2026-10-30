@@ -554,7 +554,7 @@ describe('RadioGroup', () => {
         </ThemeProvider>,
       );
 
-      const option1 = screen.getByText('Option 1').closest('label')!;
+      const option1 = screen.getByRole('radio', { name: /Option 1/ });
       option1.focus();
 
       // Test arrow down navigation
@@ -614,7 +614,9 @@ describe('RadioGroup', () => {
 
       const options = screen.getAllByRole('radio');
       options.forEach((option) => {
-        expect(option.closest('label')).toHaveAttribute('tabindex', '0');
+        // Native radio inputs are keyboard-focusable by default; they must not be
+        // removed from the tab order.
+        expect(option).not.toHaveAttribute('tabindex', '-1');
       });
     });
   });

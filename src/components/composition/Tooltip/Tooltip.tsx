@@ -560,14 +560,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     };
 
     return (
-      <div
-        ref={ref || triggerRef}
-        className={classes}
-        style={finalStyle}
-        onKeyDown={handleKeyDown}
-        {...ariaProps}
-        {...rest}
-      >
+      <div ref={ref || triggerRef} className={classes} style={finalStyle} {...ariaProps} {...rest}>
         {/* Trigger */}
         <div
           className="tooltip-component__trigger"
@@ -576,7 +569,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           onClick={handleClick}
-          tabIndex={trigger === 'focus' ? 0 : undefined}
+          onKeyDown={handleKeyDown}
+          tabIndex={trigger === 'focus' || trigger === 'click' ? 0 : undefined}
           role={trigger === 'focus' || trigger === 'click' ? 'button' : undefined}
         >
           {children}

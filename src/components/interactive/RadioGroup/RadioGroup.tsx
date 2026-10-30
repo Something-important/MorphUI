@@ -426,8 +426,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
               <label
                 key={option.value}
                 className={`radio-group-component__option ${isOptionDisabled ? 'disabled' : ''} ${isChecked ? 'checked' : ''}`}
-                tabIndex={isOptionDisabled ? -1 : 0}
-                onKeyDown={(e) => handleKeyDown(e, option.value)}
                 htmlFor={`${name}-${option.value}`}
               >
                 <input
@@ -436,6 +434,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
                   value={option.value}
                   checked={isChecked}
                   onChange={() => !isOptionDisabled && onChange(option.value)}
+                  onKeyDown={(e) => handleKeyDown(e, option.value)}
                   disabled={isOptionDisabled}
                   required={required}
                   aria-checked={isChecked}
@@ -443,10 +442,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
                   className="radio-group-component__input"
                   id={`${name}-${option.value}`}
                 />
-                <span
-                  className="radio-group-component__radio"
-                  onClick={(e) => handleRadioChange(option.value, e)}
-                />
+                <span className="radio-group-component__radio" aria-hidden="true" />
                 <div className="radio-group-component__content">
                   <span className="radio-group-component__option-label">{option.label}</span>
                   {option.description && (

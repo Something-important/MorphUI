@@ -247,7 +247,18 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        role={clickable && !disabled ? 'button' : undefined}
         tabIndex={clickable && !disabled ? 0 : undefined}
+        onKeyDown={
+          clickable && !disabled
+            ? (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  if (!loading && onClick) onClick();
+                }
+              }
+            : undefined
+        }
         {...ariaProps}
         {...rest}
       >
