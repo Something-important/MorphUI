@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/Something-important/MorphUI/compare/v0.2.0...v0.3.0) (2026-10-30)
+
+
+### Features
+
+* add Toast component with imperative API, pause-on-hover, and stacking viewport ([aab7126](https://github.com/Something-important/MorphUI/commit/aab712653633e03dfc3c689cb9b14f3dab0cc085))
+
+
+### Miscellaneous Chores
+
+* realign release version to the 0.x line ([a22d4ce](https://github.com/Something-important/MorphUI/commit/a22d4ce6a8cf5435b60d0f3313636709b03ea92d))
+
 ## 0.2.0 (2026-10-29)
 
 ### Features
