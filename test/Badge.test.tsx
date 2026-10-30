@@ -164,7 +164,9 @@ describe('Badge Component', () => {
     ];
 
     variants.forEach((variant) => {
-      const { unmount } = render(<Badge variant={variant as any}>{variant}</Badge>);
+      const { unmount } = render(
+        <Badge variant={variant as React.ComponentProps<typeof Badge>['variant']}>{variant}</Badge>,
+      );
       expect(screen.getByText(variant).parentElement).toHaveClass(`badge-component--${variant}`);
       unmount();
     });
@@ -174,7 +176,9 @@ describe('Badge Component', () => {
     const sizes = ['xs', 'sm', 'md', 'lg'];
 
     sizes.forEach((size) => {
-      const { unmount } = render(<Badge size={size as any}>{size}</Badge>);
+      const { unmount } = render(
+        <Badge size={size as React.ComponentProps<typeof Badge>['size']}>{size}</Badge>,
+      );
       expect(screen.getByText(size).parentElement).toHaveClass(`badge-component--${size}`);
       unmount();
     });

@@ -93,7 +93,7 @@ export default {
     },
   },
   decorators: [
-    (Story: any) => (
+    (Story: React.FC) => (
       <div style={{ padding: '20px', maxWidth: '800px' }}>
         <Story />
       </div>

@@ -224,7 +224,7 @@ describe('Avatar Component', () => {
         <Avatar
           name="John Doe"
           color="#8b5cf6"
-          style={{ '--avatar-custom-bg': 'purple' } as any}
+          style={{ '--avatar-custom-bg': 'purple' } as React.CSSProperties}
         />,
       );
       const avatar = container.querySelector('.avatar-component');

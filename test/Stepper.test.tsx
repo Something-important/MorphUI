@@ -328,7 +328,7 @@ describe('Stepper Component', () => {
           steps={defaultSteps}
           activeStep={1}
           activeColor="#8b5cf6"
-          style={{ '--stepper-custom-active-color': 'purple' } as any}
+          style={{ '--stepper-custom-active-color': 'purple' } as React.CSSProperties}
         />,
       );
       const stepper = container.querySelector('.stepper-component');

@@ -136,7 +136,10 @@ describe('Spinner Component', () => {
 
     it('user style prop takes precedence over CSS custom properties', () => {
       const { container } = render(
-        <Spinner color="#8b5cf6" style={{ '--spinner-custom-color': 'purple' } as any} />,
+        <Spinner
+          color="#8b5cf6"
+          style={{ '--spinner-custom-color': 'purple' } as React.CSSProperties}
+        />,
       );
       const spinner = container.querySelector('.spinner-component');
       const styleAttr = spinner?.getAttribute('style') || '';

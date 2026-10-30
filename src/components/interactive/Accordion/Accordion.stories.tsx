@@ -752,7 +752,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
                 <Dropdown
                   value={variant}
-                  onChange={(value) => setVariant(value as any)}
+                  onChange={(value) => setVariant(value as typeof variant)}
                   options={[
                     { value: 'primary', label: 'Primary' },
                     { value: 'secondary', label: 'Secondary' },
@@ -773,7 +773,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Size:</label>
                 <Dropdown
                   value={size}
-                  onChange={(value) => setSize(value as any)}
+                  onChange={(value) => setSize(value as typeof size)}
                   options={[
                     { value: 'xs', label: 'Extra Small' },
                     { value: 'sm', label: 'Small' },
@@ -791,7 +791,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Shadow:</label>
                 <Dropdown
                   value={shadow}
-                  onChange={(value) => setShadow(value as any)}
+                  onChange={(value) => setShadow(value as typeof shadow)}
                   options={[
                     { value: 'none', label: 'None' },
                     { value: 'sm', label: 'Small' },
@@ -812,7 +812,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                 </label>
                 <Dropdown
                   value={iconPosition}
-                  onChange={(value) => setIconPosition(value as any)}
+                  onChange={(value) => setIconPosition(value as typeof iconPosition)}
                   options={[
                     { value: 'left', label: 'Left' },
                     { value: 'right', label: 'Right' },
@@ -827,7 +827,7 @@ export const InteractiveThemeBuilder: StoryObj<typeof Accordion> = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Animation:</label>
                 <Dropdown
                   value={animation}
-                  onChange={(value) => setAnimation(value as any)}
+                  onChange={(value) => setAnimation(value as typeof animation)}
                   options={[
                     { value: 'slide', label: 'Slide' },
                     { value: 'fade', label: 'Fade' },

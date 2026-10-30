@@ -259,7 +259,11 @@ describe('Slider Component', () => {
 
     it('user style prop takes precedence over CSS custom properties', () => {
       const { container } = render(
-        <Slider value={50} color="#8b5cf6" style={{ '--slider-custom-color': 'purple' } as any} />,
+        <Slider
+          value={50}
+          color="#8b5cf6"
+          style={{ '--slider-custom-color': 'purple' } as React.CSSProperties}
+        />,
       );
       const slider = container.querySelector('.slider-component');
       const styleAttr = slider?.getAttribute('style') || '';
