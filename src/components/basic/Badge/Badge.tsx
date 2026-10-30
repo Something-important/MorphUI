@@ -3,10 +3,21 @@ import React, { ReactNode, forwardRef } from 'react';
 import { resolveThemeValue } from '../../../utils';
 import './Badge.css';
 
+export type BadgeVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'light'
+  | 'dark';
+export type BadgeSize = 'xs' | 'sm' | 'md' | 'lg';
+
 export interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark';
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  variant?: BadgeVariant;
+  size?: BadgeSize;
   color?: string;
   textColor?: string;
   borderColor?: string;

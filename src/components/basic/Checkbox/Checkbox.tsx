@@ -2,6 +2,17 @@ import React, { forwardRef, useState, useRef, useEffect } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Checkbox.css';
 
+export type CheckboxVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'danger'
+  | 'ghost'
+  | 'outline';
+export type CheckboxSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 export interface CheckboxProps {
   checked?: boolean;
   defaultChecked?: boolean;
@@ -17,7 +28,7 @@ export interface CheckboxProps {
     | 'info'
     | 'ghost'
     | 'outline';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: CheckboxSize;
   color?: string;
   gradient?: string;
   textColor?: string;

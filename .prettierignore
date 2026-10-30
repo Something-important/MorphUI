@@ -4,3 +4,6 @@ storybook-static/
 coverage/
 
 
+
+# release-please owns the changelog format
+CHANGELOG.md
