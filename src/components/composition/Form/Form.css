@@ -1,0 +1,48 @@
+/* Form / FormField */
+
+.form-component {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-gap, 16px);
+  width: 100%;
+}
+
+.form-component--sm {
+  --form-gap: 12px;
+}
+
+.form-component--md {
+  --form-gap: 16px;
+}
+
+.form-component--lg {
+  --form-gap: 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.form-field > .label-component {
+  font-weight: 500;
+}
+
+.form-field__helper {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #6b7280);
+  line-height: 1.25;
+}
+
+.form-field__error {
+  font-size: 0.8125rem;
+  color: var(--color-danger, #dc2626);
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.form-field--error > .label-component {
+  color: var(--color-danger, #dc2626);
+}
