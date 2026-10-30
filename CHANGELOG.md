@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/Something-important/MorphUI/compare/v0.3.1...v0.4.0) (2026-10-30)
+
+
+### Features
+
+* export variant/size/type unions for all basic + Accordion components ([1681437](https://github.com/Something-important/MorphUI/commit/1681437e96be8fc3ea42ea9d0590bafec7353e3a))
+
 ## [0.3.1](https://github.com/Something-important/MorphUI/compare/v0.3.0...v0.3.1) (2026-10-30)
 
 ### Bug Fixes
