@@ -96,6 +96,8 @@ Features: six variants (`success` / `error` / `warning` / `info` / `primary` / `
 
 ## 🧪 Testing
 
+MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **28 test suites / 1,250+ tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
+
 ```bash
 # Run all tests
 npm test
@@ -105,7 +107,22 @@ npm test -- --watch
 
 # Run tests with coverage
 npm test -- --coverage
+
+# Run a single test file
+npm test -- Toast
+
+# Same command CI uses (adds --ci and coverage thresholds)
+npm run test:ci
 ```
+
+### Writing tests for components
+
+- Tests live in the top-level [`test/`](./test) folder as `<Component>.test.tsx`.
+- Query elements the way users do: by role, label, and text (`getByRole`, `getByLabelText`) — this keeps tests resilient to markup changes.
+- Assert behavior and accessibility rather than implementation details; use `@testing-library/jest-dom` matchers such as `toBeVisible()` and `toHaveAttribute()`.
+- For pure helpers (like the `utils/` modules), plain unit tests are enough — no rendering required.
+
+Pull requests that add or change a component should include or update its test suite; CI runs the full suite on every push to `dev` and `master`.
 
 ## 🛠️ Development
 
