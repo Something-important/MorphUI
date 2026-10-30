@@ -1,0 +1,186 @@
+/* DatePicker */
+
+.datepicker-component {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 200px;
+}
+
+.datepicker-component__control {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 6px;
+  background: var(--color-surface, #fff);
+  overflow: hidden;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.datepicker-component__control:focus-within {
+  border-color: var(--color-primary-30, #3b82f6);
+  box-shadow: 0 0 0 2px var(--color-primary-20, rgba(59, 130, 246, 0.2));
+}
+
+.datepicker-component--disabled .datepicker-component__control {
+  background: var(--color-surface-muted, #f3f4f6);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.datepicker-component__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  width: 100%;
+  cursor: pointer;
+}
+
+.datepicker-component--disabled .datepicker-component__input {
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.datepicker-component--sm .datepicker-component__input {
+  padding: 6px 8px;
+  font-size: 0.8125rem;
+}
+.datepicker-component--md .datepicker-component__input {
+  padding: 8px 10px;
+  font-size: 0.875rem;
+}
+.datepicker-component--lg .datepicker-component__input {
+  padding: 10px 12px;
+  font-size: 1rem;
+}
+
+.datepicker-component__clear,
+.datepicker-component__toggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--color-text-muted, #6b7280);
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  font-size: 1em;
+}
+
+.datepicker-component__clear:hover {
+  color: var(--color-danger, #dc2626);
+}
+
+.datepicker-component__dialog {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 50;
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 8px;
+  background: var(--color-surface, #fff);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  width: 320px;
+}
+
+.datepicker-component__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.datepicker-component__nav {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--color-text-muted, #6b7280);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.datepicker-component__nav:hover {
+  background: var(--color-primary-10, rgba(59, 130, 246, 0.1));
+  color: var(--color-primary-30, #3b82f6);
+}
+
+.datepicker-component__title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.datepicker-component__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.datepicker-component__weekdays,
+.datepicker-component__row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.datepicker-component__weekday {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted, #6b7280);
+  padding: 4px 0;
+}
+
+.datepicker-component__day {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px 0;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  color: inherit;
+  text-align: center;
+}
+
+.datepicker-component__day:hover:not(:disabled) {
+  background: var(--color-primary-10, rgba(59, 130, 246, 0.1));
+}
+
+.datepicker-component__day--outside {
+  color: var(--color-text-muted, #9ca3af);
+  opacity: 0.6;
+}
+
+.datepicker-component__day--today {
+  font-weight: 700;
+  border: 1px solid var(--color-primary-30, #3b82f6);
+}
+
+.datepicker-component__day--selected {
+  background: var(--color-primary-30, #3b82f6);
+  color: #fff;
+  font-weight: 600;
+}
+
+.datepicker-component__day--selected.datepicker-component__day--today {
+  border-color: #fff;
+}
+
+.datepicker-component__day--disabled {
+  color: var(--color-text-muted, #d1d5db);
+  cursor: not-allowed;
+}
+
+.datepicker-component__day--disabled:hover {
+  background: transparent;
+}
+
+.datepicker-component__day:focus-visible {
+  outline: 2px solid var(--color-primary-30, #3b82f6);
+  outline-offset: 1px;
+}

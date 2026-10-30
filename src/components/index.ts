@@ -146,6 +146,12 @@ export {
   type ComboboxVariant,
   type ComboboxSize,
 } from './composition/Combobox';
+export {
+  DatePicker,
+  type DatePickerProps,
+  type DatePickerVariant,
+  type DatePickerSize,
+} from './composition/DatePicker';
 
 // Theme System
 export * from './theme';
