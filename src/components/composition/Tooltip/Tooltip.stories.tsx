@@ -353,7 +353,7 @@ export const Positions: Story = {
             <div key={pos} style={{ textAlign: 'center' }}>
               <Tooltip
                 content={`This tooltip appears ${pos} of the trigger button. Position: ${pos}`}
-                position={pos as any}
+                position={pos as React.ComponentProps<typeof Tooltip>['position']}
                 variant="primary"
               >
                 <Button style={{ background: color, borderColor: color }} variant="primary">
@@ -406,7 +406,7 @@ export const TriggerTypes: Story = {
             <div key={type} style={{ textAlign: 'center' }}>
               <Tooltip
                 content={`${description}\nTrigger type: ${type}`}
-                trigger={type as any}
+                trigger={type as React.ComponentProps<typeof Tooltip>['trigger']}
                 position="bottom"
                 variant="primary"
                 multiline
@@ -472,7 +472,7 @@ export const Variants: Story = {
             <Tooltip
               key={variant}
               content={`This tooltip uses the ${variant} variant with custom colors and styling.`}
-              variant={variant as any}
+              variant={variant as React.ComponentProps<typeof Tooltip>['variant']}
               position="bottom"
             >
               <Button
@@ -533,7 +533,7 @@ export const Sizes: Story = {
             <Tooltip
               key={size}
               content={`Size: ${size}\nThis tooltip is sized accordingly.`}
-              size={size as any}
+              size={size as React.ComponentProps<typeof Tooltip>['size']}
               position="bottom"
               variant="primary"
               multiline

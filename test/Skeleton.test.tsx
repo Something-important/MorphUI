@@ -139,7 +139,10 @@ describe('Skeleton Component', () => {
 
     it('user style prop takes precedence over CSS custom properties', () => {
       const { container } = render(
-        <Skeleton backgroundColor="#8b5cf6" style={{ '--skeleton-custom-bg': 'purple' } as any} />,
+        <Skeleton
+          backgroundColor="#8b5cf6"
+          style={{ '--skeleton-custom-bg': 'purple' } as React.CSSProperties}
+        />,
       );
       const skeleton = container.querySelector('.skeleton-component');
       const styleAttr = skeleton?.getAttribute('style') || '';

@@ -86,7 +86,7 @@ describe('Toggle Component', () => {
     test.each(['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'ghost', 'outline'])(
       'renders %s variant correctly',
       (variant) => {
-        renderToggle({ variant: variant as any });
+        renderToggle({ variant: variant as React.ComponentProps<typeof Toggle>['variant'] });
         const toggle = screen.getByRole('switch');
         expect(toggle).toHaveClass(`toggle-component--${variant}`);
       },
@@ -95,7 +95,7 @@ describe('Toggle Component', () => {
 
   describe('Sizes', () => {
     test.each(['sm', 'md', 'lg'])('renders %s size correctly', (size) => {
-      renderToggle({ size: size as any });
+      renderToggle({ size: size as React.ComponentProps<typeof Toggle>['size'] });
       const toggle = screen.getByRole('switch');
       expect(toggle).toHaveClass(`toggle-component--${size}`);
     });
@@ -103,7 +103,7 @@ describe('Toggle Component', () => {
 
   describe('Shadow Levels', () => {
     test.each(['none', 'sm', 'md', 'lg', 'xl'])('renders %s shadow correctly', (shadow) => {
-      renderToggle({ shadow: shadow as any });
+      renderToggle({ shadow: shadow as React.ComponentProps<typeof Toggle>['shadow'] });
       const toggle = screen.getByRole('switch');
       expect(toggle).toHaveClass(`toggle-component--shadow-${shadow}`);
     });
@@ -113,7 +113,10 @@ describe('Toggle Component', () => {
     test.each(['left', 'right', 'top', 'bottom'])(
       'renders %s label position correctly',
       (position) => {
-        renderToggle({ label: 'Test', labelPosition: position as any });
+        renderToggle({
+          label: 'Test',
+          labelPosition: position as React.ComponentProps<typeof Toggle>['labelPosition'],
+        });
         const toggle = screen.getByRole('switch');
         expect(toggle).toHaveClass(`toggle-component--label-${position}`);
       },
@@ -122,7 +125,10 @@ describe('Toggle Component', () => {
 
   describe('Icon Positions', () => {
     test.each(['left', 'right'])('renders %s icon position correctly', (position) => {
-      renderToggle({ icon: <MockIcon />, iconPosition: position as any });
+      renderToggle({
+        icon: <MockIcon />,
+        iconPosition: position as React.ComponentProps<typeof Toggle>['iconPosition'],
+      });
       const toggle = screen.getByRole('switch');
       expect(toggle).toHaveClass(`toggle-component--icon-${position}`);
     });

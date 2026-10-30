@@ -143,7 +143,10 @@ describe('Divider Component', () => {
 
     it('user style prop takes precedence over CSS custom properties', () => {
       const { container } = render(
-        <Divider color="#8b5cf6" style={{ '--divider-custom-color': 'purple' } as any} />,
+        <Divider
+          color="#8b5cf6"
+          style={{ '--divider-custom-color': 'purple' } as React.CSSProperties}
+        />,
       );
       const divider = container.querySelector('.divider-component');
       const styleAttr = divider?.getAttribute('style') || '';

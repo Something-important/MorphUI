@@ -407,7 +407,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Outline', value: 'outline' },
                   ]}
                   value={variant}
-                  onChange={(value) => setVariant(value as any)}
+                  onChange={(value) => setVariant(value as typeof variant)}
                   placeholder="Select variant"
                   size="sm"
                 />
@@ -425,7 +425,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Extra Large', value: 'xl' },
                   ]}
                   value={size}
-                  onChange={(value) => setSize(value as any)}
+                  onChange={(value) => setSize(value as typeof size)}
                   placeholder="Select size"
                   size="sm"
                 />
@@ -444,7 +444,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Bottom', value: 'bottom' },
                   ]}
                   value={labelPosition}
-                  onChange={(value) => setLabelPosition(value as any)}
+                  onChange={(value) => setLabelPosition(value as typeof labelPosition)}
                   placeholder="Select label position"
                   size="sm"
                 />
@@ -473,7 +473,7 @@ export const InteractiveThemeBuilder: Story = {
                     { label: 'Right', value: 'right' },
                   ]}
                   value={iconPosition}
-                  onChange={(value) => setIconPosition(value as any)}
+                  onChange={(value) => setIconPosition(value as typeof iconPosition)}
                   placeholder="Select icon position"
                   size="sm"
                 />

@@ -473,7 +473,7 @@ export const InteractiveThemeBuilder: Story = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Variant:</label>
                 <select
                   value={variant}
-                  onChange={(e) => setVariant(e.target.value as any)}
+                  onChange={(e) => setVariant(e.target.value as typeof variant)}
                   style={{
                     padding: '8px',
                     borderRadius: '6px',
@@ -499,7 +499,7 @@ export const InteractiveThemeBuilder: Story = {
                 <label style={{ fontWeight: '600', color: 'var(--color-text)' }}>Size:</label>
                 <select
                   value={size}
-                  onChange={(e) => setSize(e.target.value as any)}
+                  onChange={(e) => setSize(e.target.value as typeof size)}
                   style={{
                     padding: '8px',
                     borderRadius: '6px',
@@ -524,7 +524,7 @@ export const InteractiveThemeBuilder: Story = {
                 </label>
                 <select
                   value={hoverEffect}
-                  onChange={(e) => setHoverEffect(e.target.value as any)}
+                  onChange={(e) => setHoverEffect(e.target.value as typeof hoverEffect)}
                   style={{
                     padding: '8px',
                     borderRadius: '6px',
