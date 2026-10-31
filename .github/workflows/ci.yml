@@ -38,6 +38,23 @@ jobs:
         run: |
           npm run format:check
 
+      - name: Theme tokens single-source-of-truth check
+        # The theme presets (src/components/theme/themes/*.ts) are the only
+        # place tokens may be defined. theme.css is generated from lightTheme.
+        # 1) regenerate and diff -> catches hand-edits to theme.css and
+        #    forgotten regeneration after preset changes
+        # 2) check script -> catches key-set drift between the 5 presets
+        #    (a token missing from one preset becomes a stale variable when
+        #    users switch themes)
+        run: |
+          python3 scripts/generate_theme_css.py
+          git diff --exit-code src/components/theme/theme.css || {
+            echo "::error::src/components/theme/theme.css is out of date or was hand-edited."
+            echo "::error::Edit src/components/theme/themes/*.ts instead, then run: npm run tokens:generate"
+            exit 1
+          }
+          npm run tokens:check
+
       - name: Typecheck
         run: |
           npx tsc --noEmit
