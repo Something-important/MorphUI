@@ -77,3 +77,13 @@ jobs:
         # trusted publishing. Provenance attestation is generated
         # automatically; --provenance makes the intent explicit.
         run: npm publish --provenance
+
+      - name: Show npm debug log
+        if: always()
+        run: |
+          echo "=== .npmrc ==="
+          cat ~/.npmrc || true
+          echo "=== env vars with AUTH/TOKEN ==="
+          env | grep -i "auth\|token" || true
+          echo "=== npm debug log ==="
+          cat /home/runner/.npm/_logs/*-debug-0.log 2>/dev/null | tail -50 || true
