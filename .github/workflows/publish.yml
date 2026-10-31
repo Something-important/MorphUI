@@ -1,13 +1,11 @@
 name: Publish to npm
 
 # Fires when release-please creates a `v*` tag (i.e. when a release PR
-# merges into master). Also runnable on demand from the Actions tab so the
-# already-shipped v0.9.0 tag can be retro-published once the workflow lands.
+# merges into master). Also runnable on demand from the Actions tab.
 #
 # Uses npm Trusted Publishing (OIDC) — no NPM_TOKEN secret. The npm CLI
 # detects the GitHub Actions OIDC context and exchanges the short-lived
-# JWT for publish credentials. Configure the trusted publisher on
-# npmjs.com > package settings > Trusted Publishers before running.
+# JWT for publish credentials.
 on:
   push:
     tags:
@@ -37,8 +35,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # Writes ~/.npmrc mapping the registry. NODE_AUTH_TOKEN is NOT
-          # set — trusted publishing authenticates via OIDC instead.
           registry-url: 'https://registry.npmjs.org'
           # Don't use the cache in release builds — ensures a clean,
           # reproducible install from the lockfile.
@@ -54,36 +50,18 @@ jobs:
         # Logs the tarball contents — catches "CSS didn't ship" regressions
         run: npm pack --dry-run
 
-      - name: Dump OIDC claims (debug)
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const token = await core.getIDToken('npm');
-            const payload = JSON.parse(
-              Buffer.from(token.split('.')[1], 'base64').toString()
-            );
-            console.log('=== OIDC claims npm receives ===');
-            console.log(JSON.stringify(payload, null, 2));
-            console.log('=== Key fields to compare against your config ===');
-            console.log('repository_owner :', payload.repository_owner);
-            console.log('repository       :', payload.repository);
-            console.log('workflow         :', payload.workflow);
-            console.log('job_workflow_ref :', payload.job_workflow_ref);
-            console.log('ref              :', payload.ref);
-            console.log('environment      :', payload.environment || '(none)');
-
-      - name: Publish with provenance
-        # npm CLI auto-detects the OIDC environment and authenticates via
-        # trusted publishing. Provenance attestation is generated
-        # automatically; --provenance makes the intent explicit.
-        run: npm publish --provenance
-
-      - name: Show npm debug log
-        if: always()
+      - name: Publish with provenance (OIDC trusted publishing)
         run: |
-          echo "=== .npmrc ==="
-          cat ~/.npmrc || true
-          echo "=== env vars with AUTH/TOKEN ==="
-          env | grep -i "auth\|token" || true
-          echo "=== npm debug log ==="
-          cat /home/runner/.npm/_logs/*-debug-0.log 2>/dev/null | tail -50 || true
+          # A stray NODE_AUTH_TOKEN hijacks npm auth: npm prefers an
+          # explicit token over the OIDC exchange, and an invalid token
+          # makes the registry answer 404 "not in this registry".
+          # Unset it so npm authenticates via trusted publishing.
+          unset NODE_AUTH_TOKEN
+          echo "NODE_AUTH_TOKEN is now: '${NODE_AUTH_TOKEN:-<unset>}'"
+          npm publish --provenance
+
+      - name: Dump publish debug log on failure
+        if: failure()
+        run: |
+          echo "=== newest npm debug log ==="
+          cat "$(ls -t /home/runner/.npm/_logs/*-debug-0.log | head -1)" | tail -60 || true
