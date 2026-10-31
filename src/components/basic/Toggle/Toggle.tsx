@@ -211,20 +211,16 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
       // Legacy support (gradients > colors)
       ...(resolvedGradient && {
         '--toggle-custom-bg': resolvedGradient,
-        '--toggle-bg': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--toggle-custom-bg': resolvedColor,
-          '--toggle-bg': resolvedColor,
         }),
       ...(resolvedTextColor && {
         '--toggle-custom-color': resolvedTextColor,
-        '--toggle-color': resolvedTextColor,
       }),
       ...(resolvedBorderColor && {
         '--toggle-custom-border': resolvedBorderColor,
-        '--toggle-border': resolvedBorderColor,
       }),
 
       // Comprehensive color customization (gradients > colors)

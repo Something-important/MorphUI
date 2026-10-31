@@ -6,6 +6,7 @@ import { ThemeProvider } from '../../theme';
 const meta: Meta<typeof DatePicker> = {
   title: 'Components/DatePicker',
   component: DatePicker,
+  tags: ['autodocs'],
   parameters: { layout: 'padded' },
 };
 export default meta;
@@ -67,4 +68,37 @@ export const Controlled: Story = {
       </ThemeProvider>
     );
   },
+};
+
+export const Themed: Story = {
+  render: () => (
+    <ThemeProvider>
+      <div style={{ maxWidth: 280 }}>
+        <DatePicker
+          defaultValue={new Date(2026, 5, 15)}
+          color="#ff6b6b"
+          borderRadius={14}
+          shadow="lg"
+          clearable
+        />
+        <p style={{ marginTop: 12 }}>Focus the input to open the themed panel.</p>
+      </div>
+    </ThemeProvider>
+  ),
+};
+
+export const GradientPanel: Story = {
+  render: () => (
+    <ThemeProvider>
+      <div style={{ maxWidth: 280 }}>
+        <DatePicker
+          defaultValue={new Date(2026, 5, 15)}
+          gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+          textColor="#ffffff"
+          shadow="xl"
+        />
+        <p style={{ marginTop: 12 }}>Gradient wins the panel background over color.</p>
+      </div>
+    </ThemeProvider>
+  ),
 };

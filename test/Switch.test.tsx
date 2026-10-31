@@ -248,7 +248,10 @@ describe('Switch Component', () => {
     it('applies custom color via CSS variable', () => {
       const { container } = renderSwitch({ color: '#ff0000' });
       const sw = container.querySelector('.switch-component');
-      expect(sw).toHaveStyle({ '--switch-custom-bg': '#ff0000', '--switch-bg': '#ff0000' });
+      // design model: instance theme props write ONLY the --{slug}-custom-*
+      // override channel; the old --{slug}-* channel is reserved for variant
+      // classes in CSS and must stay untouched by TSX.
+      expect(sw).toHaveStyle({ '--switch-custom-bg': '#ff0000' });
     });
 
     it('applies custom gradient over color', () => {
@@ -266,7 +269,6 @@ describe('Switch Component', () => {
       const sw = container.querySelector('.switch-component');
       expect(sw).toHaveStyle({
         '--switch-custom-text-color': '#ffffff',
-        '--switch-color': '#ffffff',
       });
     });
 

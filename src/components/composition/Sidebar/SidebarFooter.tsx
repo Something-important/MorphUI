@@ -79,15 +79,12 @@ export const SidebarFooter = forwardRef<HTMLDivElement, SidebarFooterProps>(
       // Custom properties for this footer
       ...(finalBackgroundColor && {
         '--sidebar-footer-custom-bg': finalBackgroundColor,
-        '--sidebar-footer-bg': finalBackgroundColor,
       }),
       ...(finalTextColor && {
         '--sidebar-footer-custom-text': finalTextColor,
-        '--sidebar-footer-text': finalTextColor,
       }),
       ...(finalBorderColor && {
         '--sidebar-footer-custom-border': finalBorderColor,
-        '--sidebar-footer-border': finalBorderColor,
       }),
       ...(padding && {
         '--sidebar-footer-custom-padding': padding,

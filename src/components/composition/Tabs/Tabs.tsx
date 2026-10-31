@@ -301,9 +301,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
 
     // Component style object with CSS custom properties (match Button pattern)
     const componentStyle: React.CSSProperties & Record<string, string> = {
-      // Legacy support
+      // Legacy support — color drives the active-tab accent,
+      // gradient fills every surface (root/nav/panel read --tabs-custom-bg).
       ...(resolvedColor && !resolvedGradient && { '--tabs-custom-color': resolvedColor }),
-      ...(resolvedGradient && { '--tabs-custom-gradient': resolvedGradient }),
+      ...(resolvedGradient && { '--tabs-custom-bg': resolvedGradient }),
 
       // Comprehensive color customization using unified variables (gradients > colors)
       // Tab colors

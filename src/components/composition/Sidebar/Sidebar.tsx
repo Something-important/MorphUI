@@ -332,8 +332,10 @@ export const Sidebar = forwardRef<HTMLDivElement, SidebarProps>(
           ? `${maxWidth}px`
           : resolveThemeValue(maxWidth) || maxWidth,
 
-      // Legacy support (gradients > colors)
-      ...(resolvedGradient && { '--sidebar-custom-gradient': resolvedGradient }),
+      // Legacy support — color drives the active-item accent (read by item
+      // rules), gradient fills the surface when no explicit background is set
+      ...(resolvedGradient &&
+        !finalBackgroundColor && { '--sidebar-custom-background-color': resolvedGradient }),
       ...(resolvedColor && !resolvedGradient && { '--sidebar-custom-color': resolvedColor }),
 
       // Comprehensive color customization using unified variables

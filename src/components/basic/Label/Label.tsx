@@ -62,11 +62,9 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedTextColor && {
         '--label-custom-color': resolvedTextColor,
-        '--label-color': resolvedTextColor,
       }),
       ...(resolvedRequiredColor && {
         '--label-custom-required-color': resolvedRequiredColor,
-        '--label-required-color': resolvedRequiredColor,
       }),
     };
 

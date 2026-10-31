@@ -211,32 +211,20 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             height: height ? (typeof height === 'number' ? `${height}px` : height) : undefined,
           }
         : {}),
-      ...(resolvedGradient && {
-        '--drawer-custom-bg': resolvedGradient,
-        '--drawer-bg': resolvedGradient,
-      }),
+      // Props write only the custom channel; CSS owns the fallback chain.
+      ...(resolvedGradient && { '--drawer-custom-bg': resolvedGradient }),
       ...(resolvedBackgroundColor &&
-        !resolvedGradient && {
-          '--drawer-custom-bg': resolvedBackgroundColor,
-          '--drawer-bg': resolvedBackgroundColor,
-        }),
+        !resolvedGradient && { '--drawer-custom-bg': resolvedBackgroundColor }),
+      // Legacy `color` maps onto the background slot (gradients > colors > color).
       ...(resolvedColor &&
         !resolvedGradient &&
-        !resolvedBackgroundColor && {
-          '--drawer-custom-color': resolvedColor,
-          '--drawer-color': resolvedColor,
-        }),
-      ...(resolvedTextColor && {
-        '--drawer-custom-text-color': resolvedTextColor,
-        '--drawer-text-color': resolvedTextColor,
-      }),
+        !resolvedBackgroundColor && { '--drawer-custom-bg': resolvedColor }),
+      ...(resolvedTextColor && { '--drawer-custom-text-color': resolvedTextColor }),
       ...(resolvedHeaderBackgroundColor && {
         '--drawer-custom-header-bg': resolvedHeaderBackgroundColor,
-        '--drawer-header-bg': resolvedHeaderBackgroundColor,
       }),
       ...(resolvedFooterBackgroundColor && {
         '--drawer-custom-footer-bg': resolvedFooterBackgroundColor,
-        '--drawer-footer-bg': resolvedFooterBackgroundColor,
       }),
     };
 

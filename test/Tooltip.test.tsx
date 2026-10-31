@@ -550,14 +550,14 @@ describe('Tooltip Component', () => {
     it('applies custom color via CSS variable', () => {
       const { container } = renderTooltip({ isVisible: true, color: '#ff0000' });
       const tooltip = container.querySelector('.tooltip-component');
-      expect(tooltip).toHaveStyle({ '--tooltip-custom-color': '#ff0000' });
+      expect(tooltip).toHaveStyle({ '--tooltip-custom-bg': '#ff0000' });
     });
 
     it('applies custom gradient', () => {
       const gradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
       const { container } = renderTooltip({ isVisible: true, gradient });
       const tooltip = container.querySelector('.tooltip-component');
-      expect(tooltip).toHaveStyle({ '--tooltip-custom-gradient': gradient });
+      expect(tooltip).toHaveStyle({ '--tooltip-custom-bg': gradient });
     });
 
     it('applies custom backgroundColor', () => {
@@ -747,7 +747,7 @@ describe('Tooltip Component', () => {
         style: { zIndex: 9999 },
       });
       const tooltip = container.querySelector('.tooltip-component');
-      expect(tooltip).toHaveStyle({ '--tooltip-custom-color': '#ff0000', zIndex: 9999 });
+      expect(tooltip).toHaveStyle({ '--tooltip-custom-bg': '#ff0000', zIndex: 9999 });
     });
 
     it('user style takes precedence over component style', () => {

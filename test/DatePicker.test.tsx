@@ -246,4 +246,86 @@ describe('DatePicker Component', () => {
       expect(headers[0]).toHaveTextContent('Mo');
     });
   });
+
+  describe('Theming', () => {
+    it('writes the accent + background custom vars for a custom color', () => {
+      const { container } = renderWithTheme(<DatePicker color="#ff0000" />);
+      const root = container.querySelector('.datepicker-component')!;
+      expect(root).toHaveStyle({ '--datepicker-custom-accent': '#ff0000' });
+      // color also drives the panel background when no gradient is set
+      expect(root).toHaveStyle({ '--datepicker-custom-bg': '#ff0000' });
+    });
+
+    it('gradient wins the panel background var over color', () => {
+      const gradient = 'linear-gradient(to right, red, blue)';
+      const { container } = renderWithTheme(<DatePicker color="#ff0000" gradient={gradient} />);
+      const root = container.querySelector('.datepicker-component')!;
+      expect(root).toHaveStyle({ '--datepicker-custom-bg': gradient });
+      // color may still drive the accent channel when a gradient is set
+      expect(root).toHaveStyle({ '--datepicker-custom-accent': '#ff0000' });
+    });
+
+    it('resolves theme keys and css vars through resolveThemeValue', () => {
+      const { container } = renderWithTheme(
+        <DatePicker color="color-success" textColor="--color-text" borderColor="color-border" />,
+      );
+      const root = container.querySelector('.datepicker-component')!;
+      expect(root).toHaveStyle({ '--datepicker-custom-accent': 'var(--color-success)' });
+      expect(root).toHaveStyle({ '--datepicker-custom-text-color': 'var(--color-text)' });
+      expect(root).toHaveStyle({ '--datepicker-custom-border': 'var(--color-border)' });
+    });
+
+    it('converts numeric borderRadius to px and passes strings through', () => {
+      const { container, rerender } = renderWithTheme(<DatePicker borderRadius={12} />);
+      expect(container.querySelector('.datepicker-component')).toHaveStyle({
+        '--datepicker-custom-border-radius': '12px',
+      });
+      rerender(
+        <ThemeProvider>
+          <DatePicker borderRadius="1.5rem" />
+        </ThemeProvider>,
+      );
+      expect(container.querySelector('.datepicker-component')).toHaveStyle({
+        '--datepicker-custom-border-radius': '1.5rem',
+      });
+    });
+
+    it('resolves the shadow prop to a shadow token', () => {
+      const { container } = renderWithTheme(<DatePicker shadow="lg" />);
+      expect(container.querySelector('.datepicker-component')).toHaveStyle({
+        '--datepicker-custom-shadow': 'var(--shadow-lg)',
+      });
+    });
+
+    it('resolves shadow="none" to the none token', () => {
+      const { container } = renderWithTheme(<DatePicker shadow="none" />);
+      expect(container.querySelector('.datepicker-component')).toHaveStyle({
+        '--datepicker-custom-shadow': 'var(--shadow-none)',
+      });
+    });
+
+    it('writes no custom vars when no theme props are given', () => {
+      const { container } = renderWithTheme(<DatePicker />);
+      expect(container.querySelector('.datepicker-component')!.getAttribute('style')).toBeNull();
+    });
+
+    it('user style wins over the theme prop on the same var', () => {
+      const { container } = renderWithTheme(
+        <DatePicker
+          color="#ff0000"
+          style={{ '--datepicker-custom-accent': '#00ff00' } as React.CSSProperties}
+        />,
+      );
+      const root = container.querySelector('.datepicker-component')!;
+      expect(root).toHaveStyle({ '--datepicker-custom-accent': '#00ff00' });
+      // untouched theme vars survive the merge
+      expect(root).toHaveStyle({ '--datepicker-custom-bg': '#ff0000' });
+    });
+
+    it('keeps regular user style properties next to the theme vars', () => {
+      const { container } = renderWithTheme(<DatePicker color="#ff0000" style={{ width: 300 }} />);
+      const root = container.querySelector('.datepicker-component')!;
+      expect(root).toHaveStyle({ width: '300px', '--datepicker-custom-accent': '#ff0000' });
+    });
+  });
 });

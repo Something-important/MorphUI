@@ -1,135 +1,178 @@
-/* Combobox */
+/* MorphUI cascade layers — order declared in theme.css. */
+@layer morphui.base, morphui.interaction, morphui.state, morphui.feature, morphui.a11y;
 
-.combobox-component {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  min-width: 200px;
+@layer morphui.base {
+  /* Combobox */
+
+  .combobox-component {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-width: 200px;
+  }
+
+  .combobox-component__control {
+    display: flex;
+    align-items: center;
+    border: 1px solid
+      var(--combobox-custom-border, var(--combobox-border, var(--color-border, #d1d5db)));
+    border-radius: var(
+      --combobox-custom-border-radius,
+      var(--combobox-border-radius, var(--border-radius-md, 6px))
+    );
+    background: var(--color-surface, #fff);
+    color: var(--combobox-custom-text-color, var(--combobox-color, var(--color-text, #111827)));
+    overflow: hidden;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+
+  .combobox-component__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    width: 100%;
+  }
+
+  /* Sizes */
+
+  .combobox-component--sm .combobox-component__input {
+    padding: 6px 8px;
+    font-size: 0.8125rem;
+  }
+
+  .combobox-component--md .combobox-component__input {
+    padding: 8px 10px;
+    font-size: 0.875rem;
+  }
+
+  .combobox-component--lg .combobox-component__input {
+    padding: 10px 12px;
+    font-size: 1rem;
+  }
+
+  .combobox-component__clear,
+  .combobox-component__toggle {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-text-muted, #6b7280);
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    font-size: 0.9em;
+  }
+
+  /* Variant styles — only set the --combobox-* default channel; instance theme
+     props override it through the --combobox-custom-* channel. */
+
+  .combobox-component--primary {
+    --combobox-border: var(--color-primary);
+  }
+
+  .combobox-component--secondary {
+    --combobox-border: var(--color-secondary);
+  }
+
+  .combobox-component--ghost {
+    --combobox-border: transparent;
+  }
+
+  .combobox-component--outline {
+    --combobox-border: var(--color-primary);
+  }
+
+  .combobox-component__listbox {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    max-height: 240px;
+    overflow-y: auto;
+    border: 1px solid
+      var(--combobox-custom-border, var(--combobox-border, var(--color-border, #d1d5db)));
+    border-radius: var(
+      --combobox-custom-border-radius,
+      var(--combobox-border-radius, var(--border-radius-md, 6px))
+    );
+    background: var(--combobox-custom-bg, var(--combobox-bg, var(--color-background, #ffffff)));
+    box-shadow: var(
+      --combobox-custom-shadow,
+      var(--combobox-shadow, var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1)))
+    );
+    z-index: var(--z-dropdown, 1000);
+    padding: 4px;
+  }
+
+  .combobox-component__option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .combobox-component__option--highlighted {
+    background: var(--color-primary-10, rgba(59, 130, 246, 0.1));
+  }
+
+  .combobox-component__option-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .combobox-component__option-label {
+    flex: 1;
+  }
+
+  .combobox-component__option-description {
+    font-size: 0.75rem;
+    color: var(--color-text-muted, #6b7280);
+  }
+
+  .combobox-component__message {
+    padding: 8px;
+    color: var(--color-text-muted, #6b7280);
+    font-size: 0.8125rem;
+    text-align: center;
+  }
 }
 
-.combobox-component__control {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--color-border, #d1d5db);
-  border-radius: 6px;
-  background: var(--color-surface, #fff);
-  overflow: hidden;
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
+@layer morphui.interaction {
+  .combobox-component--focus .combobox-component__control,
+  .combobox-component__control:focus-within {
+    border-color: var(--color-primary-30, #3b82f6);
+    box-shadow: 0 0 0 2px var(--color-primary-20, rgba(59, 130, 246, 0.2));
+  }
+
+  .combobox-component__clear:hover {
+    color: var(--color-danger, #dc2626);
+  }
 }
 
-.combobox-component--focus .combobox-component__control,
-.combobox-component__control:focus-within {
-  border-color: var(--color-primary-30, #3b82f6);
-  box-shadow: 0 0 0 2px var(--color-primary-20, rgba(59, 130, 246, 0.2));
-}
+@layer morphui.state {
+  .combobox-component--disabled .combobox-component__control {
+    background: var(--color-surface-muted, #f3f4f6);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 
-.combobox-component--disabled .combobox-component__control {
-  background: var(--color-surface-muted, #f3f4f6);
-  cursor: not-allowed;
-  opacity: 0.6;
-}
+  .combobox-component__toggle:disabled {
+    cursor: not-allowed;
+  }
 
-.combobox-component__input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: inherit;
-  width: 100%;
-}
+  .combobox-component__option--selected {
+    font-weight: 600;
+  }
 
-/* Sizes */
-.combobox-component--sm .combobox-component__input {
-  padding: 6px 8px;
-  font-size: 0.8125rem;
-}
-.combobox-component--md .combobox-component__input {
-  padding: 8px 10px;
-  font-size: 0.875rem;
-}
-.combobox-component--lg .combobox-component__input {
-  padding: 10px 12px;
-  font-size: 1rem;
-}
-
-.combobox-component__clear,
-.combobox-component__toggle {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: var(--color-text-muted, #6b7280);
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  align-self: stretch;
-  font-size: 0.9em;
-}
-
-.combobox-component__clear:hover {
-  color: var(--color-danger, #dc2626);
-}
-
-.combobox-component__toggle:disabled {
-  cursor: not-allowed;
-}
-
-.combobox-component__listbox {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  max-height: 240px;
-  overflow-y: auto;
-  border: 1px solid var(--color-border, #d1d5db);
-  border-radius: 6px;
-  background: var(--color-surface, #fff);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  z-index: 50;
-  padding: 4px;
-}
-
-.combobox-component__option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.combobox-component__option--highlighted {
-  background: var(--color-primary-10, rgba(59, 130, 246, 0.1));
-}
-
-.combobox-component__option--selected {
-  font-weight: 600;
-}
-
-.combobox-component__option--disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.combobox-component__option-icon {
-  display: inline-flex;
-  align-items: center;
-}
-
-.combobox-component__option-label {
-  flex: 1;
-}
-
-.combobox-component__option-description {
-  font-size: 0.75rem;
-  color: var(--color-text-muted, #6b7280);
-}
-
-.combobox-component__message {
-  padding: 8px;
-  color: var(--color-text-muted, #6b7280);
-  font-size: 0.8125rem;
-  text-align: center;
+  .combobox-component__option--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

@@ -47,7 +47,6 @@ export const SidebarSeparator = forwardRef<HTMLDivElement, SidebarSeparatorProps
       // Custom properties for this separator
       ...(finalColor && {
         '--sidebar-separator-custom-color': finalColor,
-        '--sidebar-separator-color': finalColor,
       }),
       ...(thickness && {
         '--sidebar-separator-custom-thickness':

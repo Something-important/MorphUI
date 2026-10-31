@@ -68,14 +68,9 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
       ...(height && { height: typeof height === 'number' ? `${height}px` : height }),
-      ...(resolvedColor && {
-        '--skeleton-custom-color': resolvedColor,
-        '--skeleton-color': resolvedColor,
-      }),
-      ...(resolvedBackgroundColor && {
-        '--skeleton-custom-bg': resolvedBackgroundColor,
-        '--skeleton-bg': resolvedBackgroundColor,
-      }),
+      // `color` drives the shimmer highlight; `backgroundColor` the surface.
+      ...(resolvedColor && { '--skeleton-custom-color': resolvedColor }),
+      ...(resolvedBackgroundColor && { '--skeleton-custom-bg': resolvedBackgroundColor }),
     };
 
     // Explicitly merge with user's style prop (user style takes precedence)

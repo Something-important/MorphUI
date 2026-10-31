@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ContextMenu } from '../src/components/composition/ContextMenu';
-import type { ContextMenuItem } from '../src/components/composition/ContextMenu';
+import type { ContextMenuItem, ContextMenuProps } from '../src/components/composition/ContextMenu';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 const renderWithTheme = (ui: React.ReactElement) => render(<ThemeProvider>{ui}</ThemeProvider>);
@@ -232,6 +232,77 @@ describe('ContextMenu Component', () => {
       fireEvent.keyDown(menu, { key: 'ArrowDown' }); // focus Beta
       fireEvent.keyDown(menu, { key: 'Enter' });
       expect(onBeta).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Theme integration', () => {
+    const renderOpen = (props: Partial<ContextMenuProps> = {}) =>
+      renderWithTheme(
+        <ContextMenu items={items} isOpen position={{ x: 10, y: 10 }} onClose={() => {}} {...props}>
+          <div>target</div>
+        </ContextMenu>,
+      );
+
+    it('writes the custom background var for a custom color', () => {
+      renderOpen({ color: '#ff0000' });
+      expect(screen.getByRole('menu')).toHaveStyle({ '--context-menu-custom-bg': '#ff0000' });
+    });
+
+    it('resolves a theme key to a token var for the background', () => {
+      renderOpen({ color: 'color-primary' });
+      expect(screen.getByRole('menu')).toHaveStyle({
+        '--context-menu-custom-bg': 'var(--color-primary)',
+      });
+    });
+
+    it('gradient beats color for the background var', () => {
+      const gradient = 'linear-gradient(90deg, #ff0000, #0000ff)';
+      renderOpen({ color: '#ff0000', gradient });
+      expect(screen.getByRole('menu')).toHaveStyle({ '--context-menu-custom-bg': gradient });
+    });
+
+    it('writes the custom text color and border vars', () => {
+      renderOpen({ textColor: '#ffffff', borderColor: '--color-primary' });
+      expect(screen.getByRole('menu')).toHaveStyle({
+        '--context-menu-custom-text-color': '#ffffff',
+        '--context-menu-custom-border': 'var(--color-primary)',
+      });
+    });
+
+    it('converts a numeric borderRadius to px', () => {
+      renderOpen({ borderRadius: 12 });
+      expect(screen.getByRole('menu')).toHaveStyle({
+        '--context-menu-custom-border-radius': '12px',
+      });
+    });
+
+    it('keeps a string borderRadius as-is', () => {
+      renderOpen({ borderRadius: '0.5rem' });
+      expect(screen.getByRole('menu')).toHaveStyle({
+        '--context-menu-custom-border-radius': '0.5rem',
+      });
+    });
+
+    it('resolves the shadow token to a var', () => {
+      renderOpen({ shadow: 'lg' });
+      expect(screen.getByRole('menu')).toHaveStyle({
+        '--context-menu-custom-shadow': 'var(--shadow-lg)',
+      });
+    });
+
+    it('user style wins over the theme prop for the same custom var', () => {
+      renderOpen({
+        color: '#ff0000',
+        style: { '--context-menu-custom-bg': '#00ff00' } as React.CSSProperties,
+      });
+      expect(screen.getByRole('menu')).toHaveStyle({ '--context-menu-custom-bg': '#00ff00' });
+    });
+
+    it('writes no theme vars when no theme props are given', () => {
+      renderOpen();
+      const menu = screen.getByRole('menu') as HTMLElement;
+      expect(menu.style.getPropertyValue('--context-menu-custom-bg')).toBe('');
+      expect(menu.style.getPropertyValue('--context-menu-custom-shadow')).toBe('');
     });
   });
 

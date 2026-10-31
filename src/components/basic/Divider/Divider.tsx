@@ -67,12 +67,10 @@ export const Divider = forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedGradient && {
         '--divider-custom-color': resolvedGradient,
-        '--divider-color': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--divider-custom-color': resolvedColor,
-          '--divider-color': resolvedColor,
         }),
     };
 

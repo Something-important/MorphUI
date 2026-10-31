@@ -1,5 +1,6 @@
 // DatePicker.tsx
 import React, { forwardRef, useState, useRef, useId, useMemo, useCallback, useEffect } from 'react';
+import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './DatePicker.css';
 
 export type DatePickerVariant = 'primary' | 'secondary' | 'ghost' | 'outline';
@@ -26,6 +27,18 @@ export interface DatePickerProps {
   ariaLabel?: string;
   variant?: DatePickerVariant;
   size?: DatePickerSize;
+  /** Theme override for the selected/accent day + focus ring tint. */
+  color?: string;
+  /** Background gradient for the popup panel (wins over `color` for the panel bg). */
+  gradient?: string;
+  /** Panel text color (weekday headers + day cells). */
+  textColor?: string;
+  /** Panel + control border color. */
+  borderColor?: string;
+  /** Panel + control border radius (numbers are treated as px). */
+  borderRadius?: string | number;
+  /** Panel shadow level. */
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   style?: React.CSSProperties;
 }
@@ -124,6 +137,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       ariaLabel = 'Date picker',
       variant = 'primary',
       size = 'md',
+      color,
+      gradient,
+      textColor,
+      borderColor,
+      borderRadius,
+      shadow,
       className = '',
       style,
       ...rest
@@ -287,8 +306,48 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const inputDisplay = selectedDate ? format(selectedDate) : '';
     const showClear = clearable && !disabled && selectedDate != null;
 
+    // ---- Theme resolution (design model) ----
+    // resolveThemeValue: literal '#hex' -> value, '--x'/'var(--x)' -> var(--x),
+    // theme key 'color-primary' -> var(--color-primary).
+    const resolvedColor = resolveThemeValue(color);
+    const resolvedGradient = resolveThemeValue(gradient);
+    const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedBorderColor = resolveThemeValue(borderColor);
+    const resolvedShadow = shadow !== undefined ? resolveThemeValue(`shadow-${shadow}`) : undefined;
+
+    // Gradient wins over color for the panel background var; `color` always
+    // drives the accent channel (selected day / today / focus ring tint).
+    const panelBackground = resolvedGradient || resolvedColor;
+
+    // Component style: ONLY the --datepicker-custom-* channel is written here.
+    // Variant classes in DatePicker.css own the --datepicker-* default channel
+    // (never written from TSX). The vars live on the root so both the control
+    // (border / focus ring) and the dialog panel read them via inheritance.
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      ...(panelBackground && { '--datepicker-custom-bg': panelBackground }),
+      ...(resolvedTextColor && { '--datepicker-custom-text-color': resolvedTextColor }),
+      ...(resolvedBorderColor && { '--datepicker-custom-border': resolvedBorderColor }),
+      ...(borderRadius !== undefined && {
+        '--datepicker-custom-border-radius':
+          typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
+      }),
+      ...(resolvedShadow && { '--datepicker-custom-shadow': resolvedShadow }),
+      ...(resolvedColor && { '--datepicker-custom-accent': resolvedColor }),
+    };
+
+    // User style wins over the theme channel (merged last).
+    const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
+
+    // ARIA attributes for the combobox input (generated via the shared helper).
+    // aria-expanded / aria-controls are also set explicitly on the element so
+    // static analysis (jsx-a11y) can verify the combobox contract.
+    const inputAriaProps = getAriaProps({
+      label: ariaLabel,
+      hasPopup: 'dialog',
+    });
+
     return (
-      <div ref={ref} className={classes} style={style} {...rest}>
+      <div ref={ref} className={classes} style={mergedStyle} {...rest}>
         <div className="datepicker-component__control">
           <input
             ref={inputRef}
@@ -299,6 +358,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             readOnly
             disabled={disabled}
             role="combobox"
+            aria-expanded={isOpen}
+            aria-controls={dialogId}
             onFocus={() => {
               if (suppressOpenRef.current) {
                 suppressOpenRef.current = false;
@@ -306,10 +367,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               }
               open();
             }}
-            aria-label={ariaLabel}
-            aria-haspopup="dialog"
-            aria-expanded={isOpen}
-            aria-controls={isOpen ? dialogId : undefined}
+            {...inputAriaProps}
           />
           {showClear && (
             <button

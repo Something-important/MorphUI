@@ -24,11 +24,20 @@ module.exports = {
     resolve(),
     commonjs(),
     typescript({
-      tsconfig: './tsconfig.json',
+      // Scoped config: excludes *.stories.tsx and src/stories so no
+      // Storybook declarations leak into dist.
+      tsconfig: './tsconfig.build.json',
       declaration: true,
       declarationDir: 'dist',
     }),
-    postcss(),
+    // Extract all component CSS into a single dist CSS file instead of
+    // runtime <style> injection. Consumers then control load order:
+    //   import 'morphui-react/dist/morphui.css';
+    // This keeps user stylesheets able to override ours without !important.
+    postcss({
+      extract: 'morphui.css',
+      minimize: true,
+    }),
   ],
   external: Object.keys(pkg.peerDependencies || {}),
 };

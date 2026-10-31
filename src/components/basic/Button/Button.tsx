@@ -141,20 +141,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedGradient && {
         '--btn-custom-bg': resolvedGradient,
-        '--btn-bg': resolvedGradient, // Override variant color
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--btn-custom-bg': resolvedColor,
-          '--btn-bg': resolvedColor, // Override variant color
         }),
       ...(resolvedTextColor && {
         '--btn-custom-color': resolvedTextColor,
-        '--btn-color': resolvedTextColor, // Override variant color
       }),
       ...(resolvedBorderColor && {
         '--btn-custom-border': resolvedBorderColor,
-        '--btn-border': resolvedBorderColor, // Override variant color
       }),
     };
 

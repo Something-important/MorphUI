@@ -101,11 +101,9 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(
       // Custom properties for this group
       ...(finalBackgroundColor && {
         '--sidebar-group-custom-bg': finalBackgroundColor,
-        '--sidebar-group-bg': finalBackgroundColor,
       }),
       ...(finalTextColor && {
         '--sidebar-group-custom-text': finalTextColor,
-        '--sidebar-group-text': finalTextColor,
       }),
       ...style,
     };

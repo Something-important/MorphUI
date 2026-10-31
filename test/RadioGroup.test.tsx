@@ -161,7 +161,7 @@ describe('RadioGroup', () => {
       );
 
       const radioGroup = screen.getByRole('radiogroup');
-      expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': '#ff0000' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': '#ff0000' });
     });
 
     it('applies custom gradient when provided', () => {
@@ -179,7 +179,7 @@ describe('RadioGroup', () => {
       );
 
       const radioGroup = screen.getByRole('radiogroup');
-      expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': gradient });
+      expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': gradient });
     });
 
     it('applies comprehensive color props', () => {
@@ -636,7 +636,7 @@ describe('RadioGroup', () => {
       );
 
       const radioGroup = screen.getByRole('radiogroup');
-      expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': 'var(--color-success)' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': 'var(--color-success)' });
     });
 
     it('resolves theme values correctly', () => {
@@ -653,7 +653,7 @@ describe('RadioGroup', () => {
       );
 
       const radioGroup = screen.getByRole('radiogroup');
-      expect(radioGroup).toHaveStyle({ '--radio-group-custom-bg': 'var(--color-primary)' });
+      expect(radioGroup).toHaveStyle({ '--radio-group-option-bg': 'var(--color-primary)' });
     });
   });
 

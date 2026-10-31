@@ -191,3 +191,119 @@ describe('FormField Component', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Invalid');
   });
 });
+
+describe('Form Theming', () => {
+  it('writes the theme custom vars on the root form element', () => {
+    const { container } = renderWithTheme(
+      <Form
+        color="#ff0000"
+        textColor="#111111"
+        borderColor="#cccccc"
+        borderRadius={10}
+        shadow="md"
+      />,
+    );
+    expect(container.querySelector('form')).toHaveStyle({
+      '--form-custom-accent': '#ff0000',
+      '--form-custom-text-color': '#111111',
+      '--form-custom-border': '#cccccc',
+      '--form-custom-border-radius': '10px',
+      '--form-custom-shadow': 'var(--shadow-md)',
+    });
+  });
+
+  it('resolves theme keys and css vars through resolveThemeValue', () => {
+    const { container } = renderWithTheme(
+      <Form color="color-success" borderColor="--color-border" />,
+    );
+    expect(container.querySelector('form')).toHaveStyle({
+      '--form-custom-accent': 'var(--color-success)',
+      '--form-custom-border': 'var(--color-border)',
+    });
+  });
+
+  it('gradient writes the background var; color alone does not', () => {
+    const gradient = 'linear-gradient(to right, red, blue)';
+    const { container } = renderWithTheme(<Form gradient={gradient} />);
+    expect(container.querySelector('form')).toHaveStyle({
+      '--form-custom-bg': gradient,
+    });
+
+    const { container: colorOnly } = renderWithTheme(<Form color="#ff0000" />);
+    expect(colorOnly.querySelector('form')!.style.getPropertyValue('--form-custom-bg')).toBe('');
+  });
+
+  it('merges user style after the theme vars (style wins on the same var)', () => {
+    const { container } = renderWithTheme(
+      <Form
+        color="#ff0000"
+        style={{ '--form-custom-accent': '#00ff00', maxWidth: '400px' } as React.CSSProperties}
+      />,
+    );
+    const form = container.querySelector('form')!;
+    expect(form).toHaveStyle({ '--form-custom-accent': '#00ff00', maxWidth: '400px' });
+  });
+
+  it('writes no custom vars when no theme props are given', () => {
+    const { container } = renderWithTheme(<Form />);
+    expect(container.querySelector('form')!.getAttribute('style')).toBeNull();
+  });
+
+  it('supports the aria helpers alongside native aria attributes', () => {
+    renderWithTheme(<Form ariaLabel="Contact form" ariaDescribedBy="hint" />);
+    const form = screen.getByRole('form', { name: 'Contact form' });
+    expect(form).toHaveAttribute('aria-label', 'Contact form');
+    expect(form).toHaveAttribute('aria-describedby', 'hint');
+  });
+});
+
+describe('FormField Theming', () => {
+  const baseInput = <Input value="" onChange={() => {}} placeholder="Enter name" />;
+
+  it('writes the theme custom vars on the field wrapper', () => {
+    const { container } = renderWithTheme(
+      <FormField color="#00ff00" borderColor="#999999" borderRadius={8} shadow="sm">
+        {baseInput}
+      </FormField>,
+    );
+    expect(container.querySelector('.form-field')).toHaveStyle({
+      '--form-custom-accent': '#00ff00',
+      '--form-custom-border': '#999999',
+      '--form-custom-border-radius': '8px',
+      '--form-custom-shadow': 'var(--shadow-sm)',
+    });
+  });
+
+  it('accepts string border radii unchanged', () => {
+    const { container } = renderWithTheme(<FormField borderRadius="1rem">{baseInput}</FormField>);
+    expect(container.querySelector('.form-field')).toHaveStyle({
+      '--form-custom-border-radius': '1rem',
+    });
+  });
+
+  it('merges user style after the field theme vars', () => {
+    const { container } = renderWithTheme(
+      <FormField color="#00ff00" style={{ margin: '10px' }}>
+        {baseInput}
+      </FormField>,
+    );
+    expect(container.querySelector('.form-field')).toHaveStyle({
+      margin: '10px',
+      '--form-custom-accent': '#00ff00',
+    });
+  });
+
+  it('field-level theme writes override the form-level ones for the wrapped control', () => {
+    const { container } = renderWithTheme(
+      <Form color="#ff0000">
+        <FormField color="#00ff00">{baseInput}</FormField>
+      </Form>,
+    );
+    expect(container.querySelector('form')).toHaveStyle({
+      '--form-custom-accent': '#ff0000',
+    });
+    expect(container.querySelector('.form-field')).toHaveStyle({
+      '--form-custom-accent': '#00ff00',
+    });
+  });
+});

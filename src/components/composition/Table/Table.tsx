@@ -375,47 +375,38 @@ function TableInner<T>(
     // Background: gradient > color (gradients take precedence)
     ...(resolvedGradient && {
       '--table-custom-bg': resolvedGradient,
-      '--table-bg': resolvedGradient,
     }),
     ...(resolvedColor &&
       !resolvedGradient && {
         '--table-custom-bg': resolvedColor,
-        '--table-bg': resolvedColor,
       }),
 
     // Text and border colors
     ...(resolvedTextColor && {
       '--table-custom-color': resolvedTextColor,
-      '--table-color': resolvedTextColor,
     }),
     ...(resolvedBorderColor && {
       '--table-custom-border': resolvedBorderColor,
-      '--table-border': resolvedBorderColor,
     }),
 
     // Header colors: headerGradient > headerColor
     ...(resolvedHeaderGradient && {
       '--table-custom-header-bg': resolvedHeaderGradient,
-      '--table-header-bg': resolvedHeaderGradient,
     }),
     ...(resolvedHeaderColor &&
       !resolvedHeaderGradient && {
         '--table-custom-header-bg': resolvedHeaderColor,
-        '--table-header-bg': resolvedHeaderColor,
       }),
     ...(resolvedHeaderTextColor && {
       '--table-custom-header-color': resolvedHeaderTextColor,
-      '--table-header-color': resolvedHeaderTextColor,
     }),
 
     // Row colors
     ...(resolvedRowColor && {
       '--table-custom-row-bg': resolvedRowColor,
-      '--table-row-bg': resolvedRowColor,
     }),
     ...(resolvedHoverRowColor && {
       '--table-custom-hover-row-bg': resolvedHoverRowColor,
-      '--table-hover-row-bg': resolvedHoverRowColor,
     }),
 
     // Shadow

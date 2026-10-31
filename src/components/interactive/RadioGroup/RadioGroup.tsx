@@ -209,9 +209,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
 
     // Clean style application - prioritize gradients over colors, specific over general
     const componentStyle: React.CSSProperties & Record<string, string> = {
-      // Top-level custom background variable for tests and legacy consumers
-      ...(resolvedGradient && { '--radio-group-custom-bg': resolvedGradient }),
-      ...(resolvedColor && !resolvedGradient && { '--radio-group-custom-bg': resolvedColor }),
       // Container level
       ...(resolvedContainerGradient && { '--radio-group-container-bg': resolvedContainerGradient }),
       ...(resolvedContainerColor &&
@@ -269,12 +266,12 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         !resolvedContainerGradient &&
         !resolvedOptionGradient &&
         !resolvedRadioGradient &&
-        gradientTarget === 'container' && { '--radio-group-custom-bg': resolvedGradient }),
+        gradientTarget === 'container' && { '--radio-group-container-bg': resolvedGradient }),
       ...(resolvedColor &&
         !resolvedContainerColor &&
         !resolvedOptionColor &&
         !resolvedRadioColor &&
-        gradientTarget === 'container' && { '--radio-group-custom-bg': resolvedColor }),
+        gradientTarget === 'container' && { '--radio-group-container-bg': resolvedColor }),
       ...(resolvedGradient &&
         !resolvedOptionGradient &&
         (gradientTarget === 'options' || gradientTarget === 'all') && {

@@ -258,9 +258,15 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     // Component style object with CSS custom properties (match Button pattern)
     const componentStyle: React.CSSProperties & Record<string, string> = {
-      // Legacy color support (for backward compatibility)
-      ...(resolvedColor && !resolvedGradient && { '--tooltip-custom-color': resolvedColor }),
-      ...(resolvedGradient && { '--tooltip-custom-gradient': resolvedGradient }),
+      // Legacy color/gradient props map onto the background slot when the
+      // dedicated background props aren't provided (gradients > colors).
+      ...(resolvedColor &&
+        !resolvedGradient &&
+        !resolvedBackgroundGradient &&
+        !resolvedBackgroundColor && { '--tooltip-custom-bg': resolvedColor }),
+      ...(resolvedGradient &&
+        !resolvedBackgroundGradient &&
+        !resolvedBackgroundColor && { '--tooltip-custom-bg': resolvedGradient }),
 
       // Background colors and gradients (gradients > colors)
       ...(resolvedBackgroundGradient && { '--tooltip-custom-bg': resolvedBackgroundGradient }),

@@ -174,19 +174,11 @@ const SidebarContainer = forwardRef<
             ? `${maxWidth}px`
             : resolveThemeValue(maxWidth) || maxWidth,
 
-      // Theme variables for child components to inherit
-      ...(finalBackgroundColor && {
-        '--sidebar-custom-bg': finalBackgroundColor,
-        '--sidebar-bg': finalBackgroundColor,
-      }),
-      ...(finalTextColor && {
-        '--sidebar-custom-text': finalTextColor,
-        '--sidebar-text': finalTextColor,
-      }),
-      ...(finalBorderColor && {
-        '--sidebar-custom-border': finalBorderColor,
-        '--sidebar-border': finalBorderColor,
-      }),
+      // Theme variables for child components to inherit (names must match
+      // the vars Sidebar.css actually consumes)
+      ...(finalBackgroundColor && { '--sidebar-custom-bg': finalBackgroundColor }),
+      ...(finalTextColor && { '--sidebar-custom-text-color': finalTextColor }),
+      ...(finalBorderColor && { '--sidebar-custom-border-color': finalBorderColor }),
 
       // Visual effects
       ...(shadow &&

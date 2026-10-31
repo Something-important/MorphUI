@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback, forwardRef } from 'react';
 import { resolveThemeValue, getAriaProps, getKeyboardHandler } from '../../../utils';
 import './Dropdown.css';
 
@@ -23,6 +23,9 @@ export interface DropdownOptionGroup {
   defaultCollapsed?: boolean;
 }
 
+export type DropdownSize = 'sm' | 'md' | 'lg';
+export type DropdownVariant = 'default' | 'outline' | 'ghost';
+
 export interface DropdownProps {
   options?: DropdownOption[];
   value?: string | number | Array<string | number>;
@@ -33,8 +36,8 @@ export interface DropdownProps {
   maxSelections?: number;
   searchable?: boolean;
   clearable?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'outline' | 'ghost';
+  size?: DropdownSize;
+  variant?: DropdownVariant;
   color?: string;
   gradient?: string;
   background?: string; // Add missing background prop
@@ -69,599 +72,618 @@ export interface DropdownProps {
   onSearch?: (searchTerm: string) => void;
 }
 
-export const Dropdown = ({
-  options,
-  value,
-  onChange,
-  placeholder = 'Select...',
-  disabled = false,
-  multiSelect = false,
-  maxSelections,
-  searchable = false,
-  clearable = false,
-  size = 'md',
-  variant = 'default',
-  color,
-  gradient,
-  background,
-  textColor,
-  borderColor,
-  labelColor,
-  descriptionColor,
-  optionBackground,
-  optionHoverBackground,
-  optionSelectedBackground,
-  backgroundImage,
-  backgroundBlend,
-  borderRadius,
-  shadow,
-  backdropBlur,
-  hoverEffect = 'none',
-  optionGroups,
-  showOptionCount,
-  loading,
-  error,
-  className = '',
-  style,
-  trigger,
-  position = 'bottom',
-  width,
-  maxHeight = '300px',
-  onOpenChange,
-  onSearch,
-}: DropdownProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState<number>(-1);
-  const [search, setSearch] = useState('');
-  const containerRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
+export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
+  (
+    {
+      options,
+      value,
+      onChange,
+      placeholder = 'Select...',
+      disabled = false,
+      multiSelect = false,
+      maxSelections,
+      searchable = false,
+      clearable = false,
+      size = 'md',
+      variant = 'default',
+      color,
+      gradient,
+      background,
+      textColor,
+      borderColor,
+      labelColor,
+      descriptionColor,
+      optionBackground,
+      optionHoverBackground,
+      optionSelectedBackground,
+      backgroundImage,
+      backgroundBlend,
+      borderRadius,
+      shadow,
+      backdropBlur,
+      hoverEffect = 'none',
+      optionGroups,
+      showOptionCount,
+      loading,
+      error,
+      className = '',
+      style,
+      trigger,
+      position = 'bottom',
+      width,
+      maxHeight = '300px',
+      onOpenChange,
+      onSearch,
+    }: DropdownProps,
+    ref,
+  ) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+    const [search, setSearch] = useState('');
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const listRef = useRef<HTMLUListElement>(null);
 
-  const resolvedColor = resolveThemeValue(color);
-  const resolvedTextColor = resolveThemeValue(textColor);
-  const resolvedBorderColor = resolveThemeValue(borderColor);
-  const resolvedGradient = resolveThemeValue(gradient);
-  const resolvedBackground = resolveThemeValue(background); // Add background resolution
-  const resolvedLabelColor = resolveThemeValue(labelColor);
-  const resolvedDescriptionColor = resolveThemeValue(descriptionColor);
-  const resolvedOptionBackground = resolveThemeValue(optionBackground);
-  const resolvedOptionHoverBackground = resolveThemeValue(optionHoverBackground);
-  const resolvedOptionSelectedBackground = resolveThemeValue(optionSelectedBackground);
-
-  // Handle open state changes
-  const handleOpenChange = useCallback(
-    (newOpen: boolean) => {
-      setIsOpen(newOpen);
-      onOpenChange?.(newOpen);
-      if (!newOpen) {
-        setFocusedIndex(-1);
-        setSearch('');
+    // Merge the forwarded ref with the internal container ref (outside-click
+    // detection) so consumers can also measure/focus the dropdown root.
+    const setContainerRef = (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref) {
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
       }
-    },
-    [onOpenChange],
-  );
+    };
 
-  // Close dropdown if clicked outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+    const resolvedColor = resolveThemeValue(color);
+    const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedBorderColor = resolveThemeValue(borderColor);
+    const resolvedGradient = resolveThemeValue(gradient);
+    const resolvedBackground = resolveThemeValue(background); // Add background resolution
+    const resolvedLabelColor = resolveThemeValue(labelColor);
+    const resolvedDescriptionColor = resolveThemeValue(descriptionColor);
+    const resolvedOptionBackground = resolveThemeValue(optionBackground);
+    const resolvedOptionHoverBackground = resolveThemeValue(optionHoverBackground);
+    const resolvedOptionSelectedBackground = resolveThemeValue(optionSelectedBackground);
+
+    // Handle open state changes
+    const handleOpenChange = useCallback(
+      (newOpen: boolean) => {
+        setIsOpen(newOpen);
+        onOpenChange?.(newOpen);
+        if (!newOpen) {
+          setFocusedIndex(-1);
+          setSearch('');
+        }
+      },
+      [onOpenChange],
+    );
+
+    // Close dropdown if clicked outside
+    useEffect(() => {
+      function handleClickOutside(event: MouseEvent) {
+        if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+          handleOpenChange(false);
+        }
+      }
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [handleOpenChange]);
+
+    // Handle keyboard navigation focus
+    useEffect(() => {
+      if (isOpen && listRef.current && focusedIndex >= 0) {
+        const optionEls = listRef.current.querySelectorAll('.dropdown-option');
+        (optionEls[focusedIndex] as HTMLElement)?.focus();
+      }
+    }, [focusedIndex, isOpen]);
+
+    // Process options with groups
+    const processedOptions = useMemo(() => {
+      if (optionGroups && optionGroups.length > 0) {
+        return optionGroups.flatMap((group) => group.options);
+      }
+      return options || [];
+    }, [options, optionGroups]);
+
+    const filteredOptions = useMemo(
+      () =>
+        search
+          ? processedOptions.filter((opt) => opt.label.toLowerCase().includes(search.toLowerCase()))
+          : processedOptions,
+      [processedOptions, search],
+    );
+
+    const isSelected = (val: string | number) => {
+      if (multiSelect) {
+        return Array.isArray(value) && value.includes(val);
+      }
+      return value === val;
+    };
+
+    const handleOptionClick = (val: string | number, event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (disabled) return;
+
+      if (multiSelect) {
+        const selected = Array.isArray(value) ? value : [];
+        if (selected.includes(val)) {
+          const newSelected = selected.filter((v) => v !== val);
+          onChange(newSelected);
+        } else if (!maxSelections || selected.length < maxSelections) {
+          const newSelected = [...selected, val];
+          onChange(newSelected);
+        }
+      } else {
+        onChange(val);
         handleOpenChange(false);
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [handleOpenChange]);
+    };
 
-  // Handle keyboard navigation focus
-  useEffect(() => {
-    if (isOpen && listRef.current && focusedIndex >= 0) {
-      const optionEls = listRef.current.querySelectorAll('.dropdown-option');
-      (optionEls[focusedIndex] as HTMLElement)?.focus();
-    }
-  }, [focusedIndex, isOpen]);
-
-  // Process options with groups
-  const processedOptions = useMemo(() => {
-    if (optionGroups && optionGroups.length > 0) {
-      return optionGroups.flatMap((group) => group.options);
-    }
-    return options || [];
-  }, [options, optionGroups]);
-
-  const filteredOptions = useMemo(
-    () =>
-      search
-        ? processedOptions.filter((opt) => opt.label.toLowerCase().includes(search.toLowerCase()))
-        : processedOptions,
-    [processedOptions, search],
-  );
-
-  const isSelected = (val: string | number) => {
-    if (multiSelect) {
-      return Array.isArray(value) && value.includes(val);
-    }
-    return value === val;
-  };
-
-  const handleOptionClick = (val: string | number, event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (disabled) return;
-
-    if (multiSelect) {
-      const selected = Array.isArray(value) ? value : [];
-      if (selected.includes(val)) {
-        const newSelected = selected.filter((v) => v !== val);
-        onChange(newSelected);
-      } else if (!maxSelections || selected.length < maxSelections) {
-        const newSelected = [...selected, val];
-        onChange(newSelected);
+    const handleSelectAll = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (multiSelect && !disabled) {
+        const allValues = filteredOptions.map((opt) => opt.value);
+        const newValues = maxSelections ? allValues.slice(0, maxSelections) : allValues;
+        onChange(newValues);
       }
-    } else {
-      onChange(val);
-      handleOpenChange(false);
-    }
-  };
+    };
 
-  const handleSelectAll = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (multiSelect && !disabled) {
-      const allValues = filteredOptions.map((opt) => opt.value);
-      const newValues = maxSelections ? allValues.slice(0, maxSelections) : allValues;
-      onChange(newValues);
-    }
-  };
+    const handleRandomSelect = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (multiSelect && !disabled) {
+        const availableOptions = filteredOptions.filter((opt) => !opt.disabled);
+        const count = maxSelections || Math.min(3, availableOptions.length); // Default to 3 if no max
 
-  const handleRandomSelect = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (multiSelect && !disabled) {
-      const availableOptions = filteredOptions.filter((opt) => !opt.disabled);
-      const count = maxSelections || Math.min(3, availableOptions.length); // Default to 3 if no max
+        // Shuffle array and take first N items
+        const shuffled = [...availableOptions].sort(() => Math.random() - 0.5);
+        const randomValues = shuffled.slice(0, count).map((opt) => opt.value);
 
-      // Shuffle array and take first N items
-      const shuffled = [...availableOptions].sort(() => Math.random() - 0.5);
-      const randomValues = shuffled.slice(0, count).map((opt) => opt.value);
+        onChange(randomValues);
+      }
+    };
 
-      onChange(randomValues);
-    }
-  };
+    const handleClearAll = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (multiSelect && !disabled) {
+        onChange([]);
+      }
+    };
 
-  const handleClearAll = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (multiSelect && !disabled) {
-      onChange([]);
-    }
-  };
+    const handleClear = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (clearable && !disabled) {
+        onChange(multiSelect ? [] : '');
+      }
+    };
 
-  const handleClear = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (clearable && !disabled) {
-      onChange(multiSelect ? [] : '');
-    }
-  };
+    const handleSearch = (searchTerm: string) => {
+      setSearch(searchTerm);
+      onSearch?.(searchTerm);
+    };
 
-  const handleSearch = (searchTerm: string) => {
-    setSearch(searchTerm);
-    onSearch?.(searchTerm);
-  };
+    const handleKeyDown = getKeyboardHandler({
+      onEnter: () => {
+        if (isOpen && focusedIndex >= 0) {
+          handleOptionClick(filteredOptions[focusedIndex].value, {} as React.MouseEvent);
+        } else {
+          handleOpenChange(!isOpen);
+        }
+      },
+      onSpace: () => {
+        if (isOpen && focusedIndex >= 0) {
+          handleOptionClick(filteredOptions[focusedIndex].value, {} as React.MouseEvent);
+        } else {
+          handleOpenChange(!isOpen);
+        }
+      },
+      onArrowDown: () => {
+        if (!isOpen) {
+          handleOpenChange(true);
+          setFocusedIndex(0);
+        } else {
+          setFocusedIndex((prev) => (prev < filteredOptions.length - 1 ? prev + 1 : prev));
+        }
+      },
+      onArrowUp: () => {
+        if (!isOpen) {
+          handleOpenChange(true);
+          setFocusedIndex(filteredOptions.length - 1);
+        } else {
+          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+        }
+      },
+      onEscape: () => handleOpenChange(false),
+      onTab: () => handleOpenChange(false),
+    });
 
-  const handleKeyDown = getKeyboardHandler({
-    onEnter: () => {
-      if (isOpen && focusedIndex >= 0) {
-        handleOptionClick(filteredOptions[focusedIndex].value, {} as React.MouseEvent);
+    const selectedLabels = useMemo(() => {
+      if (multiSelect) {
+        const selected = Array.isArray(value) ? value : [];
+        if (selected.length > 0) {
+          return processedOptions
+            .filter((opt) => selected.includes(opt.value))
+            .map((opt) => opt.label)
+            .join(', ');
+        }
+        return placeholder;
       } else {
-        handleOpenChange(!isOpen);
+        const selectedOption = processedOptions.find((opt) => opt.value === value);
+        return selectedOption ? selectedOption.label : placeholder;
       }
-    },
-    onSpace: () => {
-      if (isOpen && focusedIndex >= 0) {
-        handleOptionClick(filteredOptions[focusedIndex].value, {} as React.MouseEvent);
-      } else {
-        handleOpenChange(!isOpen);
-      }
-    },
-    onArrowDown: () => {
-      if (!isOpen) {
-        handleOpenChange(true);
-        setFocusedIndex(0);
-      } else {
-        setFocusedIndex((prev) => (prev < filteredOptions.length - 1 ? prev + 1 : prev));
-      }
-    },
-    onArrowUp: () => {
-      if (!isOpen) {
-        handleOpenChange(true);
-        setFocusedIndex(filteredOptions.length - 1);
-      } else {
-        setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
-      }
-    },
-    onEscape: () => handleOpenChange(false),
-    onTab: () => handleOpenChange(false),
-  });
+    }, [processedOptions, value, placeholder, multiSelect]);
 
-  const selectedLabels = useMemo(() => {
-    if (multiSelect) {
-      const selected = Array.isArray(value) ? value : [];
-      if (selected.length > 0) {
-        return processedOptions
-          .filter((opt) => selected.includes(opt.value))
-          .map((opt) => opt.label)
-          .join(', ');
-      }
-      return placeholder;
-    } else {
-      const selectedOption = processedOptions.find((opt) => opt.value === value);
-      return selectedOption ? selectedOption.label : placeholder;
-    }
-  }, [processedOptions, value, placeholder, multiSelect]);
+    // Detect text gradients
+    const isTextGradient =
+      textColor &&
+      (textColor.includes('linear-gradient') ||
+        textColor.includes('radial-gradient') ||
+        textColor.includes('conic-gradient'));
 
-  // Detect text gradients
-  const isTextGradient =
-    textColor &&
-    (textColor.includes('linear-gradient') ||
-      textColor.includes('radial-gradient') ||
-      textColor.includes('conic-gradient'));
+    const isLabelGradient =
+      labelColor &&
+      (labelColor.includes('linear-gradient') ||
+        labelColor.includes('radial-gradient') ||
+        labelColor.includes('conic-gradient'));
 
-  const isLabelGradient =
-    labelColor &&
-    (labelColor.includes('linear-gradient') ||
-      labelColor.includes('radial-gradient') ||
-      labelColor.includes('conic-gradient'));
+    const isDescriptionGradient =
+      descriptionColor &&
+      (descriptionColor.includes('linear-gradient') ||
+        descriptionColor.includes('radial-gradient') ||
+        descriptionColor.includes('conic-gradient'));
 
-  const isDescriptionGradient =
-    descriptionColor &&
-    (descriptionColor.includes('linear-gradient') ||
-      descriptionColor.includes('radial-gradient') ||
-      descriptionColor.includes('conic-gradient'));
+    const isBorderGradient =
+      borderColor &&
+      (borderColor.includes('linear-gradient') ||
+        borderColor.includes('radial-gradient') ||
+        borderColor.includes('conic-gradient'));
 
-  const isBorderGradient =
-    borderColor &&
-    (borderColor.includes('linear-gradient') ||
-      borderColor.includes('radial-gradient') ||
-      borderColor.includes('conic-gradient'));
+    const isBackgroundGradient =
+      (background || gradient || color) &&
+      ((background &&
+        (background.includes('linear-gradient') ||
+          background.includes('radial-gradient') ||
+          background.includes('conic-gradient'))) ||
+        (gradient &&
+          (gradient.includes('linear-gradient') ||
+            gradient.includes('radial-gradient') ||
+            gradient.includes('conic-gradient'))) ||
+        (color &&
+          (color.includes('linear-gradient') ||
+            color.includes('radial-gradient') ||
+            color.includes('conic-gradient'))));
 
-  const isBackgroundGradient =
-    (background || gradient || color) &&
-    ((background &&
-      (background.includes('linear-gradient') ||
-        background.includes('radial-gradient') ||
-        background.includes('conic-gradient'))) ||
-      (gradient &&
-        (gradient.includes('linear-gradient') ||
-          gradient.includes('radial-gradient') ||
-          gradient.includes('conic-gradient'))) ||
-      (color &&
-        (color.includes('linear-gradient') ||
-          color.includes('radial-gradient') ||
-          color.includes('conic-gradient'))));
+    // Build classes
+    const classes = [
+      'dropdown-container',
+      `dropdown-container--${size}`,
+      `dropdown-container--${variant}`,
+      shadow && `dropdown-container--shadow-${shadow}`,
+      hoverEffect && `dropdown-container--hover-${hoverEffect}`,
+      disabled && 'dropdown-container--disabled',
+      isOpen && 'dropdown-container--open',
+      isTextGradient && 'dropdown-container--text-gradient',
+      isLabelGradient && 'dropdown-container--label-gradient',
+      isDescriptionGradient && 'dropdown-container--description-gradient',
+      isBorderGradient && 'dropdown-container--border-gradient',
+      isBackgroundGradient && 'dropdown-container--background-gradient',
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-  // Build classes
-  const classes = [
-    'dropdown-container',
-    `dropdown-container--${size}`,
-    `dropdown-container--${variant}`,
-    shadow && `dropdown-container--shadow-${shadow}`,
-    hoverEffect && `dropdown-container--hover-${hoverEffect}`,
-    disabled && 'dropdown-container--disabled',
-    isOpen && 'dropdown-container--open',
-    isTextGradient && 'dropdown-container--text-gradient',
-    isLabelGradient && 'dropdown-container--label-gradient',
-    isDescriptionGradient && 'dropdown-container--description-gradient',
-    isBorderGradient && 'dropdown-container--border-gradient',
-    isBackgroundGradient && 'dropdown-container--background-gradient',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  // Build component style object with CSS custom properties (match Button pattern)
-  const componentStyle: React.CSSProperties & Record<string, string> = {
-    // Main background: gradient > color > backgroundColor (gradients take precedence)
-    ...(resolvedGradient && {
-      '--dropdown-custom-bg': resolvedGradient,
-      '--dropdown-bg': resolvedGradient,
-    }),
-    ...(resolvedColor &&
-      !resolvedGradient && {
-        '--dropdown-custom-bg': resolvedColor,
-        '--dropdown-bg': resolvedColor,
+    // Build component style object with CSS custom properties (match Button pattern)
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      // Main background: gradient > color > backgroundColor (gradients take precedence)
+      ...(resolvedGradient && {
+        '--dropdown-custom-bg': resolvedGradient,
       }),
-    ...(resolvedBackground &&
-      !resolvedGradient &&
-      !resolvedColor && {
-        '--dropdown-custom-bg': resolvedBackground,
-        '--dropdown-bg': resolvedBackground,
+      ...(resolvedColor &&
+        !resolvedGradient && {
+          '--dropdown-custom-bg': resolvedColor,
+        }),
+      ...(resolvedBackground &&
+        !resolvedGradient &&
+        !resolvedColor && {
+          '--dropdown-custom-bg': resolvedBackground,
+        }),
+
+      // Text and border colors
+      ...(resolvedTextColor && {
+        '--dropdown-custom-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && {
+        '--dropdown-custom-border': resolvedBorderColor,
       }),
 
-    // Text and border colors
-    ...(resolvedTextColor && {
-      '--dropdown-custom-color': resolvedTextColor,
-      '--dropdown-color': resolvedTextColor,
-    }),
-    ...(resolvedBorderColor && {
-      '--dropdown-custom-border': resolvedBorderColor,
-      '--dropdown-border': resolvedBorderColor,
-    }),
+      // Label and description colors
+      ...(resolvedLabelColor && { '--dropdown-custom-label-color': resolvedLabelColor }),
+      ...(resolvedDescriptionColor && {
+        '--dropdown-custom-description-color': resolvedDescriptionColor,
+      }),
 
-    // Label and description colors
-    ...(resolvedLabelColor && { '--dropdown-custom-label-color': resolvedLabelColor }),
-    ...(resolvedDescriptionColor && {
-      '--dropdown-custom-description-color': resolvedDescriptionColor,
-    }),
+      // Option backgrounds
+      ...(resolvedOptionBackground && { '--dropdown-custom-option-bg': resolvedOptionBackground }),
+      ...(resolvedOptionHoverBackground && {
+        '--dropdown-custom-option-hover-bg': resolvedOptionHoverBackground,
+      }),
+      ...(resolvedOptionSelectedBackground && {
+        '--dropdown-custom-option-selected-bg': resolvedOptionSelectedBackground,
+      }),
 
-    // Option backgrounds
-    ...(resolvedOptionBackground && { '--dropdown-custom-option-bg': resolvedOptionBackground }),
-    ...(resolvedOptionHoverBackground && {
-      '--dropdown-custom-option-hover-bg': resolvedOptionHoverBackground,
-    }),
-    ...(resolvedOptionSelectedBackground && {
-      '--dropdown-custom-option-selected-bg': resolvedOptionSelectedBackground,
-    }),
+      // Background patterns
+      ...(backgroundImage && { '--dropdown-custom-background-image': backgroundImage }),
+      ...(backgroundBlend && { '--dropdown-custom-background-blend': backgroundBlend }),
 
-    // Background patterns
-    ...(backgroundImage && { '--dropdown-custom-background-image': backgroundImage }),
-    ...(backgroundBlend && { '--dropdown-custom-background-blend': backgroundBlend }),
+      // Other styling
+      ...(borderRadius && {
+        '--dropdown-custom-border-radius':
+          typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
+      }),
+      ...(shadow && { '--dropdown-custom-shadow': resolveThemeValue(`shadow-${shadow}`)! }),
+      ...(backdropBlur && { '--dropdown-custom-backdrop-blur': 'blur(8px)' }),
+      ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
+    };
 
-    // Other styling
-    ...(borderRadius && {
-      '--dropdown-custom-border-radius':
-        typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
-    }),
-    ...(shadow && { '--dropdown-custom-shadow': shadow }),
-    ...(backdropBlur && { '--dropdown-custom-backdrop-blur': 'blur(8px)' }),
-    ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
-  };
+    // Explicitly merge with user's style prop (user style takes precedence)
+    const containerStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
-  // Explicitly merge with user's style prop (user style takes precedence)
-  const containerStyle = style ? { ...componentStyle, ...style } : componentStyle;
+    // Build list styles
+    const listStyle: React.CSSProperties = {
+      maxHeight,
+      ...(position === 'top' && { bottom: '100%', top: 'auto' }),
+      ...(position === 'left' && { right: '100%', left: 'auto' }),
+      ...(position === 'right' && { left: '100%', right: 'auto' }),
+    };
 
-  // Build list styles
-  const listStyle: React.CSSProperties = {
-    maxHeight,
-    ...(position === 'top' && { bottom: '100%', top: 'auto' }),
-    ...(position === 'left' && { right: '100%', left: 'auto' }),
-    ...(position === 'right' && { left: '100%', right: 'auto' }),
-  };
-
-  return (
-    // the container carries role="combobox", tabIndex, and onKeyDown for full keyboard support
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className={classes}
-      style={containerStyle}
-      tabIndex={disabled ? -1 : 0}
-      onClick={() => {
-        if (!disabled) handleOpenChange(!isOpen);
-      }}
-      onKeyDown={handleKeyDown}
-      ref={containerRef}
-      {...getAriaProps({
-        hasPopup: 'listbox',
-        expanded: isOpen,
-        disabled,
-        role: 'combobox',
-        controls: 'dropdown-list',
-        label: 'Dropdown select',
-      })}
-    >
-      {trigger || (
-        <div className="dropdown-selected">
-          <span>{selectedLabels || <em>{placeholder}</em>}</span>
-          <div className="dropdown-actions">
-            {showOptionCount && (
-              <span className="dropdown-option-count">
-                {filteredOptions.length} option{filteredOptions.length !== 1 ? 's' : ''}
-              </span>
-            )}
-            {loading && (
-              <span className="dropdown-loading" aria-label="Loading options">
-                <div className="dropdown-spinner"></div>
-              </span>
-            )}
-            {error && (
-              <span className="dropdown-error" aria-label="Error loading options" title={error}>
-                ⚠️
-              </span>
-            )}
-            {clearable && value && (
-              <button
-                type="button"
-                className="dropdown-clear"
-                onClick={handleClear}
-                aria-label="Clear selection"
-              >
-                ×
-              </button>
-            )}
-            <i className={`dropdown-chevron ${isOpen ? 'open' : ''}`}>▼</i>
+    return (
+      // the container carries role="combobox", tabIndex, and onKeyDown for full keyboard support
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+      <div
+        className={classes}
+        style={containerStyle}
+        tabIndex={disabled ? -1 : 0}
+        onClick={() => {
+          if (!disabled) handleOpenChange(!isOpen);
+        }}
+        onKeyDown={handleKeyDown}
+        ref={setContainerRef}
+        {...getAriaProps({
+          hasPopup: 'listbox',
+          expanded: isOpen,
+          disabled,
+          role: 'combobox',
+          controls: 'dropdown-list',
+          label: 'Dropdown select',
+        })}
+      >
+        {trigger || (
+          <div className="dropdown-selected">
+            <span>{selectedLabels || <em>{placeholder}</em>}</span>
+            <div className="dropdown-actions">
+              {showOptionCount && (
+                <span className="dropdown-option-count">
+                  {filteredOptions.length} option{filteredOptions.length !== 1 ? 's' : ''}
+                </span>
+              )}
+              {loading && (
+                <span className="dropdown-loading" aria-label="Loading options">
+                  <div className="dropdown-spinner"></div>
+                </span>
+              )}
+              {error && (
+                <span className="dropdown-error" aria-label="Error loading options" title={error}>
+                  ⚠️
+                </span>
+              )}
+              {clearable && value && (
+                <button
+                  type="button"
+                  className="dropdown-clear"
+                  onClick={handleClear}
+                  aria-label="Clear selection"
+                >
+                  ×
+                </button>
+              )}
+              <i className={`dropdown-chevron ${isOpen ? 'open' : ''}`}>▼</i>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {isOpen && (
-        <ul
-          className={`dropdown-list dropdown-list--${position}`}
-          style={listStyle}
-          role="listbox"
-          id="dropdown-list"
-          ref={listRef}
-          aria-multiselectable={multiSelect}
-        >
-          {searchable && (
-            <li className="dropdown-search">
-              <div className="dropdown-search-container">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Search options..."
-                  onClick={(e) => e.stopPropagation()}
-                  aria-label="Search options"
-                  // intentional: lets users type immediately when the searchable dropdown opens
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
-                  autoFocus
-                />
-              </div>
-            </li>
-          )}
+        {isOpen && (
+          <ul
+            className={`dropdown-list dropdown-list--${position}`}
+            style={listStyle}
+            role="listbox"
+            id="dropdown-list"
+            ref={listRef}
+            aria-multiselectable={multiSelect}
+          >
+            {searchable && (
+              <li className="dropdown-search">
+                <div className="dropdown-search-container">
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    placeholder="Search options..."
+                    onClick={(e) => e.stopPropagation()}
+                    aria-label="Search options"
+                    // intentional: lets users type immediately when the searchable dropdown opens
+                    // eslint-disable-next-line jsx-a11y/no-autofocus
+                    autoFocus
+                  />
+                </div>
+              </li>
+            )}
 
-          {filteredOptions.length === 0 ? (
-            <li className="dropdown-no-options">
-              {loading ? 'Loading options...' : error ? `Error: ${error}` : 'No options available'}
-            </li>
-          ) : (
-            <>
-              {optionGroups && optionGroups.length > 0
-                ? // Render grouped options
-                  optionGroups.map((group) => (
-                    <li key={group.value} className="dropdown-group">
-                      <div className="dropdown-group-header">
-                        {group.icon && <span className="dropdown-group-icon">{group.icon}</span>}
-                        <span className="dropdown-group-label">{group.label}</span>
-                        {group.description && (
-                          <span className="dropdown-group-description">{group.description}</span>
-                        )}
-                      </div>
-                      <ul className="dropdown-group-options">
-                        {group.options
-                          .filter(
-                            (opt) =>
-                              !search || opt.label.toLowerCase().includes(search.toLowerCase()),
-                          )
-                          .map((opt, index) => (
-                            // keyboard selection is handled by the combobox container's onKeyDown
-                            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                            <li
-                              key={opt.value}
-                              role="option"
-                              aria-selected={isSelected(opt.value)}
-                              tabIndex={-1}
-                              className={`                              dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
-                                index === focusedIndex ? 'focused' : ''
-                              } ${opt.disabled ? 'disabled' : ''}`}
-                              onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
-                            >
-                              {multiSelect && (
-                                <input
-                                  type="checkbox"
-                                  checked={isSelected(opt.value)}
-                                  readOnly
-                                  tabIndex={-1}
-                                  disabled={opt.disabled}
-                                />
-                              )}
-                              {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
-                              <span className="dropdown-option-content">
-                                <span className="dropdown-option-label">{opt.label}</span>
-                                {opt.description && (
-                                  <span className="dropdown-option-description">
-                                    {opt.description}
-                                  </span>
+            {filteredOptions.length === 0 ? (
+              <li className="dropdown-no-options">
+                {loading
+                  ? 'Loading options...'
+                  : error
+                    ? `Error: ${error}`
+                    : 'No options available'}
+              </li>
+            ) : (
+              <>
+                {optionGroups && optionGroups.length > 0
+                  ? // Render grouped options
+                    optionGroups.map((group) => (
+                      <li key={group.value} className="dropdown-group">
+                        <div className="dropdown-group-header">
+                          {group.icon && <span className="dropdown-group-icon">{group.icon}</span>}
+                          <span className="dropdown-group-label">{group.label}</span>
+                          {group.description && (
+                            <span className="dropdown-group-description">{group.description}</span>
+                          )}
+                        </div>
+                        <ul className="dropdown-group-options">
+                          {group.options
+                            .filter(
+                              (opt) =>
+                                !search || opt.label.toLowerCase().includes(search.toLowerCase()),
+                            )
+                            .map((opt, index) => (
+                              // keyboard selection is handled by the combobox container's onKeyDown
+                              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                              <li
+                                key={opt.value}
+                                role="option"
+                                aria-selected={isSelected(opt.value)}
+                                tabIndex={-1}
+                                className={`                              dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
+                                  index === focusedIndex ? 'focused' : ''
+                                } ${opt.disabled ? 'disabled' : ''}`}
+                                onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
+                              >
+                                {multiSelect && (
+                                  <input
+                                    type="checkbox"
+                                    checked={isSelected(opt.value)}
+                                    readOnly
+                                    tabIndex={-1}
+                                    disabled={opt.disabled}
+                                  />
                                 )}
-                              </span>
-                            </li>
-                          ))}
-                      </ul>
-                    </li>
-                  ))
-                : // Render regular options
-                  filteredOptions.map((opt, index) => (
-                    // keyboard selection is handled by the combobox container's onKeyDown
-                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                    <li
-                      key={opt.value}
-                      role="option"
-                      aria-selected={isSelected(opt.value)}
-                      tabIndex={-1}
-                      className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
-                        index === focusedIndex ? 'focused' : ''
-                      } ${opt.disabled ? 'disabled' : ''}`}
-                      onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
-                    >
-                      {multiSelect && (
-                        <input
-                          type="checkbox"
-                          checked={isSelected(opt.value)}
-                          readOnly
-                          tabIndex={-1}
-                          disabled={opt.disabled}
-                        />
-                      )}
-                      {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
-                      <span className="dropdown-option-content">
-                        <span className="dropdown-option-label">{opt.label}</span>
-                        {opt.description && (
-                          <span className="dropdown-option-description">{opt.description}</span>
+                                {opt.icon && (
+                                  <span className="dropdown-option-icon">{opt.icon}</span>
+                                )}
+                                <span className="dropdown-option-content">
+                                  <span className="dropdown-option-label">{opt.label}</span>
+                                  {opt.description && (
+                                    <span className="dropdown-option-description">
+                                      {opt.description}
+                                    </span>
+                                  )}
+                                </span>
+                              </li>
+                            ))}
+                        </ul>
+                      </li>
+                    ))
+                  : // Render regular options
+                    filteredOptions.map((opt, index) => (
+                      // keyboard selection is handled by the combobox container's onKeyDown
+                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                      <li
+                        key={opt.value}
+                        role="option"
+                        aria-selected={isSelected(opt.value)}
+                        tabIndex={-1}
+                        className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
+                          index === focusedIndex ? 'focused' : ''
+                        } ${opt.disabled ? 'disabled' : ''}`}
+                        onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
+                      >
+                        {multiSelect && (
+                          <input
+                            type="checkbox"
+                            checked={isSelected(opt.value)}
+                            readOnly
+                            tabIndex={-1}
+                            disabled={opt.disabled}
+                          />
                         )}
-                      </span>
-                    </li>
-                  ))}
-            </>
-          )}
+                        {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
+                        <span className="dropdown-option-content">
+                          <span className="dropdown-option-label">{opt.label}</span>
+                          {opt.description && (
+                            <span className="dropdown-option-description">{opt.description}</span>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+              </>
+            )}
 
-          {multiSelect && (
-            <li className="dropdown-footer">
-              {/* Only show Select All when it's actually selecting all available options */}
-              {(!maxSelections || filteredOptions.length <= maxSelections) && (
+            {multiSelect && (
+              <li className="dropdown-footer">
+                {/* Only show Select All when it's actually selecting all available options */}
+                {(!maxSelections || filteredOptions.length <= maxSelections) && (
+                  <button
+                    type="button"
+                    className="dropdown-footer-btn dropdown-footer-btn--select-all"
+                    onClick={handleSelectAll}
+                    disabled={!!(disabled || filteredOptions.length === 0)}
+                    aria-label="Select all options"
+                  >
+                    Select All
+                  </button>
+                )}
+
+                {/* Show Select Top N when there's a selection limit */}
+                {maxSelections && filteredOptions.length > maxSelections && (
+                  <button
+                    type="button"
+                    className="dropdown-footer-btn dropdown-footer-btn--select-top"
+                    onClick={handleSelectAll}
+                    disabled={!!(disabled || filteredOptions.length === 0)}
+                    aria-label={`Select top ${maxSelections} options`}
+                  >
+                    Select Top {maxSelections}
+                  </button>
+                )}
+
+                {/* Random Selector */}
                 <button
                   type="button"
-                  className="dropdown-footer-btn dropdown-footer-btn--select-all"
-                  onClick={handleSelectAll}
+                  className="dropdown-footer-btn dropdown-footer-btn--random"
+                  onClick={handleRandomSelect}
                   disabled={!!(disabled || filteredOptions.length === 0)}
-                  aria-label="Select all options"
+                  aria-label={`Randomly select ${maxSelections || 3} options`}
                 >
-                  Select All
+                  Random {maxSelections || 3}
                 </button>
-              )}
 
-              {/* Show Select Top N when there's a selection limit */}
-              {maxSelections && filteredOptions.length > maxSelections && (
                 <button
                   type="button"
-                  className="dropdown-footer-btn dropdown-footer-btn--select-top"
-                  onClick={handleSelectAll}
-                  disabled={!!(disabled || filteredOptions.length === 0)}
-                  aria-label={`Select top ${maxSelections} options`}
+                  className="dropdown-footer-btn dropdown-footer-btn--clear-all"
+                  onClick={handleClearAll}
+                  disabled={disabled || (Array.isArray(value) ? value.length === 0 : false)}
+                  aria-label="Clear all selections"
                 >
-                  Select Top {maxSelections}
+                  Clear All
                 </button>
-              )}
+                <button
+                  type="button"
+                  className="dropdown-footer-btn dropdown-footer-btn--done"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpenChange(false);
+                  }}
+                  disabled={disabled}
+                  aria-label="Confirm selections"
+                >
+                  Done
+                </button>
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+    );
+  },
+);
 
-              {/* Random Selector */}
-              <button
-                type="button"
-                className="dropdown-footer-btn dropdown-footer-btn--random"
-                onClick={handleRandomSelect}
-                disabled={!!(disabled || filteredOptions.length === 0)}
-                aria-label={`Randomly select ${maxSelections || 3} options`}
-              >
-                Random {maxSelections || 3}
-              </button>
-
-              <button
-                type="button"
-                className="dropdown-footer-btn dropdown-footer-btn--clear-all"
-                onClick={handleClearAll}
-                disabled={disabled || (Array.isArray(value) ? value.length === 0 : false)}
-                aria-label="Clear all selections"
-              >
-                Clear All
-              </button>
-              <button
-                type="button"
-                className="dropdown-footer-btn dropdown-footer-btn--done"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleOpenChange(false);
-                }}
-                disabled={disabled}
-                aria-label="Confirm selections"
-              >
-                Done
-              </button>
-            </li>
-          )}
-        </ul>
-      )}
-    </div>
-  );
-};
+Dropdown.displayName = 'Dropdown';

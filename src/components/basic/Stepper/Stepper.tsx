@@ -25,6 +25,8 @@ export interface StepperProps {
   completedColor?: string;
   errorColor?: string;
   textColor?: string;
+  /** Panel shadow — maps to `--shadow-{level}` theme tokens. */
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   showLabels?: boolean;
   showDescriptions?: boolean;
   clickable?: boolean;
@@ -49,6 +51,7 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
       completedColor,
       errorColor,
       textColor,
+      shadow,
       showLabels = true,
       showDescriptions = false,
       clickable = false,
@@ -102,28 +105,25 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps>(
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedGradient && {
         '--stepper-custom-color': resolvedGradient,
-        '--stepper-color': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--stepper-custom-color': resolvedColor,
-          '--stepper-color': resolvedColor,
         }),
       ...(resolvedActiveColor && {
         '--stepper-custom-active-color': resolvedActiveColor,
-        '--stepper-active-color': resolvedActiveColor,
       }),
       ...(resolvedCompletedColor && {
         '--stepper-custom-completed-color': resolvedCompletedColor,
-        '--stepper-completed-color': resolvedCompletedColor,
       }),
       ...(resolvedErrorColor && {
         '--stepper-custom-error-color': resolvedErrorColor,
-        '--stepper-error-color': resolvedErrorColor,
       }),
       ...(resolvedTextColor && {
         '--stepper-custom-text-color': resolvedTextColor,
-        '--stepper-text-color': resolvedTextColor,
+      }),
+      ...(shadow && {
+        '--stepper-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
       }),
     };
 

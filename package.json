@@ -38,7 +38,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build:types": "tsc --emitDeclarationOnly",
+    "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
     "build:all": "npm run build:types && npm run build",
     "test": "jest",
     "test:ci": "jest --ci --coverage",
@@ -48,7 +48,9 @@
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier . -w",
     "format:check": "prettier . -c",
-    "verify": "npm run type-check && npm run lint && npm run format:check && npm test && npm run build:all",
+    "tokens:generate": "python3 scripts/generate_theme_css.py",
+    "tokens:check": "python3 scripts/check_theme_tokens.py",
+    "verify": "npm run type-check && npm run lint && npm run format:check && npm run tokens:check && npm test && npm run build:all",
     "prepublishOnly": "npm run build:all",
     "prepack": "npm run build:all"
   },
@@ -106,6 +108,7 @@
       "import": "./dist/index.esm.js",
       "require": "./dist/index.js"
     },
+    "./css": "./dist/morphui.css",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },

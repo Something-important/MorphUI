@@ -141,12 +141,12 @@ describe('Slider Component', () => {
 
   // Variants
   describe('Variants', () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'> = [
+    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
       'primary',
       'secondary',
       'success',
       'warning',
-      'error',
+      'danger',
       'info',
     ];
 
@@ -155,6 +155,12 @@ describe('Slider Component', () => {
         const { container } = render(<Slider value={50} variant={variant} />);
         expect(container.querySelector(`.slider-component--${variant}`)).toBeInTheDocument();
       });
+    });
+
+    it("maps deprecated 'error' variant to the danger class", () => {
+      const { container } = render(<Slider value={50} variant="error" />);
+      expect(container.querySelector('.slider-component--danger')).toBeInTheDocument();
+      expect(container.querySelector('.slider-component--error')).not.toBeInTheDocument();
     });
   });
 

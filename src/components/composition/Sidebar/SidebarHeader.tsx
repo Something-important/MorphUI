@@ -79,15 +79,12 @@ export const SidebarHeader = forwardRef<HTMLDivElement, SidebarHeaderProps>(
       // Custom properties for this header
       ...(finalBackgroundColor && {
         '--sidebar-header-custom-bg': finalBackgroundColor,
-        '--sidebar-header-bg': finalBackgroundColor,
       }),
       ...(finalTextColor && {
         '--sidebar-header-custom-text': finalTextColor,
-        '--sidebar-header-text': finalTextColor,
       }),
       ...(finalBorderColor && {
         '--sidebar-header-custom-border': finalBorderColor,
-        '--sidebar-header-border': finalBorderColor,
       }),
       ...(padding && {
         '--sidebar-header-custom-padding': padding,

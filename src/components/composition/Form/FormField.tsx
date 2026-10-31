@@ -1,5 +1,6 @@
 // FormField.tsx
 import React, { forwardRef, useId, isValidElement } from 'react';
+import { resolveThemeValue } from '../../../utils';
 import { Label } from '../../basic/Label/Label';
 import './Form.css';
 
@@ -14,6 +15,16 @@ export interface FormFieldProps {
   helperText?: React.ReactNode;
   /** Marks the label as required (adds the required indicator). */
   required?: boolean;
+  /** Accent for the wrapped control's focus ring / active state (overrides the Form-level accent). */
+  color?: string;
+  /** Text color for the wrapped control. */
+  textColor?: string;
+  /** Border color for the wrapped control. */
+  borderColor?: string;
+  /** Border radius for the wrapped control (numbers are treated as px). */
+  borderRadius?: string | number;
+  /** Shadow level for the wrapped control. */
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   style?: React.CSSProperties;
   /** The single input control this field wraps. */
@@ -28,12 +39,49 @@ type ChildLike = React.ReactElement<{
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   (
-    { label, htmlFor, error, helperText, required = false, className = '', style, children },
+    {
+      label,
+      htmlFor,
+      error,
+      helperText,
+      required = false,
+      color,
+      textColor,
+      borderColor,
+      borderRadius,
+      shadow,
+      className = '',
+      style,
+      children,
+    },
     ref,
   ) => {
     const autoId = useId();
     const helperId = `${autoId}-helper`;
     const errorId = `${autoId}-error`;
+
+    // ---- Theme resolution (design model) ----
+    // Field-level --form-custom-* writes sit closer to the control than the
+    // Form root's, so they win the inheritance ladder for this field only.
+    const resolvedColor = resolveThemeValue(color);
+    const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedBorderColor = resolveThemeValue(borderColor);
+    const resolvedShadow = shadow !== undefined ? resolveThemeValue(`shadow-${shadow}`) : undefined;
+
+    // Component style: ONLY the --form-custom-* channel is written here.
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      ...(resolvedColor && { '--form-custom-accent': resolvedColor }),
+      ...(resolvedTextColor && { '--form-custom-text-color': resolvedTextColor }),
+      ...(resolvedBorderColor && { '--form-custom-border': resolvedBorderColor }),
+      ...(borderRadius !== undefined && {
+        '--form-custom-border-radius':
+          typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
+      }),
+      ...(resolvedShadow && { '--form-custom-shadow': resolvedShadow }),
+    };
+
+    // User style wins over the theme channel (merged last).
+    const mergedStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
     const child = React.Children.only(children) as ChildLike;
     const childId = child.props?.id;
@@ -65,7 +113,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       .join(' ');
 
     return (
-      <div ref={ref} className={classes} style={style}>
+      <div ref={ref} className={classes} style={mergedStyle}>
         {label && (
           <Label htmlFor={fieldId} required={required}>
             {label}

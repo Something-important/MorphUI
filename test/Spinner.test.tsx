@@ -72,12 +72,12 @@ describe('Spinner Component', () => {
 
   // Variants
   describe('Variants', () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'> = [
+    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
       'primary',
       'secondary',
       'success',
       'warning',
-      'error',
+      'danger',
       'info',
     ];
 
@@ -86,6 +86,12 @@ describe('Spinner Component', () => {
         const { container } = render(<Spinner variant={variant} />);
         expect(container.querySelector(`.spinner-component--${variant}`)).toBeInTheDocument();
       });
+    });
+
+    it("maps deprecated 'error' variant to the danger class", () => {
+      const { container } = render(<Spinner variant="error" />);
+      expect(container.querySelector('.spinner-component--danger')).toBeInTheDocument();
+      expect(container.querySelector('.spinner-component--error')).not.toBeInTheDocument();
     });
   });
 

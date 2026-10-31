@@ -194,11 +194,9 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       // Text and border colors
       ...(resolvedTextColor && {
         '--accordion-custom-color': resolvedTextColor,
-        '--accordion-color': resolvedTextColor,
       }),
       ...(resolvedBorderColor && {
         '--accordion-custom-border': resolvedBorderColor,
-        '--accordion-border': resolvedBorderColor,
       }),
 
       // Header and content backgrounds
@@ -219,7 +217,6 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       // Animation and dimensions
       ...(maxHeight && { '--accordion-max-height': maxHeight }),
       ...(animationDuration && { '--accordion-animation-duration': `${animationDuration}ms` }),
-      ...(animationDuration && { '--accordion-animation-easing': 'var(--ease-in-out)' }),
 
       // Background patterns
       ...(backgroundPattern && { '--accordion-custom-bg-pattern': backgroundPattern }),

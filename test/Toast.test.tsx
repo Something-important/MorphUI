@@ -73,7 +73,7 @@ describe('Toast (standalone)', () => {
   });
 
   it('applies variant classes', () => {
-    const variants = ['success', 'warning', 'error', 'info', 'primary', 'secondary'] as const;
+    const variants = ['success', 'warning', 'danger', 'info', 'primary', 'secondary'] as const;
     variants.forEach((variant) => {
       const { unmount } = render(
         <Toast open variant={variant}>
@@ -84,6 +84,17 @@ describe('Toast (standalone)', () => {
       expect(root).toHaveClass(`toast-component--${variant}`);
       unmount();
     });
+  });
+
+  it("maps deprecated 'error' variant to the danger class", () => {
+    render(
+      <Toast open variant="error">
+        deprecated
+      </Toast>,
+    );
+    const root = screen.getByText('deprecated').closest('.toast-component');
+    expect(root).toHaveClass('toast-component--danger');
+    expect(root).not.toHaveClass('toast-component--error');
   });
 
   it('applies size classes', () => {
@@ -395,7 +406,7 @@ describe('ToastProvider / useToast', () => {
       'toast-component--success',
     );
     expect(screen.getByText('Error toast').closest('.toast-component')).toHaveClass(
-      'toast-component--error',
+      'toast-component--danger',
     );
     expect(screen.getByText('Warning toast').closest('.toast-component')).toHaveClass(
       'toast-component--warning',

@@ -11,7 +11,7 @@ A flexible, adaptable React + TypeScript UI component library for modern web app
 - 🧪 **Type Safe**: Full TypeScript support with comprehensive type definitions
 - ♿ **Accessible**: Built following WCAG guidelines and accessibility best practices
 - 📚 **Storybook**: Interactive documentation and component playground
-- 🛠️ **Modern Build**: Rollup-based bundling with tree-shaking support
+- 🛠️ **Modern Build**: Rollup-based ESM/CJS builds — the JS is tree-shakeable (`sideEffects` is limited to CSS), and all styles ship as one extracted stylesheet (`morphui-react/css`)
 
 ## 🚀 Installation
 
@@ -33,11 +33,14 @@ The package is in active pre-1.0 development — APIs may change between version
 ## 📖 Quick Start
 
 ```tsx
-import { Button, ThemeProvider, defaultTheme } from 'morphui-react';
+import { Button, ThemeProvider, lightTheme } from 'morphui-react';
+// Component styles — import once, and load it BEFORE your own stylesheets
+// so your CSS can override ours without !important.
+import 'morphui-react/dist/morphui.css';
 
 function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={lightTheme} dataTheme="light">
       <Button variant="primary" size="lg">
         Get Started
       </Button>
@@ -46,23 +49,51 @@ function App() {
 }
 ```
 
+The built-in presets are exported as `lightTheme`, `darkTheme`, `warmTheme`, `coolTheme` and `purpleTheme` (also grouped in the `themes` object).
+
 ## 🎨 Theming
 
-MorphUI uses CSS custom properties for flexible theming:
+MorphUI uses CSS custom properties for flexible theming. Every component reads tokens (`--color-*`, `--spacing-*`, `--z-*`, …) with sensible fallbacks, so three override layers are available, in increasing precedence:
+
+1. **Global tokens** — override via `ThemeProvider` (or plain CSS on `:root`)
+2. **Per-instance props** — `color`, `gradient`, `textColor`, `borderColor`, `shadow`… accept a literal (`"#ff6b6b"`), a CSS var (`"--color-primary"`) or a theme key (`"color-primary"`)
+3. **Escape hatches** — `style` (always wins) and `className` (component styles live in `@layer`s, so your unlayered CSS always wins — we never ship `!important` against you)
 
 ```tsx
-import { ThemeProvider } from 'morphui-react';
+import { ThemeProvider, createTheme } from 'morphui-react';
 
+// Structured tokens (hover/active shades are derived automatically)
+const brand = createTheme({
+  colors: { primary: '#ff6b6b', success: '#51cf66' },
+  radii: { lg: '12px' },
+  zIndex: { modal: '1050' },
+  // raw vars for anything else
+  vars: { 'switch-width-md': '44px' },
+});
+
+// Or a flat partial override on top of a preset:
 const customTheme = {
   'color-primary': '#ff6b6b',
   'color-success': '#51cf66',
   'border-radius': '12px',
 };
 
-<ThemeProvider theme={customTheme}>{/* Your app components */}</ThemeProvider>;
+<ThemeProvider theme={customTheme} baseTheme={brand}>
+  {/* Your app components */}
+</ThemeProvider>;
 ```
 
+`ThemeProvider` merges `baseTheme` + `theme`, cleans up stale variables when the theme changes, can scope to a subtree via the `target` prop, sets a `data-theme` attribute, and exposes the active theme through `useTheme()`.
+
 See the [Theme Showcase story](https://something-important.github.io/MorphUI/?path=/story/theme-theme-showcase--theme-showcase) for a live preview of all built-in themes.
+
+### Token single source of truth
+
+The theme presets (`src/components/theme/themes/*.ts`) are the **only** place tokens are defined. `theme.css` is generated from `lightTheme` and is never edited by hand. To add or change a token:
+
+1. Add the key to **all five** presets (`light`, `dark`, `cool`, `warm`, `purple`) — a token missing from one preset becomes a stale variable when users switch themes
+2. Regenerate: `npm run tokens:generate`
+3. CI enforces both rules with `npm run tokens:check` (preset alignment + CSS↔preset equality) and a regeneration diff — a PR that hand-edits `theme.css` or forgets to regenerate will fail
 
 ## 🔔 Toast Notifications
 
@@ -86,7 +117,7 @@ function App() {
 }
 ```
 
-Features: six variants (`success` / `error` / `warning` / `info` / `primary` / `secondary`), six screen positions, auto-dismiss with **pause-on-hover**, stacked viewport with `maxToasts`, optional action buttons, `duration: 0` for sticky toasts, and full theming support. A presentational `Toast` component is also exported for direct use without a provider.
+Features: six variants (`success` / `danger` / `warning` / `info` / `primary` / `secondary`; `error` still works as a deprecated alias of `danger`), six screen positions, auto-dismiss with **pause-on-hover**, stacked viewport with `maxToasts`, optional action buttons, `duration: 0` for sticky toasts, and full theming support. A presentational `Toast` component is also exported for direct use without a provider.
 
 ## 📚 Documentation
 
@@ -96,7 +127,7 @@ Features: six variants (`success` / `error` / `warning` / `info` / `primary` / `
 
 ## 🧪 Testing
 
-MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **28 test suites / 1,250+ tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
+MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **37 test suites / 1,600+ tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
 
 ```bash
 # Run all tests
@@ -148,6 +179,7 @@ npm run verify
 - **ESM**: `dist/index.esm.js` - Modern ES modules
 - **CommonJS**: `dist/index.js` - Node.js compatibility
 - **Types**: `dist/index.d.ts` - TypeScript declarations
+- **Styles**: `dist/morphui.css` - all component styles (also reachable as `morphui-react/css`)
 - **Source Maps**: For debugging and development
 
 ## 🤝 Contributing

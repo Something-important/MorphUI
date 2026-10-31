@@ -33,6 +33,45 @@ export interface ThemeTokens {
 }
 
 /**
+ * Extended token families accepted by createTheme.
+ * Each family maps to a CSS custom-property prefix, mirroring the built-in
+ * theme presets (which cover ~40 families).
+ */
+export interface ExtendedThemeTokens extends Partial<ThemeTokens> {
+  /** -> --font-size-{key} */
+  fontSizes?: Record<string, string>;
+  /** -> --font-weight-{key} */
+  fontWeights?: Record<string, string>;
+  /** -> --line-height-{key} */
+  lineHeights?: Record<string, string>;
+  /** -> --letter-spacing-{key} */
+  letterSpacings?: Record<string, string>;
+  /** -> --border-radius-{key} */
+  radii?: Record<string, string>;
+  /** -> --z-{key} */
+  zIndex?: Record<string, string>;
+  /** -> --backdrop-blur-{key} */
+  backdropBlur?: Record<string, string>;
+  /** -> --duration-{key} */
+  durations?: Record<string, string>;
+  /** -> --ease-{key} */
+  easings?: Record<string, string>;
+  /** -> --opacity-{key} */
+  opacities?: Record<string, string>;
+  /** -> --transform-{key} */
+  transforms?: Record<string, string>;
+  /** -> --text-decoration-{key} */
+  textDecorations?: Record<string, string>;
+  /**
+   * Raw CSS custom properties. Keys may be passed with or without the
+   * leading `--` (e.g. `{ 'color-primary': '#0070f3' }` or
+   * `{ '--color-primary': '#0070f3' }`). Highest precedence: merged last,
+   * so it can override anything generated from the structured families.
+   */
+  vars?: Record<string, string>;
+}
+
+/**
  * Resolves a theme value to the appropriate CSS format
  *
  * @param value - The value to resolve (CSS color, CSS variable, or theme key)
@@ -45,6 +84,11 @@ export interface ThemeTokens {
  */
 export const resolveThemeValue = (value: string | undefined): string | undefined => {
   if (!value) return undefined;
+
+  // Already a complete CSS var() reference — pass through untouched
+  if (value.startsWith('var(')) {
+    return value;
+  }
 
   // Check if it's a CSS value (starts with #, rgb, hsl, or is a complete gradient)
   if (
@@ -72,16 +116,22 @@ export const resolveThemeValue = (value: string | undefined): string | undefined
 /**
  * Creates a complete theme object with CSS custom properties
  *
+ * Supports every token family used by the built-in presets, plus a raw
+ * `vars` escape hatch for any key the structured families don't cover.
+ *
  * @param tokens - Theme tokens (colors, spacing, etc.)
  * @returns Object with CSS custom properties ready for injection
  *
  * @example
  * const theme = createTheme({
  *   colors: { primary: '#0070f3', success: '#10b981' },
- *   spacing: { sm: '0.5rem', md: '1rem' }
+ *   spacing: { sm: '0.5rem', md: '1rem' },
+ *   radii: { lg: '12px' },
+ *   zIndex: { modal: '1050' },
+ *   vars: { 'switch-width-md': '44px' },
  * });
  */
-export const createTheme = (tokens: Partial<ThemeTokens>): Record<string, string> => {
+export const createTheme = (tokens: ExtendedThemeTokens): Record<string, string> => {
   const theme: Record<string, string> = {};
 
   // Add colors
@@ -126,6 +176,38 @@ export const createTheme = (tokens: Partial<ThemeTokens>): Record<string, string
   if (tokens.typography) {
     Object.entries(tokens.typography).forEach(([key, value]) => {
       theme[`--font-${key}`] = value;
+    });
+  }
+
+  // Extended families (mirroring the built-in presets)
+  const families: Array<[Record<string, string> | undefined, string]> = [
+    [tokens.fontSizes, '--font-size-'],
+    [tokens.fontWeights, '--font-weight-'],
+    [tokens.lineHeights, '--line-height-'],
+    [tokens.letterSpacings, '--letter-spacing-'],
+    [tokens.radii, '--border-radius-'],
+    [tokens.zIndex, '--z-'],
+    [tokens.backdropBlur, '--backdrop-blur-'],
+    [tokens.durations, '--duration-'],
+    [tokens.easings, '--ease-'],
+    [tokens.opacities, '--opacity-'],
+    [tokens.transforms, '--transform-'],
+    [tokens.textDecorations, '--text-decoration-'],
+  ];
+
+  families.forEach(([family, prefix]) => {
+    if (family) {
+      Object.entries(family).forEach(([key, value]) => {
+        theme[`${prefix}${key}`] = value;
+      });
+    }
+  });
+
+  // Raw vars escape hatch — merged last so it wins over the families above
+  if (tokens.vars) {
+    Object.entries(tokens.vars).forEach(([key, value]) => {
+      const name = key.startsWith('--') ? key : `--${key}`;
+      theme[name] = value;
     });
   }
 

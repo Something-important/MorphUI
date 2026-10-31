@@ -4,7 +4,15 @@ import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Slider.css';
 
 export type SliderSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type SliderVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+export type SliderVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  /** @deprecated use 'danger' — kept for backward compatibility */
+  | 'error';
 
 export interface SliderProps {
   // Value
@@ -28,6 +36,8 @@ export interface SliderProps {
   gradient?: string;
   trackColor?: string;
   thumbColor?: string;
+  /** Track/thumb shadow — maps to `--shadow-{level}` theme tokens. */
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
 
   // Features
   label?: string;
@@ -70,6 +80,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       gradient,
       trackColor,
       thumbColor,
+      shadow,
 
       // Features
       label,
@@ -294,10 +305,11 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
     // Generate marks
     const marksArray = Array.isArray(marks) ? marks : marks ? [] : [];
 
-    // Classes
+    // Classes ('error' is the deprecated alias of 'danger')
+    const variantClass = variant === 'error' ? 'danger' : variant;
     const classes = [
       'slider-component',
-      `slider-component--${variant}`,
+      `slider-component--${variantClass}`,
       `slider-component--${size}`,
       range && 'slider-component--range',
       disabled && 'slider-component--disabled',
@@ -312,20 +324,19 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       // Color: gradient > color (gradients take precedence)
       ...(resolvedGradient && {
         '--slider-custom-color': resolvedGradient,
-        '--slider-color': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--slider-custom-color': resolvedColor,
-          '--slider-color': resolvedColor,
         }),
       ...(resolvedTrackColor && {
         '--slider-custom-track-color': resolvedTrackColor,
-        '--slider-track-color': resolvedTrackColor,
       }),
       ...(resolvedThumbColor && {
         '--slider-custom-thumb-color': resolvedThumbColor,
-        '--slider-thumb-color': resolvedThumbColor,
+      }),
+      ...(shadow && {
+        '--slider-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
       }),
     };
 

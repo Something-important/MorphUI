@@ -4,7 +4,15 @@ import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Progress.css';
 
 export type ProgressSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type ProgressVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+export type ProgressVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  /** @deprecated use 'danger' — kept for backward compatibility */
+  | 'error';
 export type ProgressType = 'linear' | 'circular';
 
 export interface ProgressProps {
@@ -89,10 +97,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         resolvedGradient.includes('radial-gradient') ||
         resolvedGradient.includes('conic-gradient'));
 
-    // Classes
+    // Classes ('error' is the deprecated alias of 'danger')
+    const variantClass = variant === 'error' ? 'danger' : variant;
     const classes = [
       'progress-component',
-      `progress-component--${variant}`,
+      `progress-component--${variantClass}`,
       `progress-component--${size}`,
       `progress-component--${type}`,
       isIndeterminate && 'progress-component--indeterminate',
@@ -109,19 +118,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       // Color: gradient > color (gradients take precedence)
       ...(resolvedGradient && {
         '--progress-custom-color': resolvedGradient,
-        '--progress-color': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--progress-custom-color': resolvedColor,
-          '--progress-color': resolvedColor,
         }),
       ...(resolvedBackgroundColor && {
         '--progress-custom-bg': resolvedBackgroundColor,
-        '--progress-bg': resolvedBackgroundColor,
-      }),
-      ...(percentage !== undefined && {
-        '--progress-value': `${percentage}%`,
       }),
     };
 

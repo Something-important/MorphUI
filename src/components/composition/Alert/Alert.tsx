@@ -227,35 +227,29 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       // Background: backgroundGradient > gradient > backgroundColor > color (gradients take precedence)
       ...(resolvedBackgroundGradient && {
         '--alert-custom-bg': resolvedBackgroundGradient,
-        '--alert-bg': resolvedBackgroundGradient,
       }),
       ...(resolvedGradient &&
         !resolvedBackgroundGradient && {
           '--alert-custom-bg': resolvedGradient,
-          '--alert-bg': resolvedGradient,
         }),
       ...(resolvedBackgroundColor &&
         !resolvedBackgroundGradient &&
         !resolvedGradient && {
           '--alert-custom-bg': resolvedBackgroundColor,
-          '--alert-bg': resolvedBackgroundColor,
         }),
       ...(resolvedColor &&
         !resolvedBackgroundGradient &&
         !resolvedGradient &&
         !resolvedBackgroundColor && {
           '--alert-custom-bg': resolvedColor,
-          '--alert-bg': resolvedColor,
         }),
 
       // Text and border colors
       ...(resolvedTextColor && {
         '--alert-custom-color': resolvedTextColor,
-        '--alert-color': resolvedTextColor,
       }),
       ...(resolvedBorderColor && {
         '--alert-custom-border': resolvedBorderColor,
-        '--alert-border': resolvedBorderColor,
       }),
 
       // Other styling

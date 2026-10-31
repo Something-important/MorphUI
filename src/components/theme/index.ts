@@ -6,7 +6,12 @@
  */
 
 // Theme Provider
-export { ThemeProvider } from './ThemeProvider';
+export {
+  ThemeProvider,
+  useTheme,
+  useThemeOptional,
+  type ThemeProviderProps,
+} from './ThemeProvider';
 
 // Built-in Themes
 export {
@@ -39,4 +44,5 @@ export {
   type ThemeColors,
   type ThemeGradients,
   type ThemeTokens,
+  type ExtendedThemeTokens,
 } from '../../utils/theme';

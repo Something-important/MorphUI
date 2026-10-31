@@ -100,6 +100,12 @@ export const warmTheme = {
   'gradient-danger': 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)',
   'gradient-info': 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
 
+  'gradient-sunset': 'linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)',
+  'gradient-ocean': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  'gradient-forest': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+  'gradient-sunrise': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+  'gradient-purple': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+  'gradient-gold': 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
   // Typography - Font Families
   'font-family': 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   'font-family-mono': 'JetBrains Mono, Fira Code, Consolas, monospace',

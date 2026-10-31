@@ -67,19 +67,15 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedColor && {
         '--breadcrumb-custom-color': resolvedColor,
-        '--breadcrumb-color': resolvedColor,
       }),
       ...(resolvedTextColor && {
         '--breadcrumb-custom-text-color': resolvedTextColor,
-        '--breadcrumb-text-color': resolvedTextColor,
       }),
       ...(resolvedActiveColor && {
         '--breadcrumb-custom-active-color': resolvedActiveColor,
-        '--breadcrumb-active-color': resolvedActiveColor,
       }),
       ...(resolvedSeparatorColor && {
         '--breadcrumb-custom-separator-color': resolvedSeparatorColor,
-        '--breadcrumb-separator-color': resolvedSeparatorColor,
       }),
     };
 

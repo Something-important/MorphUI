@@ -30,7 +30,11 @@ export interface PaginationProps {
   variant?: PaginationVariant;
   size?: PaginationSize;
   color?: string;
+  /** Container background gradient — takes precedence over any background color. */
+  gradient?: string;
   textColor?: string;
+  /** Container shadow — maps to `--shadow-{level}` theme tokens. */
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
 
   // Accessibility
   ariaLabel?: string;
@@ -121,6 +125,8 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       size = 'md',
       color,
       textColor,
+      gradient,
+      shadow,
 
       // Accessibility
       ariaLabel,
@@ -165,6 +171,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
     // Resolve theme values
     const resolvedColor = resolveThemeValue(color);
     const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedGradient = resolveThemeValue(gradient);
 
     // Handle page change
     const handlePageChange = (newPage: number) => {
@@ -201,13 +208,17 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
 
     // Build component style object with CSS custom properties (match Button pattern)
     const componentStyle: React.CSSProperties & Record<string, string> = {
+      ...(resolvedGradient && {
+        '--pagination-custom-bg': resolvedGradient,
+      }),
       ...(resolvedColor && {
         '--pagination-custom-color': resolvedColor,
-        '--pagination-color': resolvedColor,
       }),
       ...(resolvedTextColor && {
         '--pagination-custom-text-color': resolvedTextColor,
-        '--pagination-text-color': resolvedTextColor,
+      }),
+      ...(shadow && {
+        '--pagination-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
       }),
     };
 

@@ -1,48 +1,114 @@
-/* Form / FormField */
+/* MorphUI cascade layers — order declared in theme.css. */
+@layer morphui.base, morphui.interaction, morphui.state, morphui.feature, morphui.a11y;
 
-.form-component {
-  display: flex;
-  flex-direction: column;
-  gap: var(--form-gap, 16px);
-  width: 100%;
+@layer morphui.base {
+  /* Form / FormField */
+
+  .form-component {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-gap, 16px);
+    width: 100%;
+    color: var(--form-custom-text-color, var(--form-text-color, var(--color-text, #111827)));
+    background: var(--form-custom-bg, transparent);
+    border-radius: var(--form-custom-border-radius, var(--form-border-radius, 0px));
+    box-shadow: var(--form-custom-shadow, var(--form-shadow, none));
+  }
+
+  /* Variant classes own the --form-* default channel (Button pattern).
+     Priority ladder (low -> high):
+     var(--token, #hex) < these defaults < --form-custom-* (instance theme
+     props, written on the root by TSX) < style prop < className. */
+
+  .form-component--primary {
+    --form-accent: var(--color-primary, #0070f3);
+    --form-border: var(--color-border, #d1d5db);
+  }
+
+  .form-component--secondary {
+    --form-accent: var(--color-secondary, #6b7280);
+    --form-border: var(--color-border, #d1d5db);
+  }
+
+  .form-component--default {
+    --form-accent: var(--color-border-focus, #3b82f6);
+    --form-border: var(--color-border, #d1d5db);
+  }
+
+  .form-component--sm {
+    --form-gap: 12px;
+  }
+
+  .form-component--md {
+    --form-gap: 16px;
+  }
+
+  .form-component--lg {
+    --form-gap: 24px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .form-field > .label-component {
+    font-weight: 500;
+  }
+
+  /* The form/field theme channels cascade into the wrapped controls.
+     Selectors are kept at (0,1,1) specificity on purpose so control-level
+     variant classes (e.g. Input's `.input-component--primary`) still win the
+     cascade, and only the default-channel fallbacks are replaced. The vars
+     resolve either from this field's own theme props (FormField) or from the
+     inherited Form root writes. */
+
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    border-color: var(--form-custom-border, var(--form-border, var(--color-border, #d1d5db)));
+    border-radius: var(
+      --form-custom-border-radius,
+      var(--form-border-radius, var(--border-radius-md, 6px))
+    );
+    color: var(--form-custom-text-color, var(--form-text-color, var(--color-text-primary, #333)));
+  }
+
+  .form-field__helper {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted, #6b7280);
+    line-height: 1.25;
+  }
+
+  .form-field__error {
+    font-size: 0.8125rem;
+    color: var(--color-danger, #dc2626);
+    line-height: 1.25;
+    font-weight: 500;
+  }
 }
 
-.form-component--sm {
-  --form-gap: 12px;
+@layer morphui.interaction {
+  /* The form accent drives field focus states. border-color is safe for every
+     control (borderless controls stay borderless); the ring only targets
+     controls that already render one (.input-component) so hidden/native
+     inputs are untouched. */
+
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus {
+    border-color: var(--form-custom-accent, var(--form-accent, var(--color-primary)));
+  }
+
+  .form-field .input-component:focus {
+    box-shadow: 0 0 0 3px var(--form-custom-accent, var(--form-accent, rgba(0, 112, 243, 0.1)));
+  }
 }
 
-.form-component--md {
-  --form-gap: 16px;
-}
-
-.form-component--lg {
-  --form-gap: 24px;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-}
-
-.form-field > .label-component {
-  font-weight: 500;
-}
-
-.form-field__helper {
-  font-size: 0.8125rem;
-  color: var(--color-text-muted, #6b7280);
-  line-height: 1.25;
-}
-
-.form-field__error {
-  font-size: 0.8125rem;
-  color: var(--color-danger, #dc2626);
-  line-height: 1.25;
-  font-weight: 500;
-}
-
-.form-field--error > .label-component {
-  color: var(--color-danger, #dc2626);
+@layer morphui.state {
+  .form-field--error > .label-component {
+    color: var(--color-danger, #dc2626);
+  }
 }

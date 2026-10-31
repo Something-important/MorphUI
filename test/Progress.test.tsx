@@ -90,12 +90,12 @@ describe('Progress Component', () => {
 
   // Variants
   describe('Variants', () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'> = [
+    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
       'primary',
       'secondary',
       'success',
       'warning',
-      'error',
+      'danger',
       'info',
     ];
 
@@ -104,6 +104,12 @@ describe('Progress Component', () => {
         const { container } = render(<Progress value={50} variant={variant} />);
         expect(container.querySelector(`.progress-component--${variant}`)).toBeInTheDocument();
       });
+    });
+
+    it("maps deprecated 'error' variant to the danger class", () => {
+      const { container } = render(<Progress value={50} variant="error" />);
+      expect(container.querySelector('.progress-component--danger')).toBeInTheDocument();
+      expect(container.querySelector('.progress-component--error')).not.toBeInTheDocument();
     });
   });
 

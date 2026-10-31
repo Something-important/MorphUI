@@ -230,12 +230,10 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       // Main background: gradient > color (gradients take precedence)
       ...(resolvedGradient && {
         '--popover-custom-bg': resolvedGradient,
-        '--popover-bg': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--popover-custom-bg': resolvedColor,
-          '--popover-bg': resolvedColor,
         }),
 
       // Text colors and gradients
@@ -244,7 +242,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       ...(resolvedTextColor &&
         !isTextGradient && {
           '--popover-custom-text-color': resolvedTextColor,
-          '--popover-color': resolvedTextColor,
         }),
 
       // Border colors and gradients
@@ -253,7 +250,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       ...(resolvedBorderColor &&
         !isBorderGradient && {
           '--popover-custom-border-color': resolvedBorderColor,
-          '--popover-border': resolvedBorderColor,
         }),
 
       // Other styling

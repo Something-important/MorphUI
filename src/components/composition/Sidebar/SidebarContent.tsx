@@ -78,14 +78,8 @@ export const SidebarContent = forwardRef<HTMLDivElement, SidebarContentProps>(
     // Component style object
     const componentStyle: React.CSSProperties = {
       // Custom properties for this content area
-      ...(finalBackgroundColor && {
-        '--sidebar-content-custom-bg': finalBackgroundColor,
-        '--sidebar-content-bg': finalBackgroundColor,
-      }),
-      ...(finalTextColor && {
-        '--sidebar-content-custom-text': finalTextColor,
-        '--sidebar-content-text': finalTextColor,
-      }),
+      ...(finalBackgroundColor && { '--sidebar-content-custom-bg': finalBackgroundColor }),
+      ...(finalTextColor && { '--sidebar-content-custom-text': finalTextColor }),
       ...(padding && {
         '--sidebar-content-custom-padding': padding,
       }),

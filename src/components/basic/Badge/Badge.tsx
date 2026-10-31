@@ -84,15 +84,12 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedColor && {
         '--badge-custom-bg': resolvedColor,
-        '--badge-bg': resolvedColor, // Override variant color
       }),
       ...(resolvedTextColor && {
         '--badge-custom-color': resolvedTextColor,
-        '--badge-color': resolvedTextColor, // Override variant color
       }),
       ...(resolvedBorderColor && {
         '--badge-custom-border': resolvedBorderColor,
-        '--badge-border': resolvedBorderColor, // Override variant color
       }),
     };
 

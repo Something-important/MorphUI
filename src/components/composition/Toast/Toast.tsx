@@ -12,7 +12,15 @@ import React, {
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Toast.css';
 
-export type ToastVariant = 'success' | 'warning' | 'error' | 'info' | 'primary' | 'secondary';
+export type ToastVariant =
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'primary'
+  | 'secondary'
+  /** @deprecated use 'danger' — kept for backward compatibility */
+  | 'error';
 
 export type ToastPosition =
   | 'top-left'
@@ -246,6 +254,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
       if (!showIcon) return null;
       const icons: Record<ToastVariant, string> = {
         success: '✓',
+        danger: '×',
         error: '×',
         warning: '!',
         info: 'i',
@@ -258,10 +267,11 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
     const defaultIcon = getDefaultIcon();
     const message = description ?? children;
 
-    // Classes
+    // Classes ('error' is the deprecated alias of 'danger')
+    const variantClass = variant === 'error' ? 'danger' : variant;
     const classes = [
       'toast-component',
-      `toast-component--${variant}`,
+      `toast-component--${variantClass}`,
       `toast-component--${size}`,
       `toast-component--${animation}`,
       isOpen && !isExiting && 'toast-component--open',
@@ -317,7 +327,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
         id={id}
         className={classes}
         style={mergedStyle}
-        role={variant === 'error' ? 'alert' : 'status'}
+        role={variant === 'error' || variant === 'danger' ? 'alert' : 'status'}
         onMouseEnter={(event) => {
           if (pauseOnHover) pauseTimerRef.current?.();
           onMouseEnter?.(event);
@@ -420,6 +430,12 @@ export interface ToastFn {
     description?: React.ReactNode,
     options?: Partial<Omit<ToastOptions, 'variant' | 'title' | 'description'>>,
   ) => string;
+  danger: (
+    title: React.ReactNode,
+    description?: React.ReactNode,
+    options?: Partial<Omit<ToastOptions, 'variant' | 'title' | 'description'>>,
+  ) => string;
+  /** @deprecated use danger() */
   error: (
     title: React.ReactNode,
     description?: React.ReactNode,
@@ -525,7 +541,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         fn({ ...options, title, description, variant });
 
     fn.success = shortcut('success');
-    fn.error = shortcut('error');
+    fn.danger = shortcut('danger');
+    /** @deprecated use toast.danger() */
+    fn.error = shortcut('danger');
     fn.warning = shortcut('warning');
     fn.info = shortcut('info');
     return fn;

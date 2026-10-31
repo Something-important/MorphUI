@@ -79,11 +79,9 @@ export const SidebarSection = forwardRef<HTMLDivElement, SidebarSectionProps>(
       // Custom properties for this section
       ...(finalBackgroundColor && {
         '--sidebar-section-custom-bg': finalBackgroundColor,
-        '--sidebar-section-bg': finalBackgroundColor,
       }),
       ...(finalTextColor && {
         '--sidebar-section-custom-text': finalTextColor,
-        '--sidebar-section-text': finalTextColor,
       }),
       ...(padding && {
         '--sidebar-section-custom-padding': padding,

@@ -300,22 +300,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       // Gradients take precedence over colors
       ...(resolvedGradient && {
         '--input-custom-bg': resolvedGradient,
-        '--input-bg': resolvedGradient, // Override variant color
       }),
       // Colors only if no gradient
       ...(resolvedColor &&
         !resolvedGradient && {
           '--input-custom-bg': resolvedColor,
-          '--input-bg': resolvedColor, // Override variant color
         }),
       // Text and border colors
       ...(resolvedTextColor && {
         '--input-custom-color': resolvedTextColor,
-        '--input-color': resolvedTextColor, // Override variant color
       }),
       ...(resolvedBorderColor && {
         '--input-custom-border': resolvedBorderColor,
-        '--input-border': resolvedBorderColor, // Override variant color
       }),
       // Other styling properties
       ...(borderRadius && {

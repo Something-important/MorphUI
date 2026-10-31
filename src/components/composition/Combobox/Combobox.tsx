@@ -1,5 +1,6 @@
 // Combobox.tsx
 import React, { forwardRef, useState, useRef, useId, useMemo, useCallback, useEffect } from 'react';
+import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Combobox.css';
 
 export interface ComboboxOption {
@@ -34,10 +35,24 @@ export interface ComboboxProps {
   disabled?: boolean;
   clearable?: boolean;
   ariaLabel?: string;
+  /** ID of the element that describes the combobox input. */
+  ariaDescribedBy?: string;
   loadingMessage?: React.ReactNode;
   emptyMessage?: React.ReactNode;
   variant?: ComboboxVariant;
   size?: ComboboxSize;
+  /** Theme overrides — literal CSS value, "var(--x)", or a theme key like "color-primary" */
+  color?: string;
+  /** Gradient override for the background — wins over `color` for the background slot. */
+  gradient?: string;
+  /** Text color override for the control. */
+  textColor?: string;
+  /** Border color override for the control and listbox popup. */
+  borderColor?: string;
+  /** Border radius override (numbers are treated as px). */
+  borderRadius?: string | number;
+  /** Shadow token level applied to the listbox popup. */
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   style?: React.CSSProperties;
 }
@@ -62,10 +77,17 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       disabled = false,
       clearable = false,
       ariaLabel = 'Combobox',
+      ariaDescribedBy,
       loadingMessage = 'Loading...',
       emptyMessage = 'No options',
       variant = 'primary',
       size = 'md',
+      color,
+      gradient,
+      textColor,
+      borderColor,
+      borderRadius,
+      shadow,
       className = '',
       style,
       ...rest
@@ -242,8 +264,37 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
 
     const showClear = clearable && !disabled && (inputValue || selectedValue != null);
 
+    // Resolve theme values (literal CSS value, "var(--x)", or theme key like "color-primary")
+    const resolvedColor = resolveThemeValue(color);
+    const resolvedGradient = resolveThemeValue(gradient);
+    const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedBorderColor = resolveThemeValue(borderColor);
+
+    // Component style object writing the --combobox-custom-* channel.
+    // Gradient wins over color for the background slot; unset slots are skipped.
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      ...(resolvedGradient && { '--combobox-custom-bg': resolvedGradient }),
+      ...(resolvedColor && !resolvedGradient && { '--combobox-custom-bg': resolvedColor }),
+      ...(resolvedTextColor && { '--combobox-custom-text-color': resolvedTextColor }),
+      ...(resolvedBorderColor && { '--combobox-custom-border': resolvedBorderColor }),
+      ...(borderRadius && {
+        '--combobox-custom-border-radius':
+          typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
+      }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--combobox-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
+    };
+
+    // Explicitly merge with the user's style prop (user style takes precedence)
+    const mergedStyle = { ...componentStyle, ...style };
+
+    // ARIA attributes for the combobox input
+    const ariaProps = getAriaProps({ label: ariaLabel, describedBy: ariaDescribedBy });
+
     return (
-      <div ref={ref} className={classes} style={style} {...rest}>
+      <div ref={ref} className={classes} style={mergedStyle} {...rest}>
         <div className="combobox-component__control">
           <input
             ref={inputRef}
@@ -263,7 +314,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
             aria-activedescendant={
               isOpen && highlightedIndex >= 0 ? optionId(highlightedIndex) : undefined
             }
-            aria-label={ariaLabel}
+            {...ariaProps}
             aria-busy={isLoading}
           />
           {showClear && (

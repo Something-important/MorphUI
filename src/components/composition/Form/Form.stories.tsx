@@ -9,6 +9,7 @@ import { ThemeProvider } from '../../theme';
 const meta: Meta<typeof Form> = {
   title: 'Components/Form',
   component: Form,
+  tags: ['autodocs'],
   parameters: { layout: 'padded' },
 };
 export default meta;
@@ -53,4 +54,29 @@ export const WithValidation: Story = {
       </ThemeProvider>
     );
   },
+};
+
+export const Themed: Story = {
+  render: () => (
+    <ThemeProvider>
+      <Form
+        style={{ maxWidth: 400 }}
+        color="#7c3aed"
+        borderColor="#7c3aed"
+        borderRadius={10}
+        shadow="md"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <FormField label="Name" helperText="Focus the input to see the themed accent ring">
+          <Input value="" onChange={() => {}} placeholder="Jane Doe" />
+        </FormField>
+        <FormField label="Email" helperText="This field overrides the form accent" color="#0ea5e9">
+          <Input value="" onChange={() => {}} placeholder="jane@example.com" />
+        </FormField>
+        <button type="submit" className="storybook-submit">
+          Submit
+        </button>
+      </Form>
+    </ThemeProvider>
+  ),
 };

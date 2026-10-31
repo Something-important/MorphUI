@@ -218,11 +218,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       // Text and border colors
       ...(resolvedTextColor && {
         '--checkbox-custom-color': resolvedTextColor,
-        '--checkbox-color': resolvedTextColor,
       }),
       ...(resolvedBorderColor && {
         '--checkbox-custom-border': resolvedBorderColor,
-        '--checkbox-border': resolvedBorderColor,
       }),
       // Label and description colors
       ...(resolvedLabelColor && { '--checkbox-custom-label-color': resolvedLabelColor }),

@@ -193,6 +193,79 @@ describe('Combobox Component', () => {
     });
   });
 
+  describe('Theme integration', () => {
+    const getRoot = (container: HTMLElement) =>
+      container.querySelector('.combobox-component') as HTMLElement;
+
+    it('writes the custom background var for a custom color', () => {
+      const { container } = renderWithTheme(<Combobox options={fruits} color="#ff0000" />);
+      expect(getRoot(container)).toHaveStyle({ '--combobox-custom-bg': '#ff0000' });
+    });
+
+    it('resolves a theme key to a token var for the background', () => {
+      const { container } = renderWithTheme(<Combobox options={fruits} color="color-primary" />);
+      expect(getRoot(container)).toHaveStyle({ '--combobox-custom-bg': 'var(--color-primary)' });
+    });
+
+    it('gradient beats color for the background var', () => {
+      const gradient = 'linear-gradient(90deg, #ff0000, #0000ff)';
+      const { container } = renderWithTheme(
+        <Combobox options={fruits} color="#ff0000" gradient={gradient} />,
+      );
+      expect(getRoot(container)).toHaveStyle({ '--combobox-custom-bg': gradient });
+    });
+
+    it('writes the custom text color and border vars', () => {
+      const { container } = renderWithTheme(
+        <Combobox options={fruits} textColor="#ffffff" borderColor="--color-primary" />,
+      );
+      expect(getRoot(container)).toHaveStyle({
+        '--combobox-custom-text-color': '#ffffff',
+        '--combobox-custom-border': 'var(--color-primary)',
+      });
+    });
+
+    it('converts a numeric borderRadius to px', () => {
+      const { container } = renderWithTheme(<Combobox options={fruits} borderRadius={12} />);
+      expect(getRoot(container)).toHaveStyle({ '--combobox-custom-border-radius': '12px' });
+    });
+
+    it('keeps a string borderRadius as-is', () => {
+      const { container } = renderWithTheme(<Combobox options={fruits} borderRadius="0.5rem" />);
+      expect(getRoot(container)).toHaveStyle({ '--combobox-custom-border-radius': '0.5rem' });
+    });
+
+    it('resolves the shadow token to a var', () => {
+      const { container } = renderWithTheme(<Combobox options={fruits} shadow="lg" />);
+      expect(getRoot(container)).toHaveStyle({ '--combobox-custom-shadow': 'var(--shadow-lg)' });
+    });
+
+    it('user style wins over the theme prop for the same custom var', () => {
+      const { container } = renderWithTheme(
+        <Combobox
+          options={fruits}
+          color="#ff0000"
+          style={{ '--combobox-custom-bg': '#00ff00' } as React.CSSProperties}
+        />,
+      );
+      expect(getRoot(container)).toHaveStyle({ '--combobox-custom-bg': '#00ff00' });
+    });
+
+    it('writes no theme vars when no theme props are given', () => {
+      const { container } = renderWithTheme(<Combobox options={fruits} />);
+      const root = getRoot(container);
+      expect(root.style.getPropertyValue('--combobox-custom-bg')).toBe('');
+      expect(root.style.getPropertyValue('--combobox-custom-shadow')).toBe('');
+    });
+
+    it('keeps user className appended after the component classes', () => {
+      const { container } = renderWithTheme(
+        <Combobox options={fruits} color="#ff0000" className="my-combobox" />,
+      );
+      expect(getRoot(container).className.endsWith('my-combobox')).toBe(true);
+    });
+  });
+
   describe('Accessibility', () => {
     it('sets role="combobox" with aria-autocomplete="list"', () => {
       renderWithTheme(<Combobox options={fruits} ariaLabel="Fruit picker" />);

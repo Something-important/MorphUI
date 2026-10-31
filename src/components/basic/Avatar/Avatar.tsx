@@ -159,22 +159,18 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       // Color: gradient > color (gradients take precedence)
       ...(resolvedGradient && {
         '--avatar-custom-bg': resolvedGradient,
-        '--avatar-bg': resolvedGradient,
       }),
       ...(resolvedBackgroundColor &&
         !resolvedGradient && {
           '--avatar-custom-bg': resolvedBackgroundColor,
-          '--avatar-bg': resolvedBackgroundColor,
         }),
       ...(resolvedColor &&
         !resolvedGradient &&
         !resolvedBackgroundColor && {
           '--avatar-custom-bg': resolvedColor,
-          '--avatar-bg': resolvedColor,
         }),
       ...(resolvedTextColor && {
         '--avatar-custom-color': resolvedTextColor,
-        '--avatar-color': resolvedTextColor,
       }),
     };
 

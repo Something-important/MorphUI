@@ -54,9 +54,11 @@ export {
   type DropdownProps,
   type DropdownOption,
   type DropdownOptionGroup,
+  type DropdownVariant,
+  type DropdownSize,
 } from './interactive/Dropdown';
-export { Modal } from './interactive/Modal';
-export { Card } from './interactive/Card';
+export { Modal, type ModalProps } from './interactive/Modal';
+export { Card, type CardProps } from './interactive/Card';
 export {
   Accordion,
   type AccordionProps,
@@ -64,7 +66,7 @@ export {
   type AccordionSize,
   type AccordionAnimation,
 } from './interactive/Accordion';
-export { RadioGroup } from './interactive/RadioGroup';
+export { RadioGroup, type RadioGroupProps, type RadioOption } from './interactive/RadioGroup';
 export {
   Slider,
   type SliderProps,
@@ -88,7 +90,23 @@ export {
   type TabPanelProps,
   type TabItem,
 } from './composition/Tabs';
-export { Sidebar, type SidebarProps, type SidebarItem } from './composition/Sidebar';
+export {
+  Sidebar,
+  type SidebarProps,
+  type SidebarItem,
+  // Composition sub-component props (for wrapper typing).
+  // NOTE: SidebarItemProps is intentionally not re-exported — two distinct
+  // interfaces carry that name (legacy Sidebar.tsx vs composition SidebarItem.tsx).
+  type SidebarRootProps,
+  type SidebarHeaderProps,
+  type SidebarContentProps,
+  type SidebarFooterProps,
+  type SidebarGroupProps,
+  type SidebarSectionProps,
+  type SidebarSeparatorProps,
+  type SidebarToggleProps,
+  type SidebarProviderProps,
+} from './composition/Sidebar';
 export {
   Popover,
   type PopoverProps,
@@ -161,5 +179,26 @@ export {
 // Theme System
 export * from './theme';
 
-// Shared utilities (theme utilities are already exported above, so only export non-theme utils)
-export { createRipple, getAriaProps } from '../utils';
+// Shared utilities — full public surface (theme utils come via './theme' above)
+export {
+  // animation
+  createRipple,
+  animateIn,
+  animateOut,
+  staggerAnimation,
+  debounce,
+  throttle,
+  prefersReducedMotion,
+  safeAnimate,
+} from '../utils/animation';
+export {
+  // accessibility
+  generateId,
+  getAriaProps,
+  getKeyboardHandler,
+  trapFocus,
+  announceToScreenReader,
+  isScreenReaderVisible,
+  addFocusIndicator,
+  validateAriaAttributes,
+} from '../utils/accessibility';

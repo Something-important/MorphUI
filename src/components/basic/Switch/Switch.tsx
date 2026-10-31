@@ -153,21 +153,17 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       // Gradients take precedence over colors
       ...(resolvedGradient && {
         '--switch-custom-bg': resolvedGradient,
-        '--switch-bg': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--switch-custom-bg': resolvedColor,
-          '--switch-bg': resolvedColor,
         }),
       // Text and border colors
       ...(resolvedTextColor && {
         '--switch-custom-text-color': resolvedTextColor,
-        '--switch-color': resolvedTextColor,
       }),
       ...(resolvedBorderColor && {
         '--switch-custom-border-color': resolvedBorderColor,
-        '--switch-border': resolvedBorderColor,
       }),
       // Other styling properties
       ...(borderRadius && {

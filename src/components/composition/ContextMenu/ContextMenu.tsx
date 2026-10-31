@@ -9,6 +9,7 @@ import React, {
   useLayoutEffect,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './ContextMenu.css';
 
 export interface ContextMenuItem {
@@ -33,9 +34,25 @@ export interface ContextMenuProps {
   position?: { x: number; y: number };
   onClose?: () => void;
   ariaLabel?: string;
+  /** ID of the element that describes the menu panel. */
+  ariaDescribedBy?: string;
   variant?: 'primary' | 'secondary' | 'default';
   size?: 'sm' | 'md' | 'lg';
+  /** Theme overrides — literal CSS value, "var(--x)", or a theme key like "color-primary" */
+  color?: string;
+  /** Gradient override for the background — wins over `color` for the background slot. */
+  gradient?: string;
+  /** Text color override for the menu items. */
+  textColor?: string;
+  /** Border color override for the menu panel. */
+  borderColor?: string;
+  /** Border radius override (numbers are treated as px). */
+  borderRadius?: string | number;
+  /** Shadow token level applied to the menu panel. */
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
+  /** Inline style override — merged last, wins over component-generated styles. */
+  style?: React.CSSProperties;
 }
 
 const enabledItemIndices = (items: ContextMenuItem[]): number[] =>
@@ -53,9 +70,17 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
       position: controlledPosition,
       onClose,
       ariaLabel = 'Context menu',
+      ariaDescribedBy,
       variant = 'default',
       size = 'md',
+      color,
+      gradient,
+      textColor,
+      borderColor,
+      borderRadius,
+      shadow,
       className = '',
+      style,
       ...rest
     },
     ref,
@@ -205,6 +230,39 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
       .filter(Boolean)
       .join(' ');
 
+    // Resolve theme values (literal CSS value, "var(--x)", or theme key like "color-primary")
+    const resolvedColor = resolveThemeValue(color);
+    const resolvedGradient = resolveThemeValue(gradient);
+    const resolvedTextColor = resolveThemeValue(textColor);
+    const resolvedBorderColor = resolveThemeValue(borderColor);
+
+    // Component style object writing the --context-menu-custom-* channel on the
+    // menu panel. Gradient wins over color for the background slot; unset slots
+    // are skipped.
+    const componentStyle: React.CSSProperties & Record<string, string> = {
+      ...(resolvedGradient && { '--context-menu-custom-bg': resolvedGradient }),
+      ...(resolvedColor && !resolvedGradient && { '--context-menu-custom-bg': resolvedColor }),
+      ...(resolvedTextColor && {
+        '--context-menu-custom-text-color': resolvedTextColor,
+      }),
+      ...(resolvedBorderColor && { '--context-menu-custom-border': resolvedBorderColor }),
+      ...(borderRadius && {
+        '--context-menu-custom-border-radius':
+          typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
+      }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--context-menu-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
+    };
+
+    // Explicitly merge with the user's style prop (user style takes precedence).
+    // Positioning stays first so an explicit `left`/`top` in `style` still wins.
+    const menuStyle = { left: clampedPos.x, top: clampedPos.y, ...componentStyle, ...style };
+
+    // ARIA attributes for the menu panel
+    const ariaProps = getAriaProps({ label: ariaLabel, describedBy: ariaDescribedBy });
+
     return (
       <>
         <div
@@ -222,9 +280,9 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
               ref={menuRef}
               id={menuId}
               role="menu"
-              aria-label={ariaLabel}
+              {...ariaProps}
               className={classes}
-              style={{ left: clampedPos.x, top: clampedPos.y }}
+              style={menuStyle}
               onKeyDown={handleKeyDown}
               tabIndex={-1}
             >

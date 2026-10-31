@@ -237,28 +237,23 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       // Main background: gradient > color > backgroundColor (gradients take precedence)
       ...(resolvedGradient && {
         '--modal-custom-bg': resolvedGradient,
-        '--modal-bg': resolvedGradient,
       }),
       ...(resolvedColor &&
         !resolvedGradient && {
           '--modal-custom-bg': resolvedColor,
-          '--modal-bg': resolvedColor,
         }),
       ...(resolvedBackgroundColor &&
         !resolvedGradient &&
         !resolvedColor && {
           '--modal-custom-bg': resolvedBackgroundColor,
-          '--modal-bg': resolvedBackgroundColor,
         }),
 
       // Text and border colors
       ...(resolvedTextColor && {
         '--modal-custom-color': resolvedTextColor,
-        '--modal-color': resolvedTextColor,
       }),
       ...(resolvedBorderColor && {
         '--modal-custom-border': resolvedBorderColor,
-        '--modal-border': resolvedBorderColor,
       }),
 
       // Header, footer, and content backgrounds

@@ -171,11 +171,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       // Text and border colors
       ...(resolvedTextColor && {
         '--card-custom-color': resolvedTextColor,
-        '--card-color': resolvedTextColor,
       }),
       ...(resolvedBorderColor && {
         '--card-custom-border': resolvedBorderColor,
-        '--card-border': resolvedBorderColor,
       }),
 
       // Header colors
