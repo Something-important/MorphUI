@@ -54,6 +54,24 @@ jobs:
         # Logs the tarball contents — catches "CSS didn't ship" regressions
         run: npm pack --dry-run
 
+      - name: Dump OIDC claims (debug)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const token = await core.getIDToken('npm');
+            const payload = JSON.parse(
+              Buffer.from(token.split('.')[1], 'base64').toString()
+            );
+            console.log('=== OIDC claims npm receives ===');
+            console.log(JSON.stringify(payload, null, 2));
+            console.log('=== Key fields to compare against your config ===');
+            console.log('repository_owner :', payload.repository_owner);
+            console.log('repository       :', payload.repository);
+            console.log('workflow         :', payload.workflow);
+            console.log('job_workflow_ref :', payload.job_workflow_ref);
+            console.log('ref              :', payload.ref);
+            console.log('environment      :', payload.environment || '(none)');
+
       - name: Publish with provenance
         # npm CLI auto-detects the OIDC environment and authenticates via
         # trusted publishing. Provenance attestation is generated
