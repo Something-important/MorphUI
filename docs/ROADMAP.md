@@ -38,8 +38,14 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
   jsdom — `aria-controls` pointed at a conditionally-rendered region,
   `aria-labelledby` at an element with no id; the content region is now
   always mounted + hidden when collapsed, the title span carries the label
-  id; 13 axe tests + 3 explicit relationship assertions). Remaining: Input
-  (644), Table (625), Popover (539).
+  id; 13 axe tests + 3 explicit relationship assertions). **Input done**
+  (PR #22: fixed the axe `aria-required-parent` on suggestion options by
+  making the container a `role="listbox"`, plus three deeper issues axe
+  misses — the password toggle was `tabIndex={-1}` (keyboard-inaccessible),
+  the error-message id was `${id}-error` and collided as `"undefined-error"`
+  across id-less inputs, and the combobox `aria-controls`/`aria-autocomplete`
+  wiring was missing; now uses `useId()` for stable ids; 15 tests). Remaining:
+  Table (625), Popover (539).
 
 ## Medium-term (this month) — package ergonomics
 
