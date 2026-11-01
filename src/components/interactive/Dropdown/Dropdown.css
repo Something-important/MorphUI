@@ -261,7 +261,8 @@
     border-radius: var(--border-radius-sm, 3px);
     background: var(--color-background, #fff);
     position: relative;
-    transition: background-color var(--transition-fast, 0.15s) ease,
+    transition:
+      background-color var(--transition-fast, 0.15s) ease,
       border-color var(--transition-fast, 0.15s) ease;
   }
 
