@@ -93,7 +93,7 @@ The theme presets (`src/components/theme/themes/*.ts`) are the **only** place to
 
 1. Add the key to **all five** presets (`light`, `dark`, `cool`, `warm`, `purple`) — a token missing from one preset becomes a stale variable when users switch themes
 2. Regenerate: `npm run tokens:generate`
-3. CI enforces both rules with `npm run tokens:check` (preset alignment + CSS↔preset equality) and a regeneration diff — a PR that hand-edits `theme.css` or forgets to regenerate will fail
+3. CI enforces both rules through the mirrored Jest suite (`test/theme-tokens.test.ts`: preset alignment + CSS↔preset equality) — a PR that hand-edits `theme.css` or lets the presets drift will fail
 
 ## 🔔 Toast Notifications
 
@@ -124,10 +124,11 @@ Features: six variants (`success` / `danger` / `warning` / `info` / `primary` / 
 - **Live Storybook**: Browse all components and interact with them at <https://something-important.github.io/MorphUI/>
 - **Run locally**: `npm run storybook` opens Storybook at `http://localhost:6006/`
 - **Build a static copy**: `npm run build-storybook` produces a `storybook-static/` folder you can deploy anywhere
+- **Engineering docs**: architecture, component inventory, roadmap, and the publish pipeline live in [`docs/`](./docs) — start at [`docs/README.md`](./docs/README.md); the contribution workflow is in [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 
 ## 🧪 Testing
 
-MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **37 test suites / 1,600+ tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
+MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **38 test suites / 1,606 tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
 
 ```bash
 # Run all tests
