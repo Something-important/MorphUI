@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { clampToViewport } from '../../../hooks';
 import './ContextMenu.css';
 
 export interface ContextMenuItem {
@@ -206,7 +207,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
       }
     };
 
-    // Clamp the menu within the viewport.
+    // Clamp the menu within the viewport (shared point-clamping helper).
     const [clampedPos, setClampedPos] = useState(position);
     useLayoutEffect(() => {
       if (!isOpen) return;
@@ -216,9 +217,14 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
         return;
       }
       const rect = menu.getBoundingClientRect();
-      const x = Math.min(position.x, window.innerWidth - rect.width - 8);
-      const y = Math.min(position.y, window.innerHeight - rect.height - 8);
-      setClampedPos({ x: Math.max(8, x), y: Math.max(8, y) });
+      setClampedPos(
+        clampToViewport(
+          position,
+          rect,
+          { width: window.innerWidth, height: window.innerHeight },
+          8,
+        ),
+      );
     }, [isOpen, position]);
 
     const classes = [
