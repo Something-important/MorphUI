@@ -44,8 +44,10 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
   misses — the password toggle was `tabIndex={-1}` (keyboard-inaccessible),
   the error-message id was `${id}-error` and collided as `"undefined-error"`
   across id-less inputs, and the combobox `aria-controls`/`aria-autocomplete`
-  wiring was missing; now uses `useId()` for stable ids; 15 tests). Remaining:
-  Table (625), Popover (539).
+  wiring was missing; now uses `useId()` for stable ids; 15 tests). **Table
+  done** (PR #23: the `aria-label` was on the role-less wrapper div (inert),
+  moved to the `<table>` so it actually names the table; added `scope="col"`
+  to every header cell; 14 tests). Remaining: Popover (539).
 
 ## Medium-term (this month) — package ergonomics
 
