@@ -439,7 +439,6 @@ function TableInner<T>(
       id={id}
       className={`${classes} table-component__wrapper`}
       style={mergedStyle}
-      {...ariaProps}
       {...rest}
     >
       {loading ? (
@@ -448,11 +447,11 @@ function TableInner<T>(
         </div>
       ) : (
         <>
-          <table className="table-component__table" role="table">
+          <table className="table-component__table" role="table" {...ariaProps}>
             <thead className="table-component__thead">
               <tr className="table-component__tr">
                 {selectable && (
-                  <th className="table-component__th table-component__th--checkbox">
+                  <th scope="col" className="table-component__th table-component__th--checkbox">
                     <input
                       type="checkbox"
                       checked={allSelected}
@@ -469,6 +468,7 @@ function TableInner<T>(
                   return (
                     <th
                       key={column.key}
+                      scope="col"
                       className={`table-component__th ${column.className || ''}`}
                       style={{
                         width: column.width,
