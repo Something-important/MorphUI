@@ -75,8 +75,9 @@ share a Toggle/Switch base. See [ROADMAP.md](./ROADMAP.md).
 
 ## Test suite
 
-39 suites / 1,631 tests / ~17–33 seconds / all passing. Largest suites:
+44 suites / 1,694 tests / ~17–33 seconds / all passing. Largest suites:
 Tooltip (818 tests), Accordion (726), RadioGroup (704), Modal (701).
 Cross-cutting suites: `theme.test.ts`, `theme-tokens.test.ts`,
 `animation.test.ts`, `accessibility.test.ts`, `a11y.smoke.test.tsx`,
-`useAnchoredPosition.test.tsx`.
+`useAnchoredPosition.test.tsx`, plus per-component a11y suites for
+Dropdown / Sidebar / Input / Table / Popover.

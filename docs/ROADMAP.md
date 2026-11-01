@@ -26,28 +26,32 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
   viewport clamp; 25 new tests (1,631 total). Internal for now — public
   export lands with the hooks API v0 milestone. Dropdown keeps its
   pure-CSS relative positioning; it never shared this math.
+- **A11y polish pass complete** (PRs #20–#24) — all five size-outlier
+  components rendered through jest-axe across 62 state-scans, every
+  violation fixed, plus 9 explicit assertions for relationships axe
+  misses in jsdom:
+  - **Dropdown** (#20): restructured the open listbox so only
+    `role="option"`/`role="group"` children sit inside it; replaced
+    nested checkboxes with decorative `aria-hidden` spans.
+  - **Sidebar family** (#21): fixed two dangling ARIA references in
+    `SidebarGroup` (`aria-controls` on a conditionally-rendered region,
+    `aria-labelledby` on an element with no id).
+  - **Input** (#22): `aria-required-parent` on suggestions; password
+    toggle was `tabIndex={-1}` (keyboard-inaccessible); error-message
+    id collided across id-less inputs; combobox wiring missing.
+  - **Table** (#23): `aria-label` was on the role-less wrapper div
+    (inert), moved to the `<table>`; added `scope="col"` to headers.
+  - **Popover** (#24): trigger wrapper `role="button"` + `tabIndex={0}`
+    nested around the consumer's `<button>`; now conditional on the
+    child not being natively interactive.
+    Test count: 1,606 → 1,694 (44 suites) across all passes today.
 
 ## Short-term (next ~2 weeks) — quality + consistency
 
-- **A11y polish pass per component** — one component per branch, gated by the
-  existing jest-axe harness. **Dropdown done** (PR #20: restructured the open
-  listbox so only `role="option"`/`role="group"` children sit inside it,
-  replaced nested checkboxes with decorative `aria-hidden` spans, 10 new
-  axe tests across all states). **Sidebar family done** (PR #21: fixed two
-  dangling ARIA references in `SidebarGroup` that axe does not catch in
-  jsdom — `aria-controls` pointed at a conditionally-rendered region,
-  `aria-labelledby` at an element with no id; the content region is now
-  always mounted + hidden when collapsed, the title span carries the label
-  id; 13 axe tests + 3 explicit relationship assertions). **Input done**
-  (PR #22: fixed the axe `aria-required-parent` on suggestion options by
-  making the container a `role="listbox"`, plus three deeper issues axe
-  misses — the password toggle was `tabIndex={-1}` (keyboard-inaccessible),
-  the error-message id was `${id}-error` and collided as `"undefined-error"`
-  across id-less inputs, and the combobox `aria-controls`/`aria-autocomplete`
-  wiring was missing; now uses `useId()` for stable ids; 15 tests). **Table
-  done** (PR #23: the `aria-label` was on the role-less wrapper div (inert),
-  moved to the `<table>` so it actually names the table; added `scope="col"`
-  to every header cell; 14 tests). Remaining: Popover (539).
+- (A11y polish pass complete — see above.) The remaining short-term
+  quality work is coverage tightening on the known soft spots (Slider
+  ~55%, Popover ~58%, Dropdown ~64%) before raising the global floor
+  beyond 70%.
 
 ## Medium-term (this month) — package ergonomics
 
