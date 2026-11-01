@@ -33,8 +33,13 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
   existing jest-axe harness. **Dropdown done** (PR #20: restructured the open
   listbox so only `role="option"`/`role="group"` children sit inside it,
   replaced nested checkboxes with decorative `aria-hidden` spans, 10 new
-  axe tests across all states). Remaining: the Sidebar family (~2.5k),
-  Input (644), Table (625), Popover (539).
+  axe tests across all states). **Sidebar family done** (PR #21: fixed two
+  dangling ARIA references in `SidebarGroup` that axe does not catch in
+  jsdom — `aria-controls` pointed at a conditionally-rendered region,
+  `aria-labelledby` at an element with no id; the content region is now
+  always mounted + hidden when collapsed, the title span carries the label
+  id; 13 axe tests + 3 explicit relationship assertions). Remaining: Input
+  (644), Table (625), Popover (539).
 
 ## Medium-term (this month) — package ergonomics
 
