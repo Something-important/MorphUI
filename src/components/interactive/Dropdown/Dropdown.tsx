@@ -491,16 +491,9 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         )}
 
         {isOpen && (
-          <ul
-            className={`dropdown-list dropdown-list--${position}`}
-            style={listStyle}
-            role="listbox"
-            id="dropdown-list"
-            ref={listRef}
-            aria-multiselectable={multiSelect}
-          >
+          <div className={`dropdown-list dropdown-list--${position}`} style={listStyle}>
             {searchable && (
-              <li className="dropdown-search">
+              <div className="dropdown-search">
                 <div className="dropdown-search-container">
                   <input
                     type="text"
@@ -514,111 +507,130 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                     autoFocus
                   />
                 </div>
-              </li>
+              </div>
             )}
 
-            {filteredOptions.length === 0 ? (
-              <li className="dropdown-no-options">
-                {loading
-                  ? 'Loading options...'
-                  : error
-                    ? `Error: ${error}`
-                    : 'No options available'}
-              </li>
-            ) : (
-              <>
-                {optionGroups && optionGroups.length > 0
-                  ? // Render grouped options
-                    optionGroups.map((group) => (
-                      <li key={group.value} className="dropdown-group">
-                        <div className="dropdown-group-header">
-                          {group.icon && <span className="dropdown-group-icon">{group.icon}</span>}
-                          <span className="dropdown-group-label">{group.label}</span>
-                          {group.description && (
-                            <span className="dropdown-group-description">{group.description}</span>
-                          )}
-                        </div>
-                        <ul className="dropdown-group-options">
-                          {group.options
-                            .filter(
-                              (opt) =>
-                                !search || opt.label.toLowerCase().includes(search.toLowerCase()),
-                            )
-                            .map((opt, index) => (
-                              // keyboard selection is handled by the combobox container's onKeyDown
-                              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                              <li
-                                key={opt.value}
-                                role="option"
-                                aria-selected={isSelected(opt.value)}
-                                tabIndex={-1}
-                                className={`                              dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
-                                  index === focusedIndex ? 'focused' : ''
-                                } ${opt.disabled ? 'disabled' : ''}`}
-                                onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
-                              >
-                                {multiSelect && (
-                                  <input
-                                    type="checkbox"
-                                    checked={isSelected(opt.value)}
-                                    readOnly
-                                    tabIndex={-1}
-                                    disabled={opt.disabled}
-                                  />
-                                )}
-                                {opt.icon && (
-                                  <span className="dropdown-option-icon">{opt.icon}</span>
-                                )}
-                                <span className="dropdown-option-content">
-                                  <span className="dropdown-option-label">{opt.label}</span>
-                                  {opt.description && (
-                                    <span className="dropdown-option-description">
-                                      {opt.description}
-                                    </span>
+            <ul
+              role="listbox"
+              id="dropdown-list"
+              ref={listRef}
+              aria-multiselectable={multiSelect ? 'true' : undefined}
+              className="dropdown-listbox"
+            >
+              {filteredOptions.length === 0 ? (
+                <li
+                  role="option"
+                  aria-disabled="true"
+                  aria-selected="false"
+                  className="dropdown-no-options"
+                >
+                  {loading
+                    ? 'Loading options...'
+                    : error
+                      ? `Error: ${error}`
+                      : 'No options available'}
+                </li>
+              ) : (
+                <>
+                  {optionGroups && optionGroups.length > 0
+                    ? // Render grouped options: each group is a role="group" wrapper
+                      // (an allowed listbox child) around its options.
+                      optionGroups.map((group) => (
+                        <li
+                          key={group.value}
+                          role="group"
+                          aria-label={group.label}
+                          className="dropdown-group"
+                        >
+                          <div className="dropdown-group-header">
+                            {group.icon && (
+                              <span className="dropdown-group-icon">{group.icon}</span>
+                            )}
+                            <span className="dropdown-group-label">{group.label}</span>
+                            {group.description && (
+                              <span className="dropdown-group-description">
+                                {group.description}
+                              </span>
+                            )}
+                          </div>
+                          <div className="dropdown-group-options">
+                            {group.options
+                              .filter(
+                                (opt) =>
+                                  !search || opt.label.toLowerCase().includes(search.toLowerCase()),
+                              )
+                              .map((opt, index) => (
+                                // keyboard selection is handled by the combobox container's onKeyDown
+                                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                                <li
+                                  key={opt.value}
+                                  role="option"
+                                  aria-selected={isSelected(opt.value)}
+                                  tabIndex={-1}
+                                  className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
+                                    index === focusedIndex ? 'focused' : ''
+                                  } ${opt.disabled ? 'disabled' : ''}`}
+                                  onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
+                                >
+                                  {multiSelect && (
+                                    <span
+                                      className="dropdown-checkbox"
+                                      aria-hidden="true"
+                                      data-checked={isSelected(opt.value) ? 'true' : 'false'}
+                                    />
                                   )}
-                                </span>
-                              </li>
-                            ))}
-                        </ul>
-                      </li>
-                    ))
-                  : // Render regular options
-                    filteredOptions.map((opt, index) => (
-                      // keyboard selection is handled by the combobox container's onKeyDown
-                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                      <li
-                        key={opt.value}
-                        role="option"
-                        aria-selected={isSelected(opt.value)}
-                        tabIndex={-1}
-                        className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
-                          index === focusedIndex ? 'focused' : ''
-                        } ${opt.disabled ? 'disabled' : ''}`}
-                        onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
-                      >
-                        {multiSelect && (
-                          <input
-                            type="checkbox"
-                            checked={isSelected(opt.value)}
-                            readOnly
-                            tabIndex={-1}
-                            disabled={opt.disabled}
-                          />
-                        )}
-                        {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
-                        <span className="dropdown-option-content">
-                          <span className="dropdown-option-label">{opt.label}</span>
-                          {opt.description && (
-                            <span className="dropdown-option-description">{opt.description}</span>
+                                  {opt.icon && (
+                                    <span className="dropdown-option-icon">{opt.icon}</span>
+                                  )}
+                                  <span className="dropdown-option-content">
+                                    <span className="dropdown-option-label">{opt.label}</span>
+                                    {opt.description && (
+                                      <span className="dropdown-option-description">
+                                        {opt.description}
+                                      </span>
+                                    )}
+                                  </span>
+                                </li>
+                              ))}
+                          </div>
+                        </li>
+                      ))
+                    : // Render regular options
+                      filteredOptions.map((opt, index) => (
+                        // keyboard selection is handled by the combobox container's onKeyDown
+                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                        <li
+                          key={opt.value}
+                          role="option"
+                          aria-selected={isSelected(opt.value)}
+                          tabIndex={-1}
+                          className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
+                            index === focusedIndex ? 'focused' : ''
+                          } ${opt.disabled ? 'disabled' : ''}`}
+                          onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
+                        >
+                          {multiSelect && (
+                            <span
+                              className="dropdown-checkbox"
+                              aria-hidden="true"
+                              data-checked={isSelected(opt.value) ? 'true' : 'false'}
+                            />
                           )}
-                        </span>
-                      </li>
-                    ))}
-              </>
-            )}
+                          {opt.icon && <span className="dropdown-option-icon">{opt.icon}</span>}
+                          <span className="dropdown-option-content">
+                            <span className="dropdown-option-label">{opt.label}</span>
+                            {opt.description && (
+                              <span className="dropdown-option-description">{opt.description}</span>
+                            )}
+                          </span>
+                        </li>
+                      ))}
+                </>
+              )}
+            </ul>
 
             {multiSelect && (
-              <li className="dropdown-footer">
+              <div className="dropdown-footer">
                 {/* Only show Select All when it's actually selecting all available options */}
                 {(!maxSelections || filteredOptions.length <= maxSelections) && (
                   <button
@@ -677,9 +689,9 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 >
                   Done
                 </button>
-              </li>
+              </div>
             )}
-          </ul>
+          </div>
         )}
       </div>
     );
