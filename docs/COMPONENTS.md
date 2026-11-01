@@ -42,15 +42,15 @@ tests, a story, and exported types.
 | Sidebar          | 2,303 across 13 files |   1,389 | Two APIs: legacy `Sidebar` + composed `SidebarRoot/Item/…` — consolidate |
 | Table            |                   625 |     309 | Filtering + a11y (aria-sort, row keyboard nav) since 0.5.0               |
 | Toast            |                   616 |     394 | `ToastProvider` + `useToast()`; extract queueing next                    |
-| Tooltip          |                   614 |     837 | Re-implements anchored positioning (shared with Popover/Dropdown)        |
+| Tooltip          |                   508 |     837 | Uses the shared `useAnchoredPosition` hook (0.9.x)                       |
 | Tabs             |                   554 |     660 | Tabs / Tab / TabPanel                                                    |
 | DatePicker       |                   494 |     247 | Calendar grid + keyboard nav (0.7.0)                                     |
 | Combobox         |                   403 |     178 | ARIA combobox pattern (0.6.0)                                            |
 | Alert            |                   362 |     409 |                                                                          |
-| ContextMenu      |                   340 |     126 | Added in 0.8.0                                                           |
+| ContextMenu      |                   345 |     126 | Added in 0.8.0; viewport clamp via `clampToViewport`                     |
 | Drawer           |                   315 |     349 |                                                                          |
 | Form + FormField |                   239 |     114 | Two files                                                                |
-| Popover          |                   642 |     920 | Biggest stylesheet; shares positioning approach with Tooltip             |
+| Popover          |                   538 |     920 | Biggest stylesheet; uses the shared `useAnchoredPosition` hook (0.9.x)   |
 
 ## Theme & utils
 
@@ -65,17 +65,18 @@ tests, a story, and exported types.
 
 ## Refactor candidates (size outliers)
 
-1. Dropdown 689 · 2. Sidebar family ~2.5k total · 3. Input 644 · 4. Popover
-   642 · 5. Table 625 · 6. Toast 616 · 7. Tooltip 614 · 8. Tabs 554
+1. Dropdown 689 · 2. Sidebar family ~2.5k total · 3. Input 644 · 4. Table
+   625 · 5. Toast 616 · 6. Tabs 554
 
-The recurring plays: extract shared hooks (anchored positioning is
-implemented three times — Tooltip, Popover, Dropdown/ContextMenu; modal
-focus management; toast queueing), split large files into subcomponents, and
+The recurring plays: extract shared hooks (anchored positioning is now
+done — `src/hooks/useAnchoredPosition.ts`; still open: modal focus
+management, toast queueing), split large files into subcomponents, and
 share a Toggle/Switch base. See [ROADMAP.md](./ROADMAP.md).
 
 ## Test suite
 
-38 suites / 1,606 tests / ~33 seconds / all passing. Largest suites:
+39 suites / 1,631 tests / ~17–33 seconds / all passing. Largest suites:
 Tooltip (818 tests), Accordion (726), RadioGroup (704), Modal (701).
 Cross-cutting suites: `theme.test.ts`, `theme-tokens.test.ts`,
-`animation.test.ts`, `accessibility.test.ts`, `a11y.smoke.test.tsx`.
+`animation.test.ts`, `accessibility.test.ts`, `a11y.smoke.test.tsx`,
+`useAnchoredPosition.test.tsx`.

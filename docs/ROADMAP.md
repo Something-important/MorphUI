@@ -17,18 +17,22 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
   unblocked by granting the automation token workflow-file push access.
 - **CI Node 20 → 22** (`22f8ff1`) — aligns with the publish workflow;
   green on the first run.
+- **Coverage thresholds 0 → 70%** (PR #18) — global floor on all four
+  metrics; current coverage has 7–16 points of headroom.
+- **Extracted `useAnchoredPosition`** (PR #19) — new `src/hooks/` module
+  (pure `computeAnchoredPosition` / `clampToViewport` + the hook) shared by
+  Tooltip (615 → 509 LOC), Popover (643 → 539), and ContextMenu; fixed
+  Popover's detached `top`/`left` coordinate math and the never-firing
+  viewport clamp; 25 new tests (1,631 total). Internal for now — public
+  export lands with the hooks API v0 milestone. Dropdown keeps its
+  pure-CSS relative positioning; it never shared this math.
 
 ## Short-term (next ~2 weeks) — quality + consistency
 
-- **Coverage thresholds 0 → 70%** in `jest.config.js`, tighten later. Current
-  soft spots visible in the coverage report: Slider (~54% statements) and
-  ThemeProvider (~76%).
-- **Extract `useAnchoredPosition`** shared by Tooltip / Popover / Dropdown /
-  ContextMenu — removes three re-implementations and shrinks the biggest
-  files.
 - **A11y polish pass per component** — one component per branch, gated by the
   existing jest-axe harness. Start with the size outliers: Dropdown (689
-  LOC), the Sidebar family (~2.5k), Input (644), Popover (642), Table (625).
+  LOC), the Sidebar family (~2.5k), Input (644), Popover (539 after the
+  positioning refactor), Table (625).
 
 ## Medium-term (this month) — package ergonomics
 
