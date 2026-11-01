@@ -3,9 +3,10 @@ name: Publish to npm
 # Fires when release-please creates a `v*` tag (i.e. when a release PR
 # merges into master). Also runnable on demand from the Actions tab.
 #
-# Uses npm Trusted Publishing (OIDC) — no NPM_TOKEN secret. The npm CLI
-# detects the GitHub Actions OIDC context and exchanges the short-lived
-# JWT for publish credentials.
+# Uses npm Trusted Publishing (OIDC) — no NPM_TOKEN secret.
+# Requires npm CLI 11.5.1+ (Node 22.14.0+). Node 22 ships with npm 10.x,
+# which can sign provenance but cannot do the OIDC token exchange, so we
+# upgrade npm in-place before publishing.
 on:
   push:
     tags:
@@ -29,17 +30,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Node 22
+        # No `registry-url` here on purpose:
+        #   - Trusted publishing via OIDC doesn't need a token in ~/.npmrc.
+        #   - Passing `registry-url` makes actions/setup-node write
+        #     `always-auth=true` to ~/.npmrc, which npm 11+ warns about
+        #     and npm 12 will reject outright.
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: 'https://registry.npmjs.org'
-          package-manager-cache: false
 
-      - name: Upgrade npm to v11+ (required for trusted publishing)
-        # npm 11.5.1+ is the minimum that supports OIDC trusted publishing.
-        # Node 22 ships with npm 10.x, which can sign provenance but cannot
-        # exchange the OIDC JWT for publish credentials — resulting in a
-        # misleading "404 Not Found" on the publish PUT.
+      - name: Upgrade npm to v11+ (required for OIDC trusted publishing)
         run: npm install -g npm@latest
 
       - name: Print npm version (sanity check)
@@ -55,10 +55,7 @@ jobs:
         run: npm pack --dry-run
 
       - name: Publish with provenance (OIDC trusted publishing)
-        run: |
-          unset NODE_AUTH_TOKEN
-          echo "NODE_AUTH_TOKEN is now: '${NODE_AUTH_TOKEN:-<unset>}'"
-          npm publish --provenance
+        run: npm publish --provenance
 
       - name: Dump publish debug log on failure
         if: failure()
