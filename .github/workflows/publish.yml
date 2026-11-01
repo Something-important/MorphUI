@@ -14,9 +14,6 @@ on:
 
 permissions:
   contents: read
-  # Required for OIDC — lets the workflow request a JWT from GitHub that
-  # npm exchanges for short-lived publish credentials. Also drives
-  # automatic provenance attestation (Sigstore).
   id-token: write
 
 concurrency:
@@ -31,14 +28,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node 20
+      - name: Set up Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           registry-url: 'https://registry.npmjs.org'
-          # Don't use the cache in release builds — ensures a clean,
-          # reproducible install from the lockfile.
           package-manager-cache: false
+
+      - name: Upgrade npm to v11+ (required for trusted publishing)
+        # npm 11.5.1+ is the minimum that supports OIDC trusted publishing.
+        # Node 22 ships with npm 10.x, which can sign provenance but cannot
+        # exchange the OIDC JWT for publish credentials — resulting in a
+        # misleading "404 Not Found" on the publish PUT.
+        run: npm install -g npm@latest
+
+      - name: Print npm version (sanity check)
+        run: npm --version
 
       - name: Install dependencies
         run: npm ci
@@ -47,15 +52,10 @@ jobs:
         run: npm run build:all
 
       - name: Show what will be published
-        # Logs the tarball contents — catches "CSS didn't ship" regressions
         run: npm pack --dry-run
 
       - name: Publish with provenance (OIDC trusted publishing)
         run: |
-          # A stray NODE_AUTH_TOKEN hijacks npm auth: npm prefers an
-          # explicit token over the OIDC exchange, and an invalid token
-          # makes the registry answer 404 "not in this registry".
-          # Unset it so npm authenticates via trusted publishing.
           unset NODE_AUTH_TOKEN
           echo "NODE_AUTH_TOKEN is now: '${NODE_AUTH_TOKEN:-<unset>}'"
           npm publish --provenance
