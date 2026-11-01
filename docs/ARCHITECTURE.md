@@ -81,8 +81,9 @@ Theming is token-driven with **flat token maps**:
   `test/theme-tokens.test.ts` enforces the same guarantees inside the Jest
   suite that CI runs: preset key parity, token-count sanity, `createTheme`
   round-trip coverage, z-index stacking order, and `theme.css` ↔
-  `lightTheme` equality. An explicit regenerate-and-diff CI step is prepared
-  and pending application — see [ROADMAP.md](./ROADMAP.md).
+  `lightTheme` equality. CI additionally runs a regenerate-and-diff gate
+  between the Prettier check and Typecheck, so a hand-edited or stale
+  `theme.css` fails the build before the test suite even starts.
 
 Since 0.9.0 there is **no runtime style injection**: consumers import
 `morphui-react/css` (the single extracted stylesheet) once, before their own
@@ -129,10 +130,10 @@ Rollup 4, single entry `src/components/index.ts`:
 - **Jest 29 + React Testing Library + jest-axe**, jsdom environment, CSS
   mocked via `identity-obj-proxy`. 38 suites / 1,606 tests, ~33 seconds, all
   green. Coverage thresholds are currently 0 (informational only).
-- **CI** (`.github/workflows/ci.yml`): lint → prettier check →
+- **CI** (`.github/workflows/ci.yml`): lint → prettier check → theme token
+  gate (regenerate `theme.css`, fail on diff, `npm run tokens:check`) →
   `tsc --noEmit` → `jest --ci --coverage` → `build:all`, on pushes and PRs
-  to `master` and `dev`. Node 20. The theme token invariants run inside the
-  Jest step; an explicit gate step is pending — see [ROADMAP.md](./ROADMAP.md).
+  to `master` and `dev`. Node 22, matching the publish workflow.
 - **Storybook 9** (react-vite) with 33 component stories plus a Theme
   Showcase; `deploy-storybook.yml` publishes to GitHub Pages on `master`.
 - **release-please** (node, `bump-minor-pre-major`) plus **semantic-pr**

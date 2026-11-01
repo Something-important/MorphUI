@@ -10,18 +10,16 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
   `docs/ARCHITECTURE.md`, `docs/COMPONENTS.md`, this file.
 - Cleaned 14 stale local branches — `ci/npm-publish` was superseded and
   deleted; `ci/token-gate` was reviewed, verified green against the current
-  tree, and preserved as a patch (see the first short-term item).
+  tree, and preserved as a patch (landed the same day, below).
+- **Applied the theme token gate to `ci.yml`** (`a42c2a5`) — between the
+  Prettier check and Typecheck, CI regenerates `theme.css` and fails on
+  any diff, then runs `npm run tokens:check`. First CI run green;
+  unblocked by granting the automation token workflow-file push access.
+- **CI Node 20 → 22** (`22f8ff1`) — aligns with the publish workflow;
+  green on the first run.
 
 ## Short-term (next ~2 weeks) — quality + consistency
 
-- **Apply the theme token gate to `ci.yml`** — insert a step between the
-  Prettier check and Typecheck that runs `python3
-scripts/generate_theme_css.py`, fails on `git diff --exit-code --
-src/components/theme/theme.css`, then runs `npm run tokens:check`. Verified
-  green against the current tree; needs a web-UI edit or a PR because the
-  automation token cannot push workflow-file changes.
-- **CI Node 20 → 22** — one-line change in `ci.yml`; aligns with the publish
-  workflow.
 - **Coverage thresholds 0 → 70%** in `jest.config.js`, tighten later. Current
   soft spots visible in the coverage report: Slider (~54% statements) and
   ThemeProvider (~76%).
