@@ -123,11 +123,15 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(
                 {/* Icon */}
                 {icon && <span className="sidebar-group__icon">{icon}</span>}
 
-                {/* Title */}
-                <span className="sidebar-group__title">{title}</span>
+                {/* Title — carries the id that the content region labels itself by. */}
+                <span className="sidebar-group__title" id={`${id}-title`}>
+                  {title}
+                </span>
 
                 {/* Expand/Collapse Indicator */}
-                <span className="sidebar-group__indicator">{isExpanded ? '▼' : '▶'}</span>
+                <span className="sidebar-group__indicator" aria-hidden="true">
+                  {isExpanded ? '▼' : '▶'}
+                </span>
               </button>
             ) : (
               <div className="sidebar-group__header-static">
@@ -135,23 +139,27 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(
                 {icon && <span className="sidebar-group__icon">{icon}</span>}
 
                 {/* Title */}
-                <span className="sidebar-group__title">{title}</span>
+                <span className="sidebar-group__title" id={`${id}-title`}>
+                  {title}
+                </span>
               </div>
             )}
           </div>
         )}
 
-        {/* Group Content */}
-        {isExpanded && (
-          <div
-            id={`${id}-content`}
-            className="sidebar-group__content"
-            role="group"
-            aria-labelledby={title ? `${id}-header` : undefined}
-          >
-            {children}
-          </div>
-        )}
+        {/* Group Content — always rendered so the toggle's aria-controls
+            resolves in both states; hidden when collapsed so children
+            unmount (preserving existing mount semantics) while the
+            controlled region stays a valid AT target. */}
+        <div
+          id={`${id}-content`}
+          className="sidebar-group__content"
+          role="group"
+          aria-labelledby={title ? `${id}-title` : undefined}
+          hidden={!isExpanded}
+        >
+          {isExpanded && children}
+        </div>
       </div>
     );
   },

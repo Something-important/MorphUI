@@ -249,6 +249,13 @@
 
   .sidebar-group__content {
     padding-left: var(--spacing-md);
+  }
+
+  /* The expand animation plays when the group transitions into the expanded
+     state (the content region is always mounted so aria-controls resolves;
+     the animation is scoped to the expanded class so it re-triggers on
+     each expand rather than only on initial mount). */
+  .sidebar-group--expanded .sidebar-group__content {
     animation: sidebar-group-expand var(--transition-normal);
   }
 
