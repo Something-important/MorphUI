@@ -30,9 +30,11 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
 ## Short-term (next ~2 weeks) — quality + consistency
 
 - **A11y polish pass per component** — one component per branch, gated by the
-  existing jest-axe harness. Start with the size outliers: Dropdown (689
-  LOC), the Sidebar family (~2.5k), Input (644), Popover (539 after the
-  positioning refactor), Table (625).
+  existing jest-axe harness. **Dropdown done** (PR #20: restructured the open
+  listbox so only `role="option"`/`role="group"` children sit inside it,
+  replaced nested checkboxes with decorative `aria-hidden` spans, 10 new
+  axe tests across all states). Remaining: the Sidebar family (~2.5k),
+  Input (644), Table (625), Popover (539).
 
 ## Medium-term (this month) — package ergonomics
 
