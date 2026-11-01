@@ -306,6 +306,20 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       describedBy: ariaDescribedBy,
     });
 
+    // If the trigger child is already a natively interactive element (button,
+    // anchor, input, …), do NOT give the trigger wrapper role="button" and
+    // tabIndex={0} — that would nest two interactive controls (axe
+    // nested-interactive). The child handles focus and keyboard; the
+    // wrapper's handlers still catch bubbled click/keydown/hover events.
+    const interactiveTags = ['a', 'button', 'input', 'select', 'textarea', 'area'];
+    const childIsInteractive =
+      React.isValidElement(children) &&
+      typeof children.type === 'string' &&
+      interactiveTags.includes(children.type);
+    const triggerIsButtonlike = trigger === 'focus' || trigger === 'click';
+    const triggerRole = triggerIsButtonlike && !childIsInteractive ? 'button' : undefined;
+    const triggerTabIndex = triggerIsButtonlike && !childIsInteractive ? 0 : undefined;
+
     // Handle open/close
     const handleOpen = useCallback(() => {
       if (isControlled) {
@@ -501,8 +515,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
           onMouseLeave={handleMouseLeave}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          tabIndex={trigger === 'focus' || trigger === 'click' ? 0 : undefined}
-          role={trigger === 'focus' || trigger === 'click' ? 'button' : undefined}
+          tabIndex={triggerTabIndex}
+          role={triggerRole}
         >
           {children}
         </div>
