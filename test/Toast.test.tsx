@@ -479,7 +479,7 @@ describe('ToastProvider / useToast', () => {
     expect(screen.queryByText('Two')).not.toBeInTheDocument();
   });
 
-  it('limits simultaneous toasts to maxToasts (oldest dropped)', () => {
+  it('caps visible toasts at maxToasts; excess queue (oldest shown first)', () => {
     const Fire: React.FC = () => {
       const { toast } = useToast();
       return (
@@ -503,10 +503,44 @@ describe('ToastProvider / useToast', () => {
     );
     fireEvent.click(screen.getByText('fire'));
 
+    // FIFO: the oldest two are visible; Third and Fourth are queued (not
+    // rendered yet — their timers only start once they enter the window).
+    expect(screen.getByText('First')).toBeInTheDocument();
+    expect(screen.getByText('Second')).toBeInTheDocument();
+    expect(screen.queryByText('Third')).not.toBeInTheDocument();
+    expect(screen.queryByText('Fourth')).not.toBeInTheDocument();
+  });
+
+  it('queued toasts surface as earlier ones dismiss', () => {
+    const Fire: React.FC = () => {
+      const { toast, dismiss } = useToast();
+      return (
+        <button
+          type="button"
+          onClick={() => {
+            const a = toast({ title: 'First', duration: 0 });
+            toast({ title: 'Second', duration: 0 });
+            toast({ title: 'Third', duration: 0 });
+            // Dismiss the first visible toast → the queued Third surfaces.
+            dismiss(a);
+          }}
+        >
+          fire
+        </button>
+      );
+    };
+    render(
+      <ToastProvider maxToasts={2}>
+        <Fire />
+      </ToastProvider>,
+    );
+    fireEvent.click(screen.getByText('fire'));
+
+    // After dismissing First, Second (still visible) is joined by Third
+    // (the next in the queue). First is gone.
     expect(screen.queryByText('First')).not.toBeInTheDocument();
-    expect(screen.queryByText('Second')).not.toBeInTheDocument();
+    expect(screen.getByText('Second')).toBeInTheDocument();
     expect(screen.getByText('Third')).toBeInTheDocument();
-    expect(screen.getByText('Fourth')).toBeInTheDocument();
   });
 
   it('auto-dismisses using the provider default duration', () => {
