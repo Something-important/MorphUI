@@ -61,8 +61,13 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
   source maps). Ship as 0.10.0 with a size-comparison table in the
   changelog.
 - **`size-limit` budgets in CI** once subpath exports land.
-- **Headless hooks API v0**: export `useAnchoredPosition`, `useModal`,
-  `useToast` as public API.
+- ~~**Headless hooks API v0**: export `useAnchoredPosition`, `useModal`,
+  `useToast` as public API.~~ **Done (PR #25):** `useAnchoredPosition`
+  (was internal since PR #19) + new `useModal` (open/close state, ESC,
+  Tab focus trap, scroll lock, focus-loss close) now exported from the
+  package root; `useToast` was already public. Also fixed a `tsconfig.
+build.json` gap that skipped `src/hooks` in declaration emission.
+  Component adoption (Modal consuming `useModal`) is a follow-up.
 - **Theme presets from base + semantic overrides** instead of five ~442-line
   hand-maintained files (the token gate already proves key parity; collapse
   the duplication it polices).
