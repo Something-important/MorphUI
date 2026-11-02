@@ -202,3 +202,17 @@ export {
   addFocusIndicator,
   validateAriaAttributes,
 } from '../utils/accessibility';
+
+// Headless hooks API (v0)
+export {
+  useAnchoredPosition,
+  computeAnchoredPosition,
+  clampToViewport,
+  useModal,
+  type AnchoredPosition,
+  type AnchoredPositionInput,
+  type UseAnchoredPositionOptions,
+  type UseAnchoredPositionResult,
+  type UseModalOptions,
+  type UseModalResult,
+} from '../hooks';

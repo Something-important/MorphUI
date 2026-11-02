@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/components", "src/utils", "types"],
+  "include": ["src/components", "src/hooks", "src/utils", "types"],
   "exclude": [
     "node_modules",
     "dist",
