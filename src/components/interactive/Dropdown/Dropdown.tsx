@@ -200,8 +200,10 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       return value === val;
     };
 
-    const handleOptionClick = (val: string | number, event: React.MouseEvent) => {
-      event.stopPropagation();
+    const handleOptionClick = (val: string | number, event: React.MouseEvent | undefined) => {
+      // Guard stopPropagation — the keyboard handler (Enter/Space) calls
+      // this with a synthetic event that may not have stopPropagation.
+      event?.stopPropagation?.();
       if (disabled) return;
 
       if (multiSelect) {
