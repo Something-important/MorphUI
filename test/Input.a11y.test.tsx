@@ -148,6 +148,7 @@ describe('Input a11y', () => {
         />,
       );
       const input = screen.getByLabelText('Country');
+      expect(input.getAttribute('role')).toBe('combobox');
       const listboxId = input.getAttribute('aria-controls');
       expect(listboxId).toBe('country-suggestions');
       expect(input.getAttribute('aria-autocomplete')).toBe('list');
@@ -158,6 +159,56 @@ describe('Input a11y', () => {
       expect(listbox).not.toBeNull();
       expect(listbox?.getAttribute('role')).toBe('listbox');
       expect(listbox?.getAttribute('aria-label')).toBe('Suggestions');
+    });
+
+    it('suggestions: ArrowDown/Up/Enter keyboard navigation with aria-activedescendant', () => {
+      const onChange = jest.fn();
+      renderWithTheme(
+        <Input
+          id="country"
+          value=""
+          onChange={onChange}
+          ariaLabel="Country"
+          suggestions={['Canada', 'Chile', 'China']}
+        />,
+      );
+      const input = screen.getByLabelText('Country');
+
+      // ArrowDown opens the list and activates the first option.
+      fireEvent.keyDown(input, { key: 'ArrowDown' });
+      expect(input.getAttribute('aria-expanded')).toBe('true');
+      expect(input.getAttribute('aria-activedescendant')).toBe('country-suggestions-opt-0');
+
+      // ArrowDown again → second option active.
+      fireEvent.keyDown(input, { key: 'ArrowDown' });
+      expect(input.getAttribute('aria-activedescendant')).toBe('country-suggestions-opt-1');
+
+      // ArrowUp → back to first.
+      fireEvent.keyDown(input, { key: 'ArrowUp' });
+      expect(input.getAttribute('aria-activedescendant')).toBe('country-suggestions-opt-0');
+
+      // Enter selects the active option.
+      fireEvent.keyDown(input, { key: 'Enter' });
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({ target: { value: 'Canada' } }),
+      );
+    });
+
+    it('suggestions: Escape closes the listbox', () => {
+      renderWithTheme(
+        <Input
+          id="country"
+          value=""
+          onChange={noop}
+          ariaLabel="Country"
+          suggestions={['Canada']}
+        />,
+      );
+      const input = screen.getByLabelText('Country');
+      fireEvent.keyDown(input, { key: 'ArrowDown' }); // open
+      expect(input.getAttribute('aria-expanded')).toBe('true');
+      fireEvent.keyDown(input, { key: 'Escape' });
+      expect(input.getAttribute('aria-expanded')).toBe('false');
     });
 
     it('error message ids are unique across two id-less Inputs', () => {
