@@ -199,4 +199,161 @@ describe('Dropdown Component', () => {
       expect(getRoot()).toHaveStyle({ '--dropdown-custom-bg': '#00ff00' });
     });
   });
+
+  // Keyboard navigation — the combobox interaction model (Enter/Space to
+  // open or select, Arrow keys to move focus, Escape/Tab to close).
+  describe('Keyboard navigation', () => {
+    it('Enter opens the dropdown when closed', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.keyDown(getRoot(), { key: 'Enter' });
+      expect(getRoot()).toHaveAttribute('aria-expanded', 'true');
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+    });
+
+    it('Space opens the dropdown when closed', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.keyDown(getRoot(), { key: ' ' });
+      expect(getRoot()).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('ArrowDown opens the dropdown and focuses the first option', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' });
+      expect(getRoot()).toHaveAttribute('aria-expanded', 'true');
+      const options = screen.getAllByRole('option');
+      expect(options[0]).toHaveClass('focused');
+    });
+
+    it('ArrowUp opens the dropdown and focuses the last option', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.keyDown(getRoot(), { key: 'ArrowUp' });
+      const options = screen.getAllByRole('option');
+      // Last non-disabled option (Durian is disabled — index 3, but focused
+      // index starts at filteredOptions.length - 1 = 3).
+      expect(options[options.length - 1]).toHaveClass('focused');
+    });
+
+    it('ArrowDown moves focus to the next option when open', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' });
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' });
+      const options = screen.getAllByRole('option');
+      expect(options[1]).toHaveClass('focused');
+    });
+
+    it('ArrowUp moves focus to the previous option when open', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open, focus at -1 (none)
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' }); // -1 -> 0
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' }); // 0 -> 1
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' }); // 1 -> 2
+      fireEvent.keyDown(getRoot(), { key: 'ArrowUp' }); // 2 -> 1
+      const options = screen.getAllByRole('option');
+      expect(options[1]).toHaveClass('focused');
+    });
+
+    it('Enter selects the focused option when open', () => {
+      const onChange = jest.fn();
+      renderWithTheme(<Dropdown options={fruits} onChange={onChange} />);
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' }); // open, focus 0 (Apple)
+      fireEvent.keyDown(getRoot(), { key: 'Enter' });
+      expect(onChange).toHaveBeenCalledWith('apple');
+    });
+
+    it('Space selects the focused option when open', () => {
+      const onChange = jest.fn();
+      renderWithTheme(<Dropdown options={fruits} onChange={onChange} />);
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' }); // open, focus 0
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' }); // focus 1 (Banana)
+      fireEvent.keyDown(getRoot(), { key: ' ' });
+      expect(onChange).toHaveBeenCalledWith('banana');
+    });
+
+    it('Escape closes the open dropdown', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open
+      fireEvent.keyDown(getRoot(), { key: 'Escape' });
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    it('Tab closes the open dropdown', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open
+      fireEvent.keyDown(getRoot(), { key: 'Tab' });
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
+    it('ArrowDown does not move past the last option', () => {
+      renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open, focus 0
+      // Press ArrowDown many times to reach the end.
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' });
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' });
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' });
+      fireEvent.keyDown(getRoot(), { key: 'ArrowDown' }); // past last — should stay
+      const options = screen.getAllByRole('option');
+      // Last focusable option is index 2 (Durian at 3 is disabled but
+      // filteredOptions includes it; focusedIndex clamps at length-1).
+      expect(options[options.length - 1]).toHaveClass('focused');
+    });
+  });
+
+  describe('Multi-select footer actions', () => {
+    const multiFruits = [
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cherry', value: 'cherry' },
+    ];
+
+    it('Select All selects every option', () => {
+      const onChange = jest.fn();
+      renderWithTheme(<Dropdown options={multiFruits} multiSelect onChange={onChange} />);
+      fireEvent.click(getRoot()); // open
+      fireEvent.click(screen.getByLabelText('Select all options'));
+      expect(onChange).toHaveBeenCalledWith(['apple', 'banana', 'cherry']);
+    });
+
+    it('Clear All clears the selection', () => {
+      const onChange = jest.fn();
+      renderWithTheme(
+        <Dropdown
+          options={multiFruits}
+          multiSelect
+          value={['apple', 'banana']}
+          onChange={onChange}
+        />,
+      );
+      fireEvent.click(getRoot()); // open
+      fireEvent.click(screen.getByLabelText('Clear all selections'));
+      expect(onChange).toHaveBeenCalledWith([]);
+    });
+
+    it('Done closes the dropdown', () => {
+      renderWithTheme(<Dropdown options={multiFruits} multiSelect onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open
+      fireEvent.click(screen.getByLabelText('Confirm selections'));
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Loading and error states', () => {
+    it('shows the loading message when loading with no data', () => {
+      renderWithTheme(<Dropdown options={[]} loading onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open
+      expect(screen.getByText('Loading options...')).toBeInTheDocument();
+    });
+
+    it('shows the error message when error is set', () => {
+      renderWithTheme(<Dropdown options={[]} error="Fetch failed" onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open
+      expect(screen.getByText('Error: Fetch failed')).toBeInTheDocument();
+    });
+
+    it('shows the empty message when there are no options', () => {
+      renderWithTheme(<Dropdown options={[]} onChange={jest.fn()} />);
+      fireEvent.click(getRoot()); // open
+      expect(screen.getByText('No options available')).toBeInTheDocument();
+    });
+  });
 });
