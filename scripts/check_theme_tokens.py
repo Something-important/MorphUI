@@ -2,9 +2,11 @@
 """Single-source-of-truth gate for MorphUI theme tokens.
 
 Verifies, without touching any file:
-  1. All 5 theme presets define the identical key set (a token present in
-     only some presets becomes a stale variable when the user switches
-     themes — the worst kind of silent theming bug).
+  1. No preset introduces an override token that lightTheme (the base)
+     doesn't define — a token present in only one preset becomes a stale
+     variable when the user switches themes (the worst kind of silent
+     theming bug). Each non-light preset is `{ ...lightTheme, <overrides> }`,
+     so the base provides the full key set; overrides only replace values.
   2. No preset defines a key twice (TS object literal silently keeps the
      last one, which hides copy-paste drift from any diff review).
   3. theme.css :root matches lightTheme exactly — keys AND values
@@ -69,15 +71,20 @@ def main():
         if dupes:
             failures.append(f'{name}: duplicate keys {sorted(set(dupes))}')
 
-    # 1. identical key sets across presets
-    union = set().union(*(ks for ks, _ in presets.values()))
+    # 1. lightTheme is the base — its keys are the canonical full set.
+    #    Each other preset is { ...lightTheme, <overrides> }; verify no
+    #    override introduces a key the base doesn't define (that would add
+    #    a token to one preset only — stale-var risk on theme switch).
+    light_keys, _ = presets['lightTheme']
     for name, (ks, _) in presets.items():
-        missing = sorted(union - ks)
-        if missing:
+        if name == 'lightTheme':
+            continue
+        extra = sorted(ks - light_keys)
+        if extra:
             failures.append(
-                f'{name}: missing {len(missing)} token(s) other presets define '
-                f'(stale-var risk on theme switch): {missing[:10]}'
-                + (' ...' if len(missing) > 10 else '')
+                f'{name}: {len(extra)} override token(s) not defined in '
+                f'lightTheme (stale-var risk on theme switch): {extra[:10]}'
+                + (' ...' if len(extra) > 10 else '')
             )
 
     # 2. theme.css :root == lightTheme (single source of truth)
@@ -112,16 +119,17 @@ def main():
         for f in failures:
             print(f'  - {f}')
         print(
-            '\nFix: edit src/components/theme/themes/*.ts (all 5 presets), '
-            'then run: python3 scripts/generate_theme_css.py'
+            '\nFix: edit src/components/theme/themes/lightTheme.ts (the base) '
+            'and/or the specific preset override, then run: '
+            'python3 scripts/generate_theme_css.py'
         )
         sys.exit(1)
 
-    n = len(union)
+    n = len(light_keys)
     print(
-        f'OK: {len(PRESETS)} presets aligned ({n} tokens each), '
-        f'theme.css :root matches lightTheme (values equal after quote '
-        f'normalization).'
+        f'OK: {len(PRESETS)} presets aligned ({n} tokens each via base + '
+        f'overrides), theme.css :root matches lightTheme (values equal '
+        f'after quote normalization).'
     )
 
 
