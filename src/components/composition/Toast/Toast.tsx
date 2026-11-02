@@ -467,7 +467,9 @@ export interface ToastProviderProps {
   children: React.ReactNode;
   /** Where the toast viewport is anchored on screen. */
   position?: ToastPosition;
-  /** Maximum simultaneous toasts. Oldest toasts are dropped. 0 disables the limit. */
+  /** Maximum simultaneous visible toasts. Excess toasts queue and appear as
+   *  earlier ones dismiss (FIFO — oldest shown first). 0 disables the limit
+   *  (all visible at once). */
   maxToasts?: number;
   /** Default auto-dismiss duration in ms (per-toast `duration` overrides). */
   duration?: number;
@@ -516,17 +518,19 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     const fn = ((options: ToastOptions = {}) => {
       const id = options.id ?? generateToastId();
       setEntries((prev) => {
-        // Re-firing with an existing id refreshes that toast in place
+        // Re-firing with an existing id refreshes that toast in place.
         const existingIndex = prev.findIndex((entry) => entry.id === id);
         if (existingIndex >= 0) {
           const next = [...prev];
           next[existingIndex] = { id, options };
           return next;
         }
-        const next = [...prev, { id, options }];
-        return typeof maxToasts === 'number' && maxToasts > 0 && next.length > maxToasts
-          ? next.slice(next.length - maxToasts)
-          : next;
+        // Keep ALL entries — the render layer shows only the first
+        // `maxToasts` (the visible window); the rest queue and appear as
+        // earlier toasts dismiss. This means no notification is silently
+        // lost (the previous drop-oldest behavior ate the oldest toasts
+        // before the user could see them).
+        return [...prev, { id, options }];
       });
       return id;
     }) as ToastFn;
@@ -547,15 +551,23 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     fn.warning = shortcut('warning');
     fn.info = shortcut('info');
     return fn;
-  }, [maxToasts]);
+  }, []);
 
   const contextValue = useMemo(
     () => ({ toast: toastFn, dismiss, dismissAll }),
     [toastFn, dismiss, dismissAll],
   );
 
-  // Bottom positions read newest-first so fresh toasts appear closest to the edge
-  const orderedEntries = position.startsWith('bottom') ? [...entries].reverse() : entries;
+  // Visible window: the first `maxToasts` entries (FIFO — oldest shown
+  // first). Excess entries stay in `entries` and surface automatically as
+  // earlier toasts dismiss (their auto-dismiss timers only start once they
+  // are rendered). maxToasts = 0 means no limit (all visible at once).
+  const visible =
+    typeof maxToasts === 'number' && maxToasts > 0 ? entries.slice(0, maxToasts) : entries;
+
+  // Bottom positions read newest-first so fresh toasts appear closest to
+  // the edge (within the visible window).
+  const orderedEntries = position.startsWith('bottom') ? [...visible].reverse() : visible;
 
   return (
     <ToastContext.Provider value={contextValue}>

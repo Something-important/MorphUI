@@ -2,7 +2,7 @@
 
 How `morphui-react` gets from a merged pull request to the npm registry.
 
-Current state: `morphui-react@0.9.0` is live on npm (published 2026-10-31) via
+Current state: `morphui-react@0.11.0` is live on npm (published 2026-11-02) via
 GitHub Actions OIDC trusted publishing, with Sigstore provenance attestation.
 There is deliberately **no `NPM_TOKEN` secret** in this repo.
 
