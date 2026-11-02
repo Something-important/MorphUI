@@ -68,3 +68,11 @@ jobs:
       - name: Build library
         run: |
           npm run build:all
+
+      - name: Size budgets
+        # Fails if any component's brotli size (including shared deps) exceeds
+        # its budget in .size-limit.json. Catches silent bundle regressions
+        # from dependency upgrades or refactors. Runs after the build so
+        # dist/esm/ exists.
+        run: |
+          npm run size
