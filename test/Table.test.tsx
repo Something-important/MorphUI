@@ -403,3 +403,49 @@ describe('Table Component', () => {
     });
   });
 });
+
+// Column pinning (fixed: 'left' | 'right')
+describe('Fixed columns', () => {
+  it('applies fixed-left class to the header and body cells', () => {
+    const { container } = render(
+      <Table
+        data={testData}
+        columns={[
+          { key: 'name', label: 'Name', fixed: 'left' },
+          { key: 'email', label: 'Email' },
+          { key: 'role', label: 'Role' },
+        ]}
+      />,
+    );
+    const ths = container.querySelectorAll('thead th');
+    expect(ths[0]).toHaveClass('table-component__th--fixed-left');
+    expect(ths[1]).not.toHaveClass('table-component__th--fixed-left');
+    const tds = container.querySelectorAll('tbody tr:first-child td');
+    expect(tds[0]).toHaveClass('table-component__td--fixed-left');
+    expect(tds[1]).not.toHaveClass('table-component__td--fixed-left');
+  });
+
+  it('applies fixed-right class to the header and body cells', () => {
+    const { container } = render(
+      <Table
+        data={testData}
+        columns={[
+          { key: 'name', label: 'Name' },
+          { key: 'email', label: 'Email' },
+          { key: 'role', label: 'Role', fixed: 'right' },
+        ]}
+      />,
+    );
+    const ths = container.querySelectorAll('thead th');
+    expect(ths[2]).toHaveClass('table-component__th--fixed-right');
+    const tds = container.querySelectorAll('tbody tr:first-child td');
+    expect(tds[2]).toHaveClass('table-component__td--fixed-right');
+  });
+
+  it('omits the fixed class when fixed is not set', () => {
+    const { container } = render(<Table data={testData} columns={testColumns} />);
+    const th = container.querySelector('thead th');
+    expect(th).not.toHaveClass('table-component__th--fixed-left');
+    expect(th).not.toHaveClass('table-component__th--fixed-right');
+  });
+});

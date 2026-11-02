@@ -465,11 +465,14 @@ function TableInner<T>(
                 )}
                 {columns.map((column) => {
                   const isSortable = globalSortable && column.sortable !== false;
+                  const fixedClass = column.fixed
+                    ? ` table-component__th--fixed-${column.fixed}`
+                    : '';
                   return (
                     <th
                       key={column.key}
                       scope="col"
-                      className={`table-component__th ${column.className || ''}`}
+                      className={`table-component__th${fixedClass} ${column.className || ''}`}
                       style={{
                         width: column.width,
                         textAlign: column.headerAlign || column.align || 'left',
@@ -570,7 +573,7 @@ function TableInner<T>(
                         return (
                           <td
                             key={column.key}
-                            className={`table-component__td ${column.className || ''}`}
+                            className={`table-component__td${column.fixed ? ` table-component__td--fixed-${column.fixed}` : ''} ${column.className || ''}`}
                             style={{
                               textAlign: column.align || 'left',
                             }}
