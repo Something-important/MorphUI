@@ -1,10 +1,22 @@
 name: Release Please
 
+# On every push to master, release-please opens/updates a release PR. When
+# that PR merges (creating a v* tag + GitHub release), the `publish` job
+# runs automatically and publishes to npm via OIDC trusted publishing — no
+# manual dispatch needed, no NPM_TOKEN secret.
+#
+# `workflow_dispatch` with `force_publish` lets you re-publish the current
+# master version without a new release (e.g. to retry a failed publish).
 on:
   push:
     branches:
       - master
   workflow_dispatch:
+    inputs:
+      force_publish:
+        description: 'Publish the current master version to npm (bypasses the release gate)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,15 +36,53 @@ jobs:
           bump-minor-pre-major: true
           default-branch: master
 
-  # When release-please creates a release (tags v* + merges the release
-  # PR), call the publish workflow directly. workflow_call works with the
-  # default GITHUB_TOKEN — unlike the tag-push event release-please fires,
-  # which GitHub deliberately does not propagate to downstream workflows
-  # (anti-loop protection). This closes the gap so releases auto-publish.
-  call-publish:
+  # Publish to npm when release-please creates a release, or when manually
+  # dispatched with force_publish. Inlined here (rather than called via
+  # workflow_call from a separate publish.yml) so the GitHub OIDC token's
+  # `workflow` claim is `release-please.yml` — matching the npm trusted
+  # publisher config. (A workflow_call produces a caller-workflow claim that
+  # npm's trusted publishing does not recognize.)
+  publish:
     needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
-    uses: ./.github/workflows/publish.yml
+    if: ${{ inputs.force_publish || needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
+      id-token: write # OIDC trusted publishing — no NPM_TOKEN secret.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        # No `registry-url` here on purpose:
+        #   - Trusted publishing via OIDC doesn't need a token in ~/.npmrc.
+        #   - Passing `registry-url` makes actions/setup-node write
+        #     `always-auth=true` to ~/.npmrc, which npm 11+ warns about
+        #     and npm 12 will reject outright.
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Upgrade npm to v11+ (required for OIDC trusted publishing)
+        run: npm install -g npm@latest
+
+      - name: Print npm version (sanity check)
+        run: npm --version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build library (JS + types + extracted CSS)
+        run: npm run build:all
+
+      - name: Show what will be published
+        run: npm pack --dry-run
+
+      - name: Publish with provenance (OIDC trusted publishing)
+        run: npm publish --provenance
+
+      - name: Dump publish debug log on failure
+        if: failure()
+        run: |
+          echo "=== newest npm debug log ==="
+          cat "$(ls -t /home/runner/.npm/_logs/*-debug-0.log | head -1)" | tail -60 || true
