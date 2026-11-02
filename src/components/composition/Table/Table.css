@@ -49,6 +49,51 @@
     white-space: nowrap;
   }
 
+  /* Pinned / frozen columns. position: sticky keeps the column visible
+     during horizontal scroll. The cell needs a background so scrolled
+     content doesn't show through; the header sits above body cells via
+     z-index. For a single pinned column per side, left/right: 0 is
+     correct; multiple pinned columns on the same side need a CSS-variable
+     offset (--table-fixed-offset) that the consumer sets per column. */
+  .table-component__th--fixed-left,
+  .table-component__td--fixed-left {
+    position: sticky;
+    left: var(--table-fixed-offset, 0);
+    z-index: 2;
+    background: var(
+      --table-custom-header-bg,
+      var(--table-header-bg, var(--color-background, #fff))
+    );
+  }
+
+  .table-component__th--fixed-right,
+  .table-component__td--fixed-right {
+    position: sticky;
+    right: var(--table-fixed-offset, 0);
+    z-index: 2;
+    background: var(
+      --table-custom-header-bg,
+      var(--table-header-bg, var(--color-background, #fff))
+    );
+  }
+
+  /* Body cells use the row background, not the header background. */
+  .table-component__td--fixed-left,
+  .table-component__td--fixed-right {
+    background: var(--table-custom-row-bg, var(--table-row-bg, var(--color-background, #fff)));
+  }
+
+  /* A subtle shadow on the inner edge of a right-pinned column so the
+     scroll boundary is visible. */
+  .table-component__td--fixed-right,
+  .table-component__th--fixed-right {
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.06);
+  }
+  .table-component__td--fixed-left,
+  .table-component__th--fixed-left {
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.06);
+  }
+
   .table-component__th-content {
     display: flex;
     align-items: center;
