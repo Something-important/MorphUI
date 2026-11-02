@@ -55,12 +55,19 @@ Prioritized goals for MorphUI. The housekeeping section was completed on
 
 ## Medium-term (this month) — package ergonomics
 
-- **Per-component ESM exports + `preserveModules`**: subpath exports
+- ~~**Per-component ESM exports + `preserveModules`**: subpath exports
   (`morphui-react/button`), per-component CSS (`morphui-react/css/button`),
   optional sourcemap exclusion (~1.8 MB of the 3.2 MB unpacked size is
   source maps). Ship as 0.10.0 with a size-comparison table in the
-  changelog.
-- **`size-limit` budgets in CI** once subpath exports land.
+  changelog.~~ **JS subpath exports done (PR #29):** a second rollup config
+  emits `preserveModules` ESM to `dist/esm/` (one file per source module);
+  35 subpath entries (`morphui-react/button`, `morphui-react/use-modal`,
+  etc.) enable true per-component tree-shaking. Backward compatible — the
+  single-file barrel and `./css` export are unchanged. 72 structural tests
+  guard the mapping. **Deferred:** per-component CSS (`morphui-react/css/
+button`) needs a CSS-splitting strategy; sourcemap opt-out (~1.8 MB);
+  ESM-only / drop-CJS (a major-version decision).
+- **`size-limit` budgets in CI** once subpath exports land. ← now unblocked
 - ~~**Headless hooks API v0**: export `useAnchoredPosition`, `useModal`,
   `useToast` as public API.~~ **Done (PR #25):** `useAnchoredPosition`
   (was internal since PR #19) + new `useModal` (open/close state, ESC,
