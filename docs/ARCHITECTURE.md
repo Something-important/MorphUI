@@ -137,5 +137,7 @@ Rollup 4, single entry `src/components/index.ts`:
 - **Storybook 9** (react-vite) with 33 component stories plus a Theme
   Showcase; `deploy-storybook.yml` publishes to GitHub Pages on `master`.
 - **release-please** (node, `bump-minor-pre-major`) plus **semantic-pr**
-  title linting; `publish.yml` performs OIDC trusted publishing on `v*` tags
-  — see [PUBLISH_SETUP.md](../PUBLISH_SETUP.md).
+  title linting; the publish job is inlined in `release-please.yml` and
+  runs OIDC trusted publishing automatically when a release is created
+  (or on manual `force_publish` dispatch) — see
+  [PUBLISH_SETUP.md](../PUBLISH_SETUP.md).
