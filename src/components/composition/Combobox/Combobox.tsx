@@ -53,6 +53,15 @@ export interface ComboboxProps {
   borderRadius?: string | number;
   /** Shadow token level applied to the listbox popup. */
   shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  /** Enable windowed rendering for large option lists (1000+). When true,
+   *  only the visible slice of options is rendered, with a fixed
+   *  `itemHeight` per option. Requires `itemHeight`. */
+  virtualize?: boolean;
+  /** Fixed height per option in px — required when `virtualize` is true.
+   *  Used to compute the total scroll height and the visible window. */
+  itemHeight?: number;
+  /** Max height of the listbox popup in px (default 320). */
+  listboxMaxHeight?: number;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -88,6 +97,9 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       borderColor,
       borderRadius,
       shadow,
+      virtualize = false,
+      itemHeight = 40,
+      listboxMaxHeight = 320,
       className = '',
       style,
       ...rest
@@ -103,6 +115,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     const [inputValue, setInputValue] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
+    const [scrollTop, setScrollTop] = useState(0);
     const [asyncOptions, setAsyncOptions] = useState<ComboboxOption[] | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -117,6 +130,24 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     }, [sourceOptions, loadOptions, inputValue, filterOption]);
 
     const selectedOption = options.find((opt) => opt.value === selectedValue) ?? null;
+
+    // Virtualization: when enabled, render only the visible window of
+    // options. The listbox is a scroll container of height listboxMaxHeight;
+    // each option is itemHeight tall. We render a buffer of items above and
+    // below the visible viewport so arrow-key navigation feels contiguous.
+    const virtualWindow = useMemo(() => {
+      if (!virtualize || filteredOptions.length === 0) return null;
+      const viewportItems = Math.ceil(listboxMaxHeight / itemHeight);
+      const buffer = Math.max(3, Math.ceil(viewportItems / 2));
+      const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - buffer);
+      const endIndex = Math.min(filteredOptions.length, startIndex + viewportItems + buffer * 2);
+      return {
+        startIndex,
+        endIndex,
+        totalHeight: filteredOptions.length * itemHeight,
+        offsetTop: startIndex * itemHeight,
+      };
+    }, [virtualize, filteredOptions.length, scrollTop, itemHeight, listboxMaxHeight]);
 
     // Reset highlight when the list opens or the filtered set changes.
     useEffect(() => {
@@ -347,6 +378,10 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
             role="listbox"
             className="combobox-component__listbox"
             aria-label={ariaLabel}
+            style={virtualize ? { maxHeight: listboxMaxHeight, overflowY: 'auto' } : undefined}
+            onScroll={
+              virtualize ? (e) => setScrollTop((e.target as HTMLDivElement).scrollTop) : undefined
+            }
           >
             {isLoading ? (
               <div className="combobox-component__message" role="status">
@@ -354,6 +389,55 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
               </div>
             ) : filteredOptions.length === 0 ? (
               <div className="combobox-component__message">{emptyMessage}</div>
+            ) : virtualize && virtualWindow ? (
+              // Windowed render: a spacer of the full scroll height, with
+              // only the visible slice of options rendered (offset by
+              // padding-top so they land at the right scroll position).
+              <div style={{ height: virtualWindow.totalHeight, position: 'relative' }}>
+                <div style={{ paddingTop: virtualWindow.offsetTop }}>
+                  {filteredOptions
+                    .slice(virtualWindow.startIndex, virtualWindow.endIndex)
+                    .map((option, i) => {
+                      const index = virtualWindow.startIndex + i;
+                      const isHighlighted = index === highlightedIndex;
+                      const isSelected = option.value === selectedValue;
+                      return (
+                        <div
+                          key={`${option.value}-${index}`}
+                          id={optionId(index)}
+                          role="option"
+                          tabIndex={-1}
+                          aria-selected={isSelected || isHighlighted}
+                          aria-disabled={option.disabled || undefined}
+                          style={{ height: itemHeight }}
+                          className={[
+                            'combobox-component__option',
+                            isHighlighted && 'combobox-component__option--highlighted',
+                            isSelected && 'combobox-component__option--selected',
+                            option.disabled && 'combobox-component__option--disabled',
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            if (!option.disabled) commitSelection(option);
+                          }}
+                          onMouseEnter={() => setHighlightedIndex(index)}
+                        >
+                          {option.icon && (
+                            <span className="combobox-component__option-icon">{option.icon}</span>
+                          )}
+                          <span className="combobox-component__option-label">{option.label}</span>
+                          {option.description && (
+                            <span className="combobox-component__option-description">
+                              {option.description}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
             ) : (
               filteredOptions.map((option, index) => {
                 const isHighlighted = index === highlightedIndex;

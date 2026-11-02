@@ -313,3 +313,72 @@ describe('Combobox Component', () => {
     });
   });
 });
+
+// Virtualization — windowed rendering for large option lists
+describe('Virtualization', () => {
+  const manyOptions = Array.from({ length: 1000 }, (_, i) => ({
+    label: `Option ${i}`,
+    value: `opt-${i}`,
+  }));
+
+  it('renders only a window of options, not all 1000', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Combobox options={manyOptions} virtualize itemHeight={40} />
+      </ThemeProvider>,
+    );
+    // Open the listbox.
+    fireEvent.click(container.querySelector('.combobox-component__toggle')!);
+    const options = container.querySelectorAll('[role="option"]');
+    // Should render far fewer than 1000 (viewport + buffer, ~20-25).
+    expect(options.length).toBeLessThan(50);
+    expect(options.length).toBeGreaterThan(0);
+  });
+
+  it('creates a spacer with the full scroll height', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Combobox options={manyOptions} virtualize itemHeight={40} />
+      </ThemeProvider>,
+    );
+    fireEvent.click(container.querySelector('.combobox-component__toggle')!);
+    // The spacer div (listbox's direct child) has height = 1000 * 40 = 40000px.
+    const spacer = container.querySelector('[role="listbox"] > div') as HTMLElement;
+    expect(spacer.style.height).toBe('40000px');
+  });
+
+  it('shifts the visible window on scroll', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Combobox options={manyOptions} virtualize itemHeight={40} listboxMaxHeight={320} />
+      </ThemeProvider>,
+    );
+    fireEvent.click(container.querySelector('.combobox-component__toggle')!);
+    const listbox = container.querySelector('[role="listbox"]') as HTMLElement;
+
+    // Initial window: first option is "Option 0" (or near it).
+    const firstBatch = Array.from(container.querySelectorAll('[role="option"]')).map(
+      (o) => o.textContent,
+    );
+    expect(firstBatch).toContain('Option 0');
+
+    // Scroll down 400px (10 items). The window should shift — Option 0
+    // should no longer be rendered, but Option 10+ should be.
+    fireEvent.scroll(listbox, { target: { scrollTop: 400 } });
+    const secondBatch = Array.from(container.querySelectorAll('[role="option"]')).map(
+      (o) => o.textContent,
+    );
+    expect(secondBatch).not.toContain('Option 0');
+    expect(secondBatch.some((t) => t?.includes('Option 1'))).toBe(true);
+  });
+
+  it('renders all options when virtualize is off', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Combobox options={manyOptions.slice(0, 50)} />
+      </ThemeProvider>,
+    );
+    fireEvent.click(container.querySelector('.combobox-component__toggle')!);
+    expect(container.querySelectorAll('[role="option"]').length).toBe(50);
+  });
+});
