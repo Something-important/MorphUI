@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.12.0](https://github.com/Something-important/MorphUI/compare/v0.11.0...v0.12.0) (2026-11-02)
+
+
+### Features
+
+* **toast:** queue excess toasts instead of dropping them (FIFO) ([288d306](https://github.com/Something-important/MorphUI/commit/288d30622fe52adf8df559b8e35d4ada107b69c9))
+* **toast:** queue excess toasts instead of dropping them (FIFO) ([67b719e](https://github.com/Something-important/MorphUI/commit/67b719efe3a58a2c16fca5fee8b63b3087da700a))
+
+
+### Bug Fixes
+
+* **release-please:** drop config-file, use minimal with: inputs ([9ccfddb](https://github.com/Something-important/MorphUI/commit/9ccfddb4b97e109a6c37e3503380e37027394a1e))
+* **release-please:** drop config-file, use minimal with: inputs ([6996c5f](https://github.com/Something-important/MorphUI/commit/6996c5fbd9a277410ae133b4e4325316c3032461))
+* **release-please:** use single-package config, not multi-component ([d34e492](https://github.com/Something-important/MorphUI/commit/d34e4929d6f32598cc722adcf645e2dadc0a3159))
+* **release-please:** use single-package config, not multi-component ([787c0c7](https://github.com/Something-important/MorphUI/commit/787c0c7faf09b42ba63736a2c3e394e803b29edd))
+
 ## [0.11.0](https://github.com/Something-important/MorphUI/compare/v0.10.0...v0.11.0) (2026-11-02)
 
 
