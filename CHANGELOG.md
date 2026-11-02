@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.0](https://github.com/Something-important/MorphUI/compare/v0.12.0...v0.13.0) (2026-11-02)
+
+
+### Features
+
+* **input:** full ARIA combobox pattern for suggestions ([10a24fd](https://github.com/Something-important/MorphUI/commit/10a24fd9d614b7b723aed32dc07dee76877ac8e1))
+* **input:** full ARIA combobox pattern for suggestions ([07b0a59](https://github.com/Something-important/MorphUI/commit/07b0a59e431df415f402e735b898c83c32c595c3))
+
 ## [0.12.0](https://github.com/Something-important/MorphUI/compare/v0.11.0...v0.12.0) (2026-11-02)
 
 
