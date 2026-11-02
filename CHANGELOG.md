@@ -1,5 +1,58 @@
 # Changelog
 
+## [0.9.0](https://github.com/Something-important/MorphUI/compare/morphui-react-v0.11.0...morphui-react-v0.9.0) (2026-11-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **theme:** styles are no longer injected at runtime. Import 'morphui-react/css' once in your app, before your own stylesheets.
+
+### Features
+
+* Add multiple new components (Stepper, Divider, Alert, Table, Spinner, Progress, Slider, Avatar, Skeleton, Pagination, Drawer) ([d8e8204](https://github.com/Something-important/MorphUI/commit/d8e82045c173282a30078b09ee02e5d78d4a3470))
+* add Toast component with imperative API, pause-on-hover, and stacking viewport ([aab7126](https://github.com/Something-important/MorphUI/commit/aab712653633e03dfc3c689cb9b14f3dab0cc085))
+* **combobox:** add Combobox component with ARIA combobox pattern ([dd0e153](https://github.com/Something-important/MorphUI/commit/dd0e153d372c56982942b2c0206079bafbeece8b))
+* complete component improvements and test coverage ([1b42b70](https://github.com/Something-important/MorphUI/commit/1b42b7028a44402b48841792b94439921654a48d))
+* **context-menu:** add ContextMenu component ([a36fd49](https://github.com/Something-important/MorphUI/commit/a36fd4910352efc679b84691a401634bda1cfe73))
+* **datepicker:** add DatePicker with calendar grid + keyboard nav ([1ebc7d0](https://github.com/Something-important/MorphUI/commit/1ebc7d05a1c68e6cc74d5a62a0e710b68160a022))
+* export variant/size/type unions for all basic + Accordion components ([1681437](https://github.com/Something-important/MorphUI/commit/1681437e96be8fc3ea42ea9d0590bafec7353e3a))
+* **form:** add Form + FormField components ([b43b173](https://github.com/Something-important/MorphUI/commit/b43b173768717a79fc239318ed512f292df1ffef))
+* **hooks:** export useAnchoredPosition + useModal as public API (hooks v0) ([8dbeff7](https://github.com/Something-important/MorphUI/commit/8dbeff7cec6b6dcff590d91240b0f2fa28e26942))
+* **hooks:** export useAnchoredPosition + useModal as public API (hooks v0) ([44259af](https://github.com/Something-important/MorphUI/commit/44259af0bf20d487d788f1307d696e2f2edf39a7))
+* improve Button component and add CI/workflow improvements ([7152927](https://github.com/Something-important/MorphUI/commit/7152927f0f0f27a2d34b0fa3300e825b066cbb52))
+* **package:** preserveModules ESM + 35 tree-shakeable subpath exports ([3d10dd3](https://github.com/Something-important/MorphUI/commit/3d10dd30920634a6ae1ba4434769f5cd380d218e))
+* **package:** preserveModules ESM + 35 tree-shakeable subpath exports ([5a48600](https://github.com/Something-important/MorphUI/commit/5a48600d1c17b1887f9add0b70137a2a1926ff27))
+* **table:** implement filtering + improve a11y (aria-sort, aria-selected, row keyboard) ([a9db710](https://github.com/Something-important/MorphUI/commit/a9db7107a88c99daa8d215630cf9817a11492b0a))
+* **theme:** rework theming around preset-driven tokens ([22a4692](https://github.com/Something-important/MorphUI/commit/22a469233890640661888cf1998a93bbd69ed2ea))
+
+
+### Bug Fixes
+
+* **a11y:** clear all jsx-a11y warnings with real keyboard/role fixes ([05b6a25](https://github.com/Something-important/MorphUI/commit/05b6a251a997a6b50765e3ddc36121f8f6ab8a61))
+* **build:** correct types path, add sideEffects + exports for tree-shaking ([7c5e3e3](https://github.com/Something-important/MorphUI/commit/7c5e3e3105ef9d3bedbff2773d3b7d26bef05733))
+* convert accessibility ESLint errors to warnings ([ebbbe29](https://github.com/Something-important/MorphUI/commit/ebbbe29c760c2347f256574e8d10c3db4c3767c9))
+* **dropdown:** resolve axe violations across all open states ([3522821](https://github.com/Something-important/MorphUI/commit/35228216a6f72ab4e1ab17669b80f37cce9d8373))
+* **dropdown:** resolve axe violations across all open states ([0624899](https://github.com/Something-important/MorphUI/commit/0624899734f7592f98fcfee518c62f27df199275))
+* fix CI failures and add pre-commit hooks ([27eb955](https://github.com/Something-important/MorphUI/commit/27eb95548c4aa5ce1c367f792c0a25718f54b6be))
+* Fix Label test style prop precedence checks ([eea96ff](https://github.com/Something-important/MorphUI/commit/eea96ff7c84ba594265d6d168ef31540dee0f25e))
+* Fix Stepper test - remove redundant role attributes check ([6487145](https://github.com/Something-important/MorphUI/commit/64871456e628b8f224e2d7a3c2245beb9a0580ab))
+* Fix TypeScript errors in stories and components ([7dd5575](https://github.com/Something-important/MorphUI/commit/7dd55759d9aae775be03adda48a859241c3fc662))
+* **input:** resolve axe violations and three deeper a11y issues ([44ba8c1](https://github.com/Something-important/MorphUI/commit/44ba8c1c14db3069343778944b1f0e61b4966f13))
+* **input:** resolve axe violations and three deeper a11y issues ([24483c8](https://github.com/Something-important/MorphUI/commit/24483c84e5d0883801a14a8a451d7b8d3d7ed3d6))
+* **popover:** avoid nested-interactive on the trigger wrapper ([7f702fd](https://github.com/Something-important/MorphUI/commit/7f702fd84abe72633d63294ca1644f9223cc0748))
+* **popover:** avoid nested-interactive on the trigger wrapper ([0a21a6d](https://github.com/Something-important/MorphUI/commit/0a21a6d215b1a60f9352385b269d2b1ed5c028b6))
+* relax ESLint rules to prevent CI failures ([a0c3bd3](https://github.com/Something-important/MorphUI/commit/a0c3bd33230df2327f573fb08066363b2a183291))
+* **sidebar:** make SidebarGroup aria-controls/aria-labelledby resolve ([5e9757d](https://github.com/Something-important/MorphUI/commit/5e9757d93ad8fabea2310c5d9e9159acab744d6f))
+* **sidebar:** make SidebarGroup aria-controls/aria-labelledby resolve ([c7c0255](https://github.com/Something-important/MorphUI/commit/c7c02557b5ad3c255b834422aa26ced5e0309b32))
+* **table:** give the table an accessible name and add th scope ([b11ddb8](https://github.com/Something-important/MorphUI/commit/b11ddb82a2b2cbfbd991aaa1dc265b9ab7911a12))
+* **table:** give the table an accessible name and add th scope ([fdd30a4](https://github.com/Something-important/MorphUI/commit/fdd30a4758209988c4be416123369cf78180d51e))
+
+
+### Miscellaneous Chores
+
+* realign release version to the 0.x line ([a22d4ce](https://github.com/Something-important/MorphUI/commit/a22d4ce6a8cf5435b60d0f3313636709b03ea92d))
+* **release:** force 0.9.0 instead of 1.0.0 ([20439f3](https://github.com/Something-important/MorphUI/commit/20439f373bf7a713b8e1d533a5ebe59abf5f4e83))
+
 ## [0.11.0](https://github.com/Something-important/MorphUI/compare/v0.10.0...v0.11.0) (2026-11-02)
 
 
