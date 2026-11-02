@@ -110,7 +110,147 @@
     },
     "./css": "./dist/morphui.css",
     "./dist/*": "./dist/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./avatar": {
+      "types": "./dist/components/basic/Avatar/index.d.ts",
+      "import": "./dist/esm/components/basic/Avatar/Avatar.js"
+    },
+    "./badge": {
+      "types": "./dist/components/basic/Badge/index.d.ts",
+      "import": "./dist/esm/components/basic/Badge/Badge.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/components/basic/Breadcrumb/index.d.ts",
+      "import": "./dist/esm/components/basic/Breadcrumb/Breadcrumb.js"
+    },
+    "./button": {
+      "types": "./dist/components/basic/Button/index.d.ts",
+      "import": "./dist/esm/components/basic/Button/Button.js"
+    },
+    "./checkbox": {
+      "types": "./dist/components/basic/Checkbox/index.d.ts",
+      "import": "./dist/esm/components/basic/Checkbox/Checkbox.js"
+    },
+    "./divider": {
+      "types": "./dist/components/basic/Divider/index.d.ts",
+      "import": "./dist/esm/components/basic/Divider/Divider.js"
+    },
+    "./input": {
+      "types": "./dist/components/basic/Input/index.d.ts",
+      "import": "./dist/esm/components/basic/Input/Input.js"
+    },
+    "./label": {
+      "types": "./dist/components/basic/Label/index.d.ts",
+      "import": "./dist/esm/components/basic/Label/Label.js"
+    },
+    "./progress": {
+      "types": "./dist/components/basic/Progress/index.d.ts",
+      "import": "./dist/esm/components/basic/Progress/Progress.js"
+    },
+    "./skeleton": {
+      "types": "./dist/components/basic/Skeleton/index.d.ts",
+      "import": "./dist/esm/components/basic/Skeleton/Skeleton.js"
+    },
+    "./spinner": {
+      "types": "./dist/components/basic/Spinner/index.d.ts",
+      "import": "./dist/esm/components/basic/Spinner/Spinner.js"
+    },
+    "./stepper": {
+      "types": "./dist/components/basic/Stepper/index.d.ts",
+      "import": "./dist/esm/components/basic/Stepper/Stepper.js"
+    },
+    "./switch": {
+      "types": "./dist/components/basic/Switch/index.d.ts",
+      "import": "./dist/esm/components/basic/Switch/Switch.js"
+    },
+    "./toggle": {
+      "types": "./dist/components/basic/Toggle/index.d.ts",
+      "import": "./dist/esm/components/basic/Toggle/Toggle.js"
+    },
+    "./alert": {
+      "types": "./dist/components/composition/Alert/index.d.ts",
+      "import": "./dist/esm/components/composition/Alert/Alert.js"
+    },
+    "./combobox": {
+      "types": "./dist/components/composition/Combobox/index.d.ts",
+      "import": "./dist/esm/components/composition/Combobox/Combobox.js"
+    },
+    "./context-menu": {
+      "types": "./dist/components/composition/ContextMenu/index.d.ts",
+      "import": "./dist/esm/components/composition/ContextMenu/ContextMenu.js"
+    },
+    "./date-picker": {
+      "types": "./dist/components/composition/DatePicker/index.d.ts",
+      "import": "./dist/esm/components/composition/DatePicker/DatePicker.js"
+    },
+    "./drawer": {
+      "types": "./dist/components/composition/Drawer/index.d.ts",
+      "import": "./dist/esm/components/composition/Drawer/Drawer.js"
+    },
+    "./form": {
+      "types": "./dist/components/composition/Form/index.d.ts",
+      "import": "./dist/esm/components/composition/Form/Form.js"
+    },
+    "./popover": {
+      "types": "./dist/components/composition/Popover/index.d.ts",
+      "import": "./dist/esm/components/composition/Popover/Popover.js"
+    },
+    "./sidebar": {
+      "types": "./dist/components/composition/Sidebar/index.d.ts",
+      "import": "./dist/esm/components/composition/Sidebar/Sidebar.js"
+    },
+    "./table": {
+      "types": "./dist/components/composition/Table/index.d.ts",
+      "import": "./dist/esm/components/composition/Table/Table.js"
+    },
+    "./tabs": {
+      "types": "./dist/components/composition/Tabs/index.d.ts",
+      "import": "./dist/esm/components/composition/Tabs/Tabs.js"
+    },
+    "./toast": {
+      "types": "./dist/components/composition/Toast/index.d.ts",
+      "import": "./dist/esm/components/composition/Toast/Toast.js"
+    },
+    "./tooltip": {
+      "types": "./dist/components/composition/Tooltip/index.d.ts",
+      "import": "./dist/esm/components/composition/Tooltip/Tooltip.js"
+    },
+    "./accordion": {
+      "types": "./dist/components/interactive/Accordion/index.d.ts",
+      "import": "./dist/esm/components/interactive/Accordion/Accordion.js"
+    },
+    "./card": {
+      "types": "./dist/components/interactive/Card/index.d.ts",
+      "import": "./dist/esm/components/interactive/Card/Card.js"
+    },
+    "./dropdown": {
+      "types": "./dist/components/interactive/Dropdown/index.d.ts",
+      "import": "./dist/esm/components/interactive/Dropdown/Dropdown.js"
+    },
+    "./modal": {
+      "types": "./dist/components/interactive/Modal/index.d.ts",
+      "import": "./dist/esm/components/interactive/Modal/Modal.js"
+    },
+    "./pagination": {
+      "types": "./dist/components/interactive/Pagination/index.d.ts",
+      "import": "./dist/esm/components/interactive/Pagination/Pagination.js"
+    },
+    "./radio-group": {
+      "types": "./dist/components/interactive/RadioGroup/index.d.ts",
+      "import": "./dist/esm/components/interactive/RadioGroup/RadioGroup.js"
+    },
+    "./slider": {
+      "types": "./dist/components/interactive/Slider/index.d.ts",
+      "import": "./dist/esm/components/interactive/Slider/Slider.js"
+    },
+    "./use-anchored-position": {
+      "types": "./dist/hooks/useAnchoredPosition.d.ts",
+      "import": "./dist/esm/hooks/useAnchoredPosition.js"
+    },
+    "./use-modal": {
+      "types": "./dist/hooks/useModal.d.ts",
+      "import": "./dist/esm/hooks/useModal.js"
+    }
   },
   "sideEffects": [
     "**/*.css"
