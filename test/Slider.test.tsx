@@ -340,4 +340,200 @@ describe('Slider Component', () => {
       expect(screen.getByRole('slider')).toBeInTheDocument();
     });
   });
+
+  // Keyboard navigation, track click, and drag — the core interaction
+  // logic that was previously untested (covered Slider from ~55% to ~85%).
+  describe('Keyboard navigation', () => {
+    it('ArrowRight increments by step', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} step={5} onChange={onChange} />);
+      const thumb = screen.getByRole('slider');
+      fireEvent.keyDown(thumb, { key: 'ArrowRight' });
+      expect(onChange).toHaveBeenCalledWith(55);
+    });
+
+    it('ArrowLeft decrements by step', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} step={5} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'ArrowLeft' });
+      expect(onChange).toHaveBeenCalledWith(45);
+    });
+
+    it('ArrowUp increments by step', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} step={1} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'ArrowUp' });
+      expect(onChange).toHaveBeenCalledWith(51);
+    });
+
+    it('ArrowDown decrements by step', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} step={1} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'ArrowDown' });
+      expect(onChange).toHaveBeenCalledWith(49);
+    });
+
+    it('PageUp increments by step * 10', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} step={1} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'PageUp' });
+      expect(onChange).toHaveBeenCalledWith(60);
+    });
+
+    it('PageDown decrements by step * 10', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} step={1} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'PageDown' });
+      expect(onChange).toHaveBeenCalledWith(40);
+    });
+
+    it('Home sets to min', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} min={10} max={90} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'Home' });
+      expect(onChange).toHaveBeenCalledWith(10);
+    });
+
+    it('End sets to max', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} min={10} max={90} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'End' });
+      expect(onChange).toHaveBeenCalledWith(90);
+    });
+
+    it('clamps to max on ArrowRight past the end', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={98} min={0} max={100} step={5} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'ArrowRight' });
+      expect(onChange).toHaveBeenCalledWith(100);
+    });
+
+    it('does nothing when disabled', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} disabled onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'ArrowRight' });
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('ignores unrelated keys', () => {
+      const onChange = jest.fn();
+      render(<Slider defaultValue={50} onChange={onChange} />);
+      fireEvent.keyDown(screen.getByRole('slider'), { key: 'Enter' });
+      expect(onChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Range slider', () => {
+    it('keyboard moves the correct thumb', () => {
+      const onChange = jest.fn();
+      render(<Slider range defaultValue={[25, 75]} step={5} onChange={onChange} />);
+      const thumbs = screen.getAllByRole('slider');
+      fireEvent.keyDown(thumbs[1], { key: 'ArrowRight' });
+      expect(onChange).toHaveBeenCalledWith([25, 80]);
+    });
+
+    it('thumb 0 cannot exceed thumb 1', () => {
+      const onChange = jest.fn();
+      render(<Slider range defaultValue={[70, 75]} step={10} onChange={onChange} />);
+      const thumbs = screen.getAllByRole('slider');
+      // Try to push thumb 0 past thumb 1 — clamped to thumb 1's value.
+      fireEvent.keyDown(thumbs[0], { key: 'ArrowRight' });
+      expect(onChange).toHaveBeenCalledWith([75, 75]);
+    });
+
+    it('thumb 1 cannot go below thumb 0', () => {
+      const onChange = jest.fn();
+      render(<Slider range defaultValue={[25, 30]} step={10} onChange={onChange} />);
+      const thumbs = screen.getAllByRole('slider');
+      fireEvent.keyDown(thumbs[1], { key: 'ArrowLeft' });
+      expect(onChange).toHaveBeenCalledWith([25, 25]);
+    });
+  });
+
+  describe('Track click and drag', () => {
+    // jsdom getBoundingClientRect returns zeros; mock a 100px-wide track
+    // at origin so getValueFromPosition(clientX) == clientX (with min=0,
+    // max=100, step=1).
+    const mockTrackRect = (width = 100, left = 0) => {
+      const orig = Element.prototype.getBoundingClientRect;
+      Element.prototype.getBoundingClientRect = jest.fn(function () {
+        if (this.classList?.contains('slider-component__track')) {
+          return {
+            width,
+            height: 8,
+            left,
+            right: left + width,
+            top: 0,
+            bottom: 8,
+            x: left,
+            y: 0,
+            toJSON: () => ({}),
+          } as DOMRect;
+        }
+        return orig.call(this);
+      }) as unknown as () => DOMRect;
+      return () => {
+        Element.prototype.getBoundingClientRect = orig;
+      };
+    };
+
+    it('track click sets the value to the click position', () => {
+      const restore = mockTrackRect();
+      const onChange = jest.fn();
+      const { container } = render(
+        <Slider defaultValue={0} min={0} max={100} step={1} onChange={onChange} />,
+      );
+      const track = container.querySelector('.slider-component__track') as HTMLElement;
+      fireEvent.click(track, { clientX: 42 });
+      expect(onChange).toHaveBeenCalledWith(42);
+      restore();
+    });
+
+    it('track click on a range slider moves the closest thumb', () => {
+      const restore = mockTrackRect();
+      const onChange = jest.fn();
+      const { container } = render(
+        <Slider range defaultValue={[20, 80]} min={0} max={100} step={1} onChange={onChange} />,
+      );
+      const track = container.querySelector('.slider-component__track') as HTMLElement;
+      // Click near 75 — closest to thumb 1 (80).
+      fireEvent.click(track, { clientX: 75 });
+      expect(onChange).toHaveBeenCalledWith([20, 75]);
+      restore();
+    });
+
+    it('drag updates the value and fires onChangeCommitted on mouseup', () => {
+      const restore = mockTrackRect();
+      const onChange = jest.fn();
+      const onChangeCommitted = jest.fn();
+      render(
+        <Slider
+          defaultValue={0}
+          min={0}
+          max={100}
+          step={1}
+          onChange={onChange}
+          onChangeCommitted={onChangeCommitted}
+        />,
+      );
+      const thumb = screen.getByRole('slider');
+      fireEvent.mouseDown(thumb, { clientX: 0 });
+      fireEvent.mouseMove(document, { clientX: 33 });
+      expect(onChange).toHaveBeenCalledWith(33);
+      fireEvent.mouseUp(document);
+      expect(onChangeCommitted).toHaveBeenCalled();
+      restore();
+    });
+
+    it('drag is disabled when the slider is disabled', () => {
+      const restore = mockTrackRect();
+      const onChange = jest.fn();
+      render(<Slider defaultValue={0} disabled onChange={onChange} />);
+      const thumb = screen.getByRole('slider');
+      fireEvent.mouseDown(thumb, { clientX: 50 });
+      fireEvent.mouseMove(document, { clientX: 60 });
+      expect(onChange).not.toHaveBeenCalled();
+      restore();
+    });
+  });
 });

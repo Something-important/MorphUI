@@ -52,7 +52,8 @@
     "tokens:check": "python3 scripts/check_theme_tokens.py",
     "verify": "npm run type-check && npm run lint && npm run format:check && npm run tokens:check && npm test && npm run build:all",
     "prepublishOnly": "npm run build:all",
-    "prepack": "npm run build:all"
+    "prepack": "npm run build:all",
+    "size": "size-limit"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -66,6 +67,7 @@
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.4",
+    "@size-limit/preset-small-lib": "^14.3.0",
     "@storybook/addon-docs": "^9.0.12",
     "@storybook/addon-onboarding": "^9.0.12",
     "@storybook/react-vite": "^9.0.12",
@@ -98,6 +100,7 @@
     "rollup-plugin-dts": "^6.2.3",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
+    "size-limit": "^14.3.0",
     "storybook": "^9.0.12",
     "ts-jest": "^29.4.0",
     "typescript": "^5.0.0"

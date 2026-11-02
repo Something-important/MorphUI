@@ -368,6 +368,13 @@
     border-bottom: none;
   }
 
+  /* Active option (arrow-key highlight). Mirrors the :hover style so the
+     keyboard and mouse affordances match. */
+  .input-suggestion-item--active,
+  .input-suggestion-item:hover {
+    background-color: var(--color-background-hover, rgba(0, 0, 0, 0.05));
+  }
+
   /* Layout variants */
 
   .input-component.input-component--full-width {

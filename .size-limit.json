@@ -1,0 +1,177 @@
+[
+  {
+    "name": "Accordion",
+    "path": "./dist/esm/components/interactive/Accordion/Accordion.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Alert",
+    "path": "./dist/esm/components/composition/Alert/Alert.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Avatar",
+    "path": "./dist/esm/components/basic/Avatar/Avatar.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Badge",
+    "path": "./dist/esm/components/basic/Badge/Badge.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "Breadcrumb",
+    "path": "./dist/esm/components/basic/Breadcrumb/Breadcrumb.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "Button",
+    "path": "./dist/esm/components/basic/Button/Button.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Card",
+    "path": "./dist/esm/components/interactive/Card/Card.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Checkbox",
+    "path": "./dist/esm/components/basic/Checkbox/Checkbox.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Combobox",
+    "path": "./dist/esm/components/composition/Combobox/Combobox.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "ContextMenu",
+    "path": "./dist/esm/components/composition/ContextMenu/ContextMenu.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "DatePicker",
+    "path": "./dist/esm/components/composition/DatePicker/DatePicker.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Divider",
+    "path": "./dist/esm/components/basic/Divider/Divider.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "Drawer",
+    "path": "./dist/esm/components/composition/Drawer/Drawer.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Dropdown",
+    "path": "./dist/esm/components/interactive/Dropdown/Dropdown.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Form",
+    "path": "./dist/esm/components/composition/Form/Form.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "Input",
+    "path": "./dist/esm/components/basic/Input/Input.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Label",
+    "path": "./dist/esm/components/basic/Label/Label.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "Modal",
+    "path": "./dist/esm/components/interactive/Modal/Modal.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Pagination",
+    "path": "./dist/esm/components/interactive/Pagination/Pagination.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Popover",
+    "path": "./dist/esm/components/composition/Popover/Popover.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Progress",
+    "path": "./dist/esm/components/basic/Progress/Progress.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "RadioGroup",
+    "path": "./dist/esm/components/interactive/RadioGroup/RadioGroup.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Sidebar",
+    "path": "./dist/esm/components/composition/Sidebar/Sidebar.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Skeleton",
+    "path": "./dist/esm/components/basic/Skeleton/Skeleton.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "Slider",
+    "path": "./dist/esm/components/interactive/Slider/Slider.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Spinner",
+    "path": "./dist/esm/components/basic/Spinner/Spinner.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "Stepper",
+    "path": "./dist/esm/components/basic/Stepper/Stepper.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Switch",
+    "path": "./dist/esm/components/basic/Switch/Switch.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Table",
+    "path": "./dist/esm/components/composition/Table/Table.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Tabs",
+    "path": "./dist/esm/components/composition/Tabs/Tabs.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Toast",
+    "path": "./dist/esm/components/composition/Toast/Toast.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Toggle",
+    "path": "./dist/esm/components/basic/Toggle/Toggle.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Tooltip",
+    "path": "./dist/esm/components/composition/Tooltip/Tooltip.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "UseAnchoredPosition",
+    "path": "./dist/esm/hooks/useAnchoredPosition.js",
+    "limit": "2 KB"
+  },
+  {
+    "name": "UseModal",
+    "path": "./dist/esm/hooks/useModal.js",
+    "limit": "2 KB"
+  }
+]

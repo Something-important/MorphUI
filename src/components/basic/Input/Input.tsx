@@ -182,6 +182,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [, setIsHovered] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+    const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
     const [validationError, setValidationError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -340,6 +341,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       if (suggestions.length > 0) {
         setFilteredSuggestions(suggestions);
         setShowSuggestions(true);
+        setActiveSuggestionIndex(-1);
       }
       // Call original onFocus if provided
       if (rest.onFocus) {
@@ -435,6 +437,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         );
         setFilteredSuggestions(filtered);
         setShowSuggestions(filtered.length > 0);
+        setActiveSuggestionIndex(-1);
       }
 
       // Call onChange with masked value
@@ -478,7 +481,40 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         onChange(syntheticEvent);
       }
       setShowSuggestions(false);
+      setActiveSuggestionIndex(-1);
       inputRef.current?.focus();
+    };
+
+    // Combobox keyboard navigation: ArrowDown/Up move the active option,
+    // Enter selects it, Escape closes. aria-activedescendant on the input
+    // tells AT which option is active without moving focus.
+    const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (suggestions.length > 0) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (!showSuggestions) {
+            setFilteredSuggestions(suggestions);
+            setShowSuggestions(true);
+            setActiveSuggestionIndex(0);
+          } else {
+            setActiveSuggestionIndex((prev) =>
+              prev < filteredSuggestions.length - 1 ? prev + 1 : prev,
+            );
+          }
+        } else if (e.key === 'ArrowUp') {
+          if (showSuggestions) {
+            e.preventDefault();
+            setActiveSuggestionIndex((prev) => (prev > 0 ? prev - 1 : 0));
+          }
+        } else if (e.key === 'Enter' && showSuggestions && activeSuggestionIndex >= 0) {
+          e.preventDefault();
+          handleSuggestionClick(filteredSuggestions[activeSuggestionIndex]);
+        } else if (e.key === 'Escape' && showSuggestions) {
+          setShowSuggestions(false);
+          setActiveSuggestionIndex(-1);
+        }
+      }
+      rest.onKeyDown?.(e);
     };
 
     // Handle password visibility toggle
@@ -555,12 +591,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled || loading}
           autoComplete={autoComplete ?? (type === 'password' ? 'current-password' : undefined)}
           {...ariaProps}
-          // Declare the suggestions-listbox relationship. aria-controls and
-          // aria-autocomplete are valid on role=textbox; aria-expanded is not,
-          // so the full combobox pattern (role=combobox + arrow-key nav) is
-          // left as a follow-up.
+          // Full ARIA combobox pattern when suggestions exist: role=combobox
+          // makes aria-expanded valid; aria-activedescendant points at the
+          // active option so AT tracks the arrow-key highlight without focus
+          // leaving the input. When no suggestions, the input keeps its
+          // implicit role=textbox.
+          role={suggestions.length > 0 ? 'combobox' : undefined}
           aria-controls={suggestions.length > 0 ? suggestionsId : undefined}
           aria-autocomplete={suggestions.length > 0 ? 'list' : undefined}
+          aria-expanded={
+            suggestions.length > 0 ? showSuggestions && filteredSuggestions.length > 0 : undefined
+          }
+          aria-activedescendant={
+            activeSuggestionIndex >= 0 ? `${suggestionsId}-opt-${activeSuggestionIndex}` : undefined
+          }
+          onKeyDown={handleInputKeyDown}
           required={required || validation?.required}
           maxLength={characterCountLimit || maxLength}
           minLength={minLength}
@@ -641,11 +686,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {filteredSuggestions.map((suggestion, index) => (
               <div
                 key={index}
+                id={`${suggestionsId}-opt-${index}`}
                 role="option"
                 aria-selected={false}
-                tabIndex={0}
-                className="input-suggestion-item"
+                tabIndex={-1}
+                className={`input-suggestion-item${index === activeSuggestionIndex ? ' input-suggestion-item--active' : ''}`}
                 onClick={() => handleSuggestionClick(suggestion)}
+                onMouseEnter={() => setActiveSuggestionIndex(index)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
