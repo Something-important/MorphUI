@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.10.0](https://github.com/Something-important/MorphUI/compare/v0.9.0...v0.10.0) (2026-11-02)
+
+
+### Features
+
+* **hooks:** export useAnchoredPosition + useModal as public API (hooks v0) ([44259af](https://github.com/Something-important/MorphUI/commit/44259af0bf20d487d788f1307d696e2f2edf39a7))
+
+
+### Bug Fixes
+
+* **dropdown:** resolve axe violations across all open states ([0624899](https://github.com/Something-important/MorphUI/commit/0624899734f7592f98fcfee518c62f27df199275))
+* **input:** resolve axe violations and three deeper a11y issues ([24483c8](https://github.com/Something-important/MorphUI/commit/24483c84e5d0883801a14a8a451d7b8d3d7ed3d6))
+* **popover:** avoid nested-interactive on the trigger wrapper ([0a21a6d](https://github.com/Something-important/MorphUI/commit/0a21a6d215b1a60f9352385b269d2b1ed5c028b6))
+* **sidebar:** make SidebarGroup aria-controls/aria-labelledby resolve ([c7c0255](https://github.com/Something-important/MorphUI/commit/c7c02557b5ad3c255b834422aa26ced5e0309b32))
+* **table:** give the table an accessible name and add th scope ([fdd30a4](https://github.com/Something-important/MorphUI/commit/fdd30a4758209988c4be416123369cf78180d51e))
+
 ## [0.9.0](https://github.com/Something-important/MorphUI/compare/v0.8.0...v0.9.0) (2026-10-31)
 
 
