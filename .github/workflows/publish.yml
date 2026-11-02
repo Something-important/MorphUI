@@ -1,7 +1,9 @@
 name: Publish to npm
 
 # Fires when release-please creates a `v*` tag (i.e. when a release PR
-# merges into master). Also runnable on demand from the Actions tab.
+# merges into master). Also runnable on demand from the Actions tab,
+# and callable from the release-please workflow so that a release-please
+# tag creation auto-publishes without a separate manual dispatch.
 #
 # Uses npm Trusted Publishing (OIDC) — no NPM_TOKEN secret.
 # Requires npm CLI 11.5.1+ (Node 22.14.0+). Node 22 ships with npm 10.x,
@@ -12,6 +14,7 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
