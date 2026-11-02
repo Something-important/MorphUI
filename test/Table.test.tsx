@@ -271,8 +271,9 @@ describe('Table Component', () => {
 
     it('supports aria-label', () => {
       render(<Table data={testData} columns={testColumns} ariaLabel="User data table" />);
-      const wrapper = screen.getByRole('table').closest('.table-component__wrapper');
-      expect(wrapper).toHaveAttribute('aria-label', 'User data table');
+      // The aria-label lives on the <table> (role="table") so it actually
+      // produces an accessible name — not on the role-less wrapper div.
+      expect(screen.getByRole('table')).toHaveAttribute('aria-label', 'User data table');
     });
 
     it('sets aria-sort="none" on sortable columns by default', () => {

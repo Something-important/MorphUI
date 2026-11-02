@@ -84,8 +84,23 @@ describe('Popover Component', () => {
         expect(container.querySelector('.popover-component__content')).toBeInTheDocument();
       });
 
-      it('sets role="button" and tabIndex=0 for click trigger', () => {
+      it('does not duplicate role="button" on the wrapper when the child is a button', () => {
+        // The trigger child is already a natively interactive <button>, so the
+        // wrapper must NOT also get role="button" / tabIndex (that would nest
+        // two interactive controls — axe nested-interactive). The button
+        // itself handles focus and keyboard.
         const { container } = renderPopover({ trigger: 'click' });
+        const trigger = container.querySelector('.popover-component__trigger')!;
+        expect(trigger).not.toHaveAttribute('role');
+        expect(trigger).not.toHaveAttribute('tabindex');
+      });
+
+      it('sets role="button" and tabIndex=0 when the child is non-interactive', () => {
+        const { container } = renderWithTheme(
+          <Popover content="x" trigger="click">
+            <span>Hover me</span>
+          </Popover>,
+        );
         const trigger = container.querySelector('.popover-component__trigger')!;
         expect(trigger).toHaveAttribute('role', 'button');
         expect(trigger).toHaveAttribute('tabindex', '0');
@@ -182,11 +197,11 @@ describe('Popover Component', () => {
         jest.useRealTimers();
       });
 
-      it('sets role="button" and tabIndex=0 for focus trigger', () => {
+      it('does not duplicate role="button" on the wrapper when the child is a button', () => {
         const { container } = renderPopover({ trigger: 'focus' });
         const trigger = container.querySelector('.popover-component__trigger')!;
-        expect(trigger).toHaveAttribute('role', 'button');
-        expect(trigger).toHaveAttribute('tabindex', '0');
+        expect(trigger).not.toHaveAttribute('role');
+        expect(trigger).not.toHaveAttribute('tabindex');
       });
     });
 

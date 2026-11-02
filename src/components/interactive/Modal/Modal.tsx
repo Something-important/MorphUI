@@ -1,5 +1,6 @@
-import React, { ReactNode, forwardRef, useEffect, useRef } from 'react';
+import React, { ReactNode, forwardRef, useEffect, useRef, useCallback } from 'react';
 import { resolveThemeValue, getAriaProps, createRipple } from '../../../utils';
+import { useModal } from '../../../hooks';
 import './Modal.css';
 
 export interface ModalProps {
@@ -131,11 +132,39 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     },
     ref,
   ) => {
-    const modalRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
     const dragStart = useRef({ x: 0, y: 0 });
     const modalStart = useRef({ x: 0, y: 0 });
+
+    // Headless modal behavior: ESC-to-close, focus-loss close, Tab focus
+    // trapping, and body scroll lock. Modal is controlled (isOpen + onClose),
+    // so the hook's open/close/toggle are unused; only modalRef and the
+    // side-effects matter. This adds focus trapping and scroll lock that
+    // Modal previously lacked.
+    const { modalRef: hookModalRef } = useModal({
+      isOpen,
+      onClose,
+      closeOnEsc,
+      closeOnFocusLoss,
+      trapFocus: true,
+      lockScroll: true,
+    });
+
+    // Merge the forwarded ref and the hook's modalRef so both point at the
+    // dialog element (the hook needs it for focus trapping + focus loss;
+    // the draggable effect below needs it for mouse events).
+    const setModalRef = useCallback(
+      (node: HTMLDivElement | null) => {
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        }
+        (hookModalRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      },
+      [ref, hookModalRef],
+    );
 
     // Resolve theme values
     const resolvedColor = resolveThemeValue(color);
@@ -290,53 +319,18 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       hasPopup: 'dialog',
     });
 
-    // Handle overlay click
+    // Handle overlay click (ESC and focus-loss are handled by useModal)
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
       if (closeOnOverlayClick && e.target === overlayRef.current) {
         onClose();
       }
     };
 
-    // Handle keyboard events
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (closeOnEsc && e.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    // Handle focus loss
-    useEffect(() => {
-      if (!closeOnFocusLoss || !isOpen) return;
-
-      const handleFocusLoss = (e: FocusEvent) => {
-        if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-          onClose();
-        }
-      };
-
-      document.addEventListener('focusout', handleFocusLoss);
-      return () => document.removeEventListener('focusout', handleFocusLoss);
-    }, [closeOnFocusLoss, isOpen, onClose]);
-
-    // Handle ESC key
-    useEffect(() => {
-      if (!closeOnEsc || !isOpen) return;
-
-      const handleEsc = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          onClose();
-        }
-      };
-
-      document.addEventListener('keydown', handleEsc);
-      return () => document.removeEventListener('keydown', handleEsc);
-    }, [closeOnEsc, isOpen, onClose]);
-
     // Handle draggable functionality
     useEffect(() => {
       if (!draggable || !isOpen) return;
 
-      const modal = modalRef.current;
+      const modal = hookModalRef.current;
       if (!modal) return;
 
       const handleMouseDown = (e: MouseEvent) => {
@@ -372,7 +366,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
       };
-    }, [draggable, isOpen]);
+    }, [draggable, isOpen, hookModalRef]);
 
     // Handle close button click with ripple effect
     const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -397,12 +391,11 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         className={`modal-component__overlay modal-component__overlay--${backdrop} modal-component__overlay--position-${position}`}
         role="presentation"
         onClick={handleOverlayClick}
-        onKeyDown={handleKeyDown}
         tabIndex={-1}
         {...overlayAriaProps}
       >
         <div
-          ref={ref || modalRef}
+          ref={setModalRef}
           className={classes}
           style={mergedStyle}
           role="dialog"

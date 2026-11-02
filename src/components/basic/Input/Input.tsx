@@ -1,5 +1,5 @@
 // Input.tsx
-import React, { forwardRef, useState, useEffect, useRef } from 'react';
+import React, { forwardRef, useState, useEffect, useId, useRef } from 'react';
 import { resolveThemeValue, createRipple, getAriaProps } from '../../../utils';
 import './Input.css';
 
@@ -186,6 +186,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [showPassword, setShowPassword] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const suggestionsRef = useRef<HTMLDivElement>(null);
+
+    // Stable unique id for elements that need one (error message, suggestions
+    // listbox) when the consumer does not pass an `id` prop. Avoids the
+    // fragile `${undefined}-error` id and duplicate-id collisions across
+    // multiple Inputs without ids.
+    const generatedId = useId();
+    const errorId = id ? `${id}-error` : `${generatedId}-error`;
+    const suggestionsId = id ? `${id}-suggestions` : `${generatedId}-suggestions`;
 
     // Auto-detect variant from color if it's a theme color (like Button)
     const getVariantFromColor = (colorValue: string | undefined) => {
@@ -504,7 +512,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     // Generate ARIA attributes
     const ariaProps = getAriaProps({
       label: ariaLabel,
-      describedBy: finalErrorMessage ? `${id}-error` : undefined,
+      describedBy: finalErrorMessage ? errorId : undefined,
       required: required || validation?.required,
       invalid: inputState === 'error',
     });
@@ -547,6 +555,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled || loading}
           autoComplete={autoComplete ?? (type === 'password' ? 'current-password' : undefined)}
           {...ariaProps}
+          // Declare the suggestions-listbox relationship. aria-controls and
+          // aria-autocomplete are valid on role=textbox; aria-expanded is not,
+          // so the full combobox pattern (role=combobox + arrow-key nav) is
+          // left as a follow-up.
+          aria-controls={suggestions.length > 0 ? suggestionsId : undefined}
+          aria-autocomplete={suggestions.length > 0 ? 'list' : undefined}
           required={required || validation?.required}
           maxLength={characterCountLimit || maxLength}
           minLength={minLength}
@@ -567,7 +581,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             className="input-icon input-icon--right input-password-toggle"
             onClick={togglePasswordVisibility}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
-            tabIndex={-1}
+            // The toggle is a real button and must be keyboard-reachable;
+            // tabIndex={-1} previously removed it from tab order, locking
+            // keyboard users out of the show/hide action.
           >
             {showPassword ? '👁️' : '👁️‍🗨️'}
           </button>
@@ -608,14 +624,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         {/* Error message */}
         {finalErrorMessage && (
-          <div id={`${id}-error`} className="input-error-message" role="alert">
+          <div id={errorId} className="input-error-message" role="alert">
             {finalErrorMessage}
           </div>
         )}
 
         {/* Suggestions dropdown */}
         {showSuggestions && filteredSuggestions.length > 0 && (
-          <div className="input-suggestions" ref={suggestionsRef}>
+          <div
+            className="input-suggestions"
+            ref={suggestionsRef}
+            role="listbox"
+            id={suggestionsId}
+            aria-label="Suggestions"
+          >
             {filteredSuggestions.map((suggestion, index) => (
               <div
                 key={index}

@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { useAnchoredPosition } from '../../../hooks';
 import './Tooltip.css';
 
 // Position types
@@ -170,7 +171,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   ) => {
     // Internal state
     const [internalIsVisible, setInternalIsVisible] = useState(false);
-    const [currentPosition, setCurrentPosition] = useState<TooltipPosition>(position);
     const [isAnimating] = useState(false);
     const [showTimeout, setShowTimeout] = useState<NodeJS.Timeout | null>(null);
     const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -183,6 +183,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     // Determine if this is a controlled or uncontrolled component
     const isControlled = controlledIsVisible !== undefined;
     const isVisible = isControlled ? controlledIsVisible : internalIsVisible;
+
+    // Shared anchored-positioning hook (fixed / viewport coordinates):
+    // measures trigger + tooltip, resolves 'auto', applies inline styles,
+    // and reports the placement in effect for CSS classes and the arrow.
+    const { position: currentPosition } = useAnchoredPosition({
+      anchorRef: triggerRef,
+      floatingRef: tooltipRef,
+      position,
+      offset,
+      autoPosition,
+      active: isVisible,
+    });
 
     // Resolve theme values
     const resolvedColor = resolveThemeValue(color);
@@ -328,114 +340,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       describedBy: ariaDescribedBy,
     });
 
-    // Calculate position
-    const calculatePosition = useCallback(() => {
-      if (!triggerRef.current || !tooltipRef.current || !autoPosition) return;
-
-      const triggerRect = triggerRef.current.getBoundingClientRect();
-      const tooltipRect = tooltipRef.current.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-
-      let newPosition = position;
-
-      // Auto-positioning logic
-      if (autoPosition && position === 'auto') {
-        const space = {
-          top: triggerRect.top,
-          bottom: viewportHeight - triggerRect.bottom,
-          left: triggerRect.left,
-          right: viewportWidth - triggerRect.right,
-        };
-
-        if (space.bottom >= tooltipRect.height + offset) {
-          newPosition = 'bottom';
-        } else if (space.top >= tooltipRect.height + offset) {
-          newPosition = 'top';
-        } else if (space.right >= tooltipRect.width + offset) {
-          newPosition = 'right';
-        } else if (space.left >= tooltipRect.width + offset) {
-          newPosition = 'left';
-        } else {
-          newPosition = 'bottom';
-        }
-      }
-
-      if (newPosition !== currentPosition) {
-        setCurrentPosition(newPosition);
-      }
-
-      // Apply positioning
-      const styles: React.CSSProperties = {};
-
-      switch (newPosition) {
-        case 'top':
-          styles.bottom = `${viewportHeight - triggerRect.top + offset}px`;
-          styles.left = `${triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2}px`;
-          break;
-        case 'top-start':
-          styles.bottom = `${viewportHeight - triggerRect.top + offset}px`;
-          styles.left = `${triggerRect.left}px`;
-          break;
-        case 'top-end':
-          styles.bottom = `${viewportHeight - triggerRect.top + offset}px`;
-          styles.right = `${viewportWidth - triggerRect.right}px`;
-          break;
-        case 'bottom':
-          styles.top = `${triggerRect.bottom + offset}px`;
-          styles.left = `${triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2}px`;
-          break;
-        case 'bottom-start':
-          styles.top = `${triggerRect.bottom + offset}px`;
-          styles.left = `${triggerRect.left}px`;
-          break;
-        case 'bottom-end':
-          styles.top = `${triggerRect.bottom + offset}px`;
-          styles.right = `${viewportWidth - triggerRect.right}px`;
-          break;
-        case 'left':
-          styles.top = `${triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2}px`;
-          styles.right = `${viewportWidth - triggerRect.left + offset}px`;
-          break;
-        case 'left-start':
-          styles.top = `${triggerRect.top}px`;
-          styles.right = `${viewportWidth - triggerRect.left + offset}px`;
-          break;
-        case 'left-end':
-          styles.bottom = `${viewportHeight - triggerRect.bottom}px`;
-          styles.right = `${viewportWidth - triggerRect.left + offset}px`;
-          break;
-        case 'right':
-          styles.top = `${triggerRect.top + triggerRect.height / 2 - tooltipRect.height / 2}px`;
-          styles.left = `${triggerRect.right + offset}px`;
-          break;
-        case 'right-start':
-          styles.top = `${triggerRect.top}px`;
-          styles.left = `${triggerRect.right + offset}px`;
-          break;
-        case 'right-end':
-          styles.bottom = `${viewportHeight - triggerRect.bottom}px`;
-          styles.left = `${triggerRect.right + offset}px`;
-          break;
-      }
-
-      // Ensure tooltip stays within viewport
-      if (styles.left !== undefined && typeof styles.left === 'number' && styles.left < 0) {
-        styles.left = offset;
-      }
-      if (styles.top !== undefined && typeof styles.top === 'number' && styles.top < 0) {
-        styles.top = offset;
-      }
-      if (styles.right !== undefined && typeof styles.right === 'number' && styles.right < 0) {
-        styles.right = offset;
-      }
-      if (styles.bottom !== undefined && typeof styles.bottom === 'number' && styles.bottom < 0) {
-        styles.bottom = offset;
-      }
-
-      Object.assign(tooltipRef.current.style, styles);
-    }, [position, currentPosition, offset, autoPosition]);
-
     // Handle show/hide
     const handleShow = useCallback(() => {
       if (isControlled) {
@@ -539,15 +443,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isVisible, closeOnClickOutside, interactive, handleHide]);
-
-    // Position calculation effect
-    useEffect(() => {
-      if (isVisible) {
-        // Small delay to ensure DOM is ready
-        const timeout = setTimeout(calculatePosition, 10);
-        return () => clearTimeout(timeout);
-      }
-    }, [isVisible, calculatePosition]);
 
     // Cleanup timeouts
     useEffect(() => {
