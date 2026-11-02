@@ -39,7 +39,7 @@
   "scripts": {
     "build": "rollup -c",
     "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
-    "build:all": "npm run build:types && npm run build",
+    "build:all": "npm run build:types && npm run build && npm run build:css",
     "test": "jest",
     "test:ci": "jest --ci --coverage",
     "type-check": "tsc --noEmit",
@@ -53,7 +53,8 @@
     "verify": "npm run type-check && npm run lint && npm run format:check && npm run tokens:check && npm test && npm run build:all",
     "prepublishOnly": "npm run build:all",
     "prepack": "npm run build:all",
-    "size": "size-limit"
+    "size": "size-limit",
+    "build:css": "node scripts/generate_component_css.js"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -253,7 +254,42 @@
     "./use-modal": {
       "types": "./dist/hooks/useModal.d.ts",
       "import": "./dist/esm/hooks/useModal.js"
-    }
+    },
+    "./css/theme": "./dist/css/theme.css",
+    "./css/avatar": "./dist/css/avatar.css",
+    "./css/badge": "./dist/css/badge.css",
+    "./css/breadcrumb": "./dist/css/breadcrumb.css",
+    "./css/button": "./dist/css/button.css",
+    "./css/checkbox": "./dist/css/checkbox.css",
+    "./css/divider": "./dist/css/divider.css",
+    "./css/input": "./dist/css/input.css",
+    "./css/label": "./dist/css/label.css",
+    "./css/progress": "./dist/css/progress.css",
+    "./css/skeleton": "./dist/css/skeleton.css",
+    "./css/spinner": "./dist/css/spinner.css",
+    "./css/stepper": "./dist/css/stepper.css",
+    "./css/switch": "./dist/css/switch.css",
+    "./css/toggle": "./dist/css/toggle.css",
+    "./css/alert": "./dist/css/alert.css",
+    "./css/combobox": "./dist/css/combobox.css",
+    "./css/context-menu": "./dist/css/context-menu.css",
+    "./css/date-picker": "./dist/css/date-picker.css",
+    "./css/drawer": "./dist/css/drawer.css",
+    "./css/form": "./dist/css/form.css",
+    "./css/popover": "./dist/css/popover.css",
+    "./css/sidebar": "./dist/css/sidebar.css",
+    "./css/sidebar-composition": "./dist/css/sidebar-composition.css",
+    "./css/table": "./dist/css/table.css",
+    "./css/tabs": "./dist/css/tabs.css",
+    "./css/toast": "./dist/css/toast.css",
+    "./css/tooltip": "./dist/css/tooltip.css",
+    "./css/accordion": "./dist/css/accordion.css",
+    "./css/card": "./dist/css/card.css",
+    "./css/dropdown": "./dist/css/dropdown.css",
+    "./css/modal": "./dist/css/modal.css",
+    "./css/pagination": "./dist/css/pagination.css",
+    "./css/radio-group": "./dist/css/radio-group.css",
+    "./css/slider": "./dist/css/slider.css"
   },
   "sideEffects": [
     "**/*.css"

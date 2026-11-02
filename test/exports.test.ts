@@ -14,13 +14,21 @@ describe('package.json exports', () => {
   };
 
   const passthrough = new Set(['.', './css', './dist/*', './package.json']);
-  const subpaths = Object.entries(pkg.exports).filter(([k]) => !passthrough.has(k));
+  // CSS subpaths (./css/*) are plain string paths to .css files, not
+  // JS-module objects with import/types. Separate them from JS subpaths.
+  const allSubpaths = Object.entries(pkg.exports).filter(([k]) => !passthrough.has(k));
+  const jsSubpaths = allSubpaths.filter(([k]) => !k.startsWith('./css/'));
+  const cssSubpaths = allSubpaths.filter(([k]) => k.startsWith('./css/'));
 
-  it('maps at least 30 component/hook subpaths', () => {
-    expect(subpaths.length).toBeGreaterThanOrEqual(30);
+  it('maps at least 30 JS component/hook subpaths', () => {
+    expect(jsSubpaths.length).toBeGreaterThanOrEqual(30);
   });
 
-  it.each(subpaths.map(([k, v]) => [k, v] as const))(
+  it('maps at least 30 CSS subpaths', () => {
+    expect(cssSubpaths.length).toBeGreaterThanOrEqual(30);
+  });
+
+  it.each(jsSubpaths.map(([k, v]) => [k, v] as const))(
     '%s has both import and types pointing into dist/',
     (_subpath, entry) => {
       expect(entry.import).toBeDefined();
@@ -30,11 +38,17 @@ describe('package.json exports', () => {
     },
   );
 
-  it.each(subpaths.map(([k]) => [k] as const))('%s is lowercase-hyphenated', (subpath) => {
-    // ./button, ./radio-group, ./use-anchored-position — no uppercase, no camelCase.
+  it.each(cssSubpaths.map(([k]) => [k] as const))('%s points into dist/css/', (subpath) => {
+    const value = pkg.exports[subpath] as unknown;
+    expect(typeof value).toBe('string');
+    expect(value).toMatch(/^\.\/dist\/css\/[\w-]+\.css$/);
+  });
+
+  it.each(allSubpaths.map(([k]) => [k] as const))('%s is lowercase-hyphenated', (subpath) => {
+    // ./button, ./radio-group, ./css/context-menu — no uppercase, no camelCase.
     const name = subpath.slice(2);
     expect(name).toBe(name.toLowerCase());
-    expect(name).toMatch(/^[a-z][a-z0-9-]*$/);
+    expect(name).toMatch(/^[a-z][a-z0-9-/]*$/);
   });
 
   it('the barrel (.) still resolves to the single-file bundle for backward compat', () => {
