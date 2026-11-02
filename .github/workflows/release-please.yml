@@ -31,11 +31,16 @@ jobs:
       - id: release
         uses: googleapis/release-please-action@v4
         with:
-          # Config (release-type, bump-minor-pre-major) lives in
-          # release-please-config.json — the action moved these settings
-          # out of the `with:` block in v4. target-branch replaces the
-          # old default-branch input.
-          config-file: release-please-config.json
+          # Only pass inputs the v4 action recognizes (the old
+          # package-name / bump-minor-pre-major / default-branch inputs
+          # were removed — release-type + target-branch are the valid
+          # ones for a single-package node release). The package name is
+          # read from package.json; bump-minor-pre-major defaults to true
+          # in v4 (feat -> minor bump in 0.x, matching the 0.9.0-0.11.0
+          # release history). No config-file (that triggers manifest mode,
+          # which expects component-prefixed tags and conflicts with this
+          # repo's plain v* tags).
+          release-type: node
           target-branch: master
 
   # Publish to npm when release-please creates a release, or when manually
