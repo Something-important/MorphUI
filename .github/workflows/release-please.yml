@@ -29,12 +29,14 @@ jobs:
       release_created: ${{ steps.release.outputs.release_created }}
     steps:
       - id: release
-        uses: google-github-actions/release-please-action@v4
+        uses: googleapis/release-please-action@v4
         with:
-          release-type: node
-          package-name: morphui-react
-          bump-minor-pre-major: true
-          default-branch: master
+          # Config (release-type, bump-minor-pre-major) lives in
+          # release-please-config.json — the action moved these settings
+          # out of the `with:` block in v4. target-branch replaces the
+          # old default-branch input.
+          config-file: release-please-config.json
+          target-branch: master
 
   # Publish to npm when release-please creates a release, or when manually
   # dispatched with force_publish. Inlined here (rather than called via
