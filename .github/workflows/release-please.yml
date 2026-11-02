@@ -13,10 +13,26 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - id: release
+        uses: google-github-actions/release-please-action@v4
         with:
           release-type: node
           package-name: morphui-react
           bump-minor-pre-major: true
           default-branch: master
+
+  # When release-please creates a release (tags v* + merges the release
+  # PR), call the publish workflow directly. workflow_call works with the
+  # default GITHUB_TOKEN — unlike the tag-push event release-please fires,
+  # which GitHub deliberately does not propagate to downstream workflows
+  # (anti-loop protection). This closes the gap so releases auto-publish.
+  call-publish:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    uses: ./.github/workflows/publish.yml
+    permissions:
+      contents: read
+      id-token: write
