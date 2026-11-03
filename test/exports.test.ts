@@ -10,6 +10,7 @@ import { resolve } from 'path';
  */
 describe('package.json exports', () => {
   const pkg = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8')) as {
+    main?: string;
     exports: Record<string, Record<string, string>>;
   };
 
@@ -51,10 +52,12 @@ describe('package.json exports', () => {
     expect(name).toMatch(/^[a-z][a-z0-9-/]*$/);
   });
 
-  it('the barrel (.) still resolves to the single-file bundle for backward compat', () => {
+  it('the barrel (.) resolves to the ESM single-file bundle (ESM-only since 0.14.0)', () => {
     const barrel = pkg.exports['.'];
     expect(barrel.import).toBe('./dist/index.esm.js');
-    expect(barrel.require).toBe('./dist/index.js');
     expect(barrel.types).toBe('./dist/components/index.d.ts');
+    // CJS is gone — no `require` field, no `main` in package.json.
+    expect(barrel.require).toBeUndefined();
+    expect(pkg.main).toBeUndefined();
   });
 });
