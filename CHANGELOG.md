@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/Something-important/MorphUI/compare/v1.0.0...v1.0.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* **ci:** rename rollup config + CSS script to .cjs for type:module ([8366c9f](https://github.com/Something-important/MorphUI/commit/8366c9f0e09ded87ada04ae0f54286da6eed4809))
+* **ci:** rename rollup config + CSS script to .cjs for type:module ([1590eb7](https://github.com/Something-important/MorphUI/commit/1590eb774f6d4e1db3535f58f91d2f8266158043))
+
 ## [1.0.0](https://github.com/Something-important/MorphUI/compare/v0.13.0...v1.0.0) (2026-11-03)
 
 
