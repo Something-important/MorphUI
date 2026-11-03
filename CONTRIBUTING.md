@@ -129,7 +129,7 @@ When adding or changing a token:
   output.
 - Run everything with `npm test`; watch mode with `npm test -- --watch`.
 
-The suite is currently 38 suites / 1,606 tests and finishes in ~33 seconds.
+The suite is currently 48 suites / 1,974 tests and finishes in ~33 seconds.
 Coverage thresholds are 0 (informational only); raising them is on the
 [roadmap](docs/ROADMAP.md).
 
