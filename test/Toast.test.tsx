@@ -68,7 +68,7 @@ describe('Toast (standalone)', () => {
   it('uses role="status" by default and role="alert" for errors', () => {
     const { rerender } = render(<Toast open title="Info toast" variant="info" />);
     expect(screen.getByRole('status')).toBeInTheDocument();
-    rerender(<Toast open title="Error toast" variant="error" />);
+    rerender(<Toast open title="Error toast" variant="danger" />);
     expect(screen.getByRole('alert')).toBeInTheDocument();
   });
 
@@ -88,7 +88,7 @@ describe('Toast (standalone)', () => {
 
   it("maps deprecated 'error' variant to the danger class", () => {
     render(
-      <Toast open variant="error">
+      <Toast open variant="danger">
         deprecated
       </Toast>,
     );
@@ -380,7 +380,7 @@ describe('ToastProvider / useToast', () => {
           <button type="button" onClick={() => toast.success('Success toast')}>
             success
           </button>
-          <button type="button" onClick={() => toast.error('Error toast')}>
+          <button type="button" onClick={() => toast.danger('Error toast')}>
             error
           </button>
           <button type="button" onClick={() => toast.warning('Warning toast')}>

@@ -21,7 +21,7 @@ export default {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'success', 'warning', 'error', 'info'],
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
     },
     size: {
       control: { type: 'select' },
@@ -113,12 +113,12 @@ export const SizesCircular: Story = {
 // Variants
 export const Variants: Story = {
   render: () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'> = [
+    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
       'primary',
       'secondary',
       'success',
       'warning',
-      'error',
+      'danger',
       'info',
     ];
 
@@ -339,7 +339,7 @@ export const ThemeSwitching: Story = {
             <Progress value={65} variant="primary" label="Primary Progress" showValue />
             <Progress value={65} variant="success" label="Success Progress" showValue />
             <Progress value={65} variant="warning" label="Warning Progress" showValue />
-            <Progress value={65} variant="error" label="Error Progress" showValue />
+            <Progress value={65} variant="danger" label="Error Progress" showValue />
           </div>
         </div>
       </ThemeProvider>
@@ -391,7 +391,7 @@ export const UsageExamples: Story = {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Progress value={45} label="CPU Usage" showValue variant="success" />
             <Progress value={78} label="Memory Usage" showValue variant="warning" />
-            <Progress value={92} label="Disk Usage" showValue variant="error" />
+            <Progress value={92} label="Disk Usage" showValue variant="danger" />
           </div>
         </div>
 
@@ -407,7 +407,7 @@ export const UsageExamples: Story = {
               <p style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>Warning</p>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <Progress value={25} type="circular" showValue size="lg" variant="error" />
+              <Progress value={25} type="circular" showValue size="lg" variant="danger" />
               <p style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>Error</p>
             </div>
           </div>

@@ -132,7 +132,7 @@ Rollup 4, single entry `src/components/index.ts`:
 ## Quality infrastructure
 
 - **Jest 29 + React Testing Library + jest-axe**, jsdom environment, CSS
-  mocked via `identity-obj-proxy`. 38 suites / 1,606 tests, ~33 seconds, all
+  mocked via `identity-obj-proxy`. 47 suites / 1,926 tests, ~33 seconds, all
   green. Coverage thresholds are currently 0 (informational only).
 - **CI** (`.github/workflows/ci.yml`): lint → prettier check → theme token
   gate (regenerate `theme.css`, fail on diff, `npm run tokens:check`) →
