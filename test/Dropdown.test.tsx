@@ -396,3 +396,84 @@ describe('Grouped options', () => {
     expect(onChange).toHaveBeenCalledWith('lemon');
   });
 });
+
+// Coverage edge cases: click-outside, multi-select deselect, random, clear, ref
+describe('Coverage edge cases', () => {
+  it('click outside closes the dropdown', () => {
+    renderWithTheme(<Dropdown options={fruits} onChange={jest.fn()} />);
+    fireEvent.click(getRoot());
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('deselects an already-selected option in multiSelect', () => {
+    const onChange = jest.fn();
+    renderWithTheme(
+      <Dropdown options={fruits} multiSelect value={['apple', 'banana']} onChange={onChange} />,
+    );
+    fireEvent.click(getRoot());
+    // Click Apple (already selected) → should deselect it.
+    fireEvent.click(screen.getByText('Apple'));
+    expect(onChange).toHaveBeenCalledWith(['banana']);
+  });
+
+  it('respects maxSelections limit', () => {
+    let current: Array<string | number> = [];
+    const onChange = jest.fn((v) => {
+      current = v as Array<string | number>;
+    });
+    const StatefulDropdown = () => (
+      <Dropdown
+        options={fruits}
+        multiSelect
+        maxSelections={2}
+        value={current}
+        onChange={onChange}
+      />
+    );
+    const { rerender } = renderWithTheme(<StatefulDropdown />);
+    fireEvent.click(getRoot());
+    fireEvent.click(screen.getByText('Banana'));
+    rerender(
+      <ThemeProvider>
+        <StatefulDropdown />
+      </ThemeProvider>,
+    );
+    fireEvent.click(screen.getByText('Cherry'));
+    rerender(
+      <ThemeProvider>
+        <StatefulDropdown />
+      </ThemeProvider>,
+    );
+    // Now at max (2). Apple should be blocked.
+    fireEvent.click(screen.getByText('Apple'));
+    expect(onChange).toHaveBeenLastCalledWith(['banana', 'cherry']);
+  });
+
+  it('Random button selects random options', () => {
+    const onChange = jest.fn();
+    renderWithTheme(<Dropdown options={fruits.slice(0, 3)} multiSelect onChange={onChange} />);
+    fireEvent.click(getRoot());
+    fireEvent.click(screen.getByLabelText(/Randomly select/));
+    expect(onChange).toHaveBeenCalled();
+    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1][0];
+    expect(Array.isArray(lastCall)).toBe(true);
+    expect(lastCall.length).toBeGreaterThan(0);
+  });
+
+  it('Clear button clears a single-select value', () => {
+    const onChange = jest.fn();
+    renderWithTheme(<Dropdown options={fruits} value="banana" clearable onChange={onChange} />);
+    const clearBtn = screen.getByLabelText('Clear selection');
+    fireEvent.click(clearBtn);
+    expect(onChange).toHaveBeenCalledWith('');
+  });
+
+  it('forwards a ref to the root element', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    renderWithTheme(<Dropdown ref={ref} options={fruits} onChange={jest.fn()} />);
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toHaveAttribute('role', 'combobox');
+  });
+});

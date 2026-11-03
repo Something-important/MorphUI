@@ -329,3 +329,80 @@ describe('DatePicker Component', () => {
     });
   });
 });
+
+// Calendar keyboard navigation + click-outside
+describe('Calendar keyboard + click-outside', () => {
+  it('ArrowRight moves focus to the next day', () => {
+    render(
+      <ThemeProvider>
+        <DatePicker defaultValue={new Date('2026-03-15')} />
+      </ThemeProvider>,
+    );
+    fireEvent.focus(screen.getByRole('combobox'));
+    const grid = screen.getByRole('grid');
+    // ArrowRight should move focus by +1 day.
+    fireEvent.keyDown(grid, { key: 'ArrowRight' });
+    // The focused date should now be the 16th (was 15th).
+    // Check via the active element's text content.
+    expect(document.activeElement?.textContent).toBe('16');
+  });
+
+  it('ArrowLeft moves focus to the previous day', () => {
+    render(
+      <ThemeProvider>
+        <DatePicker defaultValue={new Date('2026-03-15')} />
+      </ThemeProvider>,
+    );
+    fireEvent.focus(screen.getByRole('combobox'));
+    fireEvent.keyDown(screen.getByRole('grid'), { key: 'ArrowLeft' });
+    expect(document.activeElement?.textContent).toBe('14');
+  });
+
+  it('ArrowUp moves focus up one week', () => {
+    render(
+      <ThemeProvider>
+        <DatePicker defaultValue={new Date('2026-03-15')} />
+      </ThemeProvider>,
+    );
+    fireEvent.focus(screen.getByRole('combobox'));
+    fireEvent.keyDown(screen.getByRole('grid'), { key: 'ArrowUp' });
+    // March 15 - 7 = March 8
+    expect(document.activeElement?.textContent).toBe('8');
+  });
+
+  it('Home moves focus to the start of the week', () => {
+    render(
+      <ThemeProvider>
+        <DatePicker defaultValue={new Date('2026-03-12')} />
+      </ThemeProvider>,
+    );
+    fireEvent.focus(screen.getByRole('combobox'));
+    fireEvent.keyDown(screen.getByRole('grid'), { key: 'Home' });
+    // March 12 2026 is a Thursday. Home goes to Sunday (March 8).
+    expect(document.activeElement?.textContent).toBe('8');
+  });
+
+  it('End moves focus to the end of the week', () => {
+    render(
+      <ThemeProvider>
+        <DatePicker defaultValue={new Date('2026-03-12')} />
+      </ThemeProvider>,
+    );
+    fireEvent.focus(screen.getByRole('combobox'));
+    fireEvent.keyDown(screen.getByRole('grid'), { key: 'End' });
+    // March 12 2026 is a Thursday. End of week (Saturday) = March 14.
+    expect(document.activeElement?.textContent).toBe('14');
+  });
+
+  it('click outside closes the calendar', () => {
+    render(
+      <ThemeProvider>
+        <DatePicker defaultValue={new Date('2026-03-15')} />
+      </ThemeProvider>,
+    );
+    fireEvent.focus(screen.getByRole('combobox'));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+});
