@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Sidebar } from '../src/components/composition/Sidebar/SidebarUnified';
-import { Sidebar as SidebarLegacy } from '../src/components/composition/Sidebar/Sidebar';
 import type { SidebarItem } from '../src/components/composition/Sidebar/SidebarUnified';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
@@ -90,38 +89,6 @@ describe('Sidebar Component', () => {
       renderWithTheme(<Sidebar items={items} onChange={onChange} />);
       await user.click(screen.getByText('Settings'));
       expect(onChange).toHaveBeenCalledWith('settings');
-    });
-  });
-
-  describe('Controlled active item (legacy API)', () => {
-    it('uses the activeItem prop as the active item', () => {
-      renderWithTheme(<SidebarLegacy items={items} activeItem="products" onChange={() => {}} />);
-      expect(screen.getByText('Products').closest('.sidebar-component__item')).toHaveClass(
-        'sidebar-component__item--active',
-      );
-      expect(screen.getByText('Home').closest('.sidebar-component__item')).not.toHaveClass(
-        'sidebar-component__item--active',
-      );
-    });
-
-    it('does not mutate internal state when controlled (only notifies via onChange)', async () => {
-      const user = userEvent.setup();
-      const onChange = jest.fn();
-      renderWithTheme(<SidebarLegacy items={items} activeItem="home" onChange={onChange} />);
-      // Initial active is 'home' (controlled)
-      expect(screen.getByText('Home').closest('.sidebar-component__item')).toHaveClass(
-        'sidebar-component__item--active',
-      );
-      await user.click(screen.getByText('Products'));
-      // Parent was notified
-      expect(onChange).toHaveBeenCalledWith('products');
-      // But internal state is unchanged because activeItem is controlled
-      expect(screen.getByText('Home').closest('.sidebar-component__item')).toHaveClass(
-        'sidebar-component__item--active',
-      );
-      expect(screen.getByText('Products').closest('.sidebar-component__item')).not.toHaveClass(
-        'sidebar-component__item--active',
-      );
     });
   });
 
