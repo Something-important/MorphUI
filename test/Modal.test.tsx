@@ -699,3 +699,67 @@ describe('Modal', () => {
     });
   });
 });
+
+// Draggable modal
+describe('Draggable', () => {
+  it('moves the modal when dragging the header', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Modal isOpen onClose={jest.fn()} title="Drag me" draggable>
+          <p>Content</p>
+        </Modal>
+      </ThemeProvider>,
+    );
+    const modal = container.querySelector('.modal-component') as HTMLElement;
+    const header = container.querySelector('.modal-component__header') as HTMLElement;
+    expect(header).toBeInTheDocument();
+
+    // Mock offset position (jsdom returns 0).
+    Object.defineProperty(modal, 'offsetLeft', { value: 100, configurable: true });
+    Object.defineProperty(modal, 'offsetTop', { value: 50, configurable: true });
+
+    // Start drag from the header.
+    fireEvent.mouseDown(header, { clientX: 0, clientY: 0 });
+    expect(document.body.style.cursor).toBe('grabbing');
+
+    // Move the mouse — modal position should update.
+    fireEvent.mouseMove(document, { clientX: 50, clientY: 30 });
+    expect(modal.style.left).toBe('150px'); // 100 + 50
+    expect(modal.style.top).toBe('80px'); // 50 + 30
+
+    // End drag — cursor resets.
+    fireEvent.mouseUp(document);
+    expect(document.body.style.cursor).toBe('');
+  });
+
+  it('does not drag from outside the header', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Modal isOpen onClose={jest.fn()} title="Drag me" draggable>
+          <p>Content</p>
+        </Modal>
+      </ThemeProvider>,
+    );
+    const modal = container.querySelector('.modal-component') as HTMLElement;
+    const content = container.querySelector('.modal-component__content') as HTMLElement;
+
+    // Mousedown on the content (not the header) should NOT start dragging.
+    fireEvent.mouseDown(content, { clientX: 0, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 100, clientY: 100 });
+    expect(modal.style.left).toBe('');
+    expect(document.body.style.cursor).not.toBe('grabbing');
+  });
+
+  it('does not attach drag listeners when draggable is false', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Modal isOpen onClose={jest.fn()} title="No drag">
+          <p>Content</p>
+        </Modal>
+      </ThemeProvider>,
+    );
+    const header = container.querySelector('.modal-component__header') as HTMLElement;
+    fireEvent.mouseDown(header, { clientX: 0, clientY: 0 });
+    expect(document.body.style.cursor).not.toBe('grabbing');
+  });
+});

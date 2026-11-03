@@ -156,12 +156,6 @@ describe('Slider Component', () => {
         expect(container.querySelector(`.slider-component--${variant}`)).toBeInTheDocument();
       });
     });
-
-    it("maps deprecated 'error' variant to the danger class", () => {
-      const { container } = render(<Slider value={50} variant="error" />);
-      expect(container.querySelector('.slider-component--danger')).toBeInTheDocument();
-      expect(container.querySelector('.slider-component--error')).not.toBeInTheDocument();
-    });
   });
 
   // Custom colors

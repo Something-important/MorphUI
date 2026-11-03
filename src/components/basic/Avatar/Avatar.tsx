@@ -184,7 +184,15 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     });
 
     return (
-      <div ref={ref} id={id} className={classes} style={mergedStyle} {...ariaProps} {...rest}>
+      <div
+        ref={ref}
+        id={id}
+        className={classes}
+        style={mergedStyle}
+        role="img"
+        {...ariaProps}
+        {...rest}
+      >
         {/* Image */}
         {src && !imageError && (
           <img

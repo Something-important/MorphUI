@@ -4,15 +4,7 @@ import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Spinner.css';
 
 export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type SpinnerVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  /** @deprecated use 'danger' — kept for backward compatibility */
-  | 'error';
+export type SpinnerVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
 export type SpinnerAnimation = 'spin' | 'pulse' | 'dots' | 'bars' | 'wave';
 
 export interface SpinnerProps {
@@ -73,11 +65,9 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         resolvedGradient.includes('radial-gradient') ||
         resolvedGradient.includes('conic-gradient'));
 
-    // Classes ('error' is the deprecated alias of 'danger')
-    const variantClass = variant === 'error' ? 'danger' : variant;
     const classes = [
       'spinner-component',
-      `spinner-component--${variantClass}`,
+      `spinner-component--${variant}`,
       `spinner-component--${size}`,
       `spinner-component--${animation}`,
       isColorGradient && 'spinner-component--gradient',

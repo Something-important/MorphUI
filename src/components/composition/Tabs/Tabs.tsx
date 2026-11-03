@@ -436,17 +436,16 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
 
     return (
       <TabsContext.Provider value={contextValue}>
-        <div
-          ref={ref || tabsRef}
-          className={classes}
-          style={finalStyle}
-          role="tablist"
-          aria-orientation={orientation}
-          {...ariaProps}
-          {...rest}
-        >
-          {/* Tab Navigation */}
-          <div className="tabs-component__navigation">
+        <div ref={ref || tabsRef} className={classes} style={finalStyle} {...rest}>
+          {/* Tab Navigation — role=tablist + aria-orientation + the
+              consumer ariaLabel sit on the direct parent of the role=tab
+              buttons (aria-required-children: tablist must own its tabs). */}
+          <div
+            className="tabs-component__navigation"
+            role="tablist"
+            aria-orientation={orientation}
+            {...ariaProps}
+          >
             {items.map((item) => (
               <button
                 key={item.id}

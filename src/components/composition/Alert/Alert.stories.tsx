@@ -21,7 +21,7 @@ export default {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['success', 'warning', 'error', 'info', 'primary', 'secondary'],
+      options: ['success', 'warning', 'danger', 'info', 'primary', 'secondary'],
     },
     size: {
       control: { type: 'select' },
@@ -83,7 +83,7 @@ export const Success: Story = {
 
 export const Error: Story = {
   args: {
-    variant: 'error',
+    variant: 'danger',
     title: 'Error',
     children: 'Something went wrong. Please try again.',
     position: 'top-right',
@@ -622,7 +622,7 @@ export const Interactive: Story = {
     const [alerts, setAlerts] = useState<
       Array<{
         id: number;
-        variant: 'success' | 'warning' | 'error' | 'info';
+        variant: 'success' | 'warning' | 'danger' | 'info';
         title: string;
         message: string;
         position: AlertPosition;
@@ -630,7 +630,7 @@ export const Interactive: Story = {
     >([]);
 
     const addAlert = (
-      variant: 'success' | 'warning' | 'error' | 'info',
+      variant: 'success' | 'warning' | 'danger' | 'info',
       title: string,
       message: string,
       position: AlertPosition,
@@ -672,7 +672,7 @@ export const Interactive: Story = {
           </Button>
           <Button
             variant="danger"
-            onClick={() => addAlert('error', 'Error', 'Something went wrong', 'top-left')}
+            onClick={() => addAlert('danger', 'Error', 'Something went wrong', 'top-left')}
           >
             Error
           </Button>
@@ -784,7 +784,7 @@ export const ThemeSwitching: Story = {
           </Alert>
 
           <Alert
-            variant="error"
+            variant="danger"
             title="Error Alert"
             position="top-left"
             open={open3}

@@ -21,7 +21,7 @@ export default {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'success', 'warning', 'error', 'info'],
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
     },
     size: {
       control: { type: 'select' },
@@ -112,12 +112,12 @@ export const Sizes: Story = {
 // Variants
 export const Variants: Story = {
   render: () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'> = [
+    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
       'primary',
       'secondary',
       'success',
       'warning',
-      'error',
+      'danger',
       'info',
     ];
     return (

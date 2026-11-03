@@ -16,10 +16,13 @@ const items: TabItem[] = [
 describe('Tabs Component', () => {
   describe('Basic Rendering', () => {
     it('renders a tablist with the default aria-label and base classes', () => {
-      renderWithTheme(<Tabs items={items} />);
+      const { container } = renderWithTheme(<Tabs items={items} />);
       const tablist = screen.getByRole('tablist', { name: 'Tabs' });
       expect(tablist).toBeInTheDocument();
-      expect(tablist).toHaveClass(
+      expect(tablist).toHaveClass('tabs-component__navigation');
+      // The variant/size/orientation classes live on the outer container.
+      const outer = container.querySelector('.tabs-component');
+      expect(outer).toHaveClass(
         'tabs-component',
         'tabs-component--primary',
         'tabs-component--md',
@@ -309,54 +312,74 @@ describe('Tabs Component', () => {
   describe('Variants', () => {
     it('defaults to the primary variant', () => {
       renderWithTheme(<Tabs items={items} />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--primary');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--primary',
+      );
     });
 
     it('renders with the secondary variant', () => {
       renderWithTheme(<Tabs items={items} variant="secondary" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--secondary');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--secondary',
+      );
     });
 
     it('renders with the outline variant', () => {
       renderWithTheme(<Tabs items={items} variant="outline" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--outline');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--outline',
+      );
     });
 
     it('renders with the ghost variant', () => {
       renderWithTheme(<Tabs items={items} variant="ghost" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--ghost');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--ghost',
+      );
     });
 
     it('renders with the danger variant', () => {
       renderWithTheme(<Tabs items={items} variant="danger" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--danger');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--danger',
+      );
     });
   });
 
   describe('Sizes', () => {
     it('defaults to md size', () => {
       renderWithTheme(<Tabs items={items} />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--md');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--md',
+      );
     });
 
     it('renders with xs size', () => {
       renderWithTheme(<Tabs items={items} size="xs" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--xs');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--xs',
+      );
     });
 
     it('renders with sm size', () => {
       renderWithTheme(<Tabs items={items} size="sm" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--sm');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--sm',
+      );
     });
 
     it('renders with lg size', () => {
       renderWithTheme(<Tabs items={items} size="lg" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--lg');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--lg',
+      );
     });
 
     it('renders with xl size', () => {
       renderWithTheme(<Tabs items={items} size="xl" />);
-      expect(screen.getByRole('tablist')).toHaveClass('tabs-component--xl');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass(
+        'tabs-component--xl',
+      );
     });
   });
 
@@ -403,13 +426,13 @@ describe('Tabs Component', () => {
   describe('Custom className and style', () => {
     it('applies a custom className to the tablist', () => {
       renderWithTheme(<Tabs items={items} className="my-tabs" />);
-      expect(screen.getByRole('tablist')).toHaveClass('my-tabs');
+      expect(screen.getByRole('tablist').closest('.tabs-component')).toHaveClass('my-tabs');
     });
 
     it('applies a custom inline style prop', () => {
       renderWithTheme(<Tabs items={items} style={{ marginTop: '10px' }} />);
-      const tablist = screen.getByRole('tablist');
-      expect(tablist.getAttribute('style')).toContain('margin-top: 10px');
+      const container = screen.getByRole('tablist').closest('.tabs-component');
+      expect(container?.getAttribute('style')).toContain('margin-top: 10px');
     });
   });
 

@@ -86,7 +86,7 @@ describe('Dropdown a11y', () => {
   });
 
   it('grouped options open: no axe violations', async () => {
-    const { container } = renderWithTheme(<Dropdown groups={grouped} onChange={jest.fn()} />);
+    const { container } = renderWithTheme(<Dropdown optionGroups={grouped} onChange={jest.fn()} />);
     open();
     const results = await axe(container);
     expect(results).toHaveNoViolations();

@@ -566,3 +566,126 @@ describe('Input Component', () => {
     });
   });
 });
+
+// Coverage edge cases: color mapping, mask, limit, validation, ref, suggestions
+describe('Coverage edge cases', () => {
+  it('applies phone mask to the value', () => {
+    const onChange = jest.fn();
+    renderWithTheme(<Input value="" onChange={onChange} mask="phone" ariaLabel="Phone" />);
+    const input = screen.getByLabelText('Phone');
+    fireEvent.change(input, { target: { value: '1234567890' } });
+    expect(onChange.mock.calls[0][0].target.value).toBe('(123) 456-7890');
+  });
+
+  it('applies credit-card mask to the value', () => {
+    const onChange = jest.fn();
+    renderWithTheme(<Input value="" onChange={onChange} mask="credit-card" ariaLabel="Card" />);
+    const input = screen.getByLabelText('Card');
+    fireEvent.change(input, { target: { value: '1234567890123456' } });
+    expect(onChange.mock.calls[0][0].target.value).toBe('1234 5678 9012 3456');
+  });
+
+  it('enforces characterCountLimit (blocks input over the limit)', () => {
+    const onChange = jest.fn();
+    renderWithTheme(
+      <Input value="abc" onChange={onChange} characterCountLimit={5} ariaLabel="Limited" />,
+    );
+    const input = screen.getByLabelText('Limited');
+    // Type to exceed the limit (6 chars) — should be blocked.
+    fireEvent.change(input, { target: { value: 'abcdef' } });
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('shows validation error for required field', () => {
+    const { container } = renderWithTheme(
+      <Input
+        value="initial"
+        onChange={jest.fn()}
+        validation={{ required: true }}
+        ariaLabel="Required"
+      />,
+    );
+    const input = screen.getByLabelText('Required');
+    fireEvent.change(input, { target: { value: '' } });
+    expect(container.querySelector('.input-error-message')).toHaveTextContent(
+      'This field is required',
+    );
+  });
+
+  it('shows validation error for min length', () => {
+    const { container } = renderWithTheme(
+      <Input value="initial" onChange={jest.fn()} validation={{ min: 5 }} ariaLabel="Min" />,
+    );
+    const input = screen.getByLabelText('Min');
+    fireEvent.change(input, { target: { value: 'ab' } });
+    expect(container.querySelector('.input-error-message')).toHaveTextContent(
+      'Minimum 5 characters required',
+    );
+  });
+
+  it('shows validation error for pattern mismatch', () => {
+    const { container } = renderWithTheme(
+      <Input
+        value="initial"
+        onChange={jest.fn()}
+        validation={{ pattern: /^\d+$/ }}
+        ariaLabel="Digits"
+      />,
+    );
+    const input = screen.getByLabelText('Digits');
+    fireEvent.change(input, { target: { value: 'abc' } });
+    expect(container.querySelector('.input-error-message')).toHaveTextContent('Invalid format');
+  });
+
+  it('shows validation error from custom validator', () => {
+    const { container } = renderWithTheme(
+      <Input
+        value="initial"
+        onChange={jest.fn()}
+        validation={{ custom: () => 'Custom error' }}
+        ariaLabel="Custom"
+      />,
+    );
+    const input = screen.getByLabelText('Custom');
+    fireEvent.change(input, { target: { value: 'test' } });
+    expect(container.querySelector('.input-error-message')).toHaveTextContent('Custom error');
+  });
+
+  it('click outside closes the suggestions', () => {
+    renderWithTheme(
+      <Input value="" onChange={jest.fn()} suggestions={['A', 'B']} ariaLabel="Search" />,
+    );
+    const input = screen.getByLabelText('Search');
+    fireEvent.focus(input);
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('forwards a ref to the input element', () => {
+    const ref = React.createRef<HTMLInputElement>();
+    renderWithTheme(<Input ref={ref} value="" onChange={jest.fn()} ariaLabel="Ref" />);
+    expect(ref.current).toBeInstanceOf(HTMLInputElement);
+  });
+
+  it('selects a suggestion via click', () => {
+    const onChange = jest.fn();
+    renderWithTheme(
+      <Input value="" onChange={onChange} suggestions={['Apple', 'Banana']} ariaLabel="Fruit" />,
+    );
+    fireEvent.focus(screen.getByLabelText('Fruit'));
+    fireEvent.click(screen.getByText('Apple'));
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ target: { value: 'Apple' } }));
+  });
+
+  it('selects a suggestion via Enter keyDown', () => {
+    const onChange = jest.fn();
+    renderWithTheme(
+      <Input value="" onChange={onChange} suggestions={['Apple', 'Banana']} ariaLabel="Fruit" />,
+    );
+    fireEvent.focus(screen.getByLabelText('Fruit'));
+    const option = screen.getByText('Banana');
+    fireEvent.keyDown(option, { key: 'Enter' });
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ target: { value: 'Banana' } }));
+  });
+});

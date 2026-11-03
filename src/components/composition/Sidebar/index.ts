@@ -1,9 +1,6 @@
 // Unified Sidebar API (supports both legacy and composition)
-export { Sidebar, type SidebarProps, type SidebarItem } from './SidebarUnified';
 
-// Legacy components (still available for direct import if needed)
-export { Sidebar as SidebarLegacy, SidebarItemComponent as SidebarItemLegacy } from './Sidebar';
-export type { SidebarProps as SidebarLegacyProps, SidebarItemProps } from './Sidebar';
+export { Sidebar, type SidebarProps, type SidebarItem } from './SidebarUnified';
 
 // Individual composition components (for advanced use cases)
 export {

@@ -4,15 +4,7 @@ import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Progress.css';
 
 export type ProgressSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type ProgressVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  /** @deprecated use 'danger' — kept for backward compatibility */
-  | 'error';
+export type ProgressVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
 export type ProgressType = 'linear' | 'circular';
 
 export interface ProgressProps {
@@ -97,11 +89,9 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         resolvedGradient.includes('radial-gradient') ||
         resolvedGradient.includes('conic-gradient'));
 
-    // Classes ('error' is the deprecated alias of 'danger')
-    const variantClass = variant === 'error' ? 'danger' : variant;
     const classes = [
       'progress-component',
-      `progress-component--${variantClass}`,
+      `progress-component--${variant}`,
       `progress-component--${size}`,
       `progress-component--${type}`,
       isIndeterminate && 'progress-component--indeterminate',

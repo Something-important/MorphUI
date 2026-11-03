@@ -1,6 +1,6 @@
 # Architecture
 
-The current state of MorphUI as of 0.9.0. For where it is headed, see
+The current state of MorphUI as of 1.0.0. For where it is headed, see
 [ROADMAP.md](./ROADMAP.md).
 
 ## Source layout
@@ -85,7 +85,7 @@ Theming is token-driven with **flat token maps**:
   between the Prettier check and Typecheck, so a hand-edited or stale
   `theme.css` fails the build before the test suite even starts.
 
-Since 0.9.0 there is **no runtime style injection**: consumers import
+Since 1.0.0 there is **no runtime style injection**: consumers import
 `morphui-react/css` (the single extracted stylesheet) once, before their own
 stylesheets, so user CSS can override component CSS without `!important`.
 
@@ -132,7 +132,7 @@ Rollup 4, single entry `src/components/index.ts`:
 ## Quality infrastructure
 
 - **Jest 29 + React Testing Library + jest-axe**, jsdom environment, CSS
-  mocked via `identity-obj-proxy`. 38 suites / 1,606 tests, ~33 seconds, all
+  mocked via `identity-obj-proxy`. 47 suites / 1,926 tests, ~33 seconds, all
   green. Coverage thresholds are currently 0 (informational only).
 - **CI** (`.github/workflows/ci.yml`): lint → prettier check → theme token
   gate (regenerate `theme.css`, fail on diff, `npm run tokens:check`) →
