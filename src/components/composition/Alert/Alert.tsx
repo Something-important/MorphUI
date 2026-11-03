@@ -14,7 +14,15 @@ export type AlertPosition =
 export interface AlertProps {
   children: React.ReactNode;
   title?: React.ReactNode;
-  variant?: 'success' | 'warning' | 'error' | 'info' | 'primary' | 'secondary';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'info'
+    | 'danger'
+    | 'ghost'
+    | 'outline';
   size?: 'xs' | 'sm' | 'md' | 'lg';
   position?: AlertPosition;
 
@@ -191,11 +199,13 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 
       const icons = {
         success: '✓',
-        error: '×',
+        danger: '×',
         warning: '!',
         info: 'i',
         primary: '•',
         secondary: '•',
+        ghost: '•',
+        outline: '•',
       };
 
       return icon || icons[variant] || null;
@@ -293,7 +303,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         className={classes}
         style={mergedStyle}
         role="alert"
-        aria-live={variant === 'error' ? 'assertive' : 'polite'}
+        aria-live={variant === 'danger' ? 'assertive' : 'polite'}
         {...ariaProps}
         {...rest}
       >
