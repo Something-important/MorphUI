@@ -26,6 +26,9 @@ import {
   Pagination,
   Tabs,
   Drawer,
+  Combobox,
+  DatePicker,
+  Form,
 } from '../src/components';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
@@ -96,5 +99,21 @@ describe('a11y smoke — all components', () => {
       <Drawer isOpen onClose={() => {}}>
         Content
       </Drawer>,
+    ));
+  it('Combobox', async () =>
+    check(
+      <Combobox
+        options={[
+          { label: 'Apple', value: 'apple' },
+          { label: 'Banana', value: 'banana' },
+        ]}
+      />,
+    ));
+  it('DatePicker', async () => check(<DatePicker />));
+  it('Form', async () =>
+    check(
+      <Form>
+        <input type="text" aria-label="Name" />
+      </Form>,
     ));
 });

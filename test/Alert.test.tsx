@@ -59,7 +59,7 @@ describe('Alert Component', () => {
 
   // Variants
   describe('Variants', () => {
-    const variants = ['success', 'warning', 'error', 'info', 'primary', 'secondary'] as const;
+    const variants = ['success', 'warning', 'danger', 'info', 'primary', 'secondary'] as const;
 
     variants.forEach((variant) => {
       it(`renders ${variant} variant`, () => {
@@ -424,7 +424,7 @@ describe('Alert Component', () => {
 
     it('has aria-live="assertive" for error variant', () => {
       render(
-        <Alert open={true} variant="error" position="top-right">
+        <Alert open={true} variant="danger" position="top-right">
           Error alert
         </Alert>,
       );
