@@ -1,0 +1,96 @@
+name: 🐛 Bug Report
+description: Report a bug in a MorphUI component
+title: '[bug]: '
+labels: ['bug', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the fields below.
+  - type: input
+    id: version
+    attributes:
+      label: MorphUI version
+      description: What version of morphui-react are you using?
+      placeholder: '1.0.1'
+    validations:
+      required: true
+  - type: input
+    id: react-version
+    attributes:
+      label: React version
+      description: What version of React are you using?
+      placeholder: '18.3.1 or 19.3.1'
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component is affected?
+      options:
+        - Accordion
+        - Alert
+        - Avatar
+        - Badge
+        - Breadcrumb
+        - Button
+        - Card
+        - Checkbox
+        - Combobox
+        - ContextMenu
+        - DatePicker
+        - Divider
+        - Drawer
+        - Dropdown
+        - Form
+        - Input
+        - Label
+        - Modal
+        - Pagination
+        - Popover
+        - Progress
+        - RadioGroup
+        - Sidebar
+        - Skeleton
+        - Slider
+        - Spinner
+        - Stepper
+        - Switch
+        - Table
+        - Tabs
+        - Toast
+        - Toggle
+        - Tooltip
+        - Hooks (useModal, useAnchoredPosition, useToast)
+        - ThemeProvider
+        - Other / multiple
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened? What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Minimal code to reproduce the issue
+      render:tsx
+      value: |
+        import { Button } from 'morphui-react';
+
+        export default function App() {
+          return <Button>Click me</Button>;
+        }
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output
+      description: Any error messages or warnings from the console
+      render: shell

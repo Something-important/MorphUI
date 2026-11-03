@@ -1,0 +1,75 @@
+name: ✨ Feature Request
+description: Suggest a new feature or improvement
+title: '[feat]: '
+labels: ['enhancement', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please describe what you'd like and why.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component (if applicable)
+      description: Which component would this feature affect?
+      options:
+        - New component (not yet in MorphUI)
+        - Accordion
+        - Alert
+        - Avatar
+        - Badge
+        - Breadcrumb
+        - Button
+        - Card
+        - Checkbox
+        - Combobox
+        - ContextMenu
+        - DatePicker
+        - Divider
+        - Drawer
+        - Dropdown
+        - Form
+        - Input
+        - Label
+        - Modal
+        - Pagination
+        - Popover
+        - Progress
+        - RadioGroup
+        - Sidebar
+        - Skeleton
+        - Slider
+        - Spinner
+        - Stepper
+        - Switch
+        - Table
+        - Tabs
+        - Toast
+        - Toggle
+        - Tooltip
+        - Hooks (useModal, useAnchoredPosition, useToast)
+        - ThemeProvider / theming
+        - Build / packaging
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem does this feature solve? What's the current pain point?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What would you like to see? API sketch, mockup, or description.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you tried any workarounds or alternative approaches?
