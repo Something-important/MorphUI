@@ -2,7 +2,6 @@
   "name": "morphui-react",
   "version": "0.12.0",
   "description": "MorphUI: A flexible, adaptable React + TypeScript UI component library for modern web apps.",
-  "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "./dist/components/index.d.ts",
   "files": [
@@ -109,8 +108,7 @@
   "exports": {
     ".": {
       "types": "./dist/components/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
+      "import": "./dist/index.esm.js"
     },
     "./css": "./dist/morphui.css",
     "./dist/*": "./dist/*",
