@@ -12,14 +12,14 @@ const external = Object.keys(pkg.peerDependencies || {});
 // Config 1 — the existing single-file build: CJS + ESM barrels, type
 // declarations, and the single extracted CSS. Backward-compatible with
 // `import { Button } from 'morphui-react'` and `import 'morphui-react/css'`.
+// ESM-only since 0.14.0. The CJS single-file build was dropped — modern
+// bundlers (webpack, vite, esbuild, rollup, Turbopack) all resolve ESM,
+// and the React ecosystem is ESM-first. Consumers doing
+// `require('morphui-react')` in Node CJS must now use a dynamic import
+// or configure their bundler for ESM.
 const singleFileBuild = {
   input: 'src/components/index.ts',
   output: [
-    {
-      file: pkg.main,
-      format: 'cjs',
-      sourcemap: true,
-    },
     {
       file: pkg.module,
       format: 'esm',

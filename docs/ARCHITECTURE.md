@@ -107,23 +107,27 @@ stylesheets, so user CSS can override component CSS without `!important`.
 
 Rollup 4, single entry `src/components/index.ts`:
 
-| Output                               | Size                                        |
-| ------------------------------------ | ------------------------------------------- |
-| `dist/index.js` (CJS)                | 457 kB                                      |
-| `dist/index.esm.js` (ESM)            | 449 kB                                      |
-| Source maps (shipped in the tarball) | ~908 kB each                                |
-| `dist/morphui.css` (minified)        | ~300 kB                                     |
-| npm tarball                          | 99 files, 487.7 kB packed / 3.2 MB unpacked |
+| Output                               | Size                                          |
+| ------------------------------------ | --------------------------------------------- |
+| `dist/index.esm.js` (ESM barrel)     | 449 kB                                        |
+| `dist/esm/` (preserveModules ESM)    | one file per source module                    |
+| Source maps (shipped in the tarball) | ~908 kB each                                  |
+| `dist/morphui.css` (minified)        | ~300 kB                                       |
+| `dist/css/<component>.css`           | per-component minified CSS (35 files)         |
+| npm tarball                          | ~250 files, 487.7 kB packed / 3.2 MB unpacked |
 
 - Peer dependencies (react, react-dom) are externalized; TypeScript
   declarations are emitted via `tsconfig.build.json`, which excludes
   `*.stories.tsx` and `src/stories` so no Storybook declarations leak into
   `dist`.
-- `exports` map: `.` (types/import/require), `./css`, `./dist/*`,
+- `exports` map: `.` (types/import — ESM-only since 0.14.0, no
+  `require`), `./css`, `./css/<component>` (per-component), `./dist/*`,
   `./package.json`.
-- **Single-bundle architecture**: there are no per-component subpath exports
-  yet — any import pulls the full JS bundle (tree-shaking helps ESM
-  consumers; CSS is all-or-nothing). Changing this is the top roadmap item.
+- **ESM-only** since 0.14.0 (no CJS `dist/index.js`). Per-component
+  subpath exports (`morphui-react/button`) resolve to the preserveModules
+  ESM files; per-component CSS (`morphui-react/css/button`) to
+  `dist/css/`. The single-file ESM barrel (`.`) and full CSS (`./css`)
+  remain for consumers who prefer the full bundle.
 
 ## Quality infrastructure
 
