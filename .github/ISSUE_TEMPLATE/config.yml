@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Ask a question
+    url: https://github.com/Something-important/MorphUI/discussions
+    about: Ask questions about usage, theming, or integration in GitHub Discussions
+  - name: 📖 Read the docs
+    url: https://github.com/Something-important/MorphUI/tree/master/docs
+    about: Migration guide, theming guide, accessibility guide, and architecture docs
+  - name: 🎨 Browse the Storybook
+    url: https://something-important.github.io/MorphUI/
+    about: Interactive component playground with all 33 components
