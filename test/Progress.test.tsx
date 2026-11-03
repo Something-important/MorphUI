@@ -105,12 +105,6 @@ describe('Progress Component', () => {
         expect(container.querySelector(`.progress-component--${variant}`)).toBeInTheDocument();
       });
     });
-
-    it("maps deprecated 'error' variant to the danger class", () => {
-      const { container } = render(<Progress value={50} variant="error" />);
-      expect(container.querySelector('.progress-component--danger')).toBeInTheDocument();
-      expect(container.querySelector('.progress-component--error')).not.toBeInTheDocument();
-    });
   });
 
   // Features

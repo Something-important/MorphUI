@@ -21,7 +21,7 @@ export default {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'success', 'warning', 'error', 'info'],
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
     },
     size: {
       control: { type: 'select' },
@@ -97,12 +97,12 @@ export const Sizes: Story = {
 // Variants
 export const Variants: Story = {
   render: () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'> = [
+    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
       'primary',
       'secondary',
       'success',
       'warning',
-      'error',
+      'danger',
       'info',
     ];
 
@@ -256,7 +256,7 @@ export const ThemeSwitching: Story = {
               <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Warning</p>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <Spinner variant="error" size="lg" />
+              <Spinner variant="danger" size="lg" />
               <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Error</p>
             </div>
           </div>

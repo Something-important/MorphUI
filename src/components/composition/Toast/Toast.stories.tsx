@@ -14,7 +14,7 @@ const ToastLauncher: React.FC = () => {
       <Button size="sm" onClick={() => toast.success('Saved', 'Your changes were saved.')}>
         Success
       </Button>
-      <Button size="sm" onClick={() => toast.error('Upload failed', 'Please try again.')}>
+      <Button size="sm" onClick={() => toast.danger('Upload failed', 'Please try again.')}>
         Error
       </Button>
       <Button size="sm" onClick={() => toast.warning('Storage almost full', '83% used.')}>
@@ -102,7 +102,7 @@ export default {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['success', 'warning', 'error', 'info', 'primary', 'secondary'],
+      options: ['success', 'warning', 'danger', 'info', 'primary', 'secondary'],
     },
     size: {
       control: { type: 'select' },
@@ -201,7 +201,7 @@ export const Standalone: Story = {
           padding: '24px',
         }}
       >
-        {(['success', 'error', 'warning', 'info'] as const).map((variant) => (
+        {(['success', 'danger', 'warning', 'info'] as const).map((variant) => (
           <Toast
             key={variant}
             open

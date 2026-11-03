@@ -12,15 +12,7 @@ import React, {
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Toast.css';
 
-export type ToastVariant =
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  | 'primary'
-  | 'secondary'
-  /** @deprecated use 'danger' — kept for backward compatibility */
-  | 'error';
+export type ToastVariant = 'success' | 'warning' | 'danger' | 'info' | 'primary' | 'secondary';
 
 export type ToastPosition =
   | 'top-left'
@@ -255,7 +247,6 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
       const icons: Record<ToastVariant, string> = {
         success: '✓',
         danger: '×',
-        error: '×',
         warning: '!',
         info: 'i',
         primary: '•',
@@ -267,11 +258,9 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
     const defaultIcon = getDefaultIcon();
     const message = description ?? children;
 
-    // Classes ('error' is the deprecated alias of 'danger')
-    const variantClass = variant === 'error' ? 'danger' : variant;
     const classes = [
       'toast-component',
-      `toast-component--${variantClass}`,
+      `toast-component--${variant}`,
       `toast-component--${size}`,
       `toast-component--${animation}`,
       isOpen && !isExiting && 'toast-component--open',
@@ -327,7 +316,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
         id={id}
         className={classes}
         style={mergedStyle}
-        role={variant === 'error' || variant === 'danger' ? 'alert' : 'status'}
+        role={variant === 'danger' ? 'alert' : 'status'}
         onMouseEnter={(event) => {
           if (pauseOnHover) pauseTimerRef.current?.();
           onMouseEnter?.(event);
@@ -431,12 +420,6 @@ export interface ToastFn {
     options?: Partial<Omit<ToastOptions, 'variant' | 'title' | 'description'>>,
   ) => string;
   danger: (
-    title: React.ReactNode,
-    description?: React.ReactNode,
-    options?: Partial<Omit<ToastOptions, 'variant' | 'title' | 'description'>>,
-  ) => string;
-  /** @deprecated use danger() */
-  error: (
     title: React.ReactNode,
     description?: React.ReactNode,
     options?: Partial<Omit<ToastOptions, 'variant' | 'title' | 'description'>>,
@@ -546,8 +529,6 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
 
     fn.success = shortcut('success');
     fn.danger = shortcut('danger');
-    /** @deprecated use toast.danger() */
-    fn.error = shortcut('danger');
     fn.warning = shortcut('warning');
     fn.info = shortcut('info');
     return fn;
