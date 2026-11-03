@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Sidebar } from '../src/components/composition/Sidebar/SidebarUnified';
 import { Sidebar as SidebarLegacy } from '../src/components/composition/Sidebar/Sidebar';
@@ -286,5 +286,38 @@ describe('Sidebar Component', () => {
       );
       expect(screen.getByTestId('home-icon')).toBeInTheDocument();
     });
+  });
+});
+
+// SidebarContext keyboard navigation (ESC to toggle)
+describe('Keyboard navigation', () => {
+  it('ESC closes an open overlay sidebar', () => {
+    const { container } = renderWithTheme(
+      <Sidebar items={items} overlay keyboardNavigation collapsible />,
+    );
+    // Overlay starts open (not collapsed by default).
+    expect(container.querySelector('.sidebar-root--overlay')).toBeInTheDocument();
+    expect(container.querySelector('.sidebar-root--collapsed')).not.toBeInTheDocument();
+    // ESC should collapse (close) the overlay.
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(container.querySelector('.sidebar-root--collapsed')).toBeInTheDocument();
+  });
+
+  it('ESC opens a collapsed sidebar', () => {
+    const { container } = renderWithTheme(
+      <Sidebar items={items} keyboardNavigation collapsible defaultCollapsed />,
+    );
+    expect(container.querySelector('.sidebar-root--collapsed')).toBeInTheDocument();
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(container.querySelector('.sidebar-root--collapsed')).not.toBeInTheDocument();
+  });
+
+  it('does not toggle on ESC when keyboardNavigation is disabled', () => {
+    const { container } = renderWithTheme(
+      <Sidebar items={items} collapsible defaultCollapsed keyboardNavigation={false} />,
+    );
+    fireEvent.keyDown(document, { key: 'Escape' });
+    // Still collapsed — keyboardNavigation off means ESC does nothing.
+    expect(container.querySelector('.sidebar-root--collapsed')).toBeInTheDocument();
   });
 });

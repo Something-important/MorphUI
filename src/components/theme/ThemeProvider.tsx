@@ -87,12 +87,17 @@ export const ThemeProvider = ({
     }
   }, [mergedTheme, mergedKeys, dataTheme, target]);
 
-  // On unmount, clean up every var this provider applied.
+  // On unmount, clean up every var and the data-theme attribute this
+  // provider applied.
   useEffect(() => {
     const applied = appliedKeysRef.current;
+    const hadDataTheme = dataTheme !== undefined;
     return () => {
       const el = resolveTarget(target);
       applied.forEach((key) => el.style.removeProperty(`--${key}`));
+      if (hadDataTheme) {
+        el.removeAttribute('data-theme');
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
