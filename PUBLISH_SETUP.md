@@ -30,14 +30,6 @@ The workflows involved:
 --provenance` when a release is created (or on `force_publish` dispatch).
 - `semantic-pr.yml` — enforces conventional PR titles.
 
-> Why the publish job lives in `release-please.yml` and not a separate
-> `publish.yml`: npm trusted publishing checks the GitHub OIDC token's
-> `workflow` claim, which is the **top-level** workflow file. A
-> `workflow_call` from `release-please.yml` to a separate `publish.yml`
-> produces a token claiming `release-please.yml` (the caller), which
-> doesn't match a `publish.yml` registration. Inlining keeps the claim
-> and the registration aligned on one filename.
-
 ## Requirement 1: npm CLI >= 11.5.1
 
 npm 10.x can **sign** provenance but cannot perform the **OIDC token

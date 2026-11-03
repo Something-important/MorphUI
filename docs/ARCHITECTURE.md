@@ -1,6 +1,6 @@
 # Architecture
 
-The current state of MorphUI as of 0.9.0. For where it is headed, see
+The current state of MorphUI as of 1.0.0. For where it is headed, see
 [ROADMAP.md](./ROADMAP.md).
 
 ## Source layout
@@ -85,7 +85,7 @@ Theming is token-driven with **flat token maps**:
   between the Prettier check and Typecheck, so a hand-edited or stale
   `theme.css` fails the build before the test suite even starts.
 
-Since 0.9.0 there is **no runtime style injection**: consumers import
+Since 1.0.0 there is **no runtime style injection**: consumers import
 `morphui-react/css` (the single extracted stylesheet) once, before their own
 stylesheets, so user CSS can override component CSS without `!important`.
 

@@ -291,5 +291,6 @@
   },
   "sideEffects": [
     "**/*.css"
-  ]
+  ],
+  "type": "module"
 }
