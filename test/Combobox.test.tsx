@@ -382,3 +382,111 @@ describe('Virtualization', () => {
     expect(container.querySelectorAll('[role="option"]').length).toBe(50);
   });
 });
+
+// Edge cases for coverage: async error, keyboard wrap, click-outside, mouse
+describe('Edge cases', () => {
+  const opts = [
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+    { label: 'Cherry', value: 'cherry' },
+  ];
+
+  it('ArrowUp wraps from first to last option', () => {
+    render(
+      <ThemeProvider>
+        <Combobox options={opts} />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('combobox');
+    // Open + ArrowDown to highlight first.
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    // ArrowUp from first should wrap to last.
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    const options = screen.getAllByRole('option');
+    expect(options[options.length - 1]).toHaveClass('combobox-component__option--highlighted');
+  });
+
+  it('Tab closes the open listbox', () => {
+    render(
+      <ThemeProvider>
+        <Combobox options={opts} />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('combobox');
+    fireEvent.keyDown(input, { key: 'ArrowDown' }); // open
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    fireEvent.keyDown(input, { key: 'Tab' });
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('Home highlights the first option', () => {
+    render(
+      <ThemeProvider>
+        <Combobox options={opts} />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('combobox');
+    fireEvent.keyDown(input, { key: 'ArrowDown' }); // open, highlight 0
+    fireEvent.keyDown(input, { key: 'ArrowDown' }); // highlight 1
+    fireEvent.keyDown(input, { key: 'Home' }); // back to 0
+    const options = screen.getAllByRole('option');
+    expect(options[0]).toHaveClass('combobox-component__option--highlighted');
+  });
+
+  it('End highlights the last option', () => {
+    render(
+      <ThemeProvider>
+        <Combobox options={opts} />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('combobox');
+    fireEvent.keyDown(input, { key: 'ArrowDown' }); // open
+    fireEvent.keyDown(input, { key: 'End' });
+    const options = screen.getAllByRole('option');
+    expect(options[options.length - 1]).toHaveClass('combobox-component__option--highlighted');
+  });
+
+  it('click outside closes the listbox', () => {
+    const { container } = render(
+      <ThemeProvider>
+        <Combobox options={opts} />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('combobox');
+    fireEvent.keyDown(input, { key: 'ArrowDown' }); // open
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    // Click outside (on the container background).
+    fireEvent.mouseDown(container.ownerDocument.body);
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('selects an option via mouseDown', () => {
+    const onChange = jest.fn();
+    render(
+      <ThemeProvider>
+        <Combobox options={opts} onChange={onChange} />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('combobox');
+    fireEvent.keyDown(input, { key: 'ArrowDown' }); // open
+    const options = screen.getAllByRole('option');
+    fireEvent.mouseDown(options[1]); // select Banana
+    expect(onChange).toHaveBeenCalledWith('banana');
+  });
+
+  it('handles async loadOptions rejection (clears loading state)', async () => {
+    const loadOptions = jest.fn().mockRejectedValue(new Error('fetch failed'));
+    const { container } = render(
+      <ThemeProvider>
+        <Combobox options={[]} loadOptions={loadOptions} />
+      </ThemeProvider>,
+    );
+    const input = screen.getByRole('combobox');
+    // Type to trigger loadOptions.
+    fireEvent.change(input, { target: { value: 'test' } });
+    // Wait for the rejection to settle.
+    await new Promise((r) => setTimeout(r, 50));
+    // Loading state should be cleared after rejection.
+    expect(container.querySelector('.combobox-component--loading')).not.toBeInTheDocument();
+  });
+});
