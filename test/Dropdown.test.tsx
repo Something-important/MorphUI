@@ -357,3 +357,42 @@ describe('Dropdown Component', () => {
     });
   });
 });
+
+// Grouped options render
+describe('Grouped options', () => {
+  const grouped = [
+    {
+      label: 'Citrus',
+      value: 'citrus',
+      options: [
+        { label: 'Orange', value: 'orange' },
+        { label: 'Lemon', value: 'lemon' },
+      ],
+    },
+    {
+      label: 'Berry',
+      value: 'berry',
+      options: [
+        { label: 'Strawberry', value: 'strawberry' },
+        { label: 'Blueberry', value: 'blueberry' },
+      ],
+    },
+  ];
+
+  it('renders group headers and their options', () => {
+    renderWithTheme(<Dropdown optionGroups={grouped} onChange={jest.fn()} />);
+    fireEvent.click(getRoot());
+    expect(screen.getByText('Citrus')).toBeInTheDocument();
+    expect(screen.getByText('Berry')).toBeInTheDocument();
+    expect(screen.getByText('Orange')).toBeInTheDocument();
+    expect(screen.getByText('Strawberry')).toBeInTheDocument();
+  });
+
+  it('selects an option from a group', () => {
+    const onChange = jest.fn();
+    renderWithTheme(<Dropdown optionGroups={grouped} onChange={onChange} />);
+    fireEvent.click(getRoot());
+    fireEvent.click(screen.getByText('Lemon'));
+    expect(onChange).toHaveBeenCalledWith('lemon');
+  });
+});

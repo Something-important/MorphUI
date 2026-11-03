@@ -538,7 +538,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                     ? // Render grouped options: each group is a role="group" wrapper
                       // (an allowed listbox child) around its options.
                       optionGroups.map((group) => (
-                        <li
+                        <div
                           key={group.value}
                           role="group"
                           aria-label={group.label}
@@ -595,7 +595,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                                 </li>
                               ))}
                           </div>
-                        </li>
+                        </div>
                       ))
                     : // Render regular options
                       filteredOptions.map((opt, index) => (
