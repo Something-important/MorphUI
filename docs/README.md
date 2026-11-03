@@ -5,6 +5,9 @@ codebase on 2026-11-02 at `morphui-react@1.0.0`.
 
 | Document                                   | Contents                                                                                   |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| [MIGRATION.md](./MIGRATION.md)             | 0.x → 1.0 migration guide — breaking changes + replacements                                |
+| [THEMING.md](./THEMING.md)                 | Token system, built-in themes, custom themes, base + overrides, CSS-only usage             |
+| [ACCESSIBILITY.md](./ACCESSIBILITY.md)     | A11y contracts per component, keyboard nav, hooks API, SSR, beyond-axe testing             |
 | [ARCHITECTURE.md](./ARCHITECTURE.md)       | Source layout, theming system, CSS strategy, build & package shape, quality infrastructure |
 | [COMPONENTS.md](./COMPONENTS.md)           | Full component inventory with LOC, tests, size outliers, refactor candidates               |
 | [ROADMAP.md](./ROADMAP.md)                 | Prioritized short / medium / long-term goals and explicit non-goals                        |
