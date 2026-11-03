@@ -91,6 +91,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
               key={index}
               className={classes}
               style={mergedStyle}
+              role="img"
               aria-label={ariaLabel || 'Loading content'}
             />
           ))}
@@ -104,7 +105,15 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     }
 
     return (
-      <div ref={ref} id={id} className={classes} style={mergedStyle} {...ariaProps} {...rest} />
+      <div
+        ref={ref}
+        id={id}
+        className={classes}
+        style={mergedStyle}
+        role="img"
+        {...ariaProps}
+        {...rest}
+      />
     );
   },
 );
