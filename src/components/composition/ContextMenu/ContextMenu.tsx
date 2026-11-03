@@ -95,6 +95,10 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
     const [internalIsOpen, setInternalIsOpen] = useState(false);
     const [internalPosition, setInternalPosition] = useState({ x: 0, y: 0 });
     const [focusedIndex, setFocusedIndex] = useState(-1);
+    // SSR guard: createPortal needs a DOM target (document.body). Don't
+    // render the portal until mounted on the client.
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => setIsMounted(true), []);
 
     const isOpen = isControlled ? controlledIsOpen : internalIsOpen;
     const position = controlledPosition ?? internalPosition;
@@ -281,6 +285,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
         </div>
 
         {isOpen &&
+          isMounted &&
           createPortal(
             <div
               ref={menuRef}
