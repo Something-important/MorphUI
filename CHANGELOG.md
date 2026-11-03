@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.0.0](https://github.com/Something-important/MorphUI/compare/v0.13.0...v1.0.0) (2026-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** SidebarLegacy and SidebarItemLegacy are removed. Consumers must use the unified Sidebar API (import { Sidebar } from 'morphui-react') which supports both the items[] legacy-style API and the composed children API.
+* **api:** Alert's variant='error' is removed. Use variant='danger'.
+* **api:** the 'error' variant is removed from Progress, Spinner, Slider, and Toast. The toast.error() method is removed. Consumers must use variant='danger' and toast.danger().
+* **package:** the package no longer ships a CommonJS build. Consumers doing require('morphui-react') in Node CJS must switch to a dynamic import or configure their bundler for ESM. The ESM barrel, subpath exports, and CSS exports are unaffected.
+
+### Features
+
+* **combobox:** virtualized rendering for large option lists ([4011feb](https://github.com/Something-important/MorphUI/commit/4011feb3ad01f8fe53c3f9e5c547c76665de2f37))
+* **combobox:** virtualized rendering for large option lists ([5d5a659](https://github.com/Something-important/MorphUI/commit/5d5a659480346287c97ba89ea7ce8ab9cba77783))
+* **css:** per-component CSS subpath exports ([a268db7](https://github.com/Something-important/MorphUI/commit/a268db7f818ba8a3537ea3102127544d3378a94e))
+* **css:** per-component CSS subpath exports (morphui-react/css/button) ([6d68ba9](https://github.com/Something-important/MorphUI/commit/6d68ba95718b8060a97e01d638ebd49a719d37b0))
+* **package:** drop CJS build — ESM-only ([9be9d46](https://github.com/Something-important/MorphUI/commit/9be9d462d3fee00640bc8acf1bff70fed0338e9c))
+* **table:** implement column pinning (fixed: left|right) ([9ee0795](https://github.com/Something-important/MorphUI/commit/9ee07956ea6dac6417e8ac2d1392976d7149c20e))
+* **table:** implement column pinning (fixed: left|right) ([a10089e](https://github.com/Something-important/MorphUI/commit/a10089eccaf09a24571c47d5ea81530f5cedb946))
+
+
+### Bug Fixes
+
+* **a11y:** 3 missed violations found by comprehensive smoke audit ([6940dd8](https://github.com/Something-important/MorphUI/commit/6940dd8eaa900723d3c8e022978a43da6f26e4cb))
+* **a11y:** 3 missed violations found by comprehensive smoke audit ([9e78108](https://github.com/Something-important/MorphUI/commit/9e78108b4d1939f76e405eaba22217547e4789f5))
+* **api:** Alert variant 'error' -&gt; 'danger' + add ghost/outline ([c51f030](https://github.com/Something-important/MorphUI/commit/c51f0301bb5fd6301b0d83691c016d1df5eb174b))
+* **api:** remove deprecated 'error' variant — use 'danger' ([d95be16](https://github.com/Something-important/MorphUI/commit/d95be16f417a4b22fe4701ec7f5285d140d7062f))
+* **api:** remove deprecated legacy Sidebar + orphaned barrel ([65fdba9](https://github.com/Something-important/MorphUI/commit/65fdba91067074cda053866fb1a10a8661abba6c))
+* **pre-1.0:** type:module, delete orphaned Sidebar.css, fix stale docs ([608702f](https://github.com/Something-important/MorphUI/commit/608702f19e08122f872aced28f42d8cdb229620b))
+* **pre-1.0:** type:module, delete orphaned Sidebar.css, fix stale docs ([ec0dc74](https://github.com/Something-important/MorphUI/commit/ec0dc745c17671da4f3ffcbdae268f4e3a47e5a8))
+
 ## [0.13.0](https://github.com/Something-important/MorphUI/compare/v0.12.0...v0.13.0) (2026-11-02)
 
 
