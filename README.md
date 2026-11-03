@@ -124,7 +124,10 @@ Features: six variants (`success` / `danger` / `warning` / `info` / `primary` / 
 - **Live Storybook**: Browse all components and interact with them at <https://something-important.github.io/MorphUI/>
 - **Run locally**: `npm run storybook` opens Storybook at `http://localhost:6006/`
 - **Build a static copy**: `npm run build-storybook` produces a `storybook-static/` folder you can deploy anywhere
-- **Engineering docs**: architecture, component inventory, roadmap, and the publish pipeline live in [`docs/`](./docs) — start at [`docs/README.md`](./docs/README.md); the contribution workflow is in [`CONTRIBUTING.md`](./CONTRIBUTING.md)
+- **Engineering docs**: architecture, theming guide, a11y guide, migration
+  guide, component inventory, roadmap, and the publish pipeline live in
+  [`docs/`](./docs) — start at [`docs/README.md`](./docs/README.md); the
+  contribution workflow is in [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 
 ## 🧪 Testing
 
