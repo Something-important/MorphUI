@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { Popover } from '../src/components/composition/Popover/Popover';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
@@ -29,6 +29,16 @@ const structured: PopoverContent = {
 
 const open = () => fireEvent.click(screen.getByText('Trigger'));
 
+// Open the Popover and let the useAnchoredPosition setTimeout(10ms) fire
+// within act's scope. Without this, the positioning measurement fires
+// after the test's act scope ends, producing an act() warning.
+const openAndSettle = async () => {
+  open();
+  await act(async () => {
+    await new Promise((r) => setTimeout(r, 20));
+  });
+};
+
 describe('Popover a11y', () => {
   it('closed: no axe violations', async () => {
     const { container } = renderPopover();
@@ -38,21 +48,21 @@ describe('Popover a11y', () => {
 
   it('open (string content): no axe violations', async () => {
     const { container } = renderPopover();
-    open();
+    await openAndSettle();
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('open with structured content (header/body/footer/actions): no axe violations', async () => {
     const { container } = renderPopover({ content: structured });
-    open();
+    await openAndSettle();
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('open with arrow: no axe violations', async () => {
     const { container } = renderPopover({ arrow: true });
-    open();
+    await openAndSettle();
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -60,6 +70,9 @@ describe('Popover a11y', () => {
   it('hover trigger (open): no axe violations', async () => {
     const { container } = renderPopover({ trigger: 'hover' });
     fireEvent.mouseEnter(screen.getByText('Trigger'));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 20));
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -67,13 +80,16 @@ describe('Popover a11y', () => {
   it('focus trigger (open): no axe violations', async () => {
     const { container } = renderPopover({ trigger: 'focus' });
     fireEvent.focus(screen.getByText('Trigger'));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 20));
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('with ariaLabel: no axe violations', async () => {
     const { container } = renderPopover({ ariaLabel: 'Details' });
-    open();
+    await openAndSettle();
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -81,7 +97,7 @@ describe('Popover a11y', () => {
   it('each position (top/bottom/left/right): no axe violations', async () => {
     for (const position of ['top', 'bottom', 'left', 'right'] as const) {
       const { container, unmount } = renderPopover({ position });
-      open();
+      await openAndSettle();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
       unmount();
@@ -90,7 +106,7 @@ describe('Popover a11y', () => {
 
   it('open with min/max width and height styling: no axe violations', async () => {
     const { container } = renderPopover({ minWidth: 200, maxWidth: 400, minHeight: 100 });
-    open();
+    await openAndSettle();
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -102,6 +118,9 @@ describe('Popover a11y', () => {
       </Popover>,
     );
     fireEvent.click(screen.getByText('Open info'));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 20));
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
