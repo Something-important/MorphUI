@@ -1,5 +1,5 @@
 // Drawer.tsx
-import React, { ReactNode, forwardRef, useEffect, useRef } from 'react';
+import React, { ReactNode, forwardRef, useEffect, useRef, useState, useCallback } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Drawer.css';
 
@@ -7,8 +7,13 @@ export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
 export type DrawerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 export interface DrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
+  /** Controlled open state. When provided, the parent owns the state. */
+  isOpen?: boolean;
+  /** Uncontrolled initial open state. Ignored when `isOpen` is provided. */
+  defaultOpen?: boolean;
+  /** Called when the drawer requests to close (ESC / backdrop / close button).
+   * Required for controlled; optional for uncontrolled. */
+  onClose?: () => void;
   children: ReactNode;
 
   // Position
@@ -68,7 +73,8 @@ export interface DrawerProps {
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
     {
-      isOpen,
+      isOpen: controlledIsOpen,
+      defaultOpen,
       onClose,
       children,
       position = 'right',
@@ -109,6 +115,22 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const drawerRef = useRef<HTMLDivElement>(null);
     const previousActiveElement = useRef<HTMLElement | null>(null);
 
+    // Controlled vs uncontrolled: if `isOpen` is provided, the parent owns
+    // the state. Otherwise, we manage it internally from `defaultOpen`.
+    // Mirrors the Alert/Toast uncontrolled pattern.
+    const isControlled = controlledIsOpen !== undefined;
+    const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen ?? false);
+    const open = isControlled ? controlledIsOpen : internalIsOpen;
+
+    // Centralized close handler: updates internal state in uncontrolled mode
+    // and notifies the parent. Used by ESC, backdrop click, and close button.
+    const closeDrawer = useCallback(() => {
+      if (!isControlled) {
+        setInternalIsOpen(false);
+      }
+      onClose?.();
+    }, [isControlled, onClose]);
+
     // Resolve theme values
     const resolvedColor = resolveThemeValue(color);
     const resolvedGradient = resolveThemeValue(gradient);
@@ -127,21 +149,21 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     // Handle ESC key
     useEffect(() => {
-      if (!isOpen || !closeOnEsc) return;
+      if (!open || !closeOnEsc) return;
 
       const handleEsc = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
-          onClose();
+          closeDrawer();
         }
       };
 
       document.addEventListener('keydown', handleEsc);
       return () => document.removeEventListener('keydown', handleEsc);
-    }, [isOpen, closeOnEsc, onClose]);
+    }, [open, closeOnEsc, closeDrawer]);
 
     // Focus management
     useEffect(() => {
-      if (isOpen) {
+      if (open) {
         // Store previous active element
         previousActiveElement.current = document.activeElement as HTMLElement;
 
@@ -155,11 +177,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           previousActiveElement.current.focus();
         }
       }
-    }, [isOpen]);
+    }, [open]);
 
     // Prevent body scroll when drawer is open
     useEffect(() => {
-      if (isOpen) {
+      if (open) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
@@ -168,21 +190,21 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       return () => {
         document.body.style.overflow = '';
       };
-    }, [isOpen]);
+    }, [open]);
 
     // Handle backdrop click
     const handleBackdropClick = (e: React.MouseEvent) => {
       if (closeOnBackdropClick && e.target === e.currentTarget) {
-        onClose();
+        closeDrawer();
       }
     };
 
     // Handle close button click
     const handleCloseClick = () => {
-      onClose();
+      closeDrawer();
     };
 
-    if (!isOpen) return null;
+    if (!open) return null;
 
     // Classes
     const classes = [

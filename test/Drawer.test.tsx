@@ -386,4 +386,54 @@ describe('Drawer Component', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
   });
+
+  // Uncontrolled mode — omit `isOpen` and `onClose`, pass `defaultOpen`,
+  // and the drawer manages its own open state. Mirrors the Alert/Toast
+  // uncontrolled pattern.
+  describe('Uncontrolled Mode', () => {
+    it('renders open with defaultOpen and no isOpen/onClose', () => {
+      render(<Drawer defaultOpen={true}>Uncontrolled content</Drawer>);
+      expect(screen.getByText('Uncontrolled content')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('renders nothing with defaultOpen={false}', () => {
+      render(<Drawer defaultOpen={false}>Hidden content</Drawer>);
+      expect(screen.queryByText('Hidden content')).not.toBeInTheDocument();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    it('close button closes the drawer in uncontrolled mode', () => {
+      render(<Drawer defaultOpen={true}>Closable content</Drawer>);
+      expect(screen.getByText('Closable content')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByLabelText('Close drawer'));
+
+      // Drawer unmounts (internal state → false → early return null)
+      expect(screen.queryByText('Closable content')).not.toBeInTheDocument();
+    });
+
+    it('isOpen (controlled) wins when both isOpen and defaultOpen are provided', () => {
+      render(
+        <Drawer isOpen={false} defaultOpen={true}>
+          Controlled content
+        </Drawer>,
+      );
+      // Controlled wins: closed, not open
+      expect(screen.queryByText('Controlled content')).not.toBeInTheDocument();
+    });
+
+    it('onClose is called when provided in uncontrolled mode', () => {
+      const onClose = jest.fn();
+      render(
+        <Drawer defaultOpen={true} onClose={onClose}>
+          Content
+        </Drawer>,
+      );
+      fireEvent.click(screen.getByLabelText('Close drawer'));
+      expect(onClose).toHaveBeenCalledTimes(1);
+      // Drawer is also unmounted (internal state updated)
+      expect(screen.queryByText('Content')).not.toBeInTheDocument();
+    });
+  });
 });
