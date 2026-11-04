@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.0](https://github.com/Something-important/MorphUI/compare/v1.0.1...v1.1.0) (2026-11-04)
+
+
+### Features
+
+* **community:** issue templates, security policy, React 19 verified ([59989b6](https://github.com/Something-important/MorphUI/commit/59989b65c280f96e9ec2d54f4f45043db380071d))
+* **community:** issue templates, security policy, React 19 verified ([6f6c7c6](https://github.com/Something-important/MorphUI/commit/6f6c7c6f99825bd0635315e86230eff334452df5))
+* **ssr:** server-side rendering support + smoke test for all 33 components ([f033303](https://github.com/Something-important/MorphUI/commit/f033303afc406942f8fa560c187327d10a5be932))
+* **ssr:** server-side rendering support + smoke test for all 33 components ([59186a8](https://github.com/Something-important/MorphUI/commit/59186a8e3ca7b38dae91a1e717357492a4f884a2))
+
+
+### Bug Fixes
+
+* **ci:** rename jest.config + babel.config to .cjs for type:module ([d1db675](https://github.com/Something-important/MorphUI/commit/d1db675691143e61e730389423bae15ea821dd1a))
+* **ci:** rename jest+babel configs to .cjs, remove type:module ([c6b4c4b](https://github.com/Something-important/MorphUI/commit/c6b4c4b3b0ed4d4e3ee106045876af2912a8261b))
+
 ## [1.0.1](https://github.com/Something-important/MorphUI/compare/v1.0.0...v1.0.1) (2026-11-03)
 
 
