@@ -27,7 +27,10 @@ export interface TableProps<T = Record<string, unknown>> {
 
   // Selection
   selectable?: boolean;
+  /** Controlled selected rows. */
   selectedRows?: T[];
+  /** Uncontrolled initial selected rows. Ignored when `selectedRows` is provided. */
+  defaultSelectedRows?: T[];
   onSelectionChange?: (selectedRows: T[]) => void;
   rowKey?: (row: T) => string | number;
 
@@ -92,6 +95,7 @@ function TableInner<T>(
     // Selection
     selectable = false,
     selectedRows: controlledSelectedRows,
+    defaultSelectedRows,
     onSelectionChange,
     rowKey = (row) => {
       const record = row as Record<string, unknown>;
@@ -156,7 +160,9 @@ function TableInner<T>(
 ) {
   // Internal state for uncontrolled mode
   const [isPending, startTransition] = useTransition();
-  const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>([]);
+  const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>(
+    defaultSelectedRows ?? [],
+  );
   const [internalSortColumn, setInternalSortColumn] = useState<string | null>(
     defaultSortColumn || null,
   );
