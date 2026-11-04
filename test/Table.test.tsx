@@ -219,6 +219,38 @@ describe('Table Component', () => {
       expect(screen.getByText(/page 2 of/i)).toBeInTheDocument();
       expect(screen.getByText('Bob Johnson')).toBeInTheDocument();
     });
+
+    it('initializes page from defaultCurrentPage in uncontrolled mode', () => {
+      render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          pagination
+          pageSize={2}
+          defaultCurrentPage={2}
+        />,
+      );
+      expect(screen.getByText(/page 2 of/i)).toBeInTheDocument();
+      // Page 2 with pageSize 2 = only Bob Johnson (3rd item)
+      expect(screen.getByText('Bob Johnson')).toBeInTheDocument();
+      expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
+    });
+
+    it('defaultCurrentPage is ignored when currentPage (controlled) is provided', () => {
+      render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          pagination
+          pageSize={2}
+          currentPage={1}
+          defaultCurrentPage={2}
+        />,
+      );
+      // Controlled wins: page 1, not 2
+      expect(screen.getByText(/page 1 of/i)).toBeInTheDocument();
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+    });
   });
 
   // Custom rendering
@@ -444,6 +476,34 @@ describe('Table Component', () => {
         target: { value: 'nonexistent' },
       });
       expect(screen.getByText('No matches')).toBeInTheDocument();
+    });
+
+    it('initializes filters from defaultFilters in uncontrolled mode', () => {
+      render(
+        <Table data={testData} columns={testColumns} filterable defaultFilters={{ name: 'bob' }} />,
+      );
+      // Only Bob Johnson matches the 'bob' filter
+      expect(screen.getByText('Bob Johnson')).toBeInTheDocument();
+      expect(screen.queryByText('John Doe')).toBeNull();
+      expect(screen.queryByText('Jane Smith')).toBeNull();
+      // The filter input reflects the default value
+      expect(screen.getByLabelText('Filter by Name')).toHaveValue('bob');
+    });
+
+    it('defaultFilters is ignored when filters (controlled) is provided', () => {
+      render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          filterable
+          filters={{ name: 'jane' }}
+          defaultFilters={{ name: 'bob' }}
+        />,
+      );
+      // Controlled wins: Jane, not Bob
+      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+      expect(screen.queryByText('Bob Johnson')).toBeNull();
+      expect(screen.getByLabelText('Filter by Name')).toHaveValue('jane');
     });
   });
 

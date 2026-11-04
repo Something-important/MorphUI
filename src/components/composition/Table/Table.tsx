@@ -42,13 +42,19 @@ export interface TableProps<T = Record<string, unknown>> {
 
   // Filtering
   filterable?: boolean;
+  /** Controlled filter values. */
   filters?: Record<string, unknown>;
+  /** Uncontrolled initial filter values. Ignored when `filters` is provided. */
+  defaultFilters?: Record<string, unknown>;
   onFilterChange?: (filters: Record<string, unknown>) => void;
 
   // Pagination
   pagination?: boolean;
   pageSize?: number;
+  /** Controlled current page (1-indexed). */
   currentPage?: number;
+  /** Uncontrolled initial current page. Ignored when `currentPage` is provided. */
+  defaultCurrentPage?: number;
   onPageChange?: (page: number) => void;
   totalItems?: number;
 
@@ -112,12 +118,14 @@ function TableInner<T>(
     // Filtering
     filterable = false,
     filters: controlledFilters,
+    defaultFilters,
     onFilterChange,
 
     // Pagination
     pagination = false,
     pageSize = 10,
     currentPage: controlledCurrentPage,
+    defaultCurrentPage,
     onPageChange,
     totalItems,
 
@@ -166,8 +174,10 @@ function TableInner<T>(
   );
   const [internalSortDirection, setInternalSortDirection] =
     useState<SortDirection>(defaultSortDirection);
-  const [internalCurrentPage, setInternalCurrentPage] = useState(1);
-  const [internalFilters, setInternalFilters] = useState<Record<string, string>>({});
+  const [internalCurrentPage, setInternalCurrentPage] = useState(defaultCurrentPage ?? 1);
+  const [internalFilters, setInternalFilters] = useState<Record<string, string>>(
+    (defaultFilters as Record<string, string>) ?? {},
+  );
 
   // Determine if controlled
   const isControlledSelection = controlledSelectedRows !== undefined;
