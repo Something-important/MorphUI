@@ -1,5 +1,5 @@
 // Table.tsx
-import React, { forwardRef, useState, useMemo, useCallback } from 'react';
+import React, { forwardRef, useState, useMemo, useCallback, useTransition } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Table.css';
 
@@ -155,6 +155,7 @@ function TableInner<T>(
   ref: React.Ref<HTMLDivElement>,
 ) {
   // Internal state for uncontrolled mode
+  const [isPending, startTransition] = useTransition();
   const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>([]);
   const [internalSortColumn, setInternalSortColumn] = useState<string | null>(
     defaultSortColumn || null,
@@ -204,19 +205,22 @@ function TableInner<T>(
       resolvedHeaderGradient.includes('radial-gradient') ||
       resolvedHeaderGradient.includes('conic-gradient'));
 
-  // Handle sorting
+  // Handle sorting — wrapped in useTransition so sorting large tables
+  // doesn't block the UI. The sort button responds immediately; the
+  // row reordering happens at lower priority.
   const handleSort = useCallback(
     (columnKey: string) => {
+      const newDirection = sortColumn === columnKey && sortDirection === 'asc' ? 'desc' : 'asc';
       if (isControlledSort) {
-        const newDirection = sortColumn === columnKey && sortDirection === 'asc' ? 'desc' : 'asc';
         controlledOnSort(columnKey, newDirection);
       } else {
-        const newDirection = sortColumn === columnKey && sortDirection === 'asc' ? 'desc' : 'asc';
-        setInternalSortColumn(columnKey);
-        setInternalSortDirection(newDirection);
+        startTransition(() => {
+          setInternalSortColumn(columnKey);
+          setInternalSortDirection(newDirection);
+        });
       }
     },
-    [sortColumn, sortDirection, isControlledSort, controlledOnSort],
+    [sortColumn, sortDirection, isControlledSort, controlledOnSort, startTransition],
   );
 
   // Resolve a cell value for a row by column key (dataKey takes precedence)
