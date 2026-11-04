@@ -2,10 +2,22 @@
 
 MorphUI 1.x is shipped. This file tracks what's done and what's next.
 
-**Current release:** `morphui-react@1.1.0` on npm (OIDC trusted publishing
+**Current release:** `morphui-react@1.1.1` on npm (OIDC trusted publishing
 with Sigstore provenance). **2,005 tests** (49 suites), **95.3% statement /
 84.7% branch coverage**. React 18 + 19 verified. SSR-compatible. Auto-publish
-pipeline proven (5 releases, zero manual dispatch).
+pipeline proven (6 releases, zero manual dispatch).
+
+**Pending merge to dev (3 feature branches, 2026-11-04):**
+
+- `feat/table-default-selected-rows` — `defaultSelectedRows` for uncontrolled
+  selection init (+3 tests).
+- `feat/input-uncontrolled` — full uncontrolled mode via `defaultValue`,
+  mirroring RadioGroup #71 (+8 tests).
+- `feat/chromatic-ci` — `.github/workflows/chromatic.yml` (visual regression
+  CI).
+
+Once all three merge → 2,016 tests and the "uncontrolled parity" trio is
+complete → ready to cut 1.2.0.
 
 ## Done (1.0 → 1.1)
 
@@ -58,15 +70,40 @@ pipeline proven (5 releases, zero manual dispatch).
   OIDC trusted publishing with `release-please.yml` as the workflow
   filename on npm.
 
+## Chromatic — baseline published 2026-11-04 ✅ (CI workflow pending merge)
+
+- **Baseline:** published from `dev` @ `9089ea0` — 34 components / 343 stories /
+  343 snapshots, Build 1 auto-accepted. Published Storybook at
+  `https://6aeb04452c6b25165db46b30-ueaqzjhpry.chromatic.com/`.
+- **CI workflow:** `feat/chromatic-ci` branch (commit `918dbe0`) —
+  `.github/workflows/chromatic.yml` using `chromaui/action@latest` with
+  TurboSnap (`onlyChanged: true`), `exitZeroOnChanges`, `exitOnceUploaded`,
+  Node 22, `fetch-depth: 0`. No package.json/lockfile changes (the action
+  bundles its own CLI; avoids the chromatic↔storybook vite peer conflict).
+- **Secret:** `CHROMATIC_PROJECT_TOKEN` added to GitHub Secrets by the user.
+  The PAT cannot manage Actions secrets (Gotcha #10 — separate scope from
+  Workflows), so this was a manual one-paste step.
+- **What it catches:** pixel-diff regressions across all 343 stories on every
+  PR — the class of bug jest/jest-axe structurally cannot see (CSS token
+  drift, layout shifts, color changes). Free for OSS repos (Chrome-only;
+  cross-browser is a paid tier).
+
 ## Short-term (next ~2 weeks)
 
-- **Chromatic visual regression** — needs a Chromatic account +
-  `CHROMATIC_PROJECT_TOKEN` secret. Workflow ready to wire up; snapshots
-  all 33 stories on every PR.
+- **Merge the 3 pending feature branches** above, then cut 1.2.0.
 - **size-limit CI fix** — rolldown backend exits 1 on CI even when all
   entries are within limits (first-entry measurement quirk). Currently
   `continue-on-error`. Investigate switching to esbuild preset or
   upgrading size-limit.
+- **API consistency audit round 2, continued** — `defaultCurrentPage` and
+  `defaultFilters` on Table (same uncontrolled-initial-value pattern as the
+  `defaultSelectedRows` fix). `defaultSelectedRows` itself landed on
+  `feat/table-default-selected-rows`.
+- **Storybook MDX docs** — per-component documentation pages (theming
+  examples, a11y notes, migration callouts). No version impact.
+- **Rotate the Chromatic project token** — was shared in plaintext during
+  setup; reset in Chromatic Manage → update the GitHub Secret value. No
+  code changes needed (workflow references the secret by name).
 
 ## Medium-term (this quarter)
 
