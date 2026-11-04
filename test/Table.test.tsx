@@ -133,6 +133,62 @@ describe('Table Component', () => {
       const selectedRows = onSelectionChange.mock.calls[0][0];
       expect(selectedRows.length).toBe(testData.length);
     });
+
+    it('initializes selection from defaultSelectedRows in uncontrolled mode', () => {
+      render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          selectable
+          defaultSelectedRows={[testData[0]]}
+          rowKey={(r) => r.id}
+        />,
+      );
+      const checkboxes = screen.getAllByRole('checkbox');
+      // Header is [0], first data row is [1]
+      expect(checkboxes[1]).toBeChecked();
+      expect(checkboxes[2]).not.toBeChecked();
+      expect(checkboxes[3]).not.toBeChecked();
+    });
+
+    it('defaultSelectedRows is ignored when selectedRows (controlled) is provided', () => {
+      render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          selectable
+          selectedRows={[testData[1]]}
+          defaultSelectedRows={[testData[0], testData[2]]}
+          rowKey={(r) => r.id}
+        />,
+      );
+      const checkboxes = screen.getAllByRole('checkbox');
+      // Controlled wins: only row 2 (index [2]) is checked
+      expect(checkboxes[1]).not.toBeChecked();
+      expect(checkboxes[2]).toBeChecked();
+      expect(checkboxes[3]).not.toBeChecked();
+    });
+
+    it('toggling in uncontrolled mode updates internal state', () => {
+      const onSelectionChange = jest.fn();
+      render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          selectable
+          defaultSelectedRows={[testData[0]]}
+          rowKey={(r) => r.id}
+          onSelectionChange={onSelectionChange}
+        />,
+      );
+      const checkboxes = screen.getAllByRole('checkbox');
+      expect(checkboxes[1]).toBeChecked();
+
+      // Deselect the first row
+      fireEvent.click(checkboxes[1]);
+      expect(checkboxes[1]).not.toBeChecked();
+      expect(onSelectionChange).toHaveBeenLastCalledWith([]);
+    });
   });
 
   // Pagination
