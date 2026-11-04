@@ -160,9 +160,7 @@ function TableInner<T>(
 ) {
   // Internal state for uncontrolled mode
   const [isPending, startTransition] = useTransition();
-  const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>(
-    defaultSelectedRows ?? [],
-  );
+  const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>(defaultSelectedRows ?? []);
   const [internalSortColumn, setInternalSortColumn] = useState<string | null>(
     defaultSortColumn || null,
   );
