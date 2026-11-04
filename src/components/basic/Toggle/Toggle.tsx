@@ -64,7 +64,7 @@ export interface ToggleProps {
   style?: React.CSSProperties;
 }
 
-export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
+const ToggleInner = forwardRef<HTMLButtonElement, ToggleProps>(
   (
     {
       checked: controlledChecked,
@@ -380,4 +380,5 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
   },
 );
 
-Toggle.displayName = 'Toggle';
+ToggleInner.displayName = 'Toggle';
+export const Toggle = React.memo(ToggleInner);

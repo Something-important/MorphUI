@@ -38,7 +38,7 @@ export interface ProgressProps {
   style?: React.CSSProperties;
 }
 
-export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
+const ProgressInner = forwardRef<HTMLDivElement, ProgressProps>(
   (
     {
       value,
@@ -204,4 +204,5 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
   },
 );
 
-Progress.displayName = 'Progress';
+ProgressInner.displayName = 'Progress';
+export const Progress = React.memo(ProgressInner);

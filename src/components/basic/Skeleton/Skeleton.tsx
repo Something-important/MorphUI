@@ -29,7 +29,7 @@ export interface SkeletonProps {
   style?: React.CSSProperties;
 }
 
-export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
+const SkeletonInner = forwardRef<HTMLDivElement, SkeletonProps>(
   (
     {
       variant = 'text',
@@ -118,4 +118,5 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
   },
 );
 
-Skeleton.displayName = 'Skeleton';
+SkeletonInner.displayName = 'Skeleton';
+export const Skeleton = React.memo(SkeletonInner);

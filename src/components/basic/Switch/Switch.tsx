@@ -58,7 +58,7 @@ export interface SwitchProps {
   style?: React.CSSProperties;
 }
 
-export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
+const SwitchInner = forwardRef<HTMLInputElement, SwitchProps>(
   (
     {
       // Core props
@@ -358,4 +358,5 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
   },
 );
 
-Switch.displayName = 'Switch';
+SwitchInner.displayName = 'Switch';
+export const Switch = React.memo(SwitchInner);
