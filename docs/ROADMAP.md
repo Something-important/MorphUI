@@ -2,17 +2,15 @@
 
 MorphUI 1.x is shipped. This file tracks what's done and what's next.
 
-**Current release:** `morphui-react@1.1.1` on npm (OIDC trusted publishing
-with Sigstore provenance). **2,005 tests** (49 suites), **95.3% statement /
-84.7% branch coverage**. React 18 + 19 verified. SSR-compatible. Auto-publish
-pipeline proven (6 releases, zero manual dispatch).
+**Current release:** `morphui-react@1.2.0` on npm (2026-11-04, OIDC trusted
+publishing with Sigstore provenance, logIndex 3691602716). **2,038 tests**
+(49 suites), **95.3% statement / 84.7% branch coverage**. React 18 + 19
+verified. SSR-compatible. Auto-publish pipeline proven (7 releases, zero
+manual dispatch).
 
-**dev @ `c619f09` (unreleased, 2026-11-04):** **2,038 tests** (49 suites) —
-the full controlled/uncontrolled parity audit landed: RadioGroup + Input +
-Dropdown + Table (selection + sort + pagination + filters) all support
-uncontrolled mode; Accordion gained controlled mode; Drawer gained
-uncontrolled mode. Chromatic CI is live and verified. Ready to cut 1.2.0
-whenever — merge dev → master triggers release-please.
+**dev + master in sync @ `997c436`** (2026-11-04): v1.2.0 released. The
+controlled/uncontrolled parity audit is complete — all 33 components are
+consistent. Chromatic CI is live. Ready for the next round of feature work.
 
 ## Done (1.0 → 1.1)
 
@@ -112,11 +110,9 @@ both controlled and uncontrolled modes (except Modal, by design).
 
 ## Short-term (next ~2 weeks)
 
-- **Cut 1.2.0** — dev has the full controlled/uncontrolled parity story
-  across 7 components + Chromatic CI live. Merge dev → master when ready
-  and release-please cuts it.
 - **Storybook MDX docs** — per-component documentation pages (theming
-  examples, a11y notes, migration callouts). No version impact.
+  examples, a11y notes, prop tables). No version impact; pairs with the
+  live Chromatic published Storybook.
 - **size-limit CI fix** — rolldown backend exits 1 on CI even when all
   entries are within limits (first-entry measurement quirk). Currently
   `continue-on-error`. Investigate switching to esbuild preset or
