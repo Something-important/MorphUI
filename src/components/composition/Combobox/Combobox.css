@@ -176,3 +176,7 @@
     cursor: not-allowed;
   }
 }
+.combobox-component__listbox--filtering {
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
