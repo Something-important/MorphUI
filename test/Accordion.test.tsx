@@ -723,4 +723,86 @@ describe('Accordion', () => {
       });
     });
   });
+
+  // Controlled mode — the `open` prop lets the parent own the state.
+  // `defaultOpen` is ignored when `open` is provided; clicking the trigger
+  // calls `onToggle` but does NOT change the visual state (the parent must
+  // update `open` for that).
+  describe('Controlled Mode', () => {
+    it('renders open when open={true}', () => {
+      render(
+        <ThemeProvider>
+          <Accordion title="Test" open={true}>
+            <p>Controlled content</p>
+          </Accordion>
+        </ThemeProvider>,
+      );
+      expect(screen.getByText('Controlled content')).toBeVisible();
+    });
+
+    it('renders closed when open={false}', () => {
+      render(
+        <ThemeProvider>
+          <Accordion title="Test" open={false}>
+            <p>Controlled content</p>
+          </Accordion>
+        </ThemeProvider>,
+      );
+      expect(screen.getByText('Controlled content')).not.toBeVisible();
+    });
+
+    it('open wins when both open and defaultOpen are provided', () => {
+      render(
+        <ThemeProvider>
+          <Accordion title="Test" open={false} defaultOpen={true}>
+            <p>Controlled content</p>
+          </Accordion>
+        </ThemeProvider>,
+      );
+      // Controlled wins: closed, not open
+      expect(screen.getByText('Controlled content')).not.toBeVisible();
+    });
+
+    it('clicking the trigger calls onToggle but does not change visual state', () => {
+      const onToggle = jest.fn();
+      render(
+        <ThemeProvider>
+          <Accordion title="Test" open={false} onToggle={onToggle}>
+            <p>Controlled content</p>
+          </Accordion>
+        </ThemeProvider>,
+      );
+      // Initially closed
+      expect(screen.getByText('Controlled content')).not.toBeVisible();
+
+      // Click the trigger
+      fireEvent.click(screen.getByText('Test'));
+
+      // onToggle was called with true (the would-be new state)
+      expect(onToggle).toHaveBeenCalledWith(true);
+      // But the content is still NOT visible — the parent didn't update `open`
+      expect(screen.getByText('Controlled content')).not.toBeVisible();
+    });
+
+    it('parent updating open changes the visual state', () => {
+      const { rerender } = render(
+        <ThemeProvider>
+          <Accordion title="Test" open={false}>
+            <p>Controlled content</p>
+          </Accordion>
+        </ThemeProvider>,
+      );
+      expect(screen.getByText('Controlled content')).not.toBeVisible();
+
+      // Parent flips open to true
+      rerender(
+        <ThemeProvider>
+          <Accordion title="Test" open={true}>
+            <p>Controlled content</p>
+          </Accordion>
+        </ThemeProvider>,
+      );
+      expect(screen.getByText('Controlled content')).toBeVisible();
+    });
+  });
 });
