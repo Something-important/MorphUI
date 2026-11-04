@@ -38,7 +38,6 @@ import {
   Modal,
   Dropdown,
   Sidebar,
-  Toast,
   ToastProvider,
   ContextMenu,
 } from '../src/components';
