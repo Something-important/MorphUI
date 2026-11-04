@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.2.0](https://github.com/Something-important/MorphUI/compare/v1.1.1...v1.2.0) (2026-11-04)
+
+
+### Features
+
+* **accordion:** add controlled mode via open prop ([9193b45](https://github.com/Something-important/MorphUI/commit/9193b4564056b1d81c0345baa789f0aba78eecb5))
+* **drawer:** add uncontrolled mode via defaultOpen ([1cc35cb](https://github.com/Something-important/MorphUI/commit/1cc35cb4546dbaf6d2e715a998701a923c96a672))
+* **dropdown:** add uncontrolled mode via defaultValue ([0b93651](https://github.com/Something-important/MorphUI/commit/0b93651a00d2e1504defa58b8ae505f26088905f))
+* **input:** add uncontrolled mode via defaultValue ([23b586c](https://github.com/Something-important/MorphUI/commit/23b586cce41c42fd038a959897878ff671439857))
+* **radiogroup:** add defaultValue for uncontrolled mode ([9be503f](https://github.com/Something-important/MorphUI/commit/9be503f1fdf7f83c4e3f1672d233be75a77d984d))
+* **radiogroup:** add defaultValue for uncontrolled mode ([85ed2c1](https://github.com/Something-important/MorphUI/commit/85ed2c12940ceea6cfb01d5c36a482a035e3beb9))
+* **table:** add defaultCurrentPage + defaultFilters for uncontrolled init ([08b876a](https://github.com/Something-important/MorphUI/commit/08b876a4d50cd035f1443a276ade27981de3cb90))
+* **table:** add defaultSelectedRows for uncontrolled selection ([759e671](https://github.com/Something-important/MorphUI/commit/759e6713ad46f379dabe881964b415a89c43acb6))
+
+
+### Performance Improvements
+
+* useTransition for Table sorting + Input validation ([9089ea0](https://github.com/Something-important/MorphUI/commit/9089ea0b76b14557e595e142def18b1b6ab5836d))
+* useTransition for Table sorting + Input validation ([996926e](https://github.com/Something-important/MorphUI/commit/996926e539bff12c53c0610b68510b0d1a199e6c))
+
 ## [1.1.1](https://github.com/Something-important/MorphUI/compare/v1.1.0...v1.1.1) (2026-11-04)
 
 
