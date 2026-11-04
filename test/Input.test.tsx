@@ -688,4 +688,70 @@ describe('Coverage edge cases', () => {
     fireEvent.keyDown(option, { key: 'Enter' });
     expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ target: { value: 'Banana' } }));
   });
+
+  // Uncontrolled mode — mirrors the RadioGroup #71 pattern: omit `value`
+  // and `onChange`, pass `defaultValue`, and the component manages its own
+  // state internally.
+  describe('Uncontrolled Mode', () => {
+    it('renders with defaultValue and no value/onChange', () => {
+      renderWithTheme(<Input defaultValue="hello" placeholder="P" />);
+      const input = screen.getByPlaceholderText('P');
+      expect(input).toHaveValue('hello');
+    });
+
+    it('updates internal state on typing without an onChange handler', () => {
+      renderWithTheme(<Input defaultValue="" placeholder="P" />);
+      const input = screen.getByPlaceholderText('P');
+      fireEvent.change(input, { target: { value: 'typed' } });
+      expect(input).toHaveValue('typed');
+    });
+
+    it('still calls onChange when provided in uncontrolled mode', () => {
+      const onChange = jest.fn();
+      renderWithTheme(<Input defaultValue="" onChange={onChange} placeholder="P" />);
+      const input = screen.getByPlaceholderText('P');
+      fireEvent.change(input, { target: { value: 'x' } });
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange.mock.calls[0][0].target.value).toBe('x');
+      // input reflects the internal state update
+      expect(input).toHaveValue('x');
+    });
+
+    it('value (controlled) wins when both value and defaultValue are provided', () => {
+      renderWithTheme(<Input value="controlled" defaultValue="default" placeholder="P" />);
+      const input = screen.getByPlaceholderText('P');
+      expect(input).toHaveValue('controlled');
+    });
+
+    it('applies mask in uncontrolled mode', () => {
+      renderWithTheme(<Input defaultValue="" mask="phone" placeholder="P" />);
+      const input = screen.getByPlaceholderText('P');
+      fireEvent.change(input, { target: { value: '1234567890' } });
+      // mask visually applied via internal state
+      expect(input).toHaveValue('(123) 456-7890');
+    });
+
+    it('character count reflects uncontrolled value', () => {
+      renderWithTheme(<Input defaultValue="hello" characterCount placeholder="P" />);
+      expect(screen.getByText('5/∞')).toBeInTheDocument();
+    });
+
+    it('floating label activates with defaultValue', () => {
+      renderWithTheme(<Input defaultValue="hello" floatingLabel placeholder="Label" />);
+      const label = screen.getByText('Label');
+      expect(label.className).toMatch(/input-floating-label--active/);
+    });
+
+    it('accepts suggestion in uncontrolled mode', () => {
+      renderWithTheme(
+        <Input defaultValue="" suggestions={['Apple', 'Banana']} ariaLabel="Fruit" />,
+      );
+      const input = screen.getByLabelText('Fruit');
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: 'ap' } });
+      const option = screen.getByText('Apple');
+      fireEvent.click(option);
+      expect(input).toHaveValue('Apple');
+    });
+  });
 });
