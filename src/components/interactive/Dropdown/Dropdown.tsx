@@ -29,11 +29,22 @@ export type DropdownVariant = 'default' | 'outline' | 'ghost';
 export interface DropdownProps
   extends Omit<
     React.HTMLAttributes<HTMLDivElement>,
-    'onChange' | 'color' | 'placeholder' | 'size' | 'style' | 'className' | 'disabled'
+    | 'onChange'
+    | 'defaultValue'
+    | 'color'
+    | 'placeholder'
+    | 'size'
+    | 'style'
+    | 'className'
+    | 'disabled'
   > {
   options?: DropdownOption[];
+  /** Controlled selected value. */
   value?: string | number | Array<string | number>;
-  onChange: (value: string | number | Array<string | number>) => void;
+  /** Uncontrolled initial selected value. Ignored when `value` is provided. */
+  defaultValue?: string | number | Array<string | number>;
+  /** Called when the selection changes. Required for controlled; optional for uncontrolled. */
+  onChange?: (value: string | number | Array<string | number>) => void;
   placeholder?: string;
   disabled?: boolean;
   multiSelect?: boolean;
@@ -81,6 +92,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     {
       options,
       value,
+      defaultValue,
       onChange,
       placeholder = 'Select...',
       disabled = false,
@@ -125,6 +137,25 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     const [isOpen, setIsOpen] = useState(false);
     const [focusedIndex, setFocusedIndex] = useState<number>(-1);
     const [search, setSearch] = useState('');
+
+    // Controlled vs uncontrolled: if `value` is provided, the parent owns
+    // the state. Otherwise, we manage it internally from `defaultValue`.
+    // Mirrors the Input/RadioGroup/Table uncontrolled pattern.
+    const isControlled = value !== undefined;
+    const [internalValue, setInternalValue] = useState<
+      string | number | Array<string | number> | undefined
+    >(defaultValue);
+    const currentValue = isControlled ? value : internalValue;
+
+    // Centralized update: updates internal state in uncontrolled mode and
+    // notifies the parent (if onChange was provided). Used by every
+    // selection-changing handler below.
+    const updateValue = (newValue: string | number | Array<string | number>) => {
+      if (!isControlled) {
+        setInternalValue(newValue);
+      }
+      onChange?.(newValue);
+    };
     const containerRef = useRef<HTMLDivElement | null>(null);
     const listRef = useRef<HTMLUListElement>(null);
 
@@ -200,9 +231,9 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     const isSelected = (val: string | number) => {
       if (multiSelect) {
-        return Array.isArray(value) && value.includes(val);
+        return Array.isArray(currentValue) && currentValue.includes(val);
       }
-      return value === val;
+      return currentValue === val;
     };
 
     const handleOptionClick = (val: string | number, event: React.MouseEvent | undefined) => {
@@ -212,16 +243,16 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       if (disabled) return;
 
       if (multiSelect) {
-        const selected = Array.isArray(value) ? value : [];
+        const selected = Array.isArray(currentValue) ? currentValue : [];
         if (selected.includes(val)) {
           const newSelected = selected.filter((v) => v !== val);
-          onChange(newSelected);
+          updateValue(newSelected);
         } else if (!maxSelections || selected.length < maxSelections) {
           const newSelected = [...selected, val];
-          onChange(newSelected);
+          updateValue(newSelected);
         }
       } else {
-        onChange(val);
+        updateValue(val);
         handleOpenChange(false);
       }
     };
@@ -231,7 +262,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       if (multiSelect && !disabled) {
         const allValues = filteredOptions.map((opt) => opt.value);
         const newValues = maxSelections ? allValues.slice(0, maxSelections) : allValues;
-        onChange(newValues);
+        updateValue(newValues);
       }
     };
 
@@ -245,21 +276,21 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         const shuffled = [...availableOptions].sort(() => Math.random() - 0.5);
         const randomValues = shuffled.slice(0, count).map((opt) => opt.value);
 
-        onChange(randomValues);
+        updateValue(randomValues);
       }
     };
 
     const handleClearAll = (event: React.MouseEvent) => {
       event.stopPropagation();
       if (multiSelect && !disabled) {
-        onChange([]);
+        updateValue([]);
       }
     };
 
     const handleClear = (event: React.MouseEvent) => {
       event.stopPropagation();
       if (clearable && !disabled) {
-        onChange(multiSelect ? [] : '');
+        updateValue(multiSelect ? [] : '');
       }
     };
 
@@ -305,7 +336,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     const selectedLabels = useMemo(() => {
       if (multiSelect) {
-        const selected = Array.isArray(value) ? value : [];
+        const selected = Array.isArray(currentValue) ? currentValue : [];
         if (selected.length > 0) {
           return processedOptions
             .filter((opt) => selected.includes(opt.value))
@@ -314,10 +345,10 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         }
         return placeholder;
       } else {
-        const selectedOption = processedOptions.find((opt) => opt.value === value);
+        const selectedOption = processedOptions.find((opt) => opt.value === currentValue);
         return selectedOption ? selectedOption.label : placeholder;
       }
-    }, [processedOptions, value, placeholder, multiSelect]);
+    }, [processedOptions, currentValue, placeholder, multiSelect]);
 
     // Detect text gradients
     const isTextGradient =
@@ -483,7 +514,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   ⚠️
                 </span>
               )}
-              {clearable && value && (
+              {clearable && currentValue && (
                 <button
                   type="button"
                   className="dropdown-clear"
@@ -680,7 +711,9 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   type="button"
                   className="dropdown-footer-btn dropdown-footer-btn--clear-all"
                   onClick={handleClearAll}
-                  disabled={disabled || (Array.isArray(value) ? value.length === 0 : false)}
+                  disabled={
+                    disabled || (Array.isArray(currentValue) ? currentValue.length === 0 : false)
+                  }
                   aria-label="Clear all selections"
                 >
                   Clear All
