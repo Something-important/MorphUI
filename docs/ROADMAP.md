@@ -7,17 +7,11 @@ with Sigstore provenance). **2,005 tests** (49 suites), **95.3% statement /
 84.7% branch coverage**. React 18 + 19 verified. SSR-compatible. Auto-publish
 pipeline proven (6 releases, zero manual dispatch).
 
-**Pending merge to dev (3 feature branches, 2026-11-04):**
-
-- `feat/table-default-selected-rows` — `defaultSelectedRows` for uncontrolled
-  selection init (+3 tests).
-- `feat/input-uncontrolled` — full uncontrolled mode via `defaultValue`,
-  mirroring RadioGroup #71 (+8 tests).
-- `feat/chromatic-ci` — `.github/workflows/chromatic.yml` (visual regression
-  CI).
-
-Once all three merge → 2,016 tests and the "uncontrolled parity" trio is
-complete → ready to cut 1.2.0.
+**dev @ `7672f37` (unreleased, 2026-11-04):** **2,016 tests** (49 suites) —
+the "uncontrolled parity" trio landed (RadioGroup #71 + Table
+`defaultSelectedRows` + Input `defaultValue`) and Chromatic CI is live and
+verified (first run success). Ready to cut 1.2.0 whenever — merge dev →
+master triggers release-please.
 
 ## Done (1.0 → 1.1)
 
@@ -70,16 +64,20 @@ complete → ready to cut 1.2.0.
   OIDC trusted publishing with `release-please.yml` as the workflow
   filename on npm.
 
-## Chromatic — baseline published 2026-11-04 ✅ (CI workflow pending merge)
+## Chromatic — baseline published + CI live 2026-11-04 ✅
 
 - **Baseline:** published from `dev` @ `9089ea0` — 34 components / 343 stories /
   343 snapshots, Build 1 auto-accepted. Published Storybook at
   `https://6aeb04452c6b25165db46b30-ueaqzjhpry.chromatic.com/`.
-- **CI workflow:** `feat/chromatic-ci` branch (commit `918dbe0`) —
-  `.github/workflows/chromatic.yml` using `chromaui/action@latest` with
-  TurboSnap (`onlyChanged: true`), `exitZeroOnChanges`, `exitOnceUploaded`,
-  Node 22, `fetch-depth: 0`. No package.json/lockfile changes (the action
-  bundles its own CLI; avoids the chromatic↔storybook vite peer conflict).
+- **CI workflow:** merged to dev (`b37fab0`) — `.github/workflows/chromatic.yml`
+  using `chromaui/action@latest` with TurboSnap (`onlyChanged: true`),
+  `exitZeroOnChanges`, `exitOnceUploaded`, Node 22, `fetch-depth: 0`. No
+  package.json/lockfile changes (the action bundles its own CLI; avoids the
+  chromatic↔storybook vite peer conflict).
+- **First CI run:** verified success on the merged dev push (`7672f37`, run
+  41814507601). TurboSnap re-snapshotted the Table + Input stories; no
+  regressions flagged; the uncontrolled-parity changes are now part of the
+  baseline.
 - **Secret:** `CHROMATIC_PROJECT_TOKEN` added to GitHub Secrets by the user.
   The PAT cannot manage Actions secrets (Gotcha #10 — separate scope from
   Workflows), so this was a manual one-paste step.
@@ -90,17 +88,17 @@ complete → ready to cut 1.2.0.
 
 ## Short-term (next ~2 weeks)
 
-- **Merge the 3 pending feature branches** above, then cut 1.2.0.
+- **Cut 1.2.0** — dev has the uncontrolled-parity trio + Chromatic CI; merge
+  dev → master when ready and release-please cuts it.
+- **API consistency audit round 2, continued** — `defaultCurrentPage` and
+  `defaultFilters` on Table (same uncontrolled-initial-value pattern as
+  `defaultSelectedRows`, which just merged to dev).
+- **Storybook MDX docs** — per-component documentation pages (theming
+  examples, a11y notes, migration callouts). No version impact.
 - **size-limit CI fix** — rolldown backend exits 1 on CI even when all
   entries are within limits (first-entry measurement quirk). Currently
   `continue-on-error`. Investigate switching to esbuild preset or
   upgrading size-limit.
-- **API consistency audit round 2, continued** — `defaultCurrentPage` and
-  `defaultFilters` on Table (same uncontrolled-initial-value pattern as the
-  `defaultSelectedRows` fix). `defaultSelectedRows` itself landed on
-  `feat/table-default-selected-rows`.
-- **Storybook MDX docs** — per-component documentation pages (theming
-  examples, a11y notes, migration callouts). No version impact.
 - **Rotate the Chromatic project token** — was shared in plaintext during
   setup; reset in Chromatic Manage → update the GitHub Secret value. No
   code changes needed (workflow references the secret by name).
@@ -110,8 +108,6 @@ complete → ready to cut 1.2.0.
 - **React 19 optimizations** — `use()` for async Combobox loading,
   `useOptimistic` for Toast/selection feedback, `useTransition` for
   expensive filtering. Position for the React 19 transition.
-- **FormField rest spread** — same gap as Dropdown (now fixed).
-  FormField doesn't spread `{...rest}` on its root.
 - **Storybook MDX docs** — per-component documentation pages in the
   Storybook deploy (theming examples, a11y notes, migration callouts).
 - **API consistency audit (round 2)** — verify controlled/uncontrolled
