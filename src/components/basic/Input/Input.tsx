@@ -1,5 +1,5 @@
 // Input.tsx
-import React, { forwardRef, useState, useEffect, useId, useRef } from 'react';
+import React, { forwardRef, useState, useEffect, useId, useRef, useTransition } from 'react';
 import { resolveThemeValue, createRipple, getAriaProps } from '../../../utils';
 import './Input.css';
 
@@ -184,6 +184,7 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
     const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
     const [validationError, setValidationError] = useState<string | null>(null);
+    const [validationPending, startValidationTransition] = useTransition();
     const [showPassword, setShowPassword] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const suggestionsRef = useRef<HTMLDivElement>(null);
@@ -426,9 +427,11 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
         },
       } as React.ChangeEvent<HTMLInputElement>;
 
-      // Validate input
+      // Validation — wrapped in useTransition so expensive custom
+      // validators don't block typing. The input value updates immediately;
+      // the error message appears at lower priority.
       const validationResult = validateInput(newValue);
-      setValidationError(validationResult);
+      startValidationTransition(() => setValidationError(validationResult));
 
       // Filter suggestions
       if (suggestions.length > 0) {
