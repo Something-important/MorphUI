@@ -123,9 +123,17 @@ both controlled and uncontrolled modes (except Modal, by design).
 
 ## Medium-term (this quarter)
 
-- **React 19 optimizations** — `use()` for async Combobox loading,
-  `useOptimistic` for Toast/selection feedback, `useTransition` for
-  expensive filtering. Position for the React 19 transition.
+- **React 19 API adoption** — `useTransition` (Table sorting, Input
+  validation) and `useDeferredValue` (Combobox filter) are already in
+  place. React 19 compatibility is verified (all 2,038 tests pass
+  against React 19.3.1) and a CI matrix job runs the suite against both
+  React 18 and 19 on every PR. The remaining React 19 APIs — `use()` for
+  promise unwrapping, `useOptimistic` for optimistic updates,
+  `useActionState`/`useFormStatus` for form actions — are designed for
+  server components / server actions, which a pure client-side UI
+  library doesn't directly benefit from without a consumer-side pattern
+  shift (Suspense boundaries, form actions). These will be adopted when
+  there's a concrete consumer pattern that clearly benefits.
 - **FormField rest spread** — same gap as Dropdown (now fixed). Verify no
   other components have the same `{...rest}` pass-through gap.
 
