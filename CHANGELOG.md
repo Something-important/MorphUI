@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.1](https://github.com/Something-important/MorphUI/compare/v1.1.0...v1.1.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **ci:** restore size-limit as fatal + Dropdown {...rest} aria pass-through ([1c846ae](https://github.com/Something-important/MorphUI/commit/1c846ae620e4e963bc18d228d544486f815a5355))
+* **ci:** restore size-limit as fatal + Dropdown {...rest} aria pass-through ([7c42c46](https://github.com/Something-important/MorphUI/commit/7c42c46a959e5680100187d1b664dd4a286c04a2))
+* **form:** FormField spreads {...rest} for aria/data attr pass-through ([d9a918d](https://github.com/Something-important/MorphUI/commit/d9a918dedfb23f9ec6ed89dc44d9cc9d7df6f08f))
+* **form:** FormField spreads {...rest} for aria/data attr pass-through ([578a3bb](https://github.com/Something-important/MorphUI/commit/578a3bb71b2c3fc65aff8be81c3aca4ccab554ec))
+
+
+### Performance Improvements
+
+* **combobox:** useDeferredValue for responsive search filtering ([179b400](https://github.com/Something-important/MorphUI/commit/179b400faf8bbdebf2b23ca5d3c5859118b03200))
+* **combobox:** useDeferredValue for responsive search filtering ([cb99e19](https://github.com/Something-important/MorphUI/commit/cb99e1982dcb7c065e182db4e3d9d7871592ed31))
+* wrap 13 basic components in React.memo ([61c1659](https://github.com/Something-important/MorphUI/commit/61c16593fb03bcb859a5d790bcad78d80041d295))
+* wrap 13 basic components in React.memo ([1ec08c0](https://github.com/Something-important/MorphUI/commit/1ec08c047ae634de5cf4c467f62c8b209da0358b))
+
 ## [1.1.0](https://github.com/Something-important/MorphUI/compare/v1.0.1...v1.1.0) (2026-11-04)
 
 
