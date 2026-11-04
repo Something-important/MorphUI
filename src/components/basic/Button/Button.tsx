@@ -42,7 +42,7 @@ export interface ButtonProps {
   ariaDescribedBy?: string;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const ButtonInner = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       variant = 'primary',
@@ -220,4 +220,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   },
 );
 
-Button.displayName = 'Button';
+ButtonInner.displayName = 'Button';
+export const Button = React.memo(ButtonInner);

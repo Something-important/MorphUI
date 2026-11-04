@@ -18,7 +18,7 @@ export interface DividerProps {
   id?: string;
 }
 
-export const Divider = forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
+const DividerInner = forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
   (
     {
       orientation = 'horizontal',
@@ -132,4 +132,5 @@ export const Divider = forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
   },
 );
 
-Divider.displayName = 'Divider';
+DividerInner.displayName = 'Divider';
+export const Divider = React.memo(DividerInner);

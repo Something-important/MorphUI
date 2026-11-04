@@ -19,7 +19,7 @@ export interface LabelProps {
   style?: React.CSSProperties;
 }
 
-export const Label = forwardRef<HTMLLabelElement, LabelProps>(
+const LabelInner = forwardRef<HTMLLabelElement, LabelProps>(
   (
     {
       children,
@@ -84,4 +84,5 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
   },
 );
 
-Label.displayName = 'Label';
+LabelInner.displayName = 'Label';
+export const Label = React.memo(LabelInner);

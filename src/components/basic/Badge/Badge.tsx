@@ -32,7 +32,7 @@ export interface BadgeProps {
   style?: React.CSSProperties;
 }
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
+const BadgeInner = forwardRef<HTMLSpanElement, BadgeProps>(
   (
     {
       children,
@@ -145,4 +145,5 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
   },
 );
 
-Badge.displayName = 'Badge';
+BadgeInner.displayName = 'Badge';
+export const Badge = React.memo(BadgeInner);

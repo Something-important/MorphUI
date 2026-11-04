@@ -78,7 +78,7 @@ const getColorFromString = (str: string): string => {
   return colors[Math.abs(hash) % colors.length];
 };
 
-export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
+const AvatarInner = forwardRef<HTMLDivElement, AvatarProps>(
   (
     {
       src,
@@ -238,4 +238,5 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
   },
 );
 
-Avatar.displayName = 'Avatar';
+AvatarInner.displayName = 'Avatar';
+export const Avatar = React.memo(AvatarInner);
