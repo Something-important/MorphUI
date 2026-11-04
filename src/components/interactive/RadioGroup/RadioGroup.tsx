@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './RadioGroup.css';
 
@@ -11,8 +11,12 @@ export interface RadioOption {
 
 export interface RadioGroupProps {
   options: RadioOption[];
+  /** Controlled selected value. */
   value?: string | number;
-  onChange: (value: string | number) => void;
+  /** Uncontrolled initial selected value. */
+  defaultValue?: string | number;
+  /** Called when the selection changes (required for controlled; optional for uncontrolled). */
+  onChange?: (value: string | number) => void;
   name: string;
   variant?:
     | 'primary'
@@ -66,6 +70,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     {
       options,
       value,
+      defaultValue,
       onChange,
       name,
       variant = 'primary',
@@ -111,7 +116,11 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   ) => {
     const isDisabled = disabled;
 
-    // Resolve theme values
+    // Controlled vs uncontrolled: if `value` is provided, the parent
+    // owns the state. Otherwise, we manage it internally from `defaultValue`.
+    const isControlled = value !== undefined;
+    const [internalValue, setInternalValue] = useState(defaultValue);
+    const selectedValue = isControlled ? value : internalValue;
     const resolvedColor = resolveThemeValue(color);
     const resolvedGradient = resolveThemeValue(gradient);
     const resolvedTextColor = resolveThemeValue(textColor);
@@ -327,7 +336,9 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     const handleKeyDown = (event: React.KeyboardEvent, currentValue: string | number) => {
       if (isDisabled) return;
 
-      const currentIndex = options.findIndex((opt) => opt.value === currentValue);
+      const currentIndex = options.findIndex(
+        (opt) => opt.value === (isControlled ? value : selectedValue),
+      );
       if (currentIndex === -1) return;
 
       let nextIndex = currentIndex;
@@ -346,7 +357,8 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         case ' ':
         case 'Enter':
           event.preventDefault();
-          onChange(currentValue);
+          if (!isControlled) setInternalValue(currentValue);
+          onChange?.(currentValue);
           return;
       }
 
@@ -355,7 +367,8 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       while (attempts < options.length) {
         const option = options[nextIndex];
         if (!option.disabled) {
-          onChange(option.value);
+          if (!isControlled) setInternalValue(option.value);
+          onChange?.(option.value);
           break;
         }
         nextIndex = (nextIndex + 1) % options.length;
@@ -398,7 +411,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         <div className="radio-group-component__options">
           {options.map((option) => {
             const isOptionDisabled = isDisabled || option.disabled;
-            const isChecked = option.value === value;
+            const isChecked = option.value === selectedValue;
 
             return (
               <label
@@ -411,7 +424,11 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
                   name={name}
                   value={option.value}
                   checked={isChecked}
-                  onChange={() => !isOptionDisabled && onChange(option.value)}
+                  onChange={() => {
+                    if (isOptionDisabled) return;
+                    if (!isControlled) setInternalValue(option.value);
+                    onChange?.(option.value);
+                  }}
                   onKeyDown={(e) => handleKeyDown(e, option.value)}
                   disabled={isOptionDisabled}
                   required={required}
