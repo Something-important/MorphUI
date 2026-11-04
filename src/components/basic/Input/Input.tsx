@@ -33,10 +33,14 @@ export type InputSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export interface InputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    'value' | 'onChange' | 'type' | 'placeholder' | 'size'
+    'value' | 'onChange' | 'defaultValue' | 'type' | 'placeholder' | 'size'
   > {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /** Controlled value. */
+  value?: string;
+  /** Uncontrolled initial value. Ignored when `value` is provided. */
+  defaultValue?: string;
+  /** Called when the value changes. Required for controlled; optional for uncontrolled. */
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: InputType;
   id?: string;
@@ -112,6 +116,7 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       value,
+      defaultValue,
       onChange,
       placeholder = '',
       type = 'text',
@@ -178,6 +183,13 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    // Controlled vs uncontrolled: if `value` is provided, the parent owns
+    // the state. Otherwise, we manage it internally from `defaultValue`.
+    // Mirrors the RadioGroup uncontrolled pattern (#71).
+    const isControlled = value !== undefined;
+    const [internalValue, setInternalValue] = useState(defaultValue ?? '');
+    const currentValue = isControlled ? value! : internalValue;
+
     const [isFocused, setIsFocused] = useState(false);
     const [, setIsHovered] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -443,8 +455,12 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
         setActiveSuggestionIndex(-1);
       }
 
+      // Update internal state in uncontrolled mode (so the mask renders)
+      if (!isControlled) {
+        setInternalValue(newValue);
+      }
       // Call onChange with masked value
-      onChange(maskedEvent);
+      onChange?.(maskedEvent);
     };
 
     // Validation function
@@ -481,7 +497,10 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
         const syntheticEvent = {
           target: { value: suggestion },
         } as React.ChangeEvent<HTMLInputElement>;
-        onChange(syntheticEvent);
+        if (!isControlled) {
+          setInternalValue(suggestion);
+        }
+        onChange?.(syntheticEvent);
       }
       setShowSuggestions(false);
       setActiveSuggestionIndex(-1);
@@ -541,7 +560,7 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
     const countLimit = characterCountLimit || maxLength;
     const characterCountDisplay = characterCount ? (
       <div className="input-character-count">
-        {value.length}/{countLimit || '∞'}
+        {currentValue.length}/{countLimit || '∞'}
       </div>
     ) : null;
 
@@ -561,7 +580,7 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
         {/* Floating label */}
         {floatingLabel && (
           <label
-            className={`input-floating-label ${isFocused || value ? 'input-floating-label--active' : ''}`}
+            className={`input-floating-label ${isFocused || currentValue ? 'input-floating-label--active' : ''}`}
             htmlFor={id}
           >
             {placeholder}
@@ -586,7 +605,7 @@ const InputInner = forwardRef<HTMLInputElement, InputProps>(
           }}
           className={classes}
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
-          value={value}
+          value={currentValue}
           onChange={handleChange}
           placeholder={floatingLabel ? '' : placeholder}
           id={id}
