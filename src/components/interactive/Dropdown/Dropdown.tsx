@@ -26,7 +26,11 @@ export interface DropdownOptionGroup {
 export type DropdownSize = 'sm' | 'md' | 'lg';
 export type DropdownVariant = 'default' | 'outline' | 'ghost';
 
-export interface DropdownProps {
+export interface DropdownProps
+  extends Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    'onChange' | 'color' | 'placeholder' | 'size' | 'style' | 'className' | 'disabled'
+  > {
   options?: DropdownOption[];
   value?: string | number | Array<string | number>;
   onChange: (value: string | number | Array<string | number>) => void;
@@ -114,6 +118,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       maxHeight = '300px',
       onOpenChange,
       onSearch,
+      ...rest
     }: DropdownProps,
     ref,
   ) => {
@@ -457,6 +462,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           controls: 'dropdown-list',
           label: 'Dropdown select',
         })}
+        {...rest}
       >
         {trigger || (
           <div className="dropdown-selected">
