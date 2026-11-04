@@ -63,6 +63,9 @@ export interface AccordionProps {
     | 'luminosity';
   className?: string;
   style?: React.CSSProperties;
+  /** Controlled open state. When provided, the parent owns the state and
+   * `toggle()` will call `onToggle` without updating internally. */
+  open?: boolean;
   onToggle?: (isOpen: boolean) => void;
   onOpen?: () => void;
   onClose?: () => void;
@@ -74,6 +77,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       title,
       children,
       defaultOpen = false,
+      open: controlledOpen,
       variant = 'primary',
       size = 'md',
       color,
@@ -110,7 +114,11 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     },
     ref,
   ) => {
-    const [isOpen, setIsOpen] = useState(defaultOpen);
+    // Controlled vs uncontrolled: if `open` is provided, the parent owns
+    // the state. Otherwise, we manage it internally from `defaultOpen`.
+    const isControlled = controlledOpen !== undefined;
+    const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen);
+    const isOpen = isControlled ? controlledOpen : internalIsOpen;
     const [isAnimating, setIsAnimating] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -240,7 +248,9 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       if (disabled || loading) return;
 
       const newIsOpen = !isOpen;
-      setIsOpen(newIsOpen);
+      if (!isControlled) {
+        setInternalIsOpen(newIsOpen);
+      }
 
       // Call callbacks
       onToggle?.(newIsOpen);
