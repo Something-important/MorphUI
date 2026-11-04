@@ -4,7 +4,8 @@ import { resolveThemeValue } from '../../../utils';
 import { Label } from '../../basic/Label/Label';
 import './Form.css';
 
-export interface FormFieldProps {
+export interface FormFieldProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color' | 'style' | 'className' | 'children'> {
   /** Label text (or node) for the field. */
   label?: React.ReactNode;
   /** Explicit id to link Label <-> control. Defaults to the child's id or an auto-generated one. */
@@ -53,6 +54,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       className = '',
       style,
       children,
+      ...rest
     },
     ref,
   ) => {
@@ -113,7 +115,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       .join(' ');
 
     return (
-      <div ref={ref} className={classes} style={mergedStyle}>
+      <div ref={ref} className={classes} style={mergedStyle} {...rest}>
         {label && (
           <Label htmlFor={fieldId} required={required}>
             {label}

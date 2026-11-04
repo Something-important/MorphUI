@@ -1,5 +1,14 @@
 // Combobox.tsx
-import React, { forwardRef, useState, useRef, useId, useMemo, useCallback, useEffect } from 'react';
+import React, {
+  forwardRef,
+  useState,
+  useRef,
+  useId,
+  useMemo,
+  useCallback,
+  useEffect,
+  useDeferredValue,
+} from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Combobox.css';
 
@@ -123,11 +132,15 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     const selectedValue = isControlled ? controlledValue : internalValue;
 
     // The effective options: async (if loading) or the static options filtered.
+    // useDeferredValue keeps the input responsive when filtering 1000+ options —
+    // the filter runs at lower priority so typing doesn't block.
     const sourceOptions = asyncOptions ?? options;
+    const deferredInput = useDeferredValue(inputValue);
+    const isFiltering = deferredInput !== inputValue;
     const filteredOptions = useMemo(() => {
       if (loadOptions) return sourceOptions; // async: loadOptions already filtered
-      return sourceOptions.filter((opt) => filterOption(opt, inputValue));
-    }, [sourceOptions, loadOptions, inputValue, filterOption]);
+      return sourceOptions.filter((opt) => filterOption(opt, deferredInput));
+    }, [sourceOptions, loadOptions, deferredInput, filterOption]);
 
     const selectedOption = options.find((opt) => opt.value === selectedValue) ?? null;
 
@@ -376,7 +389,8 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
             ref={listboxRef}
             id={listboxId}
             role="listbox"
-            className="combobox-component__listbox"
+            className={`combobox-component__listbox${isFiltering ? ' combobox-component__listbox--filtering' : ''}`}
+            aria-busy={isFiltering || undefined}
             aria-label={ariaLabel}
             style={virtualize ? { maxHeight: listboxMaxHeight, overflowY: 'auto' } : undefined}
             onScroll={

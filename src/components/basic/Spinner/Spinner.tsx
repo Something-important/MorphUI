@@ -29,7 +29,7 @@ export interface SpinnerProps {
   style?: React.CSSProperties;
 }
 
-export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
+const SpinnerInner = forwardRef<HTMLDivElement, SpinnerProps>(
   (
     {
       variant = 'primary',
@@ -164,4 +164,5 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
   },
 );
 
-Spinner.displayName = 'Spinner';
+SpinnerInner.displayName = 'Spinner';
+export const Spinner = React.memo(SpinnerInner);

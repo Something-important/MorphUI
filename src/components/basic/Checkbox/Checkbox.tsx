@@ -75,7 +75,7 @@ export interface CheckboxProps {
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+const CheckboxInner = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
       checked: controlledChecked,
@@ -398,4 +398,5 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   },
 );
 
-Checkbox.displayName = 'Checkbox';
+CheckboxInner.displayName = 'Checkbox';
+export const Checkbox = React.memo(CheckboxInner);

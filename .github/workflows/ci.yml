@@ -71,10 +71,10 @@ jobs:
 
       - name: Size budgets
         # Reports per-component brotli sizes vs .size-limit.json budgets.
-        # Non-fatal (continue-on-error) — the budgets are a regression
-        # guard, not a correctness check. size-limit v14's rolldown backend
-        # produces slightly different sizes on CI runners vs local, causing
-        # occasional false failures.
+        # Non-fatal: size-limit v14's rolldown backend occasionally exits 1
+        # on CI even when all entries are within limits (a known quirk with
+        # the first entry measurement). The sizes are still reported in the
+        # logs for manual review.
         continue-on-error: true
         run: |
           npm run size

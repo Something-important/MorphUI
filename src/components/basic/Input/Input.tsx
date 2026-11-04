@@ -108,7 +108,7 @@ export interface InputProps
   style?: React.CSSProperties;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+const InputInner = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       value,
@@ -710,4 +710,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   },
 );
 
-Input.displayName = 'Input';
+InputInner.displayName = 'Input';
+export const Input = React.memo(InputInner);
