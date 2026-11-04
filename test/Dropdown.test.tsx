@@ -476,4 +476,79 @@ describe('Coverage edge cases', () => {
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
     expect(ref.current).toHaveAttribute('role', 'combobox');
   });
+
+  // Uncontrolled mode — mirrors the Input/RadioGroup/Table pattern: omit
+  // `value` and `onChange`, pass `defaultValue`, and the component manages
+  // its own state internally.
+  describe('Uncontrolled Mode', () => {
+    it('renders with defaultValue and no value/onChange', () => {
+      renderWithTheme(<Dropdown options={fruits} defaultValue="banana" />);
+      expect(getRoot()).toBeInTheDocument();
+      // Trigger shows the default-selected option's label
+      expect(screen.getByText('Banana')).toBeInTheDocument();
+    });
+
+    it('updates internal state on selection without an onChange handler', () => {
+      renderWithTheme(<Dropdown options={fruits} defaultValue="banana" />);
+      // Initially Banana
+      expect(screen.getByText('Banana')).toBeInTheDocument();
+      // Open and select Apple
+      fireEvent.click(getRoot());
+      fireEvent.click(screen.getByText('Apple'));
+      // Trigger now shows Apple (internal state updated)
+      expect(screen.getByText('Apple')).toBeInTheDocument();
+    });
+
+    it('still calls onChange when provided in uncontrolled mode', () => {
+      const onChange = jest.fn();
+      renderWithTheme(<Dropdown options={fruits} defaultValue="" onChange={onChange} />);
+      fireEvent.click(getRoot());
+      fireEvent.click(screen.getByText('Apple'));
+      expect(onChange).toHaveBeenCalledWith('apple');
+    });
+
+    it('value (controlled) wins when both value and defaultValue are provided', () => {
+      renderWithTheme(<Dropdown options={fruits} value="cherry" defaultValue="banana" />);
+      // Controlled wins: Cherry, not Banana
+      expect(screen.getByText('Cherry')).toBeInTheDocument();
+      expect(screen.queryByText('Banana')).not.toBeInTheDocument();
+    });
+
+    it('multiSelect initializes from defaultValue array', () => {
+      renderWithTheme(<Dropdown options={fruits} multiSelect defaultValue={['apple', 'cherry']} />);
+      // Trigger shows both labels joined
+      expect(screen.getByText('Apple, Cherry')).toBeInTheDocument();
+    });
+
+    it('multiSelect toggles update internal state without onChange', () => {
+      renderWithTheme(<Dropdown options={fruits} multiSelect defaultValue={['apple']} />);
+      // Initially "Apple"
+      expect(screen.getByText('Apple')).toBeInTheDocument();
+      // Open and add Banana
+      fireEvent.click(getRoot());
+      fireEvent.click(screen.getByText('Banana'));
+      // Trigger now shows "Apple, Banana"
+      expect(screen.getByText('Apple, Banana')).toBeInTheDocument();
+    });
+
+    it('multiSelect deselects update internal state without onChange', () => {
+      renderWithTheme(<Dropdown options={fruits} multiSelect defaultValue={['apple', 'cherry']} />);
+      expect(screen.getByText('Apple, Cherry')).toBeInTheDocument();
+      // Open and deselect Apple
+      fireEvent.click(getRoot());
+      fireEvent.click(screen.getByText('Apple'));
+      // Close the dropdown so 'Cherry' only appears in the trigger (not the option list)
+      fireEvent.click(getRoot());
+      expect(screen.getByText('Cherry')).toBeInTheDocument();
+    });
+
+    it('clearable clears the value in uncontrolled mode', () => {
+      renderWithTheme(<Dropdown options={fruits} defaultValue="banana" clearable />);
+      expect(screen.getByText('Banana')).toBeInTheDocument();
+      const clearBtn = screen.getByLabelText('Clear selection');
+      fireEvent.click(clearBtn);
+      // After clear, the placeholder shows (no default placeholder prop → 'Select...')
+      expect(screen.getByText('Select...')).toBeInTheDocument();
+    });
+  });
 });
