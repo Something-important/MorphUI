@@ -7,11 +7,12 @@ with Sigstore provenance). **2,005 tests** (49 suites), **95.3% statement /
 84.7% branch coverage**. React 18 + 19 verified. SSR-compatible. Auto-publish
 pipeline proven (6 releases, zero manual dispatch).
 
-**dev @ `7672f37` (unreleased, 2026-11-04):** **2,016 tests** (49 suites) —
-the "uncontrolled parity" trio landed (RadioGroup #71 + Table
-`defaultSelectedRows` + Input `defaultValue`) and Chromatic CI is live and
-verified (first run success). Ready to cut 1.2.0 whenever — merge dev →
-master triggers release-please.
+**dev @ `c619f09` (unreleased, 2026-11-04):** **2,038 tests** (49 suites) —
+the full controlled/uncontrolled parity audit landed: RadioGroup + Input +
+Dropdown + Table (selection + sort + pagination + filters) all support
+uncontrolled mode; Accordion gained controlled mode; Drawer gained
+uncontrolled mode. Chromatic CI is live and verified. Ready to cut 1.2.0
+whenever — merge dev → master triggers release-please.
 
 ## Done (1.0 → 1.1)
 
@@ -86,13 +87,34 @@ master triggers release-please.
   drift, layout shifts, color changes). Free for OSS repos (Chrome-only;
   cross-browser is a paid tier).
 
+## API consistency audit — complete 2026-11-04 ✅
+
+Swept all 33 components for controlled/uncontrolled parity gaps. Three
+real gaps found and fixed (all merged to dev):
+
+- **Dropdown** — was controlled-only (`onChange` required, no `defaultValue`).
+  Added full uncontrolled mode via `defaultValue`. (+8 tests)
+- **Accordion** — was uncontrolled-only (`defaultOpen` but no controlled
+  `open`). Added controlled `open?` prop + isControlled pattern. (+5 tests)
+- **Drawer** — was controlled-only (`isOpen` + `onClose` both required).
+  Added uncontrolled mode via `defaultOpen?`; `isOpen`/`onClose` now
+  optional. (+5 tests)
+- **Table** — `defaultCurrentPage` + `defaultFilters` added (pagination
+  and filtering were already uncontrolled-capable but had no initial-value
+  seed). (+4 tests)
+
+Modal left as-is — controlled-only is the overlay convention (Radix/shadcn/
+MUI all do this); the focus-trap/scroll-lock side effects make uncontrolled
+mode an a11y risk.
+
+All 33 components are now consistent: every stateful component supports
+both controlled and uncontrolled modes (except Modal, by design).
+
 ## Short-term (next ~2 weeks)
 
-- **Cut 1.2.0** — dev has the uncontrolled-parity trio + Chromatic CI; merge
-  dev → master when ready and release-please cuts it.
-- **API consistency audit round 2, continued** — `defaultCurrentPage` and
-  `defaultFilters` on Table (same uncontrolled-initial-value pattern as
-  `defaultSelectedRows`, which just merged to dev).
+- **Cut 1.2.0** — dev has the full controlled/uncontrolled parity story
+  across 7 components + Chromatic CI live. Merge dev → master when ready
+  and release-please cuts it.
 - **Storybook MDX docs** — per-component documentation pages (theming
   examples, a11y notes, migration callouts). No version impact.
 - **size-limit CI fix** — rolldown backend exits 1 on CI even when all
@@ -108,17 +130,15 @@ master triggers release-please.
 - **React 19 optimizations** — `use()` for async Combobox loading,
   `useOptimistic` for Toast/selection feedback, `useTransition` for
   expensive filtering. Position for the React 19 transition.
-- **Storybook MDX docs** — per-component documentation pages in the
-  Storybook deploy (theming examples, a11y notes, migration callouts).
-- **API consistency audit (round 2)** — verify controlled/uncontrolled
-  parity across all 33 components; document any gaps.
+- **FormField rest spread** — same gap as Dropdown (now fixed). Verify no
+  other components have the same `{...rest}` pass-through gap.
 
 ## Long-term (1–3 months)
 
-- **Visual regression testing** — Chromatic on the 33 component stories,
-  or Playwright screenshot tests in CI.
 - **Documentation site** — Storybook as the docs portal: theming guide,
   per-component a11y notes, migration guides per breaking release.
+  Chromatic published Storybook is already live; MDX docs are the next
+  step (see short-term).
 - **Community growth** — issue templates (done), demo site, blog posts,
   contribution guide polish.
 - **Feature expansion** — DataGrid (Table + filtering + sorting +
