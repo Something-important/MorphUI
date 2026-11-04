@@ -1,0 +1,58 @@
+name: Chromatic
+
+# Visual regression + published review Storybook per PR.
+# Requires the CHROMATIC_PROJECT_TOKEN repository secret (set via
+# https://github.com/Something-important/MorphUI/settings/secrets/actions).
+# Free for open-source repos (Chrome snapshots; cross-browser is a paid tier).
+# First baseline established 2026-11-04 from dev @ 9089ea0 (34 components,
+# 343 stories, 343 snapshots, Build 1 auto-accepted).
+on:
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chromatic-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        # fetch-depth: 0 is required by TurboSnap — it needs the full git
+        # history to compute the dependency delta between the PR and the
+        # last accepted baseline.
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          # TurboSnap: only snapshot stories whose dependency graph changed
+          # since the last accepted baseline. Keeps the 343-story run cheap
+          # on small PRs (CSS token change → only affected components).
+          onlyChanged: true
+          # Don't fail the workflow when visual diffs are found — Chromatic
+          # posts a separate "Changes" check on the PR for review. Failing
+          # the build on changes is annoying for PR iteration.
+          exitZeroOnChanges: true
+          # Skip waiting for Chromatic to finish processing in CI; the
+          # result is posted to GitHub asynchronously as a check.
+          exitOnceUploaded: true
