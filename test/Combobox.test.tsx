@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Combobox } from '../src/components/composition/Combobox';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 import type { ComboboxOption } from '../src/components/composition/Combobox';
@@ -484,9 +484,11 @@ describe('Edge cases', () => {
     const input = screen.getByRole('combobox');
     // Type to trigger loadOptions.
     fireEvent.change(input, { target: { value: 'test' } });
-    // Wait for the rejection to settle.
-    await new Promise((r) => setTimeout(r, 50));
-    // Loading state should be cleared after rejection.
-    expect(container.querySelector('.combobox-component--loading')).not.toBeInTheDocument();
+    // Wait for the rejection to settle and loading state to clear.
+    // waitFor wraps the poll in act() so the setIsLoading(false) in the
+    // .catch() fires inside act's scope (no act() warning).
+    await waitFor(() => {
+      expect(container.querySelector('.combobox-component--loading')).not.toBeInTheDocument();
+    });
   });
 });

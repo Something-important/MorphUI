@@ -13,6 +13,10 @@ import { resolveThemeValue, getAriaProps } from '../../../utils';
 import { clampToViewport } from '../../../hooks';
 import './ContextMenu.css';
 
+// SSR-safe layout effect: useLayoutEffect on the client, useEffect on the
+// server (useLayoutEffect warns + does nothing during renderToString).
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 export interface ContextMenuItem {
   /** 'item' (default) or 'separator' (renders a divider). */
   type?: 'item' | 'separator';
@@ -213,7 +217,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
 
     // Clamp the menu within the viewport (shared point-clamping helper).
     const [clampedPos, setClampedPos] = useState(position);
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (!isOpen) return;
       const menu = menuRef.current;
       if (!menu) {
