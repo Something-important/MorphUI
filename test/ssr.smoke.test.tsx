@@ -43,7 +43,7 @@ import {
 } from '../src/components';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
-const items = [{ label: 'Home', value: 'home' }];
+const items = [{ id: 'home', label: 'Home', value: 'home' }];
 const opts = [{ label: 'A', value: 'a' }];
 const tableData = [{ id: 1, name: 'Test' }];
 const tableCols = [{ key: 'name', label: 'Name' }];
@@ -65,7 +65,7 @@ describe('SSR smoke — all components render without crashing', () => {
   it('Skeleton', () => expect(ssr(<Skeleton />)).toBeTruthy());
   it('Spinner', () => expect(ssr(<Spinner />)).toBeTruthy());
   it('Stepper', () =>
-    expect(ssr(<Stepper steps={[{ label: 'One' }]} currentStep={0} />)).toBeTruthy());
+    expect(ssr(<Stepper steps={[{ id: 'one', label: 'One' }]} activeStep={0} />)).toBeTruthy());
   it('Switch', () => expect(ssr(<Switch />)).toBeTruthy());
   it('Toggle', () => expect(ssr(<Toggle />)).toBeTruthy());
   it('Alert', () => expect(ssr(<Alert variant="info">Msg</Alert>)).toBeTruthy());
@@ -80,7 +80,8 @@ describe('SSR smoke — all components render without crashing', () => {
   it('RadioGroup', () => expect(ssr(<RadioGroup name="c" options={opts} />)).toBeTruthy());
   it('Slider', () => expect(ssr(<Slider defaultValue={50} />)).toBeTruthy());
   it('Pagination', () => expect(ssr(<Pagination totalItems={100} currentPage={1} />)).toBeTruthy());
-  it('Tabs', () => expect(ssr(<Tabs items={[{ label: 'T', content: 'C' }]} />)).toBeTruthy());
+  it('Tabs', () =>
+    expect(ssr(<Tabs items={[{ id: 't1', label: 'T', content: 'C' }]} />)).toBeTruthy());
   it('Drawer (closed)', () => {
     ssr(
       <Drawer isOpen={false} onClose={() => {}}>

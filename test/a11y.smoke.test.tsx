@@ -57,7 +57,15 @@ describe('a11y smoke — all components', () => {
   it('Skeleton', async () => check(<Skeleton />));
   it('Spinner', async () => check(<Spinner />));
   it('Stepper', async () =>
-    check(<Stepper steps={[{ label: 'One' }, { label: 'Two' }]} currentStep={0} />));
+    check(
+      <Stepper
+        steps={[
+          { id: 'one', label: 'One' },
+          { id: 'two', label: 'Two' },
+        ]}
+        activeStep={0}
+      />,
+    ));
   it('Switch', async () => check(<Switch />));
   it('Toggle', async () => check(<Toggle />));
   it('Alert', async () => check(<Alert variant="info">Info message</Alert>));
@@ -83,8 +91,8 @@ describe('a11y smoke — all components', () => {
     check(
       <Tabs
         items={[
-          { label: 'Tab 1', content: 'One' },
-          { label: 'Tab 2', content: 'Two' },
+          { id: 't1', label: 'Tab 1', content: 'One' },
+          { id: 't2', label: 'Tab 2', content: 'Two' },
         ]}
       />,
     ));
