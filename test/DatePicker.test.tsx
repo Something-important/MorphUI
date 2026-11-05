@@ -405,4 +405,123 @@ describe('Calendar keyboard + click-outside', () => {
     fireEvent.mouseDown(document.body);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
+
+  // Range mode
+  describe('Range Mode', () => {
+    const openCalendar = () => {
+      fireEvent.focus(screen.getByRole('combobox'));
+    };
+
+    it('renders without crashing in range mode', () => {
+      render(
+        <ThemeProvider>
+          <DatePicker range />
+        </ThemeProvider>,
+      );
+      expect(screen.getByRole('combobox')).toBeInTheDocument();
+    });
+
+    it('does not call onChange or close on first click (sets pending start)', () => {
+      const onChange = jest.fn();
+      render(
+        <ThemeProvider>
+          <DatePicker range onChange={onChange} />
+        </ThemeProvider>,
+      );
+      openCalendar();
+      const days = screen.getAllByRole('gridcell');
+      const day15 = days.find((d) => d.textContent === '15');
+      if (day15) fireEvent.click(day15);
+      expect(onChange).not.toHaveBeenCalled();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('completes the range on second click and calls onChange with [start, end]', () => {
+      const onChange = jest.fn();
+      render(
+        <ThemeProvider>
+          <DatePicker range onChange={onChange} />
+        </ThemeProvider>,
+      );
+      openCalendar();
+      const days = screen.getAllByRole('gridcell');
+      const day10 = days.find((d) => d.textContent === '10');
+      if (day10) fireEvent.click(day10);
+      const day20 = days.find((d) => d.textContent === '20');
+      if (day20) fireEvent.click(day20);
+      expect(onChange).toHaveBeenCalledTimes(1);
+      const result = onChange.mock.calls[0][0];
+      expect(Array.isArray(result)).toBe(true);
+      if (Array.isArray(result)) {
+        expect(result[0]).toBeInstanceOf(Date);
+        expect(result[1]).toBeInstanceOf(Date);
+        expect(result[0].getDate()).toBe(10);
+        expect(result[1].getDate()).toBe(20);
+      }
+    });
+
+    it('restarts range when second click is before the start', () => {
+      const onChange = jest.fn();
+      render(
+        <ThemeProvider>
+          <DatePicker range onChange={onChange} />
+        </ThemeProvider>,
+      );
+      openCalendar();
+      const days = screen.getAllByRole('gridcell');
+      const day20 = days.find((d) => d.textContent === '20');
+      if (day20) fireEvent.click(day20);
+      const day10 = days.find((d) => d.textContent === '10');
+      if (day10) fireEvent.click(day10);
+      expect(onChange).not.toHaveBeenCalled();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('initializes from defaultValue in range mode', () => {
+      render(
+        <ThemeProvider>
+          <DatePicker
+            range
+            defaultValue={[new Date(2026, 0, 5), new Date(2026, 0, 15)]}
+            clearable
+          />
+        </ThemeProvider>,
+      );
+      const input = screen.getByRole('combobox') as HTMLInputElement;
+      expect(input.value).toContain('to');
+    });
+
+    it('clears the range when clear button is clicked', () => {
+      const onChange = jest.fn();
+      render(
+        <ThemeProvider>
+          <DatePicker
+            range
+            defaultValue={[new Date(2026, 0, 5), new Date(2026, 0, 15)]}
+            clearable
+            onChange={onChange}
+          />
+        </ThemeProvider>,
+      );
+      const clearBtn = screen.getByLabelText('Clear date');
+      fireEvent.click(clearBtn);
+      expect(onChange).toHaveBeenCalledWith(null);
+    });
+
+    it('applies range highlighting classes to days between start and end', () => {
+      render(
+        <ThemeProvider>
+          <DatePicker range defaultValue={[new Date(2026, 0, 10), new Date(2026, 0, 20)]} />
+        </ThemeProvider>,
+      );
+      openCalendar();
+      const days = screen.getAllByRole('gridcell');
+      const day10 = days.find((d) => d.textContent === '10');
+      expect(day10).toHaveClass('datepicker-component__day--range-start');
+      const day20 = days.find((d) => d.textContent === '20');
+      expect(day20).toHaveClass('datepicker-component__day--range-end');
+      const day15 = days.find((d) => d.textContent === '15');
+      expect(day15).toHaveClass('datepicker-component__day--in-range');
+    });
+  });
 });

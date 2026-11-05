@@ -7,12 +7,14 @@ export type DatePickerVariant = 'primary' | 'secondary' | 'ghost' | 'outline';
 export type DatePickerSize = 'sm' | 'md' | 'lg';
 
 export interface DatePickerProps {
-  /** Controlled value (Date or ISO string YYYY-MM-DD). */
-  value?: Date | string | null;
-  /** Uncontrolled initial value. */
-  defaultValue?: Date | string | null;
-  /** Called when the user picks a date (or clears). */
-  onChange?: (value: Date | null) => void;
+  /** Controlled value (Date or ISO string YYYY-MM-DD). In range mode, a
+   *  tuple [start, end] of two dates/strings. */
+  value?: Date | string | [Date | string, Date | string] | null;
+  /** Uncontrolled initial value. Same shape as `value`. */
+  defaultValue?: Date | string | [Date | string, Date | string] | null;
+  /** Called when the user picks a date (single mode) or completes a range
+   *  (range mode: receives [start, end]). Called with null on clear. */
+  onChange?: (value: Date | null | [Date, Date]) => void;
   /** Format the date for the input. Default: YYYY-MM-DD. */
   format?: (date: Date) => string;
   /** Earliest selectable date. */
@@ -24,6 +26,8 @@ export interface DatePickerProps {
   placeholder?: string;
   disabled?: boolean;
   clearable?: boolean;
+  /** Select a date range (start + end) instead of a single date. */
+  range?: boolean;
   ariaLabel?: string;
   variant?: DatePickerVariant;
   size?: DatePickerSize;
@@ -50,6 +54,24 @@ const toDate = (input: Date | string | null | undefined): Date | null => {
   if (input instanceof Date) return isNaN(input.getTime()) ? null : input;
   const parsed = new Date(input);
   return isNaN(parsed.getTime()) ? null : parsed;
+};
+
+/** Normalize a range value [start, end] (each Date | string | null) to
+ *  [Date, Date] | null. Returns null if either side is missing. */
+const toDateRange = (
+  input: [Date | string, Date | string] | null | undefined,
+): [Date, Date] | null => {
+  if (!input || !Array.isArray(input)) return null;
+  const start = toDate(input[0]);
+  const end = toDate(input[1]);
+  if (!start || !end) return null;
+  return start <= end ? [start, end] : [end, start];
+};
+
+/** True if `day` is strictly between `start` and `end` (exclusive). */
+const isBetween = (day: Date, start: Date, end: Date): boolean => {
+  const d = startOfDay(day);
+  return d > startOfDay(start) && d < startOfDay(end);
 };
 
 const toISODate = (d: Date): string =>
@@ -134,6 +156,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       placeholder = 'YYYY-MM-DD',
       disabled = false,
       clearable = false,
+      range = false,
       ariaLabel = 'Date picker',
       variant = 'primary',
       size = 'md',
@@ -161,13 +184,34 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const maxDate = useMemo(() => startOfDay(toDate(max) ?? new Date(8640000000000000)), [max]);
 
     const isControlled = controlledValue !== undefined;
-    const [internalValue, setInternalValue] = useState<Date | null>(toDate(defaultValue));
-    const selectedDate = isControlled ? toDate(controlledValue) : internalValue;
+    const [internalValue, setInternalValue] = useState<Date | null>(
+      range ? null : toDate(defaultValue as Date | string | null),
+    );
+    const selectedDate = range
+      ? null
+      : isControlled
+        ? toDate(controlledValue as Date | string | null)
+        : internalValue;
+
+    // Range mode state
+    const defaultRange = range
+      ? toDateRange(defaultValue as [Date | string, Date | string] | null)
+      : null;
+    const controlledRange = range
+      ? toDateRange(controlledValue as [Date | string, Date | string] | null)
+      : null;
+    const [internalRange, setInternalRange] = useState<[Date, Date] | null>(defaultRange);
+    const [pendingStart, setPendingStart] = useState<Date | null>(null);
+    const selectedRange = range ? (isControlled ? controlledRange : internalRange) : null;
 
     const today = useMemo(() => startOfDay(new Date()), []);
     const [isOpen, setIsOpen] = useState(false);
-    const [viewDate, setViewDate] = useState<Date>(() => selectedDate ?? today);
-    const [focusedDate, setFocusedDate] = useState<Date>(() => selectedDate ?? today);
+    const [viewDate, setViewDate] = useState<Date>(
+      () => selectedDate ?? selectedRange?.[0] ?? today,
+    );
+    const [focusedDate, setFocusedDate] = useState<Date>(
+      () => selectedDate ?? selectedRange?.[0] ?? today,
+    );
 
     const grid = useMemo(() => getMonthGrid(viewDate, weekStartsOn), [viewDate, weekStartsOn]);
     const weekdayLabels = weekStartsOn === 1 ? WEEKDAYS_MON : WEEKDAYS_SUN;
@@ -183,28 +227,68 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     // When opening, focus the selected date (or today).
     useEffect(() => {
       if (isOpen) {
-        setViewDate(selectedDate ?? today);
-        setFocusedDate(selectedDate ?? today);
+        setViewDate(selectedDate ?? selectedRange?.[0] ?? today);
+        setFocusedDate(selectedDate ?? selectedRange?.[0] ?? today);
       }
     }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps -- selectedDate/today are stable enough per open
 
     const commit = useCallback(
       (date: Date) => {
         if (isDisabled(date)) return;
-        if (!isControlled) setInternalValue(date);
-        onChange?.(date);
-        setIsOpen(false);
-        suppressOpenRef.current = true;
-        inputRef.current?.focus();
+        if (range) {
+          // Range mode: first click sets the start, second click sets the end.
+          if (!pendingStart || (selectedRange && !pendingStart)) {
+            // No pending start (or a complete range exists) → start fresh
+            setPendingStart(date);
+            setViewDate(date);
+            return; // don't close — wait for the second click
+          }
+          // pendingStart is set — this is the second click
+          const start = pendingStart;
+          const day = startOfDay(date);
+          const startDay = startOfDay(start);
+          if (day < startDay) {
+            // Clicked before the start → restart with this as the new start
+            setPendingStart(date);
+            setViewDate(date);
+            return;
+          }
+          // Complete the range
+          const newRange: [Date, Date] = [start, date];
+          if (!isControlled) {
+            setInternalRange(newRange);
+            setInternalValue(null); // clear single-mode value
+          }
+          setPendingStart(null);
+          onChange?.(newRange);
+          setIsOpen(false);
+          suppressOpenRef.current = true;
+          inputRef.current?.focus();
+        } else {
+          // Single mode (existing behavior)
+          if (!isControlled) setInternalValue(date);
+          onChange?.(date);
+          setIsOpen(false);
+          suppressOpenRef.current = true;
+          inputRef.current?.focus();
+        }
       },
-      [isControlled, onChange, isDisabled],
+      [isControlled, onChange, isDisabled, range, pendingStart, selectedRange],
     );
 
     const clear = useCallback(() => {
-      if (!isControlled) setInternalValue(null);
-      onChange?.(null);
+      if (range) {
+        if (!isControlled) {
+          setInternalRange(null);
+          setPendingStart(null);
+        }
+        onChange?.(null);
+      } else {
+        if (!isControlled) setInternalValue(null);
+        onChange?.(null);
+      }
       inputRef.current?.focus();
-    }, [isControlled, onChange]);
+    }, [isControlled, onChange, range]);
 
     const open = () => {
       if (disabled) return;
@@ -303,8 +387,19 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       .filter(Boolean)
       .join(' ');
 
-    const inputDisplay = selectedDate ? format(selectedDate) : '';
-    const showClear = clearable && !disabled && selectedDate != null;
+    const inputDisplay = range
+      ? selectedRange
+        ? `${format(selectedRange[0])} to ${format(selectedRange[1])}`
+        : pendingStart
+          ? `${format(pendingStart)} to …`
+          : ''
+      : selectedDate
+        ? format(selectedDate)
+        : '';
+    const showClear =
+      clearable &&
+      !disabled &&
+      (range ? selectedRange != null || pendingStart != null : selectedDate != null);
 
     // ---- Theme resolution (design model) ----
     // resolveThemeValue: literal '#hex' -> value, '--x'/'var(--x)' -> var(--x),
@@ -449,22 +544,45 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                   {row.map((day) => {
                     const inMonth = isSameMonth(day, viewDate);
                     const isToday = isSameDay(day, today);
-                    const isSelected = selectedDate ? isSameDay(day, selectedDate) : false;
+                    const isSelected =
+                      !range && selectedDate ? isSameDay(day, selectedDate) : false;
                     const isFocused = isSameDay(day, focusedDate);
                     const disabledDay = isDisabled(day);
+                    // Range highlighting
+                    const rangeStart = selectedRange?.[0] ?? pendingStart;
+                    const rangeEnd = selectedRange?.[1] ?? null;
+                    const isRangeStart = range
+                      ? rangeStart
+                        ? isSameDay(day, rangeStart)
+                        : false
+                      : false;
+                    const isRangeEnd = range
+                      ? rangeEnd
+                        ? isSameDay(day, rangeEnd)
+                        : false
+                      : false;
+                    const isInRange =
+                      range && rangeStart && rangeEnd
+                        ? isBetween(day, rangeStart, rangeEnd)
+                        : false;
+                    const isRangeSelected = isRangeStart || isRangeEnd;
                     return (
                       <button
                         type="button"
                         key={toISODate(day)}
                         role="gridcell"
                         tabIndex={isFocused ? 0 : -1}
-                        aria-selected={isSelected}
+                        aria-selected={isSelected || isRangeSelected || undefined}
                         aria-disabled={disabledDay || undefined}
                         aria-current={isToday ? 'date' : undefined}
                         className={[
                           'datepicker-component__day',
                           !inMonth && 'datepicker-component__day--outside',
                           isSelected && 'datepicker-component__day--selected',
+                          isRangeStart && 'datepicker-component__day--range-start',
+                          isRangeEnd && 'datepicker-component__day--range-end',
+                          isInRange && 'datepicker-component__day--in-range',
+                          isRangeSelected && 'datepicker-component__day--selected',
                           isToday && 'datepicker-component__day--today',
                           disabledDay && 'datepicker-component__day--disabled',
                         ]

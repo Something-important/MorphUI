@@ -236,6 +236,32 @@
     border-color: #fff;
   }
 
+  /* Range mode: days between start and end get a subtle tint.
+     Start/end days use the selected style (already applied via --selected). */
+  .datepicker-component__day--in-range {
+    background: var(
+      --datepicker-custom-accent-light,
+      color-mix(in srgb, var(--datepicker-accent, var(--color-primary, #0070f3)) 15%, transparent)
+    );
+    color: var(--color-text, #111827);
+    font-weight: 400;
+  }
+
+  .datepicker-component__day--in-range:hover:not(:disabled) {
+    background: var(
+      --datepicker-custom-accent-light,
+      color-mix(in srgb, var(--datepicker-accent, var(--color-primary, #0070f3)) 25%, transparent)
+    );
+  }
+
+  /* Range start/end get rounded corners on the outer edge for a pill shape */
+  .datepicker-component__day--range-start {
+    border-radius: var(--radius-sm, 4px) 0 0 var(--radius-sm, 4px);
+  }
+  .datepicker-component__day--range-end {
+    border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
+  }
+
   .datepicker-component__day--disabled {
     color: var(--color-text-muted, #d1d5db);
     cursor: not-allowed;
