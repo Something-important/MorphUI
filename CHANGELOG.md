@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.3.0](https://github.com/Something-important/MorphUI/compare/v1.2.0...v1.3.0) (2026-11-05)
+
+
+### Features
+
+* **ci:** React 19 compatibility — CI matrix + verified ([bd56e7f](https://github.com/Something-important/MorphUI/commit/bd56e7f0124f708e9a32f5609e6b3908b2f3168c))
+
+
+### Bug Fixes
+
+* **ci:** restore continue-on-error for size-limit (CI exit-1 quirk) ([16cade0](https://github.com/Something-important/MorphUI/commit/16cade05113875a66aef7f48a2eefd1b6b161288))
+* **ci:** silence React warnings in smoke tests + ContextMenu SSR ([82aeefd](https://github.com/Something-important/MorphUI/commit/82aeefd7b5c7e61c27e4759b500d0de68082d81d))
+* **ci:** silence remaining 2 act() warnings (Combobox + Popover) ([bc50982](https://github.com/Something-important/MorphUI/commit/bc509828e19119167120f321ce5cedb507758e2e))
+* **ci:** size-limit now fatal — switched to file plugin, bumped 3 budgets ([b899e18](https://github.com/Something-important/MorphUI/commit/b899e1827219e9a323969b05198b2db0d89f0563))
+* **size-limit:** Sidebar path — Sidebar.js → SidebarUnified.js ([d22ad1d](https://github.com/Something-important/MorphUI/commit/d22ad1d26ebcf9625f9e472fd12942f47fef1a06))
+
 ## [1.2.0](https://github.com/Something-important/MorphUI/compare/v1.1.1...v1.2.0) (2026-11-04)
 
 
