@@ -67,7 +67,7 @@
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.4",
-    "@size-limit/preset-small-lib": "^14.3.0",
+    "@size-limit/file": "^14.3.0",
     "@storybook/addon-docs": "^9.0.12",
     "@storybook/addon-onboarding": "^9.0.12",
     "@storybook/react-vite": "^9.0.12",

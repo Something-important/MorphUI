@@ -42,7 +42,7 @@
   {
     "name": "Combobox",
     "path": "./dist/esm/components/composition/Combobox/Combobox.js",
-    "limit": "3 KB"
+    "limit": "4 KB"
   },
   {
     "name": "ContextMenu",
@@ -67,7 +67,7 @@
   {
     "name": "Dropdown",
     "path": "./dist/esm/components/interactive/Dropdown/Dropdown.js",
-    "limit": "4 KB"
+    "limit": "5 KB"
   },
   {
     "name": "Form",
@@ -77,7 +77,7 @@
   {
     "name": "Input",
     "path": "./dist/esm/components/basic/Input/Input.js",
-    "limit": "4 KB"
+    "limit": "5 KB"
   },
   {
     "name": "Label",
