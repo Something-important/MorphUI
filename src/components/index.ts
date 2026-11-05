@@ -79,6 +79,13 @@ export {
   type PaginationSize,
   type PaginationVariant,
 } from './interactive/Pagination';
+export {
+  TreeView,
+  type TreeNode,
+  type TreeViewProps,
+  type TreeViewVariant,
+  type TreeViewSize,
+} from './interactive/TreeView';
 
 // Composition Components
 export {

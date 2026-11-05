@@ -1,0 +1,59 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TreeViewStories from './TreeView.stories';
+
+<Meta of={TreeViewStories} />
+
+# TreeView
+
+A hierarchical data display component with expand/collapse, selection,
+keyboard navigation, and tree connector lines. Ideal for file explorers,
+org charts, category trees, and JSON viewers.
+
+## Usage
+
+```tsx
+import { TreeView, type TreeNode } from 'morphui-react';
+
+const tree: TreeNode[] = [
+  {
+    id: 'folder1',
+    label: 'My Folder',
+    children: [
+      { id: 'file1', label: 'File 1' },
+      { id: 'file2', label: 'File 2' },
+    ],
+  },
+];
+
+<TreeView
+  nodes={tree}
+  defaultExpandedNodeIds={['folder1']}
+  defaultSelectedNodeId="file1"
+  onSelect={(id, node) => console.log('Selected:', id, node)}
+/>;
+```
+
+## Controlled vs Uncontrolled
+
+Both expansion and selection support controlled and uncontrolled modes:
+
+- **Expansion**: `expandedNodeIds` (controlled) / `defaultExpandedNodeIds` (uncontrolled) + `onExpandChange`
+- **Selection**: `selectedNodeId` (controlled) / `defaultSelectedNodeId` (uncontrolled) + `onSelect`
+
+When both are provided, the controlled value wins.
+
+## Accessibility
+
+- `role="tree"` with `aria-label`
+- `role="treeitem"` per visible node with `aria-expanded`, `aria-selected`, `aria-level`, `aria-disabled`
+- Keyboard: **ArrowUp/Down** to move focus, **ArrowRight/Left** to expand/collapse or navigate, **Enter/Space** to select, **Home/End** for first/last
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />
