@@ -9,7 +9,6 @@ import { ThemeProvider } from '../../theme';
 const meta: Meta<typeof Form> = {
   title: 'Components/Form',
   component: Form,
-  tags: ['autodocs'],
   parameters: { layout: 'padded' },
 };
 export default meta;

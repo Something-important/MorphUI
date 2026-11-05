@@ -1,0 +1,35 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ToastStories from './Toast.stories';
+
+<Meta of={ToastStories} />
+
+# Toast
+
+A transient notification with queueing, variants, auto-dismiss, and manual close. Wrap your app in `ToastProvider`.
+
+## Usage
+
+```tsx
+import { Toast } from 'morphui-react';
+
+<ToastProvider>
+  <App />
+</ToastProvider>;
+// Anywhere inside:
+const { toast } = useToast();
+toast({ message: 'Saved!', variant: 'success' });
+```
+
+## Accessibility
+
+`role="status"` with `aria-live="polite"` (assertive for `variant="danger"`). The close button has `aria-label="Close"`. Toast count respects `maxVisible`; excess queue FIFO.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

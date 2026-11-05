@@ -7,7 +7,6 @@ import { ThemeProvider } from '../../theme';
 const meta: Meta<typeof Combobox> = {
   title: 'Components/Combobox',
   component: Combobox,
-  tags: ['autodocs'],
   parameters: { layout: 'padded' },
 };
 export default meta;

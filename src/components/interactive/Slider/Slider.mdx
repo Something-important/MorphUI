@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as SliderStories from './Slider.stories';
+
+<Meta of={SliderStories} />
+
+# Slider
+
+A range slider with single and dual-thumb (range) modes, marks, and controlled/uncontrolled support.
+
+## Usage
+
+```tsx
+import { Slider } from 'morphui-react';
+
+<Slider min={0} max={100} defaultValue={50} />
+<Slider range defaultValue={[20, 80]} />
+```
+
+## Accessibility
+
+`role="slider"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`. Dual-thumb mode uses `role="group"` wrapper. Keyboard: Arrow keys to adjust, Home/End for min/max.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

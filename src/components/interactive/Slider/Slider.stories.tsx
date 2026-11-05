@@ -8,7 +8,6 @@ import { Button } from '../../basic/Button';
 export default {
   title: 'Components/Slider',
   component: Slider,
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
     docs: {

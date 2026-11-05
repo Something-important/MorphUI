@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as DividerStories from './Divider.stories';
+
+<Meta of={DividerStories} />
+
+# Divider
+
+A horizontal or vertical separator line with variant and gradient support.
+
+## Usage
+
+```tsx
+import { Divider } from 'morphui-react';
+
+<Divider variant="default" />
+<Divider orientation="vertical" />
+```
+
+## Accessibility
+
+Renders `<hr>` for horizontal (semantic separator) or `<div>` with `role="separator"` for vertical. `aria-orientation` is set appropriately.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

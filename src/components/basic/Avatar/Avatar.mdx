@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as AvatarStories from './Avatar.stories';
+
+<Meta of={AvatarStories} />
+
+# Avatar
+
+A circular avatar for user/profile images with fallback initials, sizes, and optional status indicator.
+
+## Usage
+
+```tsx
+import { Avatar } from 'morphui-react';
+
+<Avatar src="/user.jpg" alt="Jane Doe" size="md" />
+<Avatar fallback="JD" size="sm" />
+```
+
+## Accessibility
+
+Renders `role="img"` with `aria-label` from the `alt` prop. When no image loads, falls back to initials text. The status dot has `role="status"`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

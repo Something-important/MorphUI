@@ -8,7 +8,6 @@ import { Button } from '../../basic/Button';
 export default {
   title: 'Components/Alert',
   component: Alert,
-  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
     docs: {

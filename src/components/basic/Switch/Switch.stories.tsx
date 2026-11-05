@@ -146,7 +146,6 @@ const meta: Meta<typeof Switch> = {
       description: 'Inline styles',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default meta;

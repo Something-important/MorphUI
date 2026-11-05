@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TooltipStories from './Tooltip.stories';
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+A hover/focus tooltip with auto-positioning, delay, and arrow support. Uses `useAnchoredPosition` for viewport clamping.
+
+## Usage
+
+```tsx
+import { Tooltip } from 'morphui-react';
+
+<Tooltip content="Delete this item" position="auto">
+  <button>Delete</button>
+</Tooltip>;
+```
+
+## Accessibility
+
+`role="tooltip"` linked via `aria-describedby` on the trigger. Shows on hover + focus, hides on blur + ESC + mouseleave. Delay configurable (default 500ms).
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

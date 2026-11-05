@@ -1,0 +1,34 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CardStories from './Card.stories';
+
+<Meta of={CardStories} />
+
+# Card
+
+A container with header, body, footer slots, variants, and hover effects.
+
+## Usage
+
+```tsx
+import { Card } from 'morphui-react';
+
+<Card variant="default" hoverable>
+  <Card.Header>Title</Card.Header>
+  <Card.Body>Content</Card.Body>
+  <Card.Footer>Actions</Card.Footer>
+</Card>;
+```
+
+## Accessibility
+
+Renders `<div>` with no implicit role. Add `role="region"` + `aria-label` if the card represents a landmark. Hoverable cards get `role="button"` only if the entire card is clickable.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

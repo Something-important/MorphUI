@@ -7,7 +7,6 @@ import { ThemeProvider } from '../../theme';
 const meta: Meta<typeof ContextMenu> = {
   title: 'Components/ContextMenu',
   component: ContextMenu,
-  tags: ['autodocs'],
   parameters: { layout: 'padded' },
 };
 export default meta;

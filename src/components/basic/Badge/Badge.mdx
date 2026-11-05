@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as BadgeStories from './Badge.stories';
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+A small count or status label. Supports 8 variants, sizes, and gradient/pulse effects.
+
+## Usage
+
+```tsx
+import { Badge } from 'morphui-react';
+
+<Badge variant="primary" size="sm">New</Badge>
+<Badge variant="danger" pulse>3</Badge>
+```
+
+## Accessibility
+
+Renders a `<span>` with no implicit role. For status indicators, set `aria-label`. The `pulse` animation respects `prefers-reduced-motion`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

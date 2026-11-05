@@ -1,0 +1,36 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as SidebarStories from './Sidebar.stories';
+
+<Meta of={SidebarStories} />
+
+# Sidebar
+
+A collapsible navigation sidebar with items, groups, badges, active state, and theme support.
+
+## Usage
+
+```tsx
+import { Sidebar } from 'morphui-react';
+
+<Sidebar
+  items={[
+    { id: 'home', label: 'Home', icon: <HomeIcon /> },
+    { id: 'settings', label: 'Settings', children: [...] },
+  ]}
+  activeItem="home"
+/>
+```
+
+## Accessibility
+
+`role="navigation"` with `aria-label`. Items are links/buttons with `aria-current="page"` for active. Collapsible groups use `aria-expanded`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

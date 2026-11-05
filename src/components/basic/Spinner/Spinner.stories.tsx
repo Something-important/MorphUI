@@ -8,7 +8,6 @@ import { Button } from '../Button';
 export default {
   title: 'Components/Spinner',
   component: Spinner,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

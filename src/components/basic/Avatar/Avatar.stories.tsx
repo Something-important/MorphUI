@@ -7,7 +7,6 @@ import { ThemeProvider, themes, type ThemeName } from '../../theme';
 export default {
   title: 'Components/Avatar',
   component: Avatar,
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
     docs: {

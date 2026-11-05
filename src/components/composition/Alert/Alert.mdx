@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as AlertStories from './Alert.stories';
+
+<Meta of={AlertStories} />
+
+# Alert
+
+A dismissible alert/banner with 8 variants, icons, and controlled + uncontrolled open state.
+
+## Usage
+
+```tsx
+import { Alert } from 'morphui-react';
+
+<Alert variant="info" defaultOpen>
+  You have 3 new messages.
+</Alert>;
+```
+
+## Accessibility
+
+`role="alert"` for `variant="danger"` (assertive), `role="status"` for others (polite). `aria-live` set accordingly. The dismiss button has `aria-label="Close"`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

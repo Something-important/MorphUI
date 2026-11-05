@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as LabelStories from './Label.stories';
+
+<Meta of={LabelStories} />
+
+# Label
+
+A `<label>` element for form fields with required indicator and theme support.
+
+## Usage
+
+```tsx
+import { Label } from 'morphui-react';
+
+<Label htmlFor="email" required>
+  Email
+</Label>;
+```
+
+## Accessibility
+
+Native `<label>` with `htmlFor` linking. The `required` prop shows a `*` indicator and sets `aria-required` on the associated input (consumer responsibility).
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

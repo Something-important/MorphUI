@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as DrawerStories from './Drawer.stories';
+
+<Meta of={DrawerStories} />
+
+# Drawer
+
+A slide-in panel overlay with controlled and uncontrolled modes, 4 positions, backdrop, ESC close, and focus management.
+
+## Usage
+
+```tsx
+import { Drawer } from 'morphui-react';
+
+<Drawer defaultOpen={true} position="right" size="md">
+  Panel content
+</Drawer>;
+```
+
+## Accessibility
+
+`role="dialog"` with `aria-modal="true"`. Focus trap + scroll lock while open. ESC closes (configurable). Backdrop click closes (configurable). Focus restored to trigger on close.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ProgressStories from './Progress.stories';
+
+<Meta of={ProgressStories} />
+
+# Progress
+
+A progress bar with determinate and indeterminate modes, gradient fills, and size variants.
+
+## Usage
+
+```tsx
+import { Progress } from 'morphui-react';
+
+<Progress value={60} max={100} />
+<Progress indeterminate />
+```
+
+## Accessibility
+
+`role="progressbar"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax` for determinate mode. Indeterminate mode omits `aria-valuenow` per ARIA spec.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

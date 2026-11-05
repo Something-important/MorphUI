@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as SkeletonStories from './Skeleton.stories';
+
+<Meta of={SkeletonStories} />
+
+# Skeleton
+
+A placeholder shimmer for loading states. Supports rectangle, circle, and text shapes with animation.
+
+## Usage
+
+```tsx
+import { Skeleton } from 'morphui-react';
+
+<Skeleton variant="text" lines={3} />
+<Skeleton variant="circle" size="md" />
+```
+
+## Accessibility
+
+Renders `<div role="img" aria-label="Loading">` with a shimmer animation. The animation respects `prefers-reduced-motion` (falls back to a static gray).
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

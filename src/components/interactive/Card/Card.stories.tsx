@@ -11,7 +11,6 @@ type CardShadow = NonNullable<React.ComponentProps<typeof Card>['shadow']>;
 export default {
   title: 'Components/Card',
   component: Card,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ToggleStories from './Toggle.stories';
+
+<Meta of={ToggleStories} />
+
+# Toggle
+
+A binary toggle with controlled and uncontrolled modes. Similar to Switch but with a different visual style.
+
+## Usage
+
+```tsx
+import { Toggle } from 'morphui-react';
+
+<Toggle checked={on} onChange={(e) => setOn(e)} />
+<Toggle defaultChecked={false} />
+```
+
+## Accessibility
+
+`role="switch"` with `aria-checked`. Keyboard: Space/Enter to toggle. Disabled sets `aria-disabled`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

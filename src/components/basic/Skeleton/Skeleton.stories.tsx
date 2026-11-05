@@ -8,7 +8,6 @@ import { Card } from '../../interactive/Card';
 export default {
   title: 'Components/Skeleton',
   component: Skeleton,
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
     docs: {

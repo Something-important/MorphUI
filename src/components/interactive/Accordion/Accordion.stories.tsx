@@ -5,7 +5,6 @@ import { Accordion, Button, Dropdown, ThemeProvider, themes } from '../../index'
 export default {
   title: 'Components/Accordion',
   component: Accordion,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

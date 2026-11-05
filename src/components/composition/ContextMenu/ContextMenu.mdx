@@ -1,0 +1,37 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ContextMenuStories from './ContextMenu.stories';
+
+<Meta of={ContextMenuStories} />
+
+# ContextMenu
+
+A right-click context menu with controlled open state, viewport clamping, and keyboard navigation.
+
+## Usage
+
+```tsx
+import { ContextMenu } from 'morphui-react';
+
+<ContextMenu items={[
+  { label: 'Copy', onClick: copy },
+  { label: 'Paste', onClick: paste },
+  { type: 'separator' },
+  { label: 'Delete', onClick: del, disabled: true },
+]}>
+  <div onContextMenu={...}>Right-click me</div>
+</ContextMenu>
+```
+
+## Accessibility
+
+`role="menu"` with `role="menuitem"` per item and `role="menubar"` not used (it is a popup menu). Keyboard: Arrow keys + Enter/Space + Escape.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

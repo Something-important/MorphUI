@@ -1,0 +1,38 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as RadioGroupStories from './RadioGroup.stories';
+
+<Meta of={RadioGroupStories} />
+
+# RadioGroup
+
+A group of radio options with controlled and uncontrolled modes, direction, and description support.
+
+## Usage
+
+```tsx
+import { RadioGroup } from 'morphui-react';
+
+<RadioGroup
+  options={[
+    { label: 'Small', value: 'sm' },
+    { label: 'Medium', value: 'md', description: 'Recommended' },
+  ]}
+  value={size}
+  onChange={setSize}
+  name="size"
+/>;
+```
+
+## Accessibility
+
+`role="radiogroup"` with `role="radio"` per option. `aria-checked` on the selected option. Keyboard: Arrow keys to move, Enter/Space to select. `name` prop sets the form field name.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />
