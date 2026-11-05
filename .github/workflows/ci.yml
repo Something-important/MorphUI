@@ -79,3 +79,33 @@ jobs:
         # users ship, not a tree-shaken best-case.
         run: |
           npm run size
+
+  # React 19 compatibility — runs the full test suite against React 19
+  # (the main build-test job runs against React 18 via the lockfile).
+  # The peer dep range is ^18 || ^19; this job catches regressions on
+  # the React 19 side. --legacy-peer-deps is needed because
+  # @testing-library/react declares react@^18 as a peer (it works fine
+  # with 19, but npm v7+ blocks the install without this flag).
+  test-react-19:
+    name: Tests (React 19)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Override React to v19
+        run: npm install react@19 react-dom@19 --no-save --legacy-peer-deps
+
+      - name: Run tests
+        env:
+          CI: true
+        run: npm test -- --ci
