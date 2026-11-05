@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FileUpload } from './FileUpload';
+import { FileUpload, type UploadedFile } from './FileUpload';
 import { ThemeProvider } from '../../theme';
 
 const meta: Meta<typeof FileUpload> = {
@@ -48,9 +48,7 @@ export const WithFiles: Story = {
 
 export const Controlled: Story = {
   render: () => {
-    const [files, setFiles] = React.useState<
-      Array<{ id: string; file: File; status: 'pending' | 'success' | 'error' }>
-    >([]);
+    const [files, setFiles] = React.useState<UploadedFile[]>([]);
     return (
       <ThemeProvider>
         <div style={{ width: 400 }}>
