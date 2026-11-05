@@ -79,6 +79,13 @@ export {
   type PaginationSize,
   type PaginationVariant,
 } from './interactive/Pagination';
+export {
+  FileUpload,
+  type UploadedFile,
+  type FileUploadProps,
+  type FileUploadVariant,
+  type FileUploadSize,
+} from './interactive/FileUpload';
 
 // Composition Components
 export {

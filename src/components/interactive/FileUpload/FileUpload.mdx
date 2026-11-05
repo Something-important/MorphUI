@@ -1,0 +1,56 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as FileUploadStories from './FileUpload.stories';
+
+<Meta of={FileUploadStories} />
+
+# FileUpload
+
+A drag-and-drop file upload component with validation, file list display,
+and controlled/uncontrolled modes. Supports multiple files, file type
+filtering, size limits, and max file count.
+
+## Usage
+
+```tsx
+import { FileUpload } from 'morphui-react';
+
+<FileUpload
+  accept="image/*"
+  maxSize={5 * 1024 * 1024} // 5 MB
+  hint="PNG, JPG up to 5MB"
+  onFilesChange={(files) => console.log(files)}
+/>;
+```
+
+## Controlled vs Uncontrolled
+
+- **Uncontrolled**: pass `defaultFiles` for initial state; the component
+  manages the list internally.
+- **Controlled**: pass `files` + `onFilesChange` — the parent owns the
+  list. When both are provided, `files` wins.
+
+## Validation
+
+- **`accept`**: file type filter (e.g. `"image/*"`, `".pdf"`,
+  `"image/png,image/jpeg"`). Files not matching are marked as error.
+- **`maxSize`**: maximum file size in bytes. Oversized files are marked
+  as error.
+- **`maxFiles`**: maximum number of files (when `multiple` is true).
+  Excess files are dropped.
+
+## Accessibility
+
+- Drop zone has `role="button"` with `aria-label` and `aria-disabled`
+- Keyboard: **Enter** or **Space** opens the file browser
+- Each file has a remove button with `aria-label="Remove {filename}"`
+- The hidden `<input type="file">` is visually hidden but accessible
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />
