@@ -108,18 +108,33 @@ mode an a11y risk.
 All 33 components are now consistent: every stateful component supports
 both controlled and uncontrolled modes (except Modal, by design).
 
+## Storybook MDX docs — complete 2026-11-04 ✅
+
+All 32 components have co-located `.mdx` documentation files with:
+
+- Overview + usage code blocks (controlled + uncontrolled where applicable)
+- Accessibility notes (ARIA roles, keyboard nav, focus management)
+- Auto-generated props table (`<Controls />` from TypeScript types)
+- All stories rendered in canvases (`<Stories />`)
+
+The Storybook config already loaded `**/*.mdx`; no config changes were
+needed. Removed `tags: ['autodocs']` from all 32 `.stories.tsx` files —
+the MDX files create the docs page, so the autodocs tag was creating
+redundant second pages.
+
+Deployed via GitHub Pages (on master push) + Chromatic published
+Storybook (live per-PR review URL).
+
 ## Short-term (next ~2 weeks)
 
-- **Storybook MDX docs** — per-component documentation pages (theming
-  examples, a11y notes, prop tables). No version impact; pairs with the
-  live Chromatic published Storybook.
-- **size-limit CI fix** — rolldown backend exits 1 on CI even when all
-  entries are within limits (first-entry measurement quirk). Currently
-  `continue-on-error`. Investigate switching to esbuild preset or
-  upgrading size-limit.
 - **Rotate the Chromatic project token** — was shared in plaintext during
   setup; reset in Chromatic Manage → update the GitHub Secret value. No
   code changes needed (workflow references the secret by name).
+- **FormField rest spread audit** — verify no other components have the
+  same `{...rest}` pass-through gap that Dropdown had (now fixed).
+- **v1.3.0 release** — when there are enough `feat:` commits to warrant
+  a minor bump. Currently dev has only `fix:`/`docs:`/`ci:` commits since
+  v1.2.0, so release-please won't bump.
 
 ## Medium-term (this quarter)
 
