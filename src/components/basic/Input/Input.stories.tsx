@@ -82,7 +82,6 @@ const meta: Meta<typeof Input> = {
       description: 'Validation rules object',
     },
   },
-  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <ThemeProvider>

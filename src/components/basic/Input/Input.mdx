@@ -1,0 +1,101 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as InputStories from './Input.stories';
+
+<Meta of={InputStories} />
+
+# Input
+
+A feature-rich text input with masking, validation, suggestions (ARIA
+combobox), character counting, floating labels, and full theme support.
+Supports both **controlled** and **uncontrolled** modes.
+
+## Usage
+
+### Controlled (recommended for forms that track every keystroke)
+
+```tsx
+const [value, setValue] = useState('');
+<Input value={value} onChange={(e) => setValue(e.target.value)} placeholder="Name" />;
+```
+
+### Uncontrolled (simpler — let the input manage its own state)
+
+```tsx
+<Input defaultValue="hello" placeholder="Name" />
+// Optional: still get notified on change
+<Input defaultValue="" onChange={(e) => console.log(e.target.value)} />
+```
+
+When `value` is omitted, the input manages its own state from
+`defaultValue`. If both `value` and `defaultValue` are provided,
+`value` wins (controlled mode).
+
+## Masking
+
+Built-in masks for common formats:
+
+```tsx
+<Input mask="phone" defaultValue="" placeholder="(555) 123-4567" />
+<Input mask="credit-card" defaultValue="" placeholder="4242 4242 4242 4242" />
+```
+
+The mask applies visually (via internal state) and in the `onChange`
+event payload — the consumer always receives the masked value.
+
+## Validation
+
+Pass a `validation` object for declarative rules:
+
+```tsx
+<Input
+  value={value}
+  onChange={onChange}
+  validation={{
+    required: true,
+    min: 3,
+    max: 50,
+    pattern: /^[a-zA-Z]+$/,
+    custom: (v) => (v.includes('@') ? null : 'Email required'),
+  }}
+/>
+```
+
+Validation runs on every change but is wrapped in `useTransition` so
+expensive custom validators don't block typing. The error message
+renders at lower priority.
+
+## Suggestions (ARIA Combobox)
+
+Pass a `suggestions` array to enable arrow-key navigable autocomplete:
+
+```tsx
+<Input suggestions={['Apple', 'Banana', 'Cherry']} ariaLabel="Fruit" />
+```
+
+The input implements the full ARIA 1.2 combobox pattern: `role="combobox"`,
+`aria-expanded`, `aria-activedescendant`, arrow-key navigation, Enter to
+select, Escape to close.
+
+## Theming
+
+All color props accept theme keys, CSS variables, or literal values.
+The `variant` prop maps to theme color slots (`color-primary`, `color-danger`,
+etc.).
+
+## Accessibility
+
+- Native `<input>` element with correct `type` attribute
+- `error` state sets `aria-invalid` and links the error message via `aria-describedby`
+- `required` prop sets `aria-required`
+- `ariaLabel` or `ariaLabelledBy` for screen reader labels
+- Suggestions mode: full ARIA 1.2 combobox pattern with keyboard nav
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

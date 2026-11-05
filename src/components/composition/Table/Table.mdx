@@ -1,0 +1,107 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TableStories from './Table.stories';
+
+<Meta of={TableStories} />
+
+# Table
+
+A feature-rich data table with sorting, filtering, pagination, row
+selection, column pinning, and full theme support. All state surfaces
+support both **controlled** and **uncontrolled** modes.
+
+## Usage
+
+### Fully uncontrolled (simplest — pass data + columns, let Table manage everything)
+
+```tsx
+<Table
+  data={users}
+  columns={[
+    { key: 'name', label: 'Name', sortable: true },
+    { key: 'email', label: 'Email', filterable: true },
+  ]}
+  selectable
+  pagination
+  pageSize={10}
+  defaultSortColumn="name"
+  defaultSortDirection="asc"
+  defaultSelectedRows={[users[0]]}
+  defaultCurrentPage={1}
+  defaultFilters={{}}
+/>
+```
+
+### Controlled (parent owns specific state)
+
+```tsx
+const [selected, setSelected] = useState([]);
+const [page, setPage] = useState(1);
+
+<Table
+  data={users}
+  columns={columns}
+  selectable
+  selectedRows={selected}
+  onSelectionChange={setSelected}
+  pagination
+  currentPage={page}
+  onPageChange={setPage}
+/>;
+```
+
+Mix and match: control some surfaces (e.g., `selectedRows`) while leaving
+others uncontrolled (e.g., sort + filters). Each `default*` prop is
+ignored when the corresponding controlled prop is provided.
+
+## State Surfaces
+
+| Surface        | Controlled prop | Uncontrolled prop      | Callback            |
+| -------------- | --------------- | ---------------------- | ------------------- |
+| Selection      | `selectedRows`  | `defaultSelectedRows`  | `onSelectionChange` |
+| Sort column    | —               | `defaultSortColumn`    | `onSort`            |
+| Sort direction | —               | `defaultSortDirection` | `onSort`            |
+| Pagination     | `currentPage`   | `defaultCurrentPage`   | `onPageChange`      |
+| Filters        | `filters`       | `defaultFilters`       | `onFilterChange`    |
+
+## Sorting
+
+Wrapped in `useTransition` so sorting large tables doesn't block the UI.
+The sort button responds immediately; row reordering happens at lower
+priority. Set `sortable: true` per column or globally via the `sortable`
+prop.
+
+## Filtering
+
+Per-column case-insensitive text search. Set `filterable: true` to
+render filter inputs in the header. Filter inputs reflect controlled
+`filters` or uncontrolled `defaultFilters` values.
+
+## Column Pinning
+
+Pin columns to the left or right edge:
+
+```tsx
+columns={[
+  { key: 'actions', label: '', fixed: 'left' },
+  { key: 'name', label: 'Name' },
+  { key: 'status', label: 'Status', fixed: 'right' },
+]}
+```
+
+## Accessibility
+
+- `role="table"` with `aria-rowcount`, `aria-colcount`
+- Sortable headers have `aria-sort="ascending|descending|none"`
+- Selectable rows have `aria-selected`
+- Header checkbox has `aria-label="Select all"`; row checkboxes have `aria-label="Select row"`
+- Keyboard: sortable headers are focusable buttons
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

@@ -1,0 +1,73 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ModalStories from './Modal.stories';
+
+<Meta of={ModalStories} />
+
+# Modal
+
+A dialog overlay with focus trapping, scroll locking, backdrop click to
+close, ESC key support, and full theme support. Renders in a portal.
+
+## Usage
+
+Modal is **controlled-only** by design — `isOpen` and `onClose` are
+required. This is the established convention for overlay components
+(Radix Dialog, shadcn Dialog, MUI Dialog all do the same). The
+focus-trap and scroll-lock side effects make uncontrolled mode an a11y
+risk (the trap could activate before the user expects it).
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+<>
+  <Button onClick={() => setIsOpen(true)}>Open modal</Button>
+  <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size="md">
+    <h2>Are you sure?</h2>
+    <p>This action cannot be undone.</p>
+    <Button variant="danger" onClick={() => setIsOpen(false)}>
+      Delete
+    </Button>
+  </Modal>
+</>;
+```
+
+## Sizes
+
+| Size   | Max width | Use case                            |
+| ------ | --------- | ----------------------------------- |
+| `xs`   | 320px     | Quick confirm                       |
+| `sm`   | 480px     | Simple forms                        |
+| `md`   | 600px     | Standard dialogs (default)          |
+| `lg`   | 800px     | Complex forms, settings             |
+| `xl`   | 1000px    | Multi-section content               |
+| `full` | 100vw     | Image lightbox, full-screen editors |
+
+## Backdrop
+
+Four backdrop styles:
+
+- `blur` — frosted glass effect (default)
+- `dark` — semi-opaque dark overlay
+- `light` — semi-opaque light overlay
+- `none` — no backdrop (floating dialog)
+
+## Accessibility
+
+- `role="dialog"` with `aria-modal="true"`
+- `aria-labelledby` set from the `title` prop or `ariaLabel`
+- **Focus trap**: focus is moved to the modal on open, restored to the
+  trigger on close
+- **Scroll lock**: `body { overflow: hidden }` while open
+- **ESC key**: closes the modal (set `closeOnEsc={false}` to disable)
+- **Backdrop click**: closes by default (set `closeOnBackdropClick={false}` to disable)
+- Keyboard: Tab cycles within the modal; focus cannot escape
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

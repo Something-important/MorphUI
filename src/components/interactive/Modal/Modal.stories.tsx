@@ -13,7 +13,6 @@ type ModalShadow = NonNullable<React.ComponentProps<typeof Modal>['shadow']>;
 export default {
   title: 'Components/Modal',
   component: Modal,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

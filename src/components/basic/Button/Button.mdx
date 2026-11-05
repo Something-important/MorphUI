@@ -1,0 +1,65 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+A versatile, themeable button with 8 variants, 5 sizes, icon support,
+gradients, ripple effects, and hover animations. Renders a native
+`<button>` element.
+
+## Usage
+
+```tsx
+import { Button } from 'morphui-react';
+
+<Button variant="primary" size="md" onClick={() => console.log('clicked')}>
+  Click me
+</Button>;
+```
+
+## Variants
+
+Eight variants cover the common semantic contexts:
+
+| Variant     | Use case                              |
+| ----------- | ------------------------------------- |
+| `primary`   | Default action                        |
+| `secondary` | Alternative action                    |
+| `success`   | Confirmation, success feedback        |
+| `warning`   | Caution, destructive-but-reversible   |
+| `info`      | Informational action                  |
+| `danger`    | Destructive, irreversible action      |
+| `ghost`     | Subtle action in dense layouts        |
+| `outline`   | Secondary action with border emphasis |
+
+## Theming
+
+All color props accept three formats:
+
+- **Theme keys**: `color-primary`, `color-success` (resolves via ThemeProvider)
+- **CSS variables**: `var(--color-primary)`
+- **Literal CSS values**: `#3b82f6`, `rgb(59, 130, 246)`, `linear-gradient(...)`
+
+## Accessibility
+
+- Native `<button>` element with correct `type` attribute
+- `disabled` prop sets `aria-disabled` and prevents pointer/keyboard activation
+- Keyboard: **Enter** and **Space** activate the button
+- Focus ring is visible by default (themeable via `--color-focus-ring`)
+- Icon-only buttons **must** set `ariaLabel` for screen reader access
+
+## Props
+
+<Controls />
+
+## Examples
+
+### Primary Story
+
+<Primary />
+
+### All Variants
+
+<Stories />
