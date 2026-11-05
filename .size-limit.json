@@ -111,7 +111,7 @@
   },
   {
     "name": "Sidebar",
-    "path": "./dist/esm/components/composition/Sidebar/Sidebar.js",
+    "path": "./dist/esm/components/composition/Sidebar/SidebarUnified.js",
     "limit": "4 KB"
   },
   {
