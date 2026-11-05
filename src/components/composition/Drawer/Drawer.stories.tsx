@@ -10,7 +10,6 @@ import { Label } from '../../basic/Label';
 export default {
   title: 'Components/Drawer',
   component: Drawer,
-  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
     docs: {

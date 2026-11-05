@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CheckboxStories from './Checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+A themeable checkbox with controlled and uncontrolled modes, indeterminate state, and label support.
+
+## Usage
+
+```tsx
+import { Checkbox } from 'morphui-react';
+
+<Checkbox checked={true} onChange={(e) => setChecked(e)} label="Accept terms" />
+<Checkbox defaultChecked={false} label="Subscribe" />
+```
+
+## Accessibility
+
+Native `<input type="checkbox">` with correct `aria-checked`. Indeterminate state sets `aria-checked="mixed"`. Label is linked via `htmlFor` / `id`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

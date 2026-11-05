@@ -1,0 +1,30 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as PaginationStories from './Pagination.stories';
+
+<Meta of={PaginationStories} />
+
+# Pagination
+
+Page navigation with controlled/uncontrolled modes, sibling count, and prev/next buttons.
+
+## Usage
+
+```tsx
+import { Pagination } from 'morphui-react';
+
+<Pagination totalItems={100} currentPage={page} onPageChange={setPage} pageSize={10} />;
+```
+
+## Accessibility
+
+`role="navigation"` with `aria-label="Pagination"`. Current page has `aria-current="page"`. Prev/next buttons have `aria-label` and `aria-disabled` when at bounds.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

@@ -1,0 +1,39 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as StepperStories from './Stepper.stories';
+
+<Meta of={StepperStories} />
+
+# Stepper
+
+A multi-step progress indicator with active/completed/error states, clickable steps, and orientation support.
+
+## Usage
+
+```tsx
+import { Stepper } from 'morphui-react';
+
+<Stepper
+  steps={[
+    { id: 'account', label: 'Account', completed: true },
+    { id: 'profile', label: 'Profile' },
+    { id: 'confirm', label: 'Confirm' },
+  ]}
+  activeStep={1}
+  clickable
+  onStepClick={(id) => goTo(id)}
+/>;
+```
+
+## Accessibility
+
+`role="navigation"` with `aria-label`. Each step is a `<li>` with `aria-current="step"` for the active one. Clickable steps are buttons with `aria-disabled` for completed/disabled.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

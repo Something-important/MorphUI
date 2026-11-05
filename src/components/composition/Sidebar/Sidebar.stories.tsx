@@ -80,7 +80,6 @@ const BellIcon = () => (
 export default {
   title: 'Components/Sidebar',
   component: SidebarRoot,
-  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
     docs: {

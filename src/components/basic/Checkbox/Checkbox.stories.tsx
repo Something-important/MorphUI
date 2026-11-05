@@ -124,7 +124,6 @@ const meta: Meta<typeof Checkbox> = {
       description: 'Inline styles',
     },
   },
-  tags: ['autodocs'],
 };
 
 export default meta;

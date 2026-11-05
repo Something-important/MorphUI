@@ -1,0 +1,37 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ComboboxStories from './Combobox.stories';
+
+<Meta of={ComboboxStories} />
+
+# Combobox
+
+An autocomplete input with async loading, virtualization, free-text mode, and controlled/uncontrolled support.
+
+## Usage
+
+```tsx
+import { Combobox } from 'morphui-react';
+
+<Combobox
+  options={users}
+  value={selected}
+  onChange={setSelected}
+  searchable
+/>
+// Async:
+<Combobox loadOptions={(q) => fetchUsers(q)} />
+```
+
+## Accessibility
+
+Full ARIA 1.2 combobox pattern: `role="combobox"`, `aria-expanded`, `aria-activedescendant`, `role="listbox"`, `role="option"` with `aria-selected`. Arrow-key nav + Enter select + Escape close.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

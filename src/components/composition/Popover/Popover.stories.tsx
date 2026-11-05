@@ -203,7 +203,6 @@ const meta: Meta<typeof Popover> = {
       </ThemeProvider>
     ),
   ],
-  tags: ['autodocs'],
 };
 
 export default meta;

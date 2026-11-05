@@ -6,7 +6,6 @@ import { ThemeProvider } from '../../theme';
 const meta: Meta<typeof DatePicker> = {
   title: 'Components/DatePicker',
   component: DatePicker,
-  tags: ['autodocs'],
   parameters: { layout: 'padded' },
 };
 export default meta;

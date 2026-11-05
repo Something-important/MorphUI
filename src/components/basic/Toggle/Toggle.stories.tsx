@@ -50,7 +50,6 @@ const MoonIcon = () => (
 export default {
   title: 'Components/Toggle',
   component: Toggle,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

@@ -8,7 +8,6 @@ import { ThemeProvider, themes, type ThemeName } from '../../theme';
 export default {
   title: 'Components/Stepper',
   component: Stepper,
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
     docs: {

@@ -1,0 +1,35 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as FormStories from './Form.stories';
+
+<Meta of={FormStories} />
+
+# Form
+
+A layout wrapper for form fields with validation display and spacing. Pairs with `FormField`.
+
+## Usage
+
+```tsx
+import { Form } from 'morphui-react';
+
+<Form onSubmit={handleSubmit}>
+  <FormField label="Email" error={errors.email}>
+    <Input value={email} onChange={...} />
+  </FormField>
+  <Button type="submit">Submit</Button>
+</Form>
+```
+
+## Accessibility
+
+Renders `<form>` with `noValidate` (the library handles validation client-side). `FormField` links label + error + input via `aria-labelledby` / `aria-describedby`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

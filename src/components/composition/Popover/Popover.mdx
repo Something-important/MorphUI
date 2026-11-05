@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as PopoverStories from './Popover.stories';
+
+<Meta of={PopoverStories} />
+
+# Popover
+
+A floating content panel anchored to a trigger, with click/hover/focus triggers, auto-positioning, and arrow support.
+
+## Usage
+
+```tsx
+import { Popover } from 'morphui-react';
+
+<Popover content="Helpful tip" trigger="hover">
+  <button>Hover me</button>
+</Popover>;
+```
+
+## Accessibility
+
+Trigger has `aria-describedby` pointing to the popover content. Popover has `role="tooltip"` for hover/focus triggers, `role="dialog"` for click trigger. ESC closes.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

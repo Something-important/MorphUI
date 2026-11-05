@@ -89,7 +89,6 @@ const ThemedToastStory: React.FC<{
 export default {
   title: 'Components/Toast',
   component: Toast,
-  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
     docs: {

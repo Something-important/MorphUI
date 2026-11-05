@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as SpinnerStories from './Spinner.stories';
+
+<Meta of={SpinnerStories} />
+
+# Spinner
+
+An animated loading spinner with size, color, and label support.
+
+## Usage
+
+```tsx
+import { Spinner } from 'morphui-react';
+
+<Spinner size="md" />
+<Spinner label="Loading data..." />
+```
+
+## Accessibility
+
+`role="status"` with `aria-live="polite"`. The `label` prop sets `aria-label`. Animation respects `prefers-reduced-motion`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

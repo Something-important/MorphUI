@@ -1,0 +1,98 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as DropdownStories from './Dropdown.stories';
+
+<Meta of={DropdownStories} />
+
+# Dropdown
+
+A select-like component with single/multi-select, search, option groups,
+random selection, clearable, and full theme support. Supports both
+**controlled** and **uncontrolled** modes.
+
+## Usage
+
+### Controlled
+
+```tsx
+const [value, setValue] = useState('');
+
+<Dropdown
+  options={[
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+  ]}
+  value={value}
+  onChange={setValue}
+  placeholder="Pick a fruit"
+/>;
+```
+
+### Uncontrolled (simpler — let Dropdown manage its own state)
+
+```tsx
+<Dropdown
+  options={fruits}
+  defaultValue="banana"
+  placeholder="Pick a fruit"
+/>
+// Optional: still get notified on change
+<Dropdown options={fruits} defaultValue="" onChange={(v) => console.log(v)} />
+```
+
+When `value` is omitted, the Dropdown manages its own state from
+`defaultValue`. If both are provided, `value` wins.
+
+## Multi-Select
+
+```tsx
+<Dropdown
+  options={fruits}
+  multiSelect
+  defaultValue={['apple', 'cherry']}
+  maxSelections={3}
+  placeholder="Pick up to 3"
+/>
+```
+
+The trigger shows selected labels joined with `, `. The footer has
+"Select All" and "Clear All" buttons (when `multiSelect` and more than
+a few options).
+
+## Searchable
+
+```tsx
+<Dropdown options={fruits} searchable placeholder="Search..." />
+```
+
+Filters options by case-insensitive substring match on the label.
+
+## Option Groups
+
+```tsx
+<Dropdown
+  options={options}
+  optionGroups={[
+    { label: 'Fruits', options: ['apple', 'banana'] },
+    { label: 'Vegetables', options: ['carrot', 'spinach'] },
+  ]}
+/>
+```
+
+## Accessibility
+
+- `role="combobox"` (ARIA 1.2 pattern) with `aria-expanded`, `aria-controls`
+- `role="listbox"` for the options popup with `aria-activedescendant` tracking
+- `role="option"` per option with `aria-selected`
+- Keyboard: **ArrowDown/Up** to navigate, **Enter/Space** to select, **Escape** to close, **Tab** to close + move focus
+- Disabled options are focusable but not selectable (per ARIA best practice)
+- `clearable` renders a "Clear selection" button with `aria-label`
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

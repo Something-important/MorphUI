@@ -8,7 +8,6 @@ import { Button } from '../Button';
 export default {
   title: 'Components/Progress',
   component: Progress,
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
     docs: {

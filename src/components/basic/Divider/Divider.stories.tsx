@@ -8,7 +8,6 @@ import { Button } from '../Button';
 export default {
   title: 'Components/Divider',
   component: Divider,
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
     docs: {

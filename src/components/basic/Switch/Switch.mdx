@@ -1,0 +1,31 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as SwitchStories from './Switch.stories';
+
+<Meta of={SwitchStories} />
+
+# Switch
+
+A toggle switch with controlled and uncontrolled modes, label support, and size variants.
+
+## Usage
+
+```tsx
+import { Switch } from 'morphui-react';
+
+<Switch checked={on} onChange={(e) => setOn(e)} label="Notifications" />
+<Switch defaultChecked={true} label="Auto-save" />
+```
+
+## Accessibility
+
+`role="switch"` with `aria-checked`. Keyboard: Space/Enter to toggle. Label linked via `htmlFor` / `id`. Disabled sets `aria-disabled`.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

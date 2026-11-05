@@ -1,0 +1,34 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as AccordionStories from './Accordion.stories';
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+A collapsible content panel with controlled and uncontrolled modes, animation, and keyboard support.
+
+## Usage
+
+```tsx
+import { Accordion } from 'morphui-react';
+
+<Accordion title="Section 1" defaultOpen={true}>
+  Content here
+</Accordion>
+// Controlled:
+<Accordion title="Section 1" open={isOpen} onToggle={setIsOpen} />
+```
+
+## Accessibility
+
+Trigger button has `aria-expanded` and `aria-controls` pointing to the content panel. Content has `role="region"` with `aria-labelledby`. Keyboard: Enter/Space to toggle.
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />
