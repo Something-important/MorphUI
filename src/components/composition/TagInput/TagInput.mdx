@@ -1,0 +1,41 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TagInputStories from './TagInput.stories';
+
+<Meta of={TagInputStories} />
+
+# TagInput
+
+A tag/chip input component for adding tags, labels, or recipients.
+Type + Enter or comma to add; Backspace or click × to remove.
+Supports controlled/uncontrolled modes, max tags, and duplicate prevention.
+
+## Usage
+
+```tsx
+import { TagInput } from 'morphui-react';
+
+<TagInput
+  defaultTags={['react', 'typescript']}
+  placeholder="Add tag…"
+  maxTags={10}
+  onTagsChange={(tags) => console.log(tags)}
+/>;
+```
+
+## Features
+
+- Add tags via Enter or comma (configurable delimiters)
+- Remove via × button or Backspace on empty input
+- `maxTags` limit, `allowDuplicates` toggle
+- Tags added on blur (if input has content)
+- Controlled + uncontrolled modes
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

@@ -79,6 +79,7 @@ export {
   type PaginationSize,
   type PaginationVariant,
 } from './interactive/Pagination';
+export { Rating, type RatingProps, type RatingSize } from './interactive/Rating';
 
 // Composition Components
 export {
@@ -149,6 +150,12 @@ export {
   type DrawerPosition,
   type DrawerSize,
 } from './composition/Drawer';
+export {
+  TagInput,
+  type TagInputProps,
+  type TagInputVariant,
+  type TagInputSize,
+} from './composition/TagInput';
 export {
   Form,
   FormField,
