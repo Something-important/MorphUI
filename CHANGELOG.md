@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/Something-important/MorphUI/compare/v1.4.2...v1.4.3) (2026-11-06)
+
+
+### Bug Fixes
+
+* **exports:** add subpath exports for 6 v1.4.0 components ([#78](https://github.com/Something-important/MorphUI/issues/78)) ([302ae31](https://github.com/Something-important/MorphUI/commit/302ae31311e0d8e7ae41d5721e4b5422df8a580c))
+
 ## [1.4.2](https://github.com/Something-important/MorphUI/compare/v1.4.1...v1.4.2) (2026-11-06)
 
 
