@@ -245,6 +245,30 @@
       "types": "./dist/components/interactive/Slider/index.d.ts",
       "import": "./dist/esm/components/interactive/Slider/Slider.js"
     },
+    "./carousel": {
+      "types": "./dist/components/interactive/Carousel/index.d.ts",
+      "import": "./dist/esm/components/interactive/Carousel/Carousel.js"
+    },
+    "./command-palette": {
+      "types": "./dist/components/interactive/CommandPalette/index.d.ts",
+      "import": "./dist/esm/components/interactive/CommandPalette/CommandPalette.js"
+    },
+    "./file-upload": {
+      "types": "./dist/components/interactive/FileUpload/index.d.ts",
+      "import": "./dist/esm/components/interactive/FileUpload/FileUpload.js"
+    },
+    "./rating": {
+      "types": "./dist/components/interactive/Rating/index.d.ts",
+      "import": "./dist/esm/components/interactive/Rating/Rating.js"
+    },
+    "./tree-view": {
+      "types": "./dist/components/interactive/TreeView/index.d.ts",
+      "import": "./dist/esm/components/interactive/TreeView/TreeView.js"
+    },
+    "./tag-input": {
+      "types": "./dist/components/composition/TagInput/index.d.ts",
+      "import": "./dist/esm/components/composition/TagInput/TagInput.js"
+    },
     "./use-anchored-position": {
       "types": "./dist/hooks/useAnchoredPosition.d.ts",
       "import": "./dist/esm/hooks/useAnchoredPosition.js"
@@ -287,7 +311,13 @@
     "./css/modal": "./dist/css/modal.css",
     "./css/pagination": "./dist/css/pagination.css",
     "./css/radio-group": "./dist/css/radio-group.css",
-    "./css/slider": "./dist/css/slider.css"
+    "./css/slider": "./dist/css/slider.css",
+    "./css/carousel": "./dist/css/carousel.css",
+    "./css/command-palette": "./dist/css/command-palette.css",
+    "./css/file-upload": "./dist/css/file-upload.css",
+    "./css/rating": "./dist/css/rating.css",
+    "./css/tree-view": "./dist/css/tree-view.css",
+    "./css/tag-input": "./dist/css/tag-input.css"
   },
   "sideEffects": [
     "**/*.css"

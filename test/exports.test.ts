@@ -21,12 +21,12 @@ describe('package.json exports', () => {
   const jsSubpaths = allSubpaths.filter(([k]) => !k.startsWith('./css/'));
   const cssSubpaths = allSubpaths.filter(([k]) => k.startsWith('./css/'));
 
-  it('maps at least 30 JS component/hook subpaths', () => {
-    expect(jsSubpaths.length).toBeGreaterThanOrEqual(30);
+  it('maps at least 41 JS component/hook subpaths', () => {
+    expect(jsSubpaths.length).toBeGreaterThanOrEqual(41);
   });
 
-  it('maps at least 30 CSS subpaths', () => {
-    expect(cssSubpaths.length).toBeGreaterThanOrEqual(30);
+  it('maps at least 41 CSS subpaths', () => {
+    expect(cssSubpaths.length).toBeGreaterThanOrEqual(41);
   });
 
   it.each(jsSubpaths.map(([k, v]) => [k, v] as const))(
