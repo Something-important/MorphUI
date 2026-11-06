@@ -1,5 +1,5 @@
 // FileUpload.tsx
-import React, { forwardRef, useState, useCallback, useRef, useId, useMemo } from 'react';
+import React, { forwardRef, useState, useCallback, useRef, useId } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './FileUpload.css';
 
@@ -137,7 +137,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
     const [internalFiles, setInternalFiles] = useState<UploadedFile[]>(defaultFiles);
     const files = isControlled ? controlledFiles : internalFiles;
     const [isDragging, setIsDragging] = useState(false);
-    const [dragCounter, setDragCounter] = useState(0);
+    const [, setDragCounter] = useState(0);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const updateFiles = useCallback(
@@ -307,7 +307,7 @@ export const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
         />
 
         {showFileList && files.length > 0 && (
-          <ul className="fileupload-component__file-list" role="list">
+          <ul className="fileupload-component__file-list">
             {files.map((item) => (
               <li
                 key={item.id}

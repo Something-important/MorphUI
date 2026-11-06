@@ -120,6 +120,18 @@ export const TagInput = forwardRef<HTMLDivElement, TagInputProps>(
       [disabled, inputValue, tags, delimiters, addTag, removeTag],
     );
 
+    const handleRootKeyDown = useCallback(
+      (e: KeyboardEvent<HTMLDivElement>) => {
+        if (disabled) return;
+        // Enter/Space on the container focuses the input, mirroring the click behavior
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          inputRef.current?.focus();
+        }
+      },
+      [disabled],
+    );
+
     const handleBlur = useCallback(() => {
       if (inputValue.trim()) addTag(inputValue);
     }, [inputValue, addTag]);
@@ -156,12 +168,18 @@ export const TagInput = forwardRef<HTMLDivElement, TagInputProps>(
       .join(' ');
 
     return (
+      // Container focuses the input on click for a chip-input UX. role="group"
+      // conveys the grouping semantics; keyboard users can focus the input
+      // directly via Tab or by pressing Enter/Space on the container.
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <div
         ref={ref}
         id={id || generatedId}
         className={classes}
         style={mergedStyle}
+        role="group"
         onClick={() => !disabled && inputRef.current?.focus()}
+        onKeyDown={handleRootKeyDown}
         {...ariaProps}
         {...rest}
       >

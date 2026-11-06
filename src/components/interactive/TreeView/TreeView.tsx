@@ -92,6 +92,10 @@ const findNode = <T,>(nodes: TreeNode<T>[], id: string): TreeNode<T> | null => {
 
 /* ---------- component ---------- */
 
+// Generic forwardRef components can't have a static displayName without
+// a cast; the cast below preserves the generic signature. The display name
+// is set after the cast.
+// eslint-disable-next-line react/display-name
 export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
   <T,>(props: TreeViewProps<T>, ref: React.Ref<HTMLDivElement>) => {
     const {
@@ -268,6 +272,10 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
       .join(' ');
 
     return (
+      // The tree uses the roving-tabindex pattern: the tree container is
+      // programmatically focusable (tabIndex={-1}) while one treeitem at a
+      // time carries tabIndex={0}. Keyboard navigation is handled centrally
+      // by the tree's onKeyDown.
       <div
         ref={ref}
         id={id || generatedId}
@@ -276,6 +284,7 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
         role="tree"
         {...ariaProps}
         onKeyDown={handleKeyDown}
+        tabIndex={-1}
         {...rest}
       >
         {visibleNodes.map(({ node, depth }, index) => {
@@ -285,6 +294,10 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
           const isFocused = index === focusIndexRef.current;
 
           return (
+            // Treeitem click selection is also reachable via Enter/Space,
+            // which is handled by the tree's onKeyDown (bubbled up from the
+            // focused treeitem via the roving-tabindex pattern).
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
             <div
               key={node.id}
               ref={(el) => {

@@ -691,7 +691,7 @@ describe('Fixed columns', () => {
     });
 
     it('initializes from defaultExpandedRows', () => {
-      const { container } = render(
+      render(
         <Table
           data={testData}
           columns={testColumns}
@@ -707,7 +707,7 @@ describe('Fixed columns', () => {
     });
 
     it('controlled expandedRows wins over defaultExpandedRows', () => {
-      const { container } = render(
+      render(
         <Table
           data={testData}
           columns={testColumns}

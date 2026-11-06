@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { FileUpload, type UploadedFile } from '../src/components/interactive/FileUpload';
+import {
+  FileUpload,
+  formatFileSize,
+  type UploadedFile,
+} from '../src/components/interactive/FileUpload';
 import { ThemeProvider } from '../src/components/theme/ThemeProvider';
 
 const renderWithTheme = (ui: React.ReactElement) => render(<ThemeProvider>{ui}</ThemeProvider>);
@@ -206,7 +210,6 @@ describe('FileUpload Component', () => {
 
   describe('formatFileSize helper', () => {
     it('formats bytes correctly', () => {
-      const { formatFileSize } = require('../src/components/interactive/FileUpload');
       expect(formatFileSize(500)).toBe('500 B');
       expect(formatFileSize(1024)).toBe('1.0 KB');
       expect(formatFileSize(1024 * 1024)).toBe('1.0 MB');

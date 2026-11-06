@@ -450,14 +450,12 @@ describe('Calendar keyboard + click-outside', () => {
       const day20 = days.find((d) => d.textContent === '20');
       if (day20) fireEvent.click(day20);
       expect(onChange).toHaveBeenCalledTimes(1);
-      const result = onChange.mock.calls[0][0];
+      const result = onChange.mock.calls[0][0] as [Date, Date];
       expect(Array.isArray(result)).toBe(true);
-      if (Array.isArray(result)) {
-        expect(result[0]).toBeInstanceOf(Date);
-        expect(result[1]).toBeInstanceOf(Date);
-        expect(result[0].getDate()).toBe(10);
-        expect(result[1].getDate()).toBe(20);
-      }
+      expect(result[0]).toBeInstanceOf(Date);
+      expect(result[1]).toBeInstanceOf(Date);
+      expect(result[0].getDate()).toBe(10);
+      expect(result[1].getDate()).toBe(20);
     });
 
     it('restarts range when second click is before the start', () => {
