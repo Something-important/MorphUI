@@ -61,7 +61,7 @@ export const Controlled: Story = {
     return (
       <ThemeProvider>
         <div style={{ maxWidth: 280 }}>
-          <DatePicker value={value} onChange={setValue} clearable />
+          <DatePicker value={value} onChange={(v) => setValue(v as Date | null)} clearable />
           <p style={{ marginTop: 12 }}>Selected: {value ? value.toDateString() : '(none)'}</p>
         </div>
       </ThemeProvider>
