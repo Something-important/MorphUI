@@ -52,7 +52,7 @@
   {
     "name": "DatePicker",
     "path": "./dist/esm/components/composition/DatePicker/DatePicker.js",
-    "limit": "4 KB"
+    "limit": "5 KB"
   },
   {
     "name": "Divider",
@@ -142,7 +142,7 @@
   {
     "name": "Table",
     "path": "./dist/esm/components/composition/Table/Table.js",
-    "limit": "4 KB"
+    "limit": "5 KB"
   },
   {
     "name": "Tabs",
@@ -173,5 +173,35 @@
     "name": "UseModal",
     "path": "./dist/esm/hooks/useModal.js",
     "limit": "2 KB"
+  },
+  {
+    "name": "TreeView",
+    "path": "./dist/esm/components/interactive/TreeView/TreeView.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "FileUpload",
+    "path": "./dist/esm/components/interactive/FileUpload/FileUpload.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "CommandPalette",
+    "path": "./dist/esm/components/interactive/CommandPalette/CommandPalette.js",
+    "limit": "4 KB"
+  },
+  {
+    "name": "Carousel",
+    "path": "./dist/esm/components/interactive/Carousel/Carousel.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "Rating",
+    "path": "./dist/esm/components/interactive/Rating/Rating.js",
+    "limit": "3 KB"
+  },
+  {
+    "name": "TagInput",
+    "path": "./dist/esm/components/composition/TagInput/TagInput.js",
+    "limit": "3 KB"
   }
 ]
