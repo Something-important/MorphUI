@@ -2,16 +2,15 @@
 
 MorphUI 1.x is shipped. This file tracks what's done and what's next.
 
-**Current release:** `morphui-react@1.4.0` on npm (2026-11-06, OIDC trusted
+**Current release:** `morphui-react@1.4.1` on npm (2026-11-06, OIDC trusted
 publishing with Sigstore provenance). **2,153 tests** (49 suites), **95.3%
 statement / 84.7% branch coverage**. **39 components**. React 18 + 19
-verified. SSR-compatible. Auto-publish pipeline proven (9 releases, zero
+verified. SSR-compatible. Auto-publish pipeline proven (10 releases, zero
 manual dispatch).
 
-**dev + master in sync @ `4c9227d`** (2026-11-06): v1.4.0 released — the
-biggest release yet (6 new components + 2 enhancements). Chromatic CI is
-live. All 39 components have MDX docs. Ready for the next round of feature
-work.
+**dev + master in sync @ `8286e50`** (2026-11-06): v1.4.1 released — patch
+for lint fixes (0 errors + 0 warnings). Chromatic CI is live. All 39
+components have MDX docs. Ready for the next round of feature work.
 
 ## Done (1.0 → 1.1)
 
