@@ -1,0 +1,153 @@
+.treeview-component {
+  --treeview-accent: var(--color-primary, #3b82f6);
+  --treeview-text-color: var(--color-text, #111827);
+  --treeview-border: var(--color-border, #d1d5db);
+  --treeview-bg: transparent;
+  --treeview-indent: 20px;
+  --treeview-radius: var(--radius-sm, 4px);
+
+  font-family: var(--font-family, inherit);
+  color: var(--treeview-custom-text-color, var(--treeview-text-color));
+  background: var(--treeview-bg);
+  border-radius: var(--treeview-custom-border-radius, var(--treeview-radius));
+  user-select: none;
+}
+
+/* Sizes */
+.treeview-component--sm {
+  font-size: var(--font-size-sm, 0.875rem);
+  --treeview-indent: 16px;
+}
+.treeview-component--md {
+  font-size: var(--font-size-md, 1rem);
+}
+.treeview-component--lg {
+  font-size: var(--font-size-lg, 1.125rem);
+  --treeview-indent: 24px;
+}
+
+/* Node row */
+.treeview-component__node {
+  outline: none;
+}
+.treeview-component__node:focus-visible .treeview-component__row {
+  outline: 2px solid var(--treeview-custom-accent, var(--treeview-accent));
+  outline-offset: -2px;
+  border-radius: var(--treeview-radius);
+}
+
+.treeview-component__row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs, 0.25rem);
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  border-radius: var(--treeview-radius);
+  cursor: pointer;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+.treeview-component__row:hover {
+  background: var(--color-surface-hover, #f3f4f6);
+}
+
+/* Selected */
+.treeview-component__node--selected .treeview-component__row {
+  background: var(
+    --treeview-custom-accent-light,
+    color-mix(in srgb, var(--treeview-accent) 12%, transparent)
+  );
+  color: var(--treeview-custom-accent, var(--treeview-accent));
+  font-weight: 600;
+}
+.treeview-component__node--selected .treeview-component__row:hover {
+  background: var(
+    --treeview-custom-accent-light,
+    color-mix(in srgb, var(--treeview-accent) 20%, transparent)
+  );
+}
+
+/* Disabled */
+.treeview-component__node--disabled .treeview-component__row {
+  color: var(--color-text-muted, #9ca3af);
+  cursor: not-allowed;
+}
+.treeview-component__node--disabled .treeview-component__row:hover {
+  background: transparent;
+}
+
+/* Toggle button (expand/collapse) */
+.treeview-component__toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--treeview-radius);
+  color: var(--color-text-secondary, #6b7280);
+  flex-shrink: 0;
+}
+.treeview-component__toggle:hover {
+  background: var(--color-surface-hover, #e5e7eb);
+  color: var(--color-text, #111827);
+}
+.treeview-component__toggle-icon {
+  font-size: 0.6rem;
+  transition: transform 0.15s ease;
+  display: inline-block;
+}
+.treeview-component__toggle-icon--expanded {
+  transform: rotate(90deg);
+}
+
+/* Placeholder for leaf nodes (aligns with the toggle) */
+.treeview-component__toggle-placeholder {
+  width: 18px;
+  flex-shrink: 0;
+}
+
+/* Icon */
+.treeview-component__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Label */
+.treeview-component__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tree connector lines (optional) */
+.treeview-component--lined .treeview-component__row {
+  position: relative;
+}
+.treeview-component--lined .treeview-component__row::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--treeview-depth) * var(--treeview-indent) - var(--treeview-indent) + 9px);
+  top: 0;
+  bottom: 50%;
+  width: 1px;
+  background: var(--treeview-custom-border, var(--treeview-border));
+  opacity: 0.4;
+}
+
+/* Empty state */
+.treeview-component__empty {
+  padding: var(--spacing-md, 1rem);
+  color: var(--color-text-muted, #9ca3af);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Shadow */
+.treeview-component--outline {
+  border: 1px solid var(--treeview-custom-border, var(--treeview-border));
+  padding: var(--spacing-xs, 0.25rem);
+}
