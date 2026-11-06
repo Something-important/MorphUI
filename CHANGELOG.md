@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/Something-important/MorphUI/compare/v1.4.1...v1.4.2) (2026-11-06)
+
+
+### Bug Fixes
+
+* **size-limit:** bump DatePicker+Table budgets, add 6 new component entries ([027e560](https://github.com/Something-important/MorphUI/commit/027e56093e734aad39f3e28d7b5584127133443d))
+
 ## [1.4.1](https://github.com/Something-important/MorphUI/compare/v1.4.0...v1.4.1) (2026-11-06)
 
 
