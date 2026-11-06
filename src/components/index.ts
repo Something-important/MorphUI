@@ -79,6 +79,7 @@ export {
   type PaginationSize,
   type PaginationVariant,
 } from './interactive/Pagination';
+export { Carousel, type CarouselProps, type CarouselVariant } from './interactive/Carousel';
 
 // Composition Components
 export {

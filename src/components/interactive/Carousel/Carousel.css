@@ -1,0 +1,119 @@
+.carousel-component {
+  --carousel-accent: var(--color-primary, #3b82f6);
+  --carousel-text-color: var(--color-text, #111827);
+  --carousel-border: var(--color-border, #e5e7eb);
+  --carousel-radius: var(--radius-md, 8px);
+  --carousel-bg: var(--color-surface, #fff);
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--carousel-custom-border-radius, var(--carousel-radius));
+  font-family: var(--font-family, inherit);
+  color: var(--carousel-custom-text-color, var(--carousel-text-color));
+  background: var(--carousel-bg);
+  box-shadow: var(--carousel-custom-shadow, none);
+  outline: none;
+}
+.carousel-component:focus-visible {
+  outline: 2px solid var(--carousel-custom-accent, var(--carousel-accent));
+  outline-offset: 2px;
+}
+
+/* Viewport — clips the sliding track */
+.carousel-component__viewport {
+  overflow: hidden;
+  border-radius: var(--carousel-radius);
+}
+
+/* Track — the sliding container. transform: translateX moves it. */
+.carousel-component__track {
+  display: flex;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* Each slide fills the viewport width */
+.carousel-component__slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+  width: 100%;
+}
+
+/* Arrows */
+.carousel-component__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--carousel-bg);
+  border: 1px solid var(--carousel-border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--carousel-text-color);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.1));
+  z-index: 2;
+  transition:
+    background 0.12s,
+    color 0.12s,
+    transform 0.12s;
+  user-select: none;
+}
+.carousel-component__arrow:hover:not(:disabled) {
+  background: var(--carousel-custom-accent, var(--carousel-accent));
+  color: #fff;
+}
+.carousel-component__arrow:focus-visible {
+  outline: 2px solid var(--carousel-accent);
+  outline-offset: 2px;
+}
+.carousel-component__arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.carousel-component__arrow--prev {
+  left: var(--spacing-sm, 0.5rem);
+}
+.carousel-component__arrow--next {
+  right: var(--spacing-sm, 0.5rem);
+}
+
+/* Dots */
+.carousel-component__dots {
+  position: absolute;
+  bottom: var(--spacing-sm, 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--spacing-xs, 0.25rem);
+  z-index: 2;
+}
+.carousel-component__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--carousel-border);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 0.12s,
+    transform 0.12s;
+}
+.carousel-component__dot:hover {
+  background: var(--color-text-secondary, #6b7280);
+}
+.carousel-component__dot--active {
+  background: var(--carousel-custom-accent, var(--carousel-accent));
+  transform: scale(1.3);
+}
+.carousel-component__dot:focus-visible {
+  outline: 2px solid var(--carousel-accent);
+  outline-offset: 2px;
+}
