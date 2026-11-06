@@ -199,7 +199,7 @@
     },
     "./sidebar": {
       "types": "./dist/components/composition/Sidebar/index.d.ts",
-      "import": "./dist/esm/components/composition/Sidebar/Sidebar.js"
+      "import": "./dist/esm/components/composition/Sidebar/SidebarUnified.js"
     },
     "./table": {
       "types": "./dist/components/composition/Table/index.d.ts",
@@ -299,7 +299,7 @@
     "./css/drawer": "./dist/css/drawer.css",
     "./css/form": "./dist/css/form.css",
     "./css/popover": "./dist/css/popover.css",
-    "./css/sidebar": "./dist/css/sidebar.css",
+    "./css/sidebar": "./dist/css/sidebar-composition.css",
     "./css/sidebar-composition": "./dist/css/sidebar-composition.css",
     "./css/table": "./dist/css/table.css",
     "./css/tabs": "./dist/css/tabs.css",
