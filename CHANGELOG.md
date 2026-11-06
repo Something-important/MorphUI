@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.4.0](https://github.com/Something-important/MorphUI/compare/v1.3.0...v1.4.0) (2026-11-06)
+
+
+### Features
+
+* **carousel:** new Carousel component — sliding content carousel ([2bb6e89](https://github.com/Something-important/MorphUI/commit/2bb6e89ee2afb9305f6b743318fba5580a1bfbf7))
+* **command-palette:** new CommandPalette component — Cmd+K search palette ([15d6c8f](https://github.com/Something-important/MorphUI/commit/15d6c8fff57d7624742c91215f6abf442b0786b2))
+* **datepicker:** add range mode for selecting a start + end date ([3568648](https://github.com/Something-important/MorphUI/commit/356864801cbeafb6b384c281f628da82d495db07))
+* **fileupload:** new FileUpload component — drag-and-drop file upload ([fdac3a1](https://github.com/Something-important/MorphUI/commit/fdac3a1440213b8d3a3129ddf73e2d24ac73c0fc))
+* **rating+taginput:** new Rating + TagInput components ([be1d285](https://github.com/Something-important/MorphUI/commit/be1d285b5013f463fa85025dc7c9f90144c9dbc5))
+* **table:** column resizing + row expansion ([07184dc](https://github.com/Something-important/MorphUI/commit/07184dc7a05cc700ad5db45663c908a6c3180733))
+* **treeview:** new TreeView component for hierarchical data ([ed8af0a](https://github.com/Something-important/MorphUI/commit/ed8af0a88ad222d1db6e7a62bca17b49b222396e))
+
+
+### Bug Fixes
+
+* **stories:** use UploadedFile type in FileUpload Controlled story ([78739f5](https://github.com/Something-important/MorphUI/commit/78739f5a3ba0c867a82d42c6614ed357db010366))
+
 ## [1.3.0](https://github.com/Something-important/MorphUI/compare/v1.2.0...v1.3.0) (2026-11-05)
 
 
