@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/Something-important/MorphUI/compare/v1.4.3...v1.4.4) (2026-11-06)
+
+
+### Bug Fixes
+
+* **exports:** alias dangling Sidebar subpaths to actual emitted files ([#80](https://github.com/Something-important/MorphUI/issues/80)) ([0c24d29](https://github.com/Something-important/MorphUI/commit/0c24d291cdc09c2651dbb22635c2176cb596451e))
+
 ## [1.4.3](https://github.com/Something-important/MorphUI/compare/v1.4.2...v1.4.3) (2026-11-06)
 
 
