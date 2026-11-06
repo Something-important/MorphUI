@@ -99,16 +99,8 @@ export {
   type CommandPaletteProps,
   type CommandPaletteVariant,
 } from './interactive/CommandPalette';
-export {
-  Carousel,
-  type CarouselProps,
-  type CarouselVariant,
-} from './interactive/Carousel';
-export {
-  Rating,
-  type RatingProps,
-  type RatingSize,
-} from './interactive/Rating';
+export { Carousel, type CarouselProps, type CarouselVariant } from './interactive/Carousel';
+export { Rating, type RatingProps, type RatingSize } from './interactive/Rating';
 
 // Composition Components
 export {

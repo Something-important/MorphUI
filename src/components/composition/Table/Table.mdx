@@ -88,6 +88,45 @@ columns={[
 ]}
 ```
 
+## Column Resizing
+
+Add `resizable: true` to any column to let users drag its right edge to
+resize. The width is tracked internally (uncontrolled); the initial width
+comes from the column's `width` prop.
+
+```tsx
+columns={[
+  { key: 'name', label: 'Name', resizable: true, width: 200 },
+  { key: 'email', label: 'Email', resizable: true },
+  { key: 'role', label: 'Role' },
+]}
+```
+
+- Minimum width enforced (40px)
+- Body cursor changes to `col-resize` during drag
+- Width applies to both header and body cells
+
+## Row Expansion
+
+Enable expandable rows with `expandable` + `renderExpandedRow`. Click the
+▶/▼ toggle to expand a row and reveal custom content below it.
+
+```tsx
+<Table
+  data={users}
+  columns={columns}
+  expandable
+  renderExpandedRow={(user) => <UserDetails user={user} />}
+  defaultExpandedRows={[users[0]]}
+  onExpandChange={(expanded) => console.log(expanded)}
+/>
+```
+
+- Controlled (`expandedRows`) + uncontrolled (`defaultExpandedRows`)
+- `onExpandChange` callback fires on toggle
+- `aria-expanded` on toggle buttons, per-row `aria-label`
+- Expanded content renders in a full-width `<tr>` below the row
+
 ## Accessibility
 
 - `role="table"` with `aria-rowcount`, `aria-colcount`

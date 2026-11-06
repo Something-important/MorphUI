@@ -15,6 +15,29 @@ import { DatePicker } from 'morphui-react';
 <DatePicker value={new Date()} onChange={(date) => setDate(date)} firstDayOfWeek={1} />;
 ```
 
+## Range Mode
+
+Pass `range` to select a start + end date instead of a single date.
+
+```tsx
+<DatePicker
+  range
+  defaultValue={[new Date(2026, 0, 1), new Date(2026, 0, 31)]}
+  onChange={(value) => {
+    // value is [Date, Date] | null
+    if (value) console.log('Start:', value[0], 'End:', value[1]);
+  }}
+/>
+```
+
+- First click sets the range start (popup stays open)
+- Second click sets the range end → `onChange` receives `[Date, Date]`
+- Clicking before the start restarts the range
+- Input displays `"YYYY-MM-DD to YYYY-MM-DD"` (or `"... to …"` mid-selection)
+- Calendar opens to the range start's month
+- Days between start and end get a subtle accent tint (`color-mix` 15%)
+- Start/end days get rounded outer corners (pill shape)
+
 ## Accessibility
 
 `role="application"` on the calendar grid with `aria-label`. Days are buttons with `aria-selected` and `aria-disabled`. Keyboard: Arrow keys to navigate days, Enter to select.
