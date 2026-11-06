@@ -79,6 +79,12 @@ export {
   type PaginationSize,
   type PaginationVariant,
 } from './interactive/Pagination';
+export {
+  CommandPalette,
+  type CommandItem,
+  type CommandPaletteProps,
+  type CommandPaletteVariant,
+} from './interactive/CommandPalette';
 
 // Composition Components
 export {

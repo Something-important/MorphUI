@@ -1,0 +1,70 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CommandPaletteStories from './CommandPalette.stories';
+
+<Meta of={CommandPaletteStories} />
+
+# CommandPalette
+
+A Cmd+K / Ctrl+K command palette — the modern search-and-execute pattern
+used by VS Code, Linear, Notion, and Vercel. Renders a centered overlay
+with a search input and filtered, grouped command list. Full keyboard
+navigation.
+
+## Usage
+
+```tsx
+import { CommandPalette, type CommandItem } from 'morphui-react';
+
+const commands: CommandItem[] = [
+  {
+    id: 'go-home',
+    label: 'Go to Home',
+    group: 'Navigation',
+    shortcut: '⌘H',
+    keywords: 'dashboard start',
+    onSelect: () => navigate('/'),
+  },
+  {
+    id: 'copy',
+    label: 'Copy',
+    group: 'Actions',
+    shortcut: '⌘C',
+    onSelect: () => copyToClipboard(),
+  },
+];
+
+<CommandPalette items={commands} />;
+```
+
+Press **⌘K** (Mac) or **Ctrl+K** (Windows/Linux) to open/close the palette.
+
+## Features
+
+- **Global ⌘K / Ctrl+K shortcut** toggles the palette
+- **Fuzzy search** — matches against label + optional `keywords` field
+- **Grouped results** — items with the same `group` are rendered under a label
+- **Keyboard navigation** — ArrowUp/Down to move, Enter to select, Escape to close
+- **Shortcut hints** — optional `shortcut` prop renders a `<kbd>` badge
+- **Icons** — optional `icon` per item
+- **Disabled items** — shown but not selectable
+- **Portal rendering** — overlay renders in `document.body`
+- **Controlled + uncontrolled** open state (`isOpen` / `defaultIsOpen`)
+
+## Accessibility
+
+- `role="dialog"` + `aria-modal="true"` on the panel
+- `role="combobox"` on the search input with `aria-expanded`, `aria-controls`,
+  `aria-activedescendant`, `aria-autocomplete="list"`
+- `role="listbox"` on the results + `role="option"` per item with
+  `aria-selected` on the active item
+- `aria-disabled` on disabled items
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />
