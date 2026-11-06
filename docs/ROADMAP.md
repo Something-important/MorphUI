@@ -2,15 +2,16 @@
 
 MorphUI 1.x is shipped. This file tracks what's done and what's next.
 
-**Current release:** `morphui-react@1.2.0` on npm (2026-11-04, OIDC trusted
-publishing with Sigstore provenance, logIndex 3691602716). **2,038 tests**
-(49 suites), **95.3% statement / 84.7% branch coverage**. React 18 + 19
-verified. SSR-compatible. Auto-publish pipeline proven (7 releases, zero
+**Current release:** `morphui-react@1.4.0` on npm (2026-11-06, OIDC trusted
+publishing with Sigstore provenance). **2,153 tests** (49 suites), **95.3%
+statement / 84.7% branch coverage**. **39 components**. React 18 + 19
+verified. SSR-compatible. Auto-publish pipeline proven (9 releases, zero
 manual dispatch).
 
-**dev + master in sync @ `997c436`** (2026-11-04): v1.2.0 released. The
-controlled/uncontrolled parity audit is complete — all 33 components are
-consistent. Chromatic CI is live. Ready for the next round of feature work.
+**dev + master in sync @ `4c9227d`** (2026-11-06): v1.4.0 released — the
+biggest release yet (6 new components + 2 enhancements). Chromatic CI is
+live. All 39 components have MDX docs. Ready for the next round of feature
+work.
 
 ## Done (1.0 → 1.1)
 
@@ -105,12 +106,12 @@ Modal left as-is — controlled-only is the overlay convention (Radix/shadcn/
 MUI all do this); the focus-trap/scroll-lock side effects make uncontrolled
 mode an a11y risk.
 
-All 33 components are now consistent: every stateful component supports
+All 39 components are now consistent: every stateful component supports
 both controlled and uncontrolled modes (except Modal, by design).
 
 ## Storybook MDX docs — complete 2026-11-04 ✅
 
-All 32 components have co-located `.mdx` documentation files with:
+All 39 components have co-located `.mdx` documentation files with:
 
 - Overview + usage code blocks (controlled + uncontrolled where applicable)
 - Accessibility notes (ARIA roles, keyboard nav, focus management)
@@ -118,12 +119,30 @@ All 32 components have co-located `.mdx` documentation files with:
 - All stories rendered in canvases (`<Stories />`)
 
 The Storybook config already loaded `**/*.mdx`; no config changes were
-needed. Removed `tags: ['autodocs']` from all 32 `.stories.tsx` files —
+needed. Removed `tags: ['autodocs']` from all 39 `.stories.tsx` files —
 the MDX files create the docs page, so the autodocs tag was creating
 redundant second pages.
 
 Deployed via GitHub Pages (on master push) + Chromatic published
 Storybook (live per-PR review URL).
+
+## v1.4.0 — shipped 2026-11-06 ✅
+
+6 new components (33 → 39):
+
+- **TreeView** (#34) — hierarchical data display with expand/collapse, keyboard nav
+- **FileUpload** (#35) — drag-and-drop with validation, file list, controlled/uncontrolled
+- **CommandPalette** (#36) — Cmd+K search palette with fuzzy search, grouped results
+- **Carousel** (#37) — sliding content with autoplay, arrows, dots, touch/swipe
+- **Rating** (#38) — star rating with half-star precision, keyboard nav
+- **TagInput** (#39) — tag/chip input with Enter/comma to add, Backspace to remove
+
+2 feature enhancements:
+
+- **Table** — column resizing (drag handle) + row expansion (expandable + renderExpandedRow)
+- **DatePicker** — range mode (select start + end date with visual highlighting)
+
++115 tests (2,038 → 2,153).
 
 ## Short-term (next ~2 weeks)
 
@@ -132,15 +151,15 @@ Storybook (live per-PR review URL).
   code changes needed (workflow references the secret by name).
 - **FormField rest spread audit** — verify no other components have the
   same `{...rest}` pass-through gap that Dropdown had (now fixed).
-- **v1.3.0 release** — when there are enough `feat:` commits to warrant
-  a minor bump. Currently dev has only `fix:`/`docs:`/`ci:` commits since
-  v1.2.0, so release-please won't bump.
+- **v1.5.0** — when there are enough `feat:` commits to warrant a minor
+  bump. Potential candidates: OTPInput, SegmentedControl, ColorPicker,
+  DataGrid, migration guide.
 
 ## Medium-term (this quarter)
 
 - **React 19 API adoption** — `useTransition` (Table sorting, Input
   validation) and `useDeferredValue` (Combobox filter) are already in
-  place. React 19 compatibility is verified (all 2,038 tests pass
+  place. React 19 compatibility is verified (all 2,153 tests pass
   against React 19.3.1) and a CI matrix job runs the suite against both
   React 18 and 19 on every PR. The remaining React 19 APIs — `use()` for
   promise unwrapping, `useOptimistic` for optimistic updates,
@@ -156,19 +175,17 @@ Storybook (live per-PR review URL).
 
 - **Documentation site** — Storybook as the docs portal: theming guide,
   per-component a11y notes, migration guides per breaking release.
-  Chromatic published Storybook is already live; MDX docs are the next
-  step (see short-term).
+  Chromatic published Storybook is already live; MDX docs are complete
+  (all 39 components).
 - **Community growth** — issue templates (done), demo site, blog posts,
   contribution guide polish.
 - **Feature expansion** — DataGrid (Table + filtering + sorting +
-  pagination integrated), TreeView, FileUpload. Only after the
-  stability + docs work lands.
+  pagination integrated), OTPInput, SegmentedControl, ColorPicker,
+  MentionInput. Only after the stability + docs work lands.
 
 ## Non-goals
 
 - No CSS-in-JS runtime — the single-CSS design is deliberate.
-- No component-count expansion before the docs + visual regression
-  work lands — polish the 33 existing components first.
 - No history rewrites of `master`.
 
 ## Definition of done
