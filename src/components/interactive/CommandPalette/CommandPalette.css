@@ -1,0 +1,178 @@
+.cmd-component__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.cmd-component {
+  --cmd-accent: var(--color-primary, #3b82f6);
+  --cmd-text-color: var(--color-text, #111827);
+  --cmd-border: var(--color-border, #e5e7eb);
+  --cmd-radius: var(--radius-lg, 12px);
+  --cmd-bg: var(--color-surface, #ffffff);
+  --cmd-muted: var(--color-text-secondary, #6b7280);
+  --cmd-hover: var(--color-surface-hover, #f3f4f6);
+
+  width: 90%;
+  max-width: 560px;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--cmd-bg);
+  border: 1px solid var(--cmd-custom-border, var(--cmd-border));
+  border-radius: var(--cmd-custom-border-radius, var(--cmd-radius));
+  box-shadow: var(--cmd-custom-shadow, var(--shadow-xl, 0 20px 60px rgba(0, 0, 0, 0.15)));
+  overflow: hidden;
+  font-family: var(--font-family, inherit);
+  color: var(--cmd-custom-text-color, var(--cmd-text-color));
+  animation: cmd-pop 0.12s ease-out;
+}
+
+@keyframes cmd-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Search row */
+.cmd-component__search {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+  padding: var(--spacing-md, 0.75rem) var(--spacing-lg, 1rem);
+  border-bottom: 1px solid var(--cmd-border);
+}
+.cmd-component__search-icon {
+  font-size: 1.125rem;
+  color: var(--cmd-muted);
+  flex-shrink: 0;
+}
+.cmd-component__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--font-size-md, 1rem);
+  color: var(--cmd-text-color);
+  font-family: inherit;
+}
+.cmd-component__input::placeholder {
+  color: var(--cmd-muted);
+}
+.cmd-component__esc {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--cmd-muted);
+  background: var(--cmd-hover);
+  border: 1px solid var(--cmd-border);
+  border-radius: var(--radius-sm, 4px);
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+
+/* List */
+.cmd-component__list-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-xs, 0.25rem);
+}
+.cmd-component__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cmd-component__group {
+  list-style: none;
+}
+.cmd-component__group-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cmd-muted);
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 0.75rem) var(--spacing-xs, 0.25rem);
+}
+.cmd-component__group-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Item */
+.cmd-component__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 0.75rem);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  font-size: var(--font-size-sm, 0.875rem);
+  transition: background 0.08s;
+  user-select: none;
+}
+.cmd-component__item:hover {
+  background: var(--cmd-hover);
+}
+.cmd-component__item--active {
+  background: var(
+    --cmd-custom-accent-light,
+    color-mix(in srgb, var(--cmd-accent) 12%, transparent)
+  );
+  color: var(--cmd-custom-accent, var(--cmd-accent));
+}
+.cmd-component__item--active:hover {
+  background: var(
+    --cmd-custom-accent-light,
+    color-mix(in srgb, var(--cmd-accent) 20%, transparent)
+  );
+}
+.cmd-component__item--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.cmd-component__item--disabled:hover {
+  background: transparent;
+}
+
+.cmd-component__item-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+.cmd-component__item-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cmd-component__item-shortcut {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--cmd-muted);
+  background: var(--cmd-hover);
+  border: 1px solid var(--cmd-border);
+  border-radius: var(--radius-xs, 3px);
+  padding: 1px 5px;
+  flex-shrink: 0;
+}
+
+/* Empty */
+.cmd-component__empty {
+  padding: var(--spacing-xl, 2rem) var(--spacing-lg, 1rem);
+  text-align: center;
+  color: var(--cmd-muted);
+  font-size: var(--font-size-sm, 0.875rem);
+}
