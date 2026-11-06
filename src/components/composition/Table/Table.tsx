@@ -188,7 +188,7 @@ function TableInner<T>(
   ref: React.Ref<HTMLDivElement>,
 ) {
   // Internal state for uncontrolled mode
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>(defaultSelectedRows ?? []);
 
   // Column resizing (uncontrolled — internal state per column key)

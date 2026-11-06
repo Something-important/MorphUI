@@ -231,7 +231,12 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
     let activeId: string | undefined;
 
     return createPortal(
+      // Overlay handles click-outside-to-close and Escape/arrow key navigation.
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div className="cmd-component__overlay" onClick={close} onKeyDown={handleKeyDown}>
+        {/* Dialog's onClick stops propagation so clicks inside don't close the
+            modal. Keyboard nav is handled by the overlay's onKeyDown. */}
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */}
         <div
           ref={ref}
           className={classes}
@@ -284,6 +289,7 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
                               id={`${generatedId}-${item.id}`}
                               className="cmd-component__item cmd-component__item--disabled"
                               role="option"
+                              aria-selected={false}
                               aria-disabled="true"
                             >
                               <CommandRow item={item} />
@@ -294,6 +300,9 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
                         const isActive = runningIndex === activeIndex;
                         if (isActive) activeId = `${generatedId}-${item.id}`;
                         return (
+                          // The listbox (overlay) handles keyboard navigation via
+                          // aria-activedescendant; the option itself is not focusable.
+                          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                           <li
                             key={item.id}
                             id={`${generatedId}-${item.id}`}

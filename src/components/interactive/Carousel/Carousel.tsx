@@ -180,6 +180,11 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const translateX = `calc(${current} * -100%)`;
 
     return (
+      // Carousel is a custom widget: the region needs to be focusable so
+      // users can navigate between slides with the arrow keys. The standard
+      // ARIA carousel pattern (region + aria-roledescription) is intentionally
+      // preserved here.
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <div
         ref={ref}
         id={generatedId}
@@ -188,6 +193,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         role="region"
         {...ariaProps}
         onKeyDown={handleKeyDown}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}

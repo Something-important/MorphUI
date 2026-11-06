@@ -104,6 +104,19 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(
       [readonly, disabled, allowHalf],
     );
 
+    const handleStarKeyDown = useCallback(
+      (e: React.KeyboardEvent, starValue: number) => {
+        if (readonly || disabled) return;
+        // Allow Enter/Space to "click" a star directly when programmatically focused.
+        // The parent slider handles arrow-key navigation via tab order.
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick(starValue);
+        }
+      },
+      [readonly, disabled, handleClick],
+    );
+
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent) => {
         if (readonly || disabled) return;
@@ -172,8 +185,17 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(
             <span
               key={i}
               className="rating-component__star-wrapper"
+              role="button"
+              tabIndex={-1}
+              aria-label={`${starIndex} star${starIndex > 1 ? 's' : ''}`}
               onClick={() =>
                 handleClick(
+                  allowHalf ? starIndex - (displayValue === starIndex - 0.5 ? 0.5 : 0) : starIndex,
+                )
+              }
+              onKeyDown={(e) =>
+                handleStarKeyDown(
+                  e,
                   allowHalf ? starIndex - (displayValue === starIndex - 0.5 ? 0.5 : 0) : starIndex,
                 )
               }
