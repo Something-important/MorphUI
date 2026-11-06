@@ -1,0 +1,34 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as RatingStories from './Rating.stories';
+
+<Meta of={RatingStories} />
+
+# Rating
+
+A star rating component with half-star precision, keyboard navigation,
+and controlled/uncontrolled modes. Supports readonly display and
+configurable star count.
+
+## Usage
+
+```tsx
+import { Rating } from 'morphui-react';
+
+<Rating defaultValue={3} max={5} onChange={(value) => console.log(value)} />;
+```
+
+## Accessibility
+
+- `role="slider"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`
+- Keyboard: ArrowRight/Up to increase, ArrowLeft/Down to decrease
+- `aria-readonly` when readonly, `aria-disabled` when disabled
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />

@@ -1,0 +1,101 @@
+.taginput-component {
+  --taginput-accent: var(--color-primary, #3b82f6);
+  --taginput-text-color: var(--color-text, #111827);
+  --taginput-border: var(--color-border, #d1d5db);
+  --taginput-radius: var(--radius-sm, 4px);
+  --taginput-bg: var(--color-surface, #fff);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs, 0.25rem);
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.5rem);
+  border: 1px solid var(--taginput-custom-border, var(--taginput-border));
+  border-radius: var(--taginput-custom-border-radius, var(--taginput-radius));
+  background: var(--taginput-bg);
+  cursor: text;
+  min-height: calc(var(--font-size-md, 1rem) * 2 + var(--spacing-xs, 0.25rem) * 2);
+  font-family: var(--font-family, inherit);
+  color: var(--taginput-custom-text-color, var(--taginput-text-color));
+  transition:
+    border-color 0.12s,
+    box-shadow 0.12s;
+}
+.taginput-component:focus-within {
+  border-color: var(--taginput-custom-accent, var(--taginput-accent));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--taginput-accent) 20%, transparent);
+}
+
+/* Sizes */
+.taginput-component--sm {
+  font-size: var(--font-size-sm, 0.875rem);
+}
+.taginput-component--md {
+  font-size: var(--font-size-md, 1rem);
+}
+.taginput-component--lg {
+  font-size: var(--font-size-lg, 1.125rem);
+}
+
+/* Disabled */
+.taginput-component--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Tag */
+.taginput-component__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs, 0.25rem);
+  padding: 2px var(--spacing-sm, 0.5rem);
+  border-radius: var(--taginput-radius);
+  background: var(
+    --taginput-custom-accent-light,
+    color-mix(in srgb, var(--taginput-accent) 12%, transparent)
+  );
+  color: var(--taginput-custom-accent, var(--taginput-accent));
+  font-size: 0.8125em;
+  font-weight: 500;
+  white-space: nowrap;
+  animation: taginput-pop 0.12s ease-out;
+}
+@keyframes taginput-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.taginput-component__tag-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.6;
+  transition: opacity 0.12s;
+}
+.taginput-component__tag-remove:hover {
+  opacity: 1;
+}
+
+/* Input */
+.taginput-component__input {
+  flex: 1;
+  min-width: 60px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  padding: var(--spacing-xs, 0.25rem) 0;
+}
+.taginput-component__input::placeholder {
+  color: var(--color-text-muted, #9ca3af);
+}
