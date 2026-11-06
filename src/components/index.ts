@@ -86,6 +86,29 @@ export {
   type TreeViewVariant,
   type TreeViewSize,
 } from './interactive/TreeView';
+export {
+  FileUpload,
+  type UploadedFile,
+  type FileUploadProps,
+  type FileUploadVariant,
+  type FileUploadSize,
+} from './interactive/FileUpload';
+export {
+  CommandPalette,
+  type CommandItem,
+  type CommandPaletteProps,
+  type CommandPaletteVariant,
+} from './interactive/CommandPalette';
+export {
+  Carousel,
+  type CarouselProps,
+  type CarouselVariant,
+} from './interactive/Carousel';
+export {
+  Rating,
+  type RatingProps,
+  type RatingSize,
+} from './interactive/Rating';
 
 // Composition Components
 export {
@@ -156,6 +179,12 @@ export {
   type DrawerPosition,
   type DrawerSize,
 } from './composition/Drawer';
+export {
+  TagInput,
+  type TagInputProps,
+  type TagInputVariant,
+  type TagInputSize,
+} from './composition/TagInput';
 export {
   Form,
   FormField,
