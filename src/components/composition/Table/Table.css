@@ -47,6 +47,72 @@
     border-bottom: 2px solid
       var(--table-custom-border, var(--table-border, var(--color-border, #d1d5db)));
     white-space: nowrap;
+    position: relative;
+  }
+
+  /* Column resize handle — a thin draggable strip at the right edge of
+     each resizable column header. position: absolute on the th (which
+     has position: relative). */
+  .table-component__resize-handle {
+    position: absolute;
+    right: -2px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    cursor: col-resize;
+    background: transparent;
+    z-index: 10;
+    user-select: none;
+    touch-action: none;
+  }
+  .table-component__resize-handle:hover,
+  .table-component__resize-handle:active {
+    background: var(--color-primary, #3b82f6);
+  }
+
+  /* Expand toggle column — narrow, centered, no header label */
+  .table-component__th--expand-toggle,
+  .table-component__td--expand-toggle {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    text-align: center;
+    padding-left: var(--spacing-xs, 0.5rem);
+    padding-right: var(--spacing-xs, 0.5rem);
+  }
+  .table-component__expand-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-xs, 0.5rem);
+    border-radius: var(--radius-sm, 4px);
+    color: var(--color-text-secondary, #6b7280);
+    font-size: 0.75rem;
+    line-height: 1;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+  .table-component__expand-toggle:hover {
+    background: var(--color-surface-hover, #f3f4f6);
+    color: var(--color-text, #111827);
+  }
+  .table-component__expand-toggle:focus-visible {
+    outline: 2px solid var(--color-focus-ring, var(--color-primary, #3b82f6));
+    outline-offset: 2px;
+  }
+  .table-component__expand-icon {
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+  .table-component__tr--expanded-content,
+  .table-component__td--expanded-content {
+    padding: var(--spacing-md, 1rem);
+    background: var(--color-surface-secondary, #f9fafb);
+    border-bottom: 1px solid
+      var(--table-custom-border, var(--table-border, var(--color-border, #d1d5db)));
+  }
+  .table-component__tr--expanded-parent {
+    border-bottom: none !important;
   }
 
   /* Pinned / frozen columns. position: sticky keeps the column visible

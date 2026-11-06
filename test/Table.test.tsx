@@ -564,4 +564,204 @@ describe('Fixed columns', () => {
     expect(th).not.toHaveClass('table-component__th--fixed-left');
     expect(th).not.toHaveClass('table-component__th--fixed-right');
   });
+
+  // Column resizing
+  describe('Column Resizing', () => {
+    it('renders a resize handle on resizable columns', () => {
+      const { container } = render(
+        <Table data={testData} columns={[{ key: 'name', label: 'Name', resizable: true }]} />,
+      );
+      const handle = container.querySelector('.table-component__resize-handle');
+      expect(handle).toBeInTheDocument();
+    });
+
+    it('does not render a resize handle when resizable is not set', () => {
+      const { container } = render(
+        <Table data={testData} columns={[{ key: 'name', label: 'Name' }]} />,
+      );
+      const handle = container.querySelector('.table-component__resize-handle');
+      expect(handle).not.toBeInTheDocument();
+    });
+
+    it('updates column width on drag', () => {
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={[{ key: 'name', label: 'Name', resizable: true, width: 100 }]}
+        />,
+      );
+      const handle = container.querySelector('.table-component__resize-handle') as HTMLElement;
+      const th = container.querySelector('th') as HTMLElement;
+
+      // Mock getBoundingClientRect to return a starting width
+      jest.spyOn(th, 'getBoundingClientRect').mockReturnValue({
+        width: 100,
+        height: 40,
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 40,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      } as DOMRect);
+
+      // Start drag
+      fireEvent.mouseDown(handle, { clientX: 100 });
+
+      // Simulate mousemove on document
+      fireEvent.mouseMove(document, { clientX: 150 });
+
+      // Simulate mouseup on document
+      fireEvent.mouseUp(document);
+
+      // The th width should now be 150px (100 start + 50 drag)
+      // We can't easily assert the exact pixel value due to jsdom limitations,
+      // but we can verify the column width was applied via inline style
+      const thStyle = th.getAttribute('style') || '';
+      expect(thStyle).toMatch(/width:\s*150px/);
+    });
+  });
+
+  // Row expansion
+  describe('Row Expansion', () => {
+    it('renders an expand toggle column when expandable is true', () => {
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          expandable
+          renderExpandedRow={(row) => <div>Expanded: {row.name}</div>}
+        />,
+      );
+      const toggle = container.querySelector('.table-component__expand-toggle');
+      expect(toggle).toBeInTheDocument();
+    });
+
+    it('does not render expand toggle when expandable is not set', () => {
+      const { container } = render(<Table data={testData} columns={testColumns} />);
+      const toggle = container.querySelector('.table-component__expand-toggle');
+      expect(toggle).not.toBeInTheDocument();
+    });
+
+    it('expands a row when the toggle is clicked', () => {
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          expandable
+          renderExpandedRow={(row) => <div data-testid="expanded-content">{row.name} details</div>}
+          rowKey={(r) => r.id}
+        />,
+      );
+
+      // No expanded content initially
+      expect(screen.queryByTestId('expanded-content')).not.toBeInTheDocument();
+
+      // Click the first row's expand toggle
+      const toggles = container.querySelectorAll('.table-component__expand-toggle');
+      fireEvent.click(toggles[0]);
+
+      // Expanded content appears
+      expect(screen.getByTestId('expanded-content')).toBeInTheDocument();
+      expect(screen.getByTestId('expanded-content')).toHaveTextContent('John Doe details');
+    });
+
+    it('collapses an expanded row when toggle is clicked again', () => {
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          expandable
+          defaultExpandedRows={[testData[0]]}
+          renderExpandedRow={(row) => <div data-testid="expanded-content">{row.name}</div>}
+          rowKey={(r) => r.id}
+        />,
+      );
+
+      // Row starts expanded
+      expect(screen.getByTestId('expanded-content')).toBeInTheDocument();
+
+      // Click the toggle to collapse
+      const toggles = container.querySelectorAll('.table-component__expand-toggle');
+      fireEvent.click(toggles[0]);
+
+      // Expanded content is gone
+      expect(screen.queryByTestId('expanded-content')).not.toBeInTheDocument();
+    });
+
+    it('initializes from defaultExpandedRows', () => {
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          expandable
+          defaultExpandedRows={[testData[1]]}
+          renderExpandedRow={(row) => <div data-testid="expanded-content">{row.name}</div>}
+          rowKey={(r) => r.id}
+        />,
+      );
+
+      // Row 2 (Jane Smith) should be expanded initially
+      expect(screen.getByTestId('expanded-content')).toHaveTextContent('Jane Smith');
+    });
+
+    it('controlled expandedRows wins over defaultExpandedRows', () => {
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          expandable
+          expandedRows={[testData[0]]}
+          defaultExpandedRows={[testData[1], testData[2]]}
+          renderExpandedRow={(row) => <div data-testid="expanded-content">{row.name}</div>}
+          rowKey={(r) => r.id}
+        />,
+      );
+
+      // Controlled wins: only John Doe, not Jane/Bob
+      expect(screen.getByTestId('expanded-content')).toHaveTextContent('John Doe');
+    });
+
+    it('calls onExpandChange when a row is toggled', () => {
+      const onExpandChange = jest.fn();
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          expandable
+          onExpandChange={onExpandChange}
+          renderExpandedRow={(row) => <div>{row.name}</div>}
+          rowKey={(r) => r.id}
+        />,
+      );
+
+      const toggles = container.querySelectorAll('.table-component__expand-toggle');
+      fireEvent.click(toggles[0]);
+
+      expect(onExpandChange).toHaveBeenCalledTimes(1);
+      const expanded = onExpandChange.mock.calls[0][0];
+      expect(expanded).toHaveLength(1);
+      expect(expanded[0].id).toBe(1);
+    });
+
+    it('sets aria-expanded on the toggle button', () => {
+      const { container } = render(
+        <Table
+          data={testData}
+          columns={testColumns}
+          expandable
+          defaultExpandedRows={[testData[0]]}
+          renderExpandedRow={(row) => <div>{row.name}</div>}
+          rowKey={(r) => r.id}
+        />,
+      );
+
+      const toggles = container.querySelectorAll('.table-component__expand-toggle');
+      // First row is expanded → aria-expanded="true"
+      expect(toggles[0]).toHaveAttribute('aria-expanded', 'true');
+      // Second row is not expanded → aria-expanded="false"
+      expect(toggles[1]).toHaveAttribute('aria-expanded', 'false');
+    });
+  });
 });

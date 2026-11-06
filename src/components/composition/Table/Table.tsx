@@ -1,5 +1,5 @@
 // Table.tsx
-import React, { forwardRef, useState, useMemo, useCallback, useTransition } from 'react';
+import React, { forwardRef, useState, useMemo, useCallback, useTransition, useRef } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
 import './Table.css';
 
@@ -18,6 +18,8 @@ export interface TableColumn<T = Record<string, unknown>> {
   headerAlign?: 'left' | 'center' | 'right';
   fixed?: 'left' | 'right';
   className?: string;
+  /** Allow the user to resize this column by dragging its right edge. */
+  resizable?: boolean;
 }
 
 export interface TableProps<T = Record<string, unknown>> {
@@ -91,6 +93,17 @@ export interface TableProps<T = Record<string, unknown>> {
 
   // Events
   onRowClick?: (row: T, index: number) => void;
+
+  // Row expansion
+  /** Enable expandable rows (adds an expand/collapse toggle column). */
+  expandable?: boolean;
+  /** Render the expanded content for a row. Required when `expandable` is true. */
+  renderExpandedRow?: (row: T, index: number) => React.ReactNode;
+  /** Controlled expanded rows. */
+  expandedRows?: T[];
+  /** Uncontrolled initial expanded rows. Ignored when `expandedRows` is provided. */
+  defaultExpandedRows?: T[];
+  onExpandChange?: (expandedRows: T[]) => void;
 }
 
 function TableInner<T>(
@@ -162,6 +175,14 @@ function TableInner<T>(
 
     // Events
     onRowClick,
+
+    // Row expansion
+    expandable = false,
+    renderExpandedRow,
+    expandedRows: controlledExpandedRows,
+    defaultExpandedRows,
+    onExpandChange,
+
     ...rest
   }: TableProps<T>,
   ref: React.Ref<HTMLDivElement>,
@@ -169,6 +190,47 @@ function TableInner<T>(
   // Internal state for uncontrolled mode
   const [isPending, startTransition] = useTransition();
   const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>(defaultSelectedRows ?? []);
+
+  // Column resizing (uncontrolled — internal state per column key)
+  const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
+  const resizingRef = useRef<{ key: string; startX: number; startWidth: number } | null>(null);
+
+  const handleResizeStart = useCallback((e: React.MouseEvent, columnKey: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const th = (e.currentTarget as HTMLElement).closest('th');
+    const startWidth = th?.getBoundingClientRect().width ?? 0;
+    resizingRef.current = { key: columnKey, startX: e.clientX, startWidth };
+
+    const handleMouseMove = (ev: MouseEvent) => {
+      if (!resizingRef.current) return;
+      const { key, startX, startWidth } = resizingRef.current;
+      const newWidth = Math.max(40, startWidth + (ev.clientX - startX));
+      setColumnWidths((prev) => ({ ...prev, [key]: newWidth }));
+    };
+
+    const handleMouseUp = () => {
+      resizingRef.current = null;
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  // Resolve the effective width for a column (resized width takes precedence)
+  const getColumnWidth = useCallback(
+    (column: TableColumn<T>): string | number | undefined => {
+      const resized = columnWidths[column.key];
+      return resized !== undefined ? `${resized}px` : column.width;
+    },
+    [columnWidths],
+  );
   const [internalSortColumn, setInternalSortColumn] = useState<string | null>(
     defaultSortColumn || null,
   );
@@ -178,22 +240,46 @@ function TableInner<T>(
   const [internalFilters, setInternalFilters] = useState<Record<string, string>>(
     (defaultFilters as Record<string, string>) ?? {},
   );
+  const [internalExpandedRows, setInternalExpandedRows] = useState<T[]>(defaultExpandedRows ?? []);
 
   // Determine if controlled
   const isControlledSelection = controlledSelectedRows !== undefined;
   const isControlledSort = controlledOnSort !== undefined;
   const isControlledPagination = controlledCurrentPage !== undefined;
+  const isControlledExpanded = controlledExpandedRows !== undefined;
 
   // Current values
   const selectedRows = isControlledSelection ? controlledSelectedRows : internalSelectedRows;
   const sortColumn = internalSortColumn;
   const sortDirection = internalSortDirection;
   const currentPage = isControlledPagination ? controlledCurrentPage : internalCurrentPage;
+  const expandedRows = isControlledExpanded ? controlledExpandedRows! : internalExpandedRows;
 
   const isControlledFilters = controlledFilters !== undefined;
   const filters = isControlledFilters
     ? (controlledFilters as Record<string, string>)
     : internalFilters;
+
+  // Row expansion toggle
+  const toggleRowExpanded = useCallback(
+    (row: T) => {
+      const key = rowKey(row);
+      const isExpanded = expandedRows.some((r) => rowKey(r) === key);
+      const newExpanded = isExpanded
+        ? expandedRows.filter((r) => rowKey(r) !== key)
+        : [...expandedRows, row];
+      if (!isControlledExpanded) {
+        setInternalExpandedRows(newExpanded);
+      }
+      onExpandChange?.(newExpanded);
+    },
+    [expandedRows, rowKey, isControlledExpanded, onExpandChange],
+  );
+
+  const isRowExpanded = useCallback(
+    (row: T) => expandedRows.some((r) => rowKey(r) === rowKey(row)),
+    [expandedRows, rowKey],
+  );
 
   // Resolve theme values
   const resolvedColor = resolveThemeValue(color);
@@ -468,6 +554,14 @@ function TableInner<T>(
           <table className="table-component__table" role="table" {...ariaProps}>
             <thead className="table-component__thead">
               <tr className="table-component__tr">
+                {expandable && (
+                  <th
+                    scope="col"
+                    className="table-component__th table-component__th--expand-toggle"
+                  >
+                    <span className="table-component__expand-toggle-header" />
+                  </th>
+                )}
                 {selectable && (
                   <th scope="col" className="table-component__th table-component__th--checkbox">
                     <input
@@ -492,7 +586,7 @@ function TableInner<T>(
                       scope="col"
                       className={`table-component__th${fixedClass} ${column.className || ''}`}
                       style={{
-                        width: column.width,
+                        width: getColumnWidth(column),
                         textAlign: column.headerAlign || column.align || 'left',
                       }}
                       aria-sort={
@@ -533,6 +627,13 @@ function TableInner<T>(
                           />
                         )}
                       </div>
+                      {column.resizable && (
+                        <div
+                          className="table-component__resize-handle"
+                          onMouseDown={(e) => handleResizeStart(e, column.key)}
+                          aria-hidden="true"
+                        />
+                      )}
                     </th>
                   );
                 })}
@@ -543,7 +644,7 @@ function TableInner<T>(
                 <tr className="table-component__tr">
                   <td
                     className="table-component__td table-component__td--empty"
-                    colSpan={columns.length + (selectable ? 1 : 0)}
+                    colSpan={columns.length + (selectable ? 1 : 0) + (expandable ? 1 : 0)}
                   >
                     {typeof emptyMessage === 'string' ? <p>{emptyMessage}</p> : emptyMessage}
                   </td>
@@ -552,55 +653,91 @@ function TableInner<T>(
                 paginatedData.map((row, rowIndex) => {
                   const key = rowKey(row);
                   const isSelected = selectedRows.some((r) => rowKey(r) === key);
+                  const isExpanded = expandable && isRowExpanded(row);
+                  const colSpan = columns.length + (selectable ? 1 : 0) + (expandable ? 1 : 0);
 
                   return (
-                    <tr
-                      key={key}
-                      className={`table-component__tr ${isSelected ? 'table-component__tr--selected' : ''}`}
-                      onClick={onRowClick ? () => onRowClick(row, rowIndex) : undefined}
-                      tabIndex={onRowClick ? 0 : undefined}
-                      onKeyDown={
-                        onRowClick
-                          ? (e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                onRowClick(row, rowIndex);
+                    <React.Fragment key={key}>
+                      <tr
+                        className={`table-component__tr ${isSelected ? 'table-component__tr--selected' : ''} ${isExpanded ? 'table-component__tr--expanded-parent' : ''}`}
+                        onClick={onRowClick ? () => onRowClick(row, rowIndex) : undefined}
+                        tabIndex={onRowClick ? 0 : undefined}
+                        onKeyDown={
+                          onRowClick
+                            ? (e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  e.preventDefault();
+                                  onRowClick(row, rowIndex);
+                                }
                               }
-                            }
-                          : undefined
-                      }
-                      aria-selected={selectable ? isSelected : undefined}
-                    >
-                      {selectable && (
-                        <td className="table-component__td table-component__td--checkbox">
-                          <input
-                            type="checkbox"
-                            checked={isSelected}
-                            onChange={() => toggleRowSelection(row)}
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label={`Select row ${rowIndex + 1}`}
-                          />
-                        </td>
-                      )}
-                      {columns.map((column) => {
-                        const value = getCellValue(row, column);
-                        const renderedValue = column.render
-                          ? column.render(value, row, rowIndex)
-                          : (value as React.ReactNode);
-
-                        return (
-                          <td
-                            key={column.key}
-                            className={`table-component__td${column.fixed ? ` table-component__td--fixed-${column.fixed}` : ''} ${column.className || ''}`}
-                            style={{
-                              textAlign: column.align || 'left',
-                            }}
-                          >
-                            {renderedValue}
+                            : undefined
+                        }
+                        aria-selected={selectable ? isSelected : undefined}
+                      >
+                        {expandable && (
+                          <td className="table-component__td table-component__td--expand-toggle">
+                            <button
+                              type="button"
+                              className="table-component__expand-toggle"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleRowExpanded(row);
+                              }}
+                              aria-expanded={isExpanded}
+                              aria-label={
+                                isExpanded
+                                  ? `Collapse row ${rowIndex + 1}`
+                                  : `Expand row ${rowIndex + 1}`
+                              }
+                            >
+                              <span className="table-component__expand-icon">
+                                {isExpanded ? '▼' : '▶'}
+                              </span>
+                            </button>
                           </td>
-                        );
-                      })}
-                    </tr>
+                        )}
+                        {selectable && (
+                          <td className="table-component__td table-component__td--checkbox">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => toggleRowSelection(row)}
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label={`Select row ${rowIndex + 1}`}
+                            />
+                          </td>
+                        )}
+                        {columns.map((column) => {
+                          const value = getCellValue(row, column);
+                          const renderedValue = column.render
+                            ? column.render(value, row, rowIndex)
+                            : (value as React.ReactNode);
+
+                          return (
+                            <td
+                              key={column.key}
+                              className={`table-component__td${column.fixed ? ` table-component__td--fixed-${column.fixed}` : ''} ${column.className || ''}`}
+                              style={{
+                                width: getColumnWidth(column),
+                                textAlign: column.align || 'left',
+                              }}
+                            >
+                              {renderedValue}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                      {isExpanded && renderExpandedRow && (
+                        <tr className="table-component__tr table-component__tr--expanded">
+                          <td
+                            colSpan={colSpan}
+                            className="table-component__td table-component__td--expanded-content"
+                          >
+                            {renderExpandedRow(row, rowIndex)}
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   );
                 })
               )}
