@@ -1,0 +1,64 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CarouselStories from './Carousel.stories';
+
+<Meta of={CarouselStories} />
+
+# Carousel
+
+A content carousel with sliding transitions, navigation arrows, dots,
+autoplay, keyboard navigation, and touch/swipe support.
+
+## Usage
+
+```tsx
+import { Carousel } from 'morphui-react';
+
+<Carousel
+  slides={[
+    <img src="/slide1.jpg" alt="Slide 1" />,
+    <img src="/slide2.jpg" alt="Slide 2" />,
+    <img src="/slide3.jpg" alt="Slide 3" />,
+  ]}
+  autoplay
+  autoplayInterval={3000}
+/>;
+```
+
+Or pass slides as children:
+
+```tsx
+<Carousel>
+  <div>First slide</div>
+  <div>Second slide</div>
+</Carousel>
+```
+
+## Features
+
+- **Sliding transitions** — smooth `translateX` with cubic-bezier easing
+- **Navigation arrows** — prev/next buttons (optional via `showArrows`)
+- **Navigation dots** — click to jump to a slide (optional via `showDots`)
+- **Loop** — wraps around from last to first (default: true)
+- **Autoplay** — auto-advance with configurable interval
+- **Pause on hover** — pauses autoplay when the mouse is over the carousel
+- **Keyboard nav** — ArrowLeft/Right to navigate (focus the carousel first)
+- **Touch/swipe** — swipe left/right on touch devices
+- **Controlled + uncontrolled** — `currentSlide` / `defaultSlide` + `onSlideChange`
+
+## Accessibility
+
+- `role="region"` with `aria-label`
+- Each slide has `aria-hidden` (true for non-current, false for current) + `aria-label="Slide N of M"`
+- Dots have `role="tab"` with `aria-selected`
+- Arrows have `aria-label="Previous/Next slide"`
+- Keyboard: ArrowLeft/Right when the carousel is focused
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Primary />
+
+<Stories />
