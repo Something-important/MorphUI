@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/Something-important/MorphUI/compare/v1.4.0...v1.4.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* **lint:** resolve all 26 lint errors + warnings (5 errors, 21 warnings) ([6654080](https://github.com/Something-important/MorphUI/commit/665408038311cf75910b1a3fe1b8bcb5903e41dc))
+
 ## [1.4.0](https://github.com/Something-important/MorphUI/compare/v1.3.0...v1.4.0) (2026-11-06)
 
 
