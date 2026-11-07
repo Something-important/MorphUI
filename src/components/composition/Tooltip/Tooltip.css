@@ -75,7 +75,7 @@
 
   .tooltip-component__arrow--top-start {
     bottom: -6px;
-    left: 16px;
+    inset-inline-start: 16px;
     border-top-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
@@ -84,7 +84,7 @@
 
   .tooltip-component__arrow--top-end {
     bottom: -6px;
-    right: 16px;
+    inset-inline-end: 16px;
     border-top-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
@@ -103,7 +103,7 @@
 
   .tooltip-component__arrow--bottom-start {
     top: -6px;
-    left: 16px;
+    inset-inline-start: 16px;
     border-bottom-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
@@ -112,7 +112,7 @@
 
   .tooltip-component__arrow--bottom-end {
     top: -6px;
-    right: 16px;
+    inset-inline-end: 16px;
     border-bottom-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
@@ -120,56 +120,56 @@
   }
 
   .tooltip-component__arrow--left {
-    right: -6px;
+    inset-inline-end: -6px;
     top: 50%;
     transform: translateY(-50%);
-    border-left-color: var(
+    border-inline-start-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
     );
   }
 
   .tooltip-component__arrow--left-start {
-    right: -6px;
+    inset-inline-end: -6px;
     top: 16px;
-    border-left-color: var(
+    border-inline-start-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
     );
   }
 
   .tooltip-component__arrow--left-end {
-    right: -6px;
+    inset-inline-end: -6px;
     bottom: 16px;
-    border-left-color: var(
+    border-inline-start-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
     );
   }
 
   .tooltip-component__arrow--right {
-    left: -6px;
+    inset-inline-start: -6px;
     top: 50%;
     transform: translateY(-50%);
-    border-right-color: var(
+    border-inline-end-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
     );
   }
 
   .tooltip-component__arrow--right-start {
-    left: -6px;
+    inset-inline-start: -6px;
     top: 16px;
-    border-right-color: var(
+    border-inline-end-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
     );
   }
 
   .tooltip-component__arrow--right-end {
-    left: -6px;
+    inset-inline-start: -6px;
     bottom: 16px;
-    border-right-color: var(
+    border-inline-end-color: var(
       --tooltip-custom-arrow-color,
       var(--tooltip-custom-border-color, var(--tooltip-border, var(--color-border, #d1d5db)))
     );
@@ -228,11 +228,11 @@
   }
 
   .tooltip-component--xs .tooltip-component__arrow--left {
-    right: -4px;
+    inset-inline-end: -4px;
   }
 
   .tooltip-component--xs .tooltip-component__arrow--right {
-    left: -4px;
+    inset-inline-start: -4px;
   }
 
   .tooltip-component--sm .tooltip-component__content {
@@ -260,11 +260,11 @@
   }
 
   .tooltip-component--sm .tooltip-component__arrow--left {
-    right: -5px;
+    inset-inline-end: -5px;
   }
 
   .tooltip-component--sm .tooltip-component__arrow--right {
-    left: -5px;
+    inset-inline-start: -5px;
   }
 
   .tooltip-component--md .tooltip-component__content {
@@ -292,11 +292,11 @@
   }
 
   .tooltip-component--md .tooltip-component__arrow--left {
-    right: -6px;
+    inset-inline-end: -6px;
   }
 
   .tooltip-component--md .tooltip-component__arrow--right {
-    left: -6px;
+    inset-inline-start: -6px;
   }
 
   .tooltip-component--lg .tooltip-component__content {
@@ -324,11 +324,11 @@
   }
 
   .tooltip-component--lg .tooltip-component__arrow--left {
-    right: -7px;
+    inset-inline-end: -7px;
   }
 
   .tooltip-component--lg .tooltip-component__arrow--right {
-    left: -7px;
+    inset-inline-start: -7px;
   }
 
   .tooltip-component--xl .tooltip-component__content {
@@ -356,11 +356,11 @@
   }
 
   .tooltip-component--xl .tooltip-component__arrow--left {
-    right: -8px;
+    inset-inline-end: -8px;
   }
 
   .tooltip-component--xl .tooltip-component__arrow--right {
-    left: -8px;
+    inset-inline-start: -8px;
   }
 
   /* Variant Styles */
@@ -556,7 +556,7 @@
   .tooltip-component__content-inner ul,
   .tooltip-component__content-inner ol {
     margin: 0.5rem 0;
-    padding-left: 1.5rem;
+    padding-inline-start: 1.5rem;
   }
 
   .tooltip-component__content-inner li {
@@ -580,9 +580,9 @@
   }
 
   .tooltip-component__content-inner blockquote {
-    border-left: 3px solid var(--color-border, #d1d5db);
+    border-inline-start: 3px solid var(--color-border, #d1d5db);
     margin: 0.5rem 0;
-    padding-left: 1rem;
+    padding-inline-start: 1rem;
     font-style: italic;
     color: var(--color-text-muted, #6b7280);
   }
@@ -780,11 +780,11 @@
     }
 
     .tooltip-component__arrow--left {
-      right: -5px;
+      inset-inline-end: -5px;
     }
 
     .tooltip-component__arrow--right {
-      left: -5px;
+      inset-inline-start: -5px;
     }
   }
 }
@@ -810,11 +810,11 @@
     }
 
     .tooltip-component__arrow--left {
-      right: -8px;
+      inset-inline-end: -8px;
     }
 
     .tooltip-component__arrow--right {
-      left: -8px;
+      inset-inline-start: -8px;
     }
   }
 }

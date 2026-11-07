@@ -7,7 +7,7 @@
   .modal-component__overlay {
     position: fixed;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -299,12 +299,12 @@
 
   .modal-component--left {
     align-self: center;
-    margin-left: var(--spacing-xl, 2rem);
+    margin-inline-start: var(--spacing-xl, 2rem);
   }
 
   .modal-component--right {
     align-self: center;
-    margin-right: var(--spacing-xl, 2rem);
+    margin-inline-end: var(--spacing-xl, 2rem);
   }
 
   .modal-component--top-left {
@@ -418,7 +418,7 @@
   .modal-component__close {
     position: absolute;
     top: var(--spacing-md, 1rem);
-    right: var(--spacing-md, 1rem);
+    inset-inline-end: var(--spacing-md, 1rem);
     width: 32px;
     height: 32px;
     border: none;
@@ -539,8 +539,8 @@
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     bottom: 0;
     border-radius: inherit;
     padding: 1px;

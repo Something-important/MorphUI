@@ -55,7 +55,7 @@
   .tabs-component--vertical .tabs-component__navigation {
     flex-direction: column;
     border-bottom: none;
-    border-right: 2px solid
+    border-inline-end: 2px solid
       var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
     min-width: 200px;
   }
@@ -345,8 +345,8 @@
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     height: 2px;
     background: var(
       --tabs-custom-color,
@@ -359,8 +359,8 @@
   .tabs-component--vertical .tabs-component__tab--active::after {
     bottom: 0;
     top: 0;
-    left: auto;
-    right: 0;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
     width: 2px;
     height: auto;
   }
@@ -428,11 +428,11 @@
   }
 
   .tabs-component--outline.tabs-component--vertical .tabs-component__tab--active {
-    border-right-color: var(
+    border-inline-end-color: var(
       --tabs-custom-bg,
       var(--tabs-panel-bg, var(--color-background, #ffffff))
     );
-    margin-right: -2px;
+    margin-inline-end: -2px;
   }
 
   .tabs-component__tab--active {
@@ -598,7 +598,7 @@
 
     .tabs-component--vertical .tabs-component__navigation {
       flex-direction: row;
-      border-right: none;
+      border-inline-end: none;
       border-bottom: 2px solid
         var(--tabs-custom-border-color, var(--tabs-nav-border, var(--color-border, #d1d5db)));
       min-width: auto;
@@ -610,8 +610,8 @@
     .tabs-component--vertical .tabs-component__tab--active::after {
       bottom: 0;
       top: auto;
-      left: 0;
-      right: 0;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
       width: auto;
       height: 2px;
     }

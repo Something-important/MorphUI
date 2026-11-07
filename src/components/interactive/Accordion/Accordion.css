@@ -214,7 +214,7 @@
 
   .accordion-component__header {
     width: 100%;
-    text-align: left;
+    text-align: start;
     padding: var(--accordion-padding);
     background: var(--accordion-custom-header-bg, var(--accordion-header-bg));
     border: none;
@@ -311,7 +311,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: var(--spacing-sm, 0.5rem);
+    margin-inline-start: var(--spacing-sm, 0.5rem);
   }
 
   .accordion-component__spinner {

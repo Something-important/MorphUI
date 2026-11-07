@@ -102,7 +102,7 @@
   .avatar-component__status {
     position: absolute;
     bottom: 0;
-    right: 0;
+    inset-inline-end: 0;
     width: 0.375em;
     height: 0.375em;
     border-radius: 50%;
@@ -159,7 +159,7 @@
   .avatar-component__badge {
     position: absolute;
     top: -4px;
-    right: -4px;
+    inset-inline-end: -4px;
     min-width: 18px;
     height: 18px;
     padding: 0 6px;

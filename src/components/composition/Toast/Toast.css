@@ -27,7 +27,7 @@
 
   .toast-viewport--top-left {
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
   }
 
   .toast-viewport--top-center {
@@ -38,12 +38,12 @@
 
   .toast-viewport--top-right {
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
   }
 
   .toast-viewport--bottom-left {
     bottom: 0;
-    left: 0;
+    inset-inline-start: 0;
   }
 
   .toast-viewport--bottom-center {
@@ -54,7 +54,7 @@
 
   .toast-viewport--bottom-right {
     bottom: 0;
-    right: 0;
+    inset-inline-end: 0;
   }
 
   /* ---------------------------------------------------------------------------
@@ -82,7 +82,7 @@
     );
     font-family: var(--font-family, system-ui, -apple-system, sans-serif);
     /* Accent bar (variant color) on the leading edge */
-    border-left: 4px solid
+    border-inline-start: 4px solid
       var(--toast-custom-accent, var(--toast-accent, var(--color-info, #3b82f6)));
     opacity: 0;
     transform: translateY(10px);
@@ -299,9 +299,9 @@
  * ------------------------------------------------------------------------- */
 
   [dir='rtl'] .toast-component {
-    border-left-width: 1px;
-    border-left-style: solid;
-    border-right: 4px solid
+    border-inline-start-width: 1px;
+    border-inline-start-style: solid;
+    border-inline-end: 4px solid
       var(--toast-custom-accent, var(--toast-accent, var(--color-info, #3b82f6)));
   }
 

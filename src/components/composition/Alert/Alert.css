@@ -37,7 +37,7 @@
 
   .alert-component--top-left {
     top: var(--spacing-lg, 1.5rem);
-    left: var(--spacing-lg, 1.5rem);
+    inset-inline-start: var(--spacing-lg, 1.5rem);
   }
 
   .alert-component--top-center {
@@ -48,12 +48,12 @@
 
   .alert-component--top-right {
     top: var(--spacing-lg, 1.5rem);
-    right: var(--spacing-lg, 1.5rem);
+    inset-inline-end: var(--spacing-lg, 1.5rem);
   }
 
   .alert-component--bottom-left {
     bottom: var(--spacing-lg, 1.5rem);
-    left: var(--spacing-lg, 1.5rem);
+    inset-inline-start: var(--spacing-lg, 1.5rem);
     top: auto;
   }
 
@@ -66,7 +66,7 @@
 
   .alert-component--bottom-right {
     bottom: var(--spacing-lg, 1.5rem);
-    right: var(--spacing-lg, 1.5rem);
+    inset-inline-end: var(--spacing-lg, 1.5rem);
     top: auto;
   }
 
@@ -276,7 +276,7 @@
     transition:
       opacity var(--transition-fast, 0.15s),
       background-color var(--transition-fast, 0.15s);
-    margin-left: auto;
+    margin-inline-start: auto;
   }
 
   .alert-component__dismiss svg {
@@ -393,8 +393,8 @@
 
     .alert-component--top-center,
     .alert-component--bottom-center {
-      left: var(--spacing-lg, 1.5rem);
-      right: var(--spacing-lg, 1.5rem);
+      inset-inline-start: var(--spacing-lg, 1.5rem);
+      inset-inline-end: var(--spacing-lg, 1.5rem);
       transform: translateY(-10px);
       width: calc(100vw - 2 * var(--spacing-lg, 1.5rem));
     }

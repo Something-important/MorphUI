@@ -41,7 +41,7 @@
 
   .table-component__th {
     padding: var(--spacing-md, 1rem);
-    text-align: left;
+    text-align: start;
     font-weight: var(--font-weight-semibold, 600);
     color: var(--table-custom-header-color, var(--table-header-color, var(--color-text, #111827)));
     border-bottom: 2px solid
@@ -55,7 +55,7 @@
      has position: relative). */
   .table-component__resize-handle {
     position: absolute;
-    right: -2px;
+    inset-inline-end: -2px;
     top: 0;
     bottom: 0;
     width: 4px;
@@ -76,8 +76,8 @@
     width: 2.5rem;
     min-width: 2.5rem;
     text-align: center;
-    padding-left: var(--spacing-xs, 0.5rem);
-    padding-right: var(--spacing-xs, 0.5rem);
+    padding-inline-start: var(--spacing-xs, 0.5rem);
+    padding-inline-end: var(--spacing-xs, 0.5rem);
   }
   .table-component__expand-toggle {
     background: none;
@@ -124,7 +124,7 @@
   .table-component__th--fixed-left,
   .table-component__td--fixed-left {
     position: sticky;
-    left: var(--table-fixed-offset, 0);
+    inset-inline-start: var(--table-fixed-offset, 0);
     z-index: 2;
     background: var(
       --table-custom-header-bg,
@@ -135,7 +135,7 @@
   .table-component__th--fixed-right,
   .table-component__td--fixed-right {
     position: sticky;
-    right: var(--table-fixed-offset, 0);
+    inset-inline-end: var(--table-fixed-offset, 0);
     z-index: 2;
     background: var(
       --table-custom-header-bg,
@@ -235,13 +235,13 @@
 
   .table-component--bordered .table-component__td,
   .table-component--bordered .table-component__th {
-    border-right: 1px solid
+    border-inline-end: 1px solid
       var(--table-custom-border, var(--table-border, var(--color-border, #d1d5db)));
   }
 
   .table-component--bordered .table-component__td:last-child,
   .table-component--bordered .table-component__th:last-child {
-    border-right: none;
+    border-inline-end: none;
   }
 
   /* Sizes */

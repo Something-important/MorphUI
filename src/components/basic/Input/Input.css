@@ -95,11 +95,11 @@
   /* Icon positioning */
 
   .input-component.input-component--has-left-icon {
-    padding-left: 2.5rem;
+    padding-inline-start: 2.5rem;
   }
 
   .input-component.input-component--has-right-icon {
-    padding-right: 2.5rem;
+    padding-inline-end: 2.5rem;
   }
 
   /* Floating label support */
@@ -112,11 +112,11 @@
   /* Ensure proper spacing for floating labels with icons */
 
   .input-component.input-component--has-left-icon.input-component--floating-label {
-    padding-left: 2.5rem;
+    padding-inline-start: 2.5rem;
   }
 
   .input-component.input-component--has-right-icon.input-component--floating-label {
-    padding-right: 2.5rem;
+    padding-inline-end: 2.5rem;
   }
 
   /* Variant classes (match Button exactly) - Highest specificity */
@@ -180,7 +180,7 @@
 
   .input-spinner {
     position: absolute;
-    right: 0.75rem;
+    inset-inline-end: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
     width: 1rem;
@@ -221,11 +221,11 @@
   }
 
   .input-icon--left {
-    left: 0.75rem;
+    inset-inline-start: 0.75rem;
   }
 
   .input-icon--right {
-    right: 0.75rem;
+    inset-inline-end: 0.75rem;
   }
 
   /* Password toggle button */
@@ -251,7 +251,7 @@
 
   .input-floating-label {
     position: absolute;
-    left: 0.75rem;
+    inset-inline-start: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--color-text-secondary);
@@ -265,14 +265,14 @@
   }
 
   .input-component.input-component--has-left-icon .input-floating-label {
-    left: 2.5rem;
+    inset-inline-start: 2.5rem;
   }
 
   /* Character count - positioned inside the input box */
 
   .input-character-count {
     position: absolute;
-    right: 0.75rem;
+    inset-inline-end: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
     font-size: 0.75rem;
@@ -291,13 +291,13 @@
   /* Adjust input padding when character count is shown */
 
   .input-wrapper--has-character-count .input-component {
-    padding-right: 4rem;
+    padding-inline-end: 4rem;
   }
 
   /* Ensure character count doesn't overlap with right icon */
 
   .input-wrapper--has-character-count.input-wrapper--has-right-icon .input-component {
-    padding-right: 4rem;
+    padding-inline-end: 4rem;
   }
 
   /* Character count with custom styling */
@@ -344,8 +344,8 @@
   .input-suggestions {
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     background: var(--color-background);
     border: 1px solid var(--color-border);
     border-top: none;
@@ -598,7 +598,7 @@
   /* Loading state */
 
   .input-component.input-component--loading {
-    padding-right: 2.5rem;
+    padding-inline-end: 2.5rem;
   }
 
   .input-component:focus + .input-icon,
@@ -616,7 +616,7 @@
   /* Ensure proper spacing for floating labels with icons */
 
   .input-component.input-component--has-left-icon .input-floating-label--active {
-    left: 2.5rem;
+    inset-inline-start: 2.5rem;
   }
 
   /* Error state icon */
@@ -662,8 +662,8 @@
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     bottom: 0;
     border-radius: inherit;
     padding: 1px;
