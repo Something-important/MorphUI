@@ -1,321 +1,177 @@
-// Toast.stories.tsx
-import React, { useCallback } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Toast, ToastProvider, useToast, type ToastOptions, type ToastPosition } from './Toast';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
+import { Toast, ToastProvider, useToast } from './Toast';
 import { Button } from '../../basic/Button';
+import { Demo, Stack, ThemeGrid } from '../../../stories/_shared';
 
-/** Helper that fires toasts via the imperative API. */
-const ToastLauncher: React.FC = () => {
-  const { toast } = useToast();
-
-  return (
-    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-      <Button size="sm" onClick={() => toast.success('Saved', 'Your changes were saved.')}>
-        Success
-      </Button>
-      <Button size="sm" onClick={() => toast.danger('Upload failed', 'Please try again.')}>
-        Error
-      </Button>
-      <Button size="sm" onClick={() => toast.warning('Storage almost full', '83% used.')}>
-        Warning
-      </Button>
-      <Button size="sm" onClick={() => toast.info('New version available')}>
-        Info
-      </Button>
-      <Button
-        size="sm"
-        onClick={() =>
-          toast({
-            title: 'File deleted',
-            description: 'Recover it from the trash within 30 days.',
-            variant: 'warning',
-            action: 'Undo',
-            onActionClick: () => toast.success('File restored'),
-          })
-        }
-      >
-        With action
-      </Button>
-      <Button size="sm" onClick={() => toast({ title: 'Sticky toast', duration: 0 })}>
-        Sticky
-      </Button>
-    </div>
-  );
-};
-
-/** Theme wrapper for stories. */
-const ThemedToastStory: React.FC<{
-  themeName: ThemeName;
-  position: ToastPosition;
-  duration?: number;
-  maxToasts?: number;
-  autoDismiss?: boolean;
-  pauseOnHover?: boolean;
-}> = ({
-  themeName: _themeName,
-  position,
-  duration = 4000,
-  maxToasts = 3,
-  autoDismiss = true,
-  pauseOnHover = true,
-}) => (
-  <ToastProvider
-    position={position}
-    duration={duration}
-    maxToasts={maxToasts}
-    autoDismiss={autoDismiss}
-    pauseOnHover={pauseOnHover}
-  >
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '16px',
-        background: 'var(--color-background-secondary)',
-        flexWrap: 'wrap',
-        padding: '24px',
-      }}
-    >
-      <ToastLauncher />
-    </div>
-  </ToastProvider>
-);
-
-export default {
-  title: 'Components/Toast',
+const meta: Meta<typeof Toast> = {
+  title: 'Composition/Toast',
   component: Toast,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'centered',
     docs: {
       description: {
         component:
-          'A toast notification system with an imperative API. Wrap your app in `<ToastProvider>` and fire notifications with `useToast()`. Supports variants, six screen positions, auto-dismiss with pause-on-hover, stacked viewports, actions, and full theming.',
-      },
-    },
-  },
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['success', 'warning', 'danger', 'info', 'primary', 'secondary'],
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg'],
-    },
-    animation: {
-      control: { type: 'select' },
-      options: ['fade', 'slide', 'scale', 'slide-up', 'slide-down'],
-    },
-    dismissible: { control: { type: 'boolean' } },
-    autoDismiss: { control: { type: 'boolean' } },
-    duration: { control: { type: 'number' } },
-    pauseOnHover: { control: { type: 'boolean' } },
-    glassmorphism: { control: { type: 'boolean' } },
-  },
-} satisfies Meta<typeof Toast>;
-
-type Story = StoryObj<typeof Toast>;
-
-// Playground: all variants via the imperative API (dark theme, default position)
-export const Playground: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="bottom-right" />,
-};
-
-// Light theme
-export const LightTheme: Story = {
-  render: () => <ThemedToastStory themeName="light" position="bottom-right" />,
-};
-
-// Dark theme
-export const DarkTheme: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="bottom-right" />,
-};
-
-// Positions
-export const TopRight: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="top-right" />,
-};
-
-export const TopCenter: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="top-center" />,
-};
-
-export const BottomCenter: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="bottom-center" />,
-};
-
-export const BottomLeft: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="bottom-left" />,
-};
-
-// Long duration to demo pause-on-hover
-export const PauseOnHover: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="bottom-right" duration={6000} />,
-  parameters: {
-    docs: {
-      description: {
-        story: 'Hover a toast to pause its auto-dismiss countdown; move away to resume.',
+          'Toast renders a transient notification. Use ToastProvider + useToast hook for managed queuing, or render Toast standalone with open/onClose. 4 variants, 4 sizes, 6 positions, 5 animations.',
       },
     },
   },
 };
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-// Unlimited simultaneous toasts
-export const UnlimitedStack: Story = {
+// Standalone (presentational) toast — no provider needed
+export const Default: Story = {
   render: () => (
-    <ThemedToastStory themeName="dark" position="bottom-right" maxToasts={0} duration={0} />
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'maxToasts=0 disables the stack limit and duration=0 keeps toasts until dismissed.',
-      },
-    },
-  },
-};
-
-// Dismissible-only (no auto dismiss)
-export const ManualDismissOnly: Story = {
-  render: () => <ThemedToastStory themeName="dark" position="bottom-right" autoDismiss={false} />,
-};
-
-// Standalone presentational usage (no provider)
-export const Standalone: Story = {
-  render: () => (
-    <ThemeProvider theme={themes.light}>
-      <div
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '12px',
-          background: 'var(--color-background-secondary)',
-          padding: '24px',
-        }}
-      >
-        {(['success', 'danger', 'warning', 'info'] as const).map((variant) => (
-          <Toast
-            key={variant}
-            open
-            variant={variant}
-            animation="slide-up"
-            title={`${variant[0].toUpperCase()}${variant.slice(1)}`}
-            description="A standalone toast placed inline in the layout."
-            style={{ position: 'static', pointerEvents: 'auto' }}
-          />
-        ))}
-      </div>
-    </ThemeProvider>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'The presentational `Toast` can also be used directly without a provider — position it yourself in the layout.',
-      },
-    },
-  },
-};
-
-// Custom icons and styling
-export const CustomStyling: Story = {
-  render: () => (
-    <ThemeProvider theme={themes.dark}>
-      <ToastProvider position="bottom-right" duration={0}>
-        <CustomStylingLauncher />
-      </ToastProvider>
-    </ThemeProvider>
-  ),
-};
-
-const CustomStylingLauncher: React.FC = () => {
-  const { toast } = useToast();
-
-  const fire = useCallback((options: ToastOptions) => toast(options), [toast]);
-
-  return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '8px',
-        background: 'var(--color-background-secondary)',
-        flexWrap: 'wrap',
-        padding: '24px',
-      }}
-    >
-      <Button
-        size="sm"
-        onClick={() =>
-          fire({
-            title: 'Accent override',
-            description: 'Custom accent color and radius.',
-            color: '#a855f7',
-            borderRadius: 16,
-          })
-        }
-      >
-        Purple accent
-      </Button>
-      <Button
-        size="sm"
-        onClick={() =>
-          fire({
-            title: 'No icon',
-            description: 'Icon hidden via showIcon={false}.',
-            showIcon: false,
-            variant: 'secondary',
-          })
-        }
-      >
-        No icon
-      </Button>
-      <Button
-        size="sm"
-        onClick={() =>
-          fire({
-            title: 'Custom icon',
-            description: 'Emoji icon passed inline.',
-            customIcon: '🚀',
-            variant: 'primary',
-          })
-        }
-      >
-        Rocket icon
-      </Button>
-      <Button
-        size="sm"
-        onClick={() =>
-          fire({
-            title: 'Glass toast',
-            description: 'Glassmorphism styling.',
-            glassmorphism: true,
-            variant: 'info',
-          })
-        }
-      >
-        Glassmorphism
-      </Button>
-      <Button
-        size="sm"
-        onClick={() =>
-          fire({
-            title: 'Large toast',
-            description: 'size="lg" with a longer message body.',
-            variant: 'success',
-            size: 'lg',
-          })
-        }
-      >
-        Large
-      </Button>
+    <div style={{ padding: '40px' }}>
+      <Toast
+        open
+        variant="info"
+        title="Default toast"
+        description="This is a standalone toast rendered with open=true."
+      />
     </div>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Demo title="All variants (standalone)">
+      <Stack gap={8}>
+        <Toast open variant="info" title="Info" description="Informational message" />
+        <Toast open variant="success" title="Success" description="Operation completed" />
+        <Toast open variant="warning" title="Warning" description="Please review" />
+        <Toast open variant="danger" title="Error" description="Something went wrong" />
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Demo title="All sizes">
+      <Stack gap={8}>
+        <Toast open size="xs" variant="info" description="Extra small" />
+        <Toast open size="sm" variant="info" description="Small" />
+        <Toast open size="md" variant="info" description="Medium" />
+        <Toast open size="lg" variant="info" description="Large" />
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const States: Story = {
+  render: () => (
+    <Demo title="Dismissible & auto-dismiss">
+      <Stack gap={8}>
+        <Toast
+          open
+          variant="info"
+          title="Dismissible"
+          description="Click X to dismiss"
+          dismissible
+        />
+        <Toast
+          open
+          variant="success"
+          title="Auto-dismiss"
+          description="Dismisses after 4s"
+          autoDismiss
+          duration={4000}
+        />
+      </Stack>
+    </Demo>
+  ),
+};
+
+// Managed toasts via ToastProvider + useToast
+const ToastLauncher = () => {
+  const { toast } = useToast();
+  return (
+    <Demo title="Managed toasts (ToastProvider + useToast)">
+      <Stack gap={8}>
+        <Button
+          variant="primary"
+          onClick={() => toast.success('Saved', 'Changes saved successfully')}
+        >
+          Show success toast
+        </Button>
+        <Button
+          variant="danger"
+          onClick={() =>
+            toast({ variant: 'danger', title: 'Failed', description: 'Could not save changes' })
+          }
+        >
+          Show error toast
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() =>
+            toast({ variant: 'info', title: 'Info', description: 'Here is some info' })
+          }
+        >
+          Show info toast
+        </Button>
+      </Stack>
+    </Demo>
   );
+};
+
+export const Controlled: Story = {
+  render: () => (
+    <ToastProvider position="top-right">
+      <ToastLauncher />
+    </ToastProvider>
+  ),
+};
+
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Positions & animations (standalone)">
+      <Stack gap={8}>
+        <Toast
+          open
+          variant="info"
+          title="Slide-up"
+          description="slide-up animation"
+          animation="slide-up"
+        />
+        <Toast open variant="info" title="Scale" description="scale animation" animation="scale" />
+        <Toast open variant="info" title="Fade" description="fade animation" animation="fade" />
+        <Toast
+          open
+          variant="info"
+          title="Custom color"
+          description="custom background"
+          color="#ff0055"
+          textColor="#fff"
+        />
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Toast across all 5 preset themes">
+      <ThemeGrid>
+        <Toast open variant="info" title="Theme" description="Themed toast" />
+      </ThemeGrid>
+    </Demo>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — long text, body-only, no title">
+      <Stack gap={8}>
+        <Toast
+          open
+          variant="info"
+          title="Long title that might wrap or truncate"
+          description="This toast contains a very long body message that should wrap gracefully across multiple lines without breaking the toast layout."
+        />
+        <Toast open variant="info" description="Body only, no title" />
+      </Stack>
+    </Demo>
+  ),
 };
