@@ -1,7 +1,7 @@
 // Label.stories.tsx
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Label, Input, Button, ThemeProvider, themes, type ThemeName } from '../../index';
+import { Label, Input, Button } from '../../index';
 
 const meta: Meta<typeof Label> = {
   title: 'Components/Label',
@@ -351,76 +351,6 @@ export const FormExample: Story = {
 };
 
 // Theme Showcase
-export const ThemeShowcase: Story = {
-  render: () => {
-    const [currentTheme, setCurrentTheme] = useState<ThemeName>('light');
-
-    return (
-      <ThemeProvider theme={themes[currentTheme]}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '500px' }}>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {Object.keys(themes).map((themeName) => (
-              <Button
-                key={themeName}
-                variant={currentTheme === themeName ? 'primary' : 'outline'}
-                size="sm"
-                onClick={() => setCurrentTheme(themeName as ThemeName)}
-              >
-                {themeName.charAt(0).toUpperCase() + themeName.slice(1)}
-              </Button>
-            ))}
-          </div>
-
-          <div
-            style={{
-              padding: '20px',
-              border: '1px solid var(--color-border, #e5e7eb)',
-              borderRadius: '8px',
-              backgroundColor: 'var(--color-background, #ffffff)',
-            }}
-          >
-            <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
-              Labels with Current Theme: {currentTheme}
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div>
-                <Label variant="primary" htmlFor="theme-primary">
-                  Primary Label
-                </Label>
-              </div>
-              <div>
-                <Label variant="secondary" htmlFor="theme-secondary">
-                  Secondary Label
-                </Label>
-              </div>
-              <div>
-                <Label variant="success" htmlFor="theme-success" required>
-                  Success Label (Required)
-                </Label>
-              </div>
-              <div>
-                <Label variant="warning" htmlFor="theme-warning">
-                  Warning Label
-                </Label>
-              </div>
-              <div>
-                <Label variant="danger" htmlFor="theme-danger" required>
-                  Danger Label (Required)
-                </Label>
-              </div>
-              <div>
-                <Label variant="info" htmlFor="theme-info">
-                  Info Label
-                </Label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // With Form Validation States
 export const ValidationStates: Story = {
   render: () => {

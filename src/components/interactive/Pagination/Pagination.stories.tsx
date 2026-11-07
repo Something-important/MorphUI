@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Pagination } from './Pagination';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Button } from '../../basic/Button';
 
 export default {
@@ -219,68 +218,6 @@ export const CustomColors: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = useState<ThemeName>('light');
-    const [page, setPage] = useState(1);
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div>
-              <h3 style={{ marginBottom: '1rem' }}>Basic Pagination</h3>
-              <Pagination
-                totalItems={100}
-                pageSize={10}
-                currentPage={page}
-                onPageChange={setPage}
-              />
-            </div>
-
-            <div>
-              <h3 style={{ marginBottom: '1rem' }}>With All Features</h3>
-              <Pagination
-                totalItems={200}
-                pageSize={10}
-                currentPage={page}
-                onPageChange={setPage}
-                showPageNumbers
-                showFirstLast
-                showTotal
-              />
-            </div>
-          </div>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Interactive example
 export const Interactive: Story = {
   render: () => {

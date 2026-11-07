@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Carousel } from './Carousel';
-import { ThemeProvider } from '../../theme';
 
 const meta: Meta<typeof Carousel> = {
   title: 'Components/Carousel',
@@ -76,40 +75,32 @@ const slides = [
 
 export const Default: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 500 }}>
-        <Carousel slides={slides} shadow="lg" />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 500 }}>
+      <Carousel slides={slides} shadow="lg" />
+    </div>
   ),
 };
 
 export const Autoplay: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 500 }}>
-        <Carousel slides={slides} autoplay autoplayInterval={2000} shadow="md" />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 500 }}>
+      <Carousel slides={slides} autoplay autoplayInterval={2000} shadow="md" />
+    </div>
   ),
 };
 
 export const NoLoop: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 500 }}>
-        <Carousel slides={slides} loop={false} />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 500 }}>
+      <Carousel slides={slides} loop={false} />
+    </div>
   ),
 };
 
 export const Minimal: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 500 }}>
-        <Carousel slides={slides} showArrows={false} showDots={false} />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 500 }}>
+      <Carousel slides={slides} showArrows={false} showDots={false} />
+    </div>
   ),
 };

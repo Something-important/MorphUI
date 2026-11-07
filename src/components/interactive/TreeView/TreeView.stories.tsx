@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TreeView, type TreeNode } from './TreeView';
-import { ThemeProvider } from '../../theme';
 
 const fileTree: TreeNode[] = [
   {
@@ -37,21 +36,17 @@ type Story = StoryObj<typeof TreeView>;
 
 export const Default: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 300 }}>
-        <TreeView nodes={fileTree} defaultExpandedNodeIds={['src', 'components']} />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 300 }}>
+      <TreeView nodes={fileTree} defaultExpandedNodeIds={['src', 'components']} />
+    </div>
   ),
 };
 
 export const WithIcons: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 300 }}>
-        <TreeView nodes={fileTree} defaultExpandedNodeIds={['src']} />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 300 }}>
+      <TreeView nodes={fileTree} defaultExpandedNodeIds={['src']} />
+    </div>
   ),
 };
 
@@ -60,38 +55,32 @@ export const Controlled: Story = {
     const [selected, setSelected] = React.useState<string | null>('button');
     const [expanded, setExpanded] = React.useState<string[]>(['src', 'components']);
     return (
-      <ThemeProvider>
-        <div style={{ width: 300 }}>
-          <TreeView
-            nodes={fileTree}
-            selectedNodeId={selected}
-            onSelect={(id) => setSelected(id)}
-            expandedNodeIds={expanded}
-            onExpandChange={setExpanded}
-          />
-          <p style={{ marginTop: 12, fontSize: 14 }}>Selected: {selected ?? '(none)'}</p>
-        </div>
-      </ThemeProvider>
+      <div style={{ width: 300 }}>
+        <TreeView
+          nodes={fileTree}
+          selectedNodeId={selected}
+          onSelect={(id) => setSelected(id)}
+          expandedNodeIds={expanded}
+          onExpandChange={setExpanded}
+        />
+        <p style={{ marginTop: 12, fontSize: 14 }}>Selected: {selected ?? '(none)'}</p>
+      </div>
     );
   },
 };
 
 export const Outline: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 300 }}>
-        <TreeView nodes={fileTree} variant="outline" defaultExpandedNodeIds={['src']} shadow="sm" />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 300 }}>
+      <TreeView nodes={fileTree} variant="outline" defaultExpandedNodeIds={['src']} shadow="sm" />
+    </div>
   ),
 };
 
 export const NoLines: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ width: 300 }}>
-        <TreeView nodes={fileTree} showLines={false} defaultExpandedNodeIds={['src']} />
-      </div>
-    </ThemeProvider>
+    <div style={{ width: 300 }}>
+      <TreeView nodes={fileTree} showLines={false} defaultExpandedNodeIds={['src']} />
+    </div>
   ),
 };

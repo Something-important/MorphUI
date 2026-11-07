@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Drawer } from './Drawer';
 import { Button } from '../../basic/Button';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Input } from '../../basic/Input';
 import { Label } from '../../basic/Label';
 
@@ -251,53 +250,6 @@ export const WithoutBackdrop: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = useState<ThemeName>('light');
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <Button onClick={() => setIsOpen(true)}>Open Drawer</Button>
-          <Drawer
-            isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
-            title="Theme Switched Drawer"
-            description="This drawer adapts to the selected theme"
-          >
-            <p>Drawer content that respects the theme settings.</p>
-          </Drawer>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Full-width drawer
 export const FullWidth: Story = {
   render: () => {

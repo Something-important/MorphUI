@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Slider } from './Slider';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Button } from '../../basic/Button';
 
 export default {
@@ -245,70 +244,6 @@ export const Gradients: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = useState<ThemeName>('light');
-    const [value1, setValue1] = useState(30);
-    const [value2, setValue2] = useState(70);
-    const [range, setRange] = useState<[number, number]>([25, 75]);
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '500px' }}>
-            <Slider
-              value={value1}
-              onChange={(val) => setValue1(val as number)}
-              variant="primary"
-              label="Primary Slider"
-              showValue
-            />
-            <Slider
-              value={value2}
-              onChange={(val) => setValue2(val as number)}
-              variant="success"
-              label="Success Slider"
-              showValue
-            />
-            <Slider
-              range
-              value={range}
-              onChange={(val) => setRange(val as [number, number])}
-              variant="warning"
-              label="Range Slider"
-              showValue
-            />
-          </div>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Interactive examples
 export const InteractiveExamples: Story = {
   render: () => {

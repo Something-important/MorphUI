@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Alert, type AlertPosition } from './Alert';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Button } from '../../basic/Button';
 
 export default {
@@ -704,109 +703,6 @@ export const Interactive: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = useState<ThemeName>('light');
-    const [open1, setOpen1] = useState(true);
-    const [open2, setOpen2] = useState(true);
-    const [open3, setOpen3] = useState(true);
-    const [open4, setOpen4] = useState(true);
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px', textAlign: 'center', minHeight: '100vh' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              gap: '10px',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              marginBottom: '20px',
-            }}
-          >
-            <Button onClick={() => setOpen1(!open1)} size="sm">
-              {open1 ? 'Hide' : 'Show'} Success
-            </Button>
-            <Button onClick={() => setOpen2(!open2)} size="sm">
-              {open2 ? 'Hide' : 'Show'} Warning
-            </Button>
-            <Button onClick={() => setOpen3(!open3)} size="sm">
-              {open3 ? 'Hide' : 'Show'} Error
-            </Button>
-            <Button onClick={() => setOpen4(!open4)} size="sm">
-              {open4 ? 'Hide' : 'Show'} Info
-            </Button>
-          </div>
-
-          <Alert
-            variant="success"
-            title="Success Alert"
-            position="top-right"
-            open={open1}
-            onClose={() => setOpen1(false)}
-          >
-            This success alert adapts to the {theme} theme
-          </Alert>
-
-          <Alert
-            variant="warning"
-            title="Warning Alert"
-            position="top-center"
-            open={open2}
-            onClose={() => setOpen2(false)}
-          >
-            This warning alert adapts to the {theme} theme
-          </Alert>
-
-          <Alert
-            variant="danger"
-            title="Error Alert"
-            position="top-left"
-            open={open3}
-            onClose={() => setOpen3(false)}
-          >
-            This error alert adapts to the {theme} theme
-          </Alert>
-
-          <Alert
-            variant="info"
-            title="Info Alert"
-            position="bottom-right"
-            open={open4}
-            onClose={() => setOpen4(false)}
-          >
-            This info alert adapts to the {theme} theme
-          </Alert>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Long content
 export const LongContent: Story = {
   args: {
