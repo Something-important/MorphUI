@@ -1,1042 +1,131 @@
-import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Dropdown, DropdownOption, DropdownOptionGroup } from '../../index';
+import { Dropdown, type DropdownOption } from './Dropdown';
+import { Demo, Stack, ThemeGrid } from '../../../stories/_shared';
 
 const meta: Meta<typeof Dropdown> = {
-  title: 'Components/Dropdown',
+  title: 'Patterns/Dropdown',
   component: Dropdown,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'A flexible dropdown component with support for single/multi-select, search, theming, and positioning.',
+          'Dropdown renders a select menu with single/multi-select, search, grouping, icons, and custom rendering. 8 variants, 5 sizes.',
       },
     },
   },
-  argTypes: {
-    size: {
-      control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
-      description: 'Size of the dropdown',
-    },
-    variant: {
-      control: { type: 'select' },
-      options: ['default', 'outline', 'ghost'],
-      description: 'Visual variant of the dropdown',
-    },
-    color: {
-      control: { type: 'text' },
-      description: 'Custom background color (hex, rgb, theme key)',
-    },
-    textColor: {
-      control: { type: 'text' },
-      description: 'Custom text color',
-    },
-    borderColor: {
-      control: { type: 'text' },
-      description: 'Custom border color',
-    },
-    labelColor: {
-      control: { type: 'text' },
-      description: 'Custom label color',
-    },
-    descriptionColor: {
-      control: { type: 'text' },
-      description: 'Custom description color',
-    },
-    position: {
-      control: { type: 'select' },
-      options: ['bottom', 'top', 'left', 'right'],
-      description: 'Position of the dropdown list',
-    },
-    width: {
-      control: { type: 'text' },
-      description: 'Custom width of the dropdown',
-    },
-    maxHeight: {
-      control: { type: 'text' },
-      description: 'Maximum height of the dropdown list',
-    },
-    searchable: {
-      control: { type: 'boolean' },
-      description: 'Enable search functionality',
-    },
-    clearable: {
-      control: { type: 'boolean' },
-      description: 'Show clear button when value is selected',
-    },
-    multiSelect: {
-      control: { type: 'boolean' },
-      description: 'Enable multiple selection',
-    },
-    maxSelections: {
-      control: { type: 'number' },
-      description: 'Maximum number of selections (multi-select only)',
-    },
-    hoverEffect: {
-      control: { type: 'select' },
-      options: ['none', 'lift', 'glow', 'scale'],
-      description: 'Hover effect type',
-    },
-    disabled: {
-      control: { type: 'boolean' },
-      description: 'Disable the dropdown',
-    },
-  },
-  decorators: [
-    (Story) => (
-      <div style={{ padding: '2rem', minHeight: '400px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
-
 export default meta;
-type Story = StoryObj<typeof Dropdown>;
+type Story = StoryObj<typeof meta>;
 
-// Sample options
-const sampleOptions: DropdownOption[] = [
-  { label: 'Apple', value: 'apple', icon: '🍎' },
-  { label: 'Banana', value: 'banana', icon: '🍌' },
-  { label: 'Cherry', value: 'cherry', icon: '🍒' },
-  { label: 'Date', value: 'date', icon: '📅' },
-  { label: 'Elderberry', value: 'elderberry', icon: '🫐' },
-  { label: 'Fig', value: 'fig', icon: '🌿' },
-  { label: 'Grape', value: 'grape', icon: '🍇' },
-  { label: 'Honeydew', value: 'honeydew', icon: '🍈' },
+const options: DropdownOption[] = [
+  { label: 'Apple', value: 'apple' },
+  { label: 'Banana', value: 'banana' },
+  { label: 'Cherry', value: 'cherry' },
+  { label: 'Date', value: 'date' },
+  { label: 'Elderberry', value: 'elderberry' },
+  { label: 'Fig', value: 'fig' },
+  { label: 'Grape', value: 'grape' },
+  { label: 'Honeydew', value: 'honeydew' },
 ];
 
-const countries: DropdownOption[] = [
-  { label: 'United States', value: 'us', description: 'North America' },
-  { label: 'Canada', value: 'ca', description: 'North America' },
-  { label: 'United Kingdom', value: 'uk', description: 'Europe' },
-  { label: 'Germany', value: 'de', description: 'Europe' },
-  { label: 'France', value: 'fr', description: 'Europe' },
-  { label: 'Japan', value: 'jp', description: 'Asia' },
-  { label: 'Australia', value: 'au', description: 'Oceania' },
-  { label: 'Brazil', value: 'br', description: 'South America' },
-];
-
-// ============================================================================
-// BASIC FUNCTIONALITY STORIES
-// ============================================================================
-
-export const Basic: Story = {
+export const Default: Story = {
   args: {
-    options: sampleOptions,
+    options,
     placeholder: 'Select a fruit...',
   },
 };
 
-export const MultiSelect: Story = {
-  render: () => {
-    const [values, setValues] = useState<string[]>([]);
-
-    return (
-      <Dropdown
-        options={sampleOptions}
-        value={values}
-        onChange={(val) => setValues(val as string[])}
-        placeholder="Select multiple fruits"
-        multiSelect
-        showOptionCount
-      />
-    );
-  },
-};
-
-export const Searchable: Story = {
-  render: () => {
-    const [value, setValue] = useState<string>('');
-
-    return (
-      <Dropdown
-        options={countries}
-        value={value}
-        onChange={(val) => setValue(val as string)}
-        placeholder="Search countries..."
-        searchable
-        showOptionCount
-      />
-    );
-  },
-};
-
-// ============================================================================
-// VISUAL VARIANT STORIES
-// ============================================================================
-
-export const SizeVariants: Story = {
+export const Variants: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Small dropdown"
-        size="sm"
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Medium dropdown (default)"
-        size="md"
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Large dropdown"
-        size="lg"
-        onChange={() => {}}
-      />
-    </div>
+    <Demo title="All variants">
+      <Stack gap={8} style={{ width: '320px' }}>
+        {(['default', 'outline', 'ghost'] as const).map((v) => (
+          <Dropdown key={v} options={options} variant={v} placeholder={v} />
+        ))}
+      </Stack>
+    </Demo>
   ),
 };
 
-export const VisualVariants: Story = {
+export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Default variant"
-        variant="default"
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Outline variant"
-        variant="outline"
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Ghost variant"
-        variant="ghost"
-        onChange={() => {}}
-      />
-    </div>
+    <Demo title="All sizes">
+      <Stack gap={8} style={{ width: '320px' }}>
+        {(['sm', 'md', 'lg'] as const).map((s) => (
+          <Dropdown key={s} options={options} size={s} placeholder={s} />
+        ))}
+      </Stack>
+    </Demo>
   ),
 };
 
-export const Positioning: Story = {
-  render: () => {
-    const [value1, setValue1] = useState<string>('');
-    const [value2, setValue2] = useState<string>('');
-    const [value3, setValue3] = useState<string>('');
-    const [value4, setValue4] = useState<string>('');
-
-    return (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '2rem',
-          alignItems: 'start',
-        }}
-      >
-        <div>
-          <h4 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: '500' }}>
-            Bottom (default)
-          </h4>
-          <Dropdown
-            options={sampleOptions}
-            value={value1}
-            onChange={(val) => setValue1(val as string)}
-            placeholder="Bottom position"
-            position="bottom"
-          />
-        </div>
-
-        <div>
-          <h4 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: '500' }}>Top</h4>
-          <Dropdown
-            options={sampleOptions}
-            value={value2}
-            onChange={(val) => setValue2(val as string)}
-            placeholder="Top position"
-            position="top"
-          />
-        </div>
-
-        <div>
-          <h4 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: '500' }}>Left</h4>
-          <Dropdown
-            options={sampleOptions}
-            value={value3}
-            onChange={(val) => setValue3(val as string)}
-            placeholder="Left position"
-            position="left"
-          />
-        </div>
-
-        <div>
-          <h4 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: '500' }}>Right</h4>
-          <Dropdown
-            options={sampleOptions}
-            value={value4}
-            onChange={(val) => setValue4(val as string)}
-            placeholder="Right position"
-            position="right"
-          />
-        </div>
-      </div>
-    );
-  },
-};
-
-// ============================================================================
-// ADVANCED FEATURE STORIES
-// ============================================================================
-
-export const CustomColors: Story = {
+export const States: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Custom background color"
-        gradient="#10b981"
-        textColor="white"
-        borderColor="#059669"
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Custom text color"
-        textColor="#7c3aed"
-        borderColor="#7c3aed"
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Custom border color"
-        borderColor="#f59e0b"
-        onChange={() => {}}
-      />
-    </div>
+    <Demo title="Disabled, default value, clearable">
+      <Stack gap={8} style={{ width: '320px' }}>
+        <Dropdown options={options} disabled placeholder="Disabled" />
+        <Dropdown options={options} defaultValue="cherry" placeholder="With default" />
+        <Dropdown options={options} clearable placeholder="Clearable" />
+      </Stack>
+    </Demo>
   ),
 };
 
-export const CustomWidth: Story = {
+export const Controlled: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Narrow dropdown"
-        width={150}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Medium dropdown (default)"
-        width={200}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Wide dropdown"
-        width={350}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Full width dropdown"
-        width="100%"
-        onChange={() => {}}
-      />
-    </div>
+    <Demo title="Controlled vs uncontrolled">
+      <Stack gap={8} style={{ width: '320px' }}>
+        <Dropdown options={options} defaultValue="apple" placeholder="Uncontrolled" />
+        <Dropdown options={options} value="banana" onChange={() => {}} placeholder="Controlled" />
+      </Stack>
+    </Demo>
   ),
 };
 
-export const CustomTrigger: Story = {
-  render: () => {
-    const [value, setValue] = useState<string>('');
-
-    return (
-      <Dropdown
-        options={sampleOptions}
-        value={value}
-        onChange={(val) => setValue(val as string)}
-        trigger={
-          <div
-            style={{
-              padding: '12px 16px',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              textAlign: 'center',
-              fontWeight: '500',
-            }}
-          >
-            🎨 Custom Trigger Button
-          </div>
-        }
-      />
-    );
-  },
-};
-
-export const Disabled: Story = {
+export const Customization: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Disabled dropdown"
-        disabled
-        onChange={() => {}}
-      />
-      <Dropdown options={sampleOptions} placeholder="Enabled dropdown" onChange={() => {}} />
-    </div>
+    <Demo title="Multi-select, searchable, grouped, icons, disabled options">
+      <Stack gap={8} style={{ width: '320px' }}>
+        <Dropdown options={options} multiSelect placeholder="Multi-select..." />
+        <Dropdown options={options} searchable placeholder="Searchable..." />
+        <Dropdown
+          options={[
+            { label: 'With icon', value: 'icon', icon: <span>🍎</span> },
+            { label: 'With description', value: 'desc', description: 'Has a description' },
+            { label: 'Disabled', value: 'dis', disabled: true },
+          ]}
+          placeholder="Custom options"
+        />
+      </Stack>
+    </Demo>
   ),
 };
 
-export const WithIconsAndDescriptions: Story = {
-  render: () => {
-    const [value, setValue] = useState<string>('');
-
-    return (
-      <Dropdown
-        options={countries}
-        value={value}
-        onChange={(val) => setValue(val as string)}
-        placeholder="Select a country with descriptions"
-        showOptionCount
-      />
-    );
-  },
-};
-
-// ============================================================================
-// MULTI-SELECT AND ADVANCED FUNCTIONALITY STORIES
-// ============================================================================
-
-export const LimitedSelection: Story = {
-  render: () => {
-    const [values, setValues] = useState<string[]>([]);
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Dropdown
-          options={sampleOptions}
-          value={values}
-          onChange={(val) => setValues(val as string[])}
-          placeholder="Select up to 3 fruits"
-          multiSelect
-          maxSelections={3}
-          showOptionCount
-        />
-        <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
-          Try selecting more than 3 options - you'll see the limit in action!
-        </p>
-      </div>
-    );
-  },
-};
-
-export const OptionGroups: Story = {
-  render: () => {
-    const [value, setValue] = useState<string>('');
-
-    const groupedOptions: DropdownOptionGroup[] = [
-      {
-        label: 'Fruits',
-        value: 'fruits',
-        options: [
-          { label: 'Apple', value: 'apple', icon: '🍎' },
-          { label: 'Banana', value: 'banana', icon: '🍌' },
-          { label: 'Cherry', value: 'cherry', icon: '🍒' },
-        ],
-      },
-      {
-        label: 'Vegetables',
-        value: 'vegetables',
-        options: [
-          { label: 'Carrot', value: 'carrot', icon: '🥕' },
-          { label: 'Broccoli', value: 'broccoli', icon: '🥦' },
-          { label: 'Spinach', value: 'spinach', icon: '🥬' },
-        ],
-      },
-      {
-        label: 'Grains',
-        value: 'grains',
-        options: [
-          { label: 'Rice', value: 'rice', icon: '🍚' },
-          { label: 'Bread', value: 'bread', icon: '🍞' },
-          { label: 'Pasta', value: 'pasta', icon: '🍝' },
-        ],
-      },
-    ];
-
-    return (
-      <Dropdown
-        options={[]}
-        optionGroups={groupedOptions}
-        value={value}
-        onChange={(val) => setValue(val as string)}
-        placeholder="Select from grouped options"
-        showOptionCount
-      />
-    );
-  },
-};
-
-export const RandomSelectorAndSmartSelectAll: Story = {
-  render: () => {
-    const [selectedValues, setSelectedValues] = useState<Record<string, Array<string | number>>>(
-      {},
-    );
-
-    const handleChange = (key: string) => (value: string | number | Array<string | number>) => {
-      if (Array.isArray(value)) {
-        setSelectedValues((prev) => ({ ...prev, [key]: value }));
-      }
-    };
-
-    // Extended options for better demonstration
-    const extendedOptions: DropdownOption[] = [
-      { label: 'Apple', value: 'apple', icon: '🍎' },
-      { label: 'Banana', value: 'banana', icon: '🍌' },
-      { label: 'Cherry', value: 'cherry', icon: '🍒' },
-      { label: 'Date', value: 'date', icon: '📅' },
-      { label: 'Elderberry', value: 'elderberry', icon: '🫐' },
-      { label: 'Fig', value: 'fig', icon: '🌿' },
-      { label: 'Grape', value: 'grape', icon: '🍇' },
-      { label: 'Honeydew', value: 'honeydew', icon: '🍈' },
-      { label: 'Kiwi', value: 'kiwi', icon: '🥝' },
-      { label: 'Lemon', value: 'lemon', icon: '🍋' },
-      { label: 'Mango', value: 'mango', icon: '🥭' },
-      { label: 'Orange', value: 'orange', icon: '🍊' },
-    ];
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🎲 Random Selector & Smart Select All
-        </h3>
-
-        {/* No Selection Limit - Shows "Select All" */}
-        <div>
-          <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '500', color: '#555' }}>
-            No Selection Limit
-          </h4>
-          <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
-            <h5 style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: '#666' }}>
-              Shows "Select All" + "Random 3" (default)
-            </h5>
-            <Dropdown
-              options={extendedOptions}
-              value={selectedValues['no-limit'] || []}
-              onChange={handleChange('no-limit')}
-              placeholder="Select fruits (no limit)"
-              multiSelect
-              showOptionCount
-              gradient="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-              textColor="white"
-              shadow="md"
-            />
-          </div>
-        </div>
-
-        {/* Selection Limit - Shows "Select Top N" */}
-        <div>
-          <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '500', color: '#555' }}>
-            Selection Limit
-          </h4>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '16px',
-            }}
-          >
-            {[3, 5, 7].map((limit) => (
-              <div
-                key={limit}
-                style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-              >
-                <h5
-                  style={{
-                    marginBottom: '8px',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    color: '#666',
-                  }}
-                >
-                  Max {limit} selections
-                </h5>
-                <Dropdown
-                  options={extendedOptions}
-                  value={selectedValues[`limit-${limit}`] || []}
-                  onChange={handleChange(`limit-${limit}`)}
-                  placeholder={`Select up to ${limit} fruits`}
-                  multiSelect
-                  maxSelections={limit}
-                  showOptionCount
-                  background="linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)"
-                  textColor="white"
-                  shadow="md"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Random Selector Showcase */}
-        <div>
-          <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '500', color: '#555' }}>
-            🎲 Random Selector Features
-          </h4>
-          <div
-            style={{
-              padding: '16px',
-              border: '1px solid #e5e7eb',
-              borderRadius: '8px',
-              background: '#f8fafc',
-            }}
-          >
-            <h5 style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: '#666' }}>
-              How Random Selector Works
-            </h5>
-            <div
-              style={{
-                fontSize: '14px',
-                color: '#475569',
-                lineHeight: '1.5',
-                marginBottom: '16px',
-              }}
-            >
-              <p style={{ margin: '0 0 8px 0' }}>
-                <strong>🎯 Smart Selection:</strong> Random selector automatically respects
-                maxSelections limits
-              </p>
-              <p style={{ margin: '0 0 8px 0' }}>
-                <strong>🎲 True Randomness:</strong> Uses Fisher-Yates shuffle algorithm for
-                unbiased selection
-              </p>
-              <p style={{ margin: '0 0 8px 0' }}>
-                <strong>⚡ Performance:</strong> Efficient random selection without affecting
-                existing selections
-              </p>
-              <p style={{ margin: '0 0 0 0' }}>
-                <strong>🔒 Disabled Options:</strong> Automatically excludes disabled options from
-                random selection
-              </p>
-            </div>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '16px',
-              }}
-            >
-              <Dropdown
-                options={extendedOptions}
-                value={selectedValues['random-demo'] || []}
-                onChange={handleChange('random-demo')}
-                placeholder="Try random selection!"
-                multiSelect
-                maxSelections={4}
-                showOptionCount
-                background="linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)"
-                textColor="white"
-                shadow="lg"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Button Logic Explanation */}
-        <div>
-          <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '500', color: '#555' }}>
-            🔍 Button Logic
-          </h4>
-          <div
-            style={{
-              padding: '16px',
-              border: '1px solid #e5e7eb',
-              borderRadius: '8px',
-              background: '#fef3c7',
-            }}
-          >
-            <h5
-              style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: '#92400e' }}
-            >
-              Smart Button Display Logic
-            </h5>
-            <div style={{ fontSize: '14px', color: '#92400e', lineHeight: '1.5' }}>
-              <p style={{ margin: '0 0 8px 0' }}>
-                <strong>✅ "Select All":</strong> Only shown when all options can be selected (no
-                limit or limit ≥ total options)
-              </p>
-              <p style={{ margin: '0 0 8px 0' }}>
-                <strong>🎯 "Select Top N":</strong> Shown when there's a selection limit and total
-                options &gt; limit
-              </p>
-              <p style={{ margin: '0 0 8px 0' }}>
-                <strong>🎲 "Random N":</strong> Always shown, automatically adjusts to maxSelections
-                or defaults to 3
-              </p>
-              <p style={{ margin: '0 0 0 0' }}>
-                <strong>🧹 "Clear All" & "Done":</strong> Always shown for multi-select dropdowns
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// ============================================================================
-// STYLING AND EFFECTS STORIES
-// ============================================================================
-
-export const GradientBackgrounds: Story = {
+export const AllThemes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Sunset gradient"
-        gradient="linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)"
-        textColor="white"
-        borderColor="transparent"
-        shadow="lg"
-        borderRadius={12}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Ocean gradient"
-        gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-        textColor="white"
-        borderColor="transparent"
-        shadow="lg"
-        borderRadius={12}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Forest gradient"
-        gradient="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-        textColor="white"
-        borderColor="transparent"
-        shadow="lg"
-        borderRadius={12}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Sunrise gradient"
-        gradient="linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
-        textColor="white"
-        borderColor="transparent"
-        shadow="lg"
-        borderRadius={12}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Purple gradient"
-        gradient="linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)"
-        textColor="white"
-        borderColor="transparent"
-        shadow="lg"
-        borderRadius={12}
-        onChange={() => {}}
-      />
-      <Dropdown
-        options={sampleOptions}
-        placeholder="Gold gradient"
-        gradient="linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)"
-        textColor="white"
-        borderColor="transparent"
-        shadow="lg"
-        borderRadius={12}
-        onChange={() => {}}
-      />
-    </div>
+    <Demo title="Dropdown across all 5 preset themes">
+      <ThemeGrid>
+        <Dropdown options={options.slice(0, 4)} placeholder="Select..." />
+      </ThemeGrid>
+    </Demo>
   ),
 };
 
-export const AdvancedStyling: Story = {
-  render: () => {
-    const [value1, setValue1] = useState<string>('');
-    const [value2, setValue2] = useState<string>('');
-    const [value3, setValue3] = useState<string>('');
-
-    const handleChange1 = (value: string | number | Array<string | number>) => {
-      if (typeof value === 'string') setValue1(value);
-    };
-    const handleChange2 = (value: string | number | Array<string | number>) => {
-      if (typeof value === 'string') setValue2(value);
-    };
-    const handleChange3 = (value: string | number | Array<string | number>) => {
-      if (typeof value === 'string') setValue3(value);
-    };
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — empty, single option, long labels">
+      <Stack gap={8} style={{ width: '320px' }}>
+        <Dropdown options={[]} placeholder="No options" />
+        <Dropdown options={[{ label: 'Only one', value: '1' }]} placeholder="Single option" />
         <Dropdown
-          options={sampleOptions}
-          placeholder="Custom background image..."
-          backgroundImage="linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%)"
-          backgroundBlend="overlay"
-          textColor="white"
-          borderColor="rgba(255,255,255,0.3)"
-          shadow="2xl"
-          borderRadius={20}
-          backdropBlur
-          value={value1}
-          onChange={handleChange1}
+          options={[
+            { label: 'A very long option label that might overflow the dropdown', value: 'long' },
+            { label: 'Short', value: 'short' },
+          ]}
+          placeholder="Mixed lengths"
         />
-        <Dropdown
-          options={sampleOptions}
-          placeholder="Custom shadow and border..."
-          background="linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)"
-          textColor="#8B4513"
-          borderColor="#DAA520"
-          shadow="2xl"
-          borderRadius={25}
-          width={300}
-          value={value2}
-          onChange={handleChange2}
-        />
-        <Dropdown
-          options={sampleOptions}
-          placeholder="Minimal with backdrop blur..."
-          variant="ghost"
-          background="rgba(255,255,255,0.1)"
-          textColor="white"
-          borderColor="rgba(255,255,255,0.2)"
-          shadow="none"
-          borderRadius={8}
-          backdropBlur
-          width={280}
-          value={value3}
-          onChange={handleChange3}
-        />
-      </div>
-    );
-  },
+      </Stack>
+    </Demo>
+  ),
 };
-
-export const HoverEffects: Story = {
-  render: () => {
-    const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          ✨ Hover Effects
-        </h3>
-
-        {/* Hover Effects */}
-        <div>
-          <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '500', color: '#555' }}>
-            Hover Effects
-          </h4>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '16px',
-            }}
-          >
-            {['none', 'lift', 'glow', 'scale'].map((effect) => (
-              <div
-                key={effect}
-                style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-              >
-                <h5
-                  style={{
-                    marginBottom: '8px',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    color: '#666',
-                    textTransform: 'capitalize',
-                  }}
-                >
-                  {effect} Effect
-                </h5>
-                <Dropdown
-                  options={sampleOptions}
-                  value={selectedValues[`hover-${effect}`]}
-                  onChange={(value) =>
-                    setSelectedValues((prev) => ({ ...prev, [`hover-${effect}`]: value as string }))
-                  }
-                  placeholder={`${effect.charAt(0).toUpperCase() + effect.slice(1)} Hover Effect`}
-                  hoverEffect={effect as React.ComponentProps<typeof Dropdown>['hoverEffect']}
-                  background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-                  textColor="white"
-                  shadow="md"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Shadow Levels with Hover Effects */}
-        <div>
-          <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '500', color: '#555' }}>
-            Shadow Levels with Hover Effects
-          </h4>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '16px',
-            }}
-          >
-            {['sm', 'md', 'lg', 'xl'].map((shadow) => (
-              <div
-                key={shadow}
-                style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-              >
-                <h5
-                  style={{
-                    marginBottom: '8px',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    color: '#666',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {shadow} Shadow + Lift Effect
-                </h5>
-                <Dropdown
-                  options={sampleOptions}
-                  value={selectedValues[`shadow-${shadow}`]}
-                  onChange={(value) =>
-                    setSelectedValues((prev) => ({
-                      ...prev,
-                      [`shadow-${shadow}`]: value as string,
-                    }))
-                  }
-                  placeholder={`${shadow.toUpperCase()} Shadow + Lift`}
-                  hoverEffect="lift"
-                  shadow={shadow as React.ComponentProps<typeof Dropdown>['shadow']}
-                  background="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-                  textColor="white"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Variants with Hover Effects */}
-        <div>
-          <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '500', color: '#555' }}>
-            Variants with Hover Effects
-          </h4>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '16px',
-            }}
-          >
-            {['default', 'outline', 'ghost'].map((variant) => (
-              <div
-                key={variant}
-                style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-              >
-                <h5
-                  style={{
-                    marginBottom: '8px',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    color: '#666',
-                    textTransform: 'capitalize',
-                  }}
-                >
-                  {variant} Variant + Glow Effect
-                </h5>
-                <Dropdown
-                  options={sampleOptions}
-                  value={selectedValues[`variant-${variant}`]}
-                  onChange={(value) =>
-                    setSelectedValues((prev) => ({
-                      ...prev,
-                      [`variant-${variant}`]: value as string,
-                    }))
-                  }
-                  placeholder={`${variant.charAt(0).toUpperCase() + variant.slice(1)} + Glow`}
-                  variant={variant as React.ComponentProps<typeof Dropdown>['variant']}
-                  hoverEffect="glow"
-                  shadow="lg"
-                  background="linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)"
-                  textColor="white"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// ============================================================================
-// STATE AND UTILITY STORIES
-// ============================================================================
-
-export const LoadingAndErrorStates: Story = {
-  render: () => {
-    const [value1, setValue1] = useState<string>('');
-    const [value2, setValue2] = useState<string>('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>('');
-
-    const handleChange1 = (value: string | number | Array<string | number>) => {
-      if (typeof value === 'string') setValue1(value);
-    };
-    const handleChange2 = (value: string | number | Array<string | number>) => {
-      if (typeof value === 'string') setValue2(value);
-    };
-
-    // Simulate loading and error states
-    React.useEffect(() => {
-      const timer = setTimeout(() => {
-        setLoading(false);
-        setError('Failed to load options');
-      }, 3000);
-      return () => clearTimeout(timer);
-    }, []);
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Dropdown
-          options={sampleOptions}
-          placeholder="Loading options..."
-          loading={loading}
-          showOptionCount
-          background="linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
-          textColor="white"
-          borderColor="transparent"
-          shadow="lg"
-          borderRadius={12}
-          value={value1}
-          onChange={handleChange1}
-        />
-        <Dropdown
-          options={sampleOptions}
-          placeholder="Error state..."
-          error={error}
-          showOptionCount
-          background="linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)"
-          textColor="#8B4513"
-          borderColor="transparent"
-          shadow="md"
-          borderRadius={12}
-          value={value2}
-          onChange={handleChange2}
-        />
-      </div>
-    );
-  },
-};
-
-// ============================================================================
-// INTERACTIVE THEME BUILDER (ALWAYS LAST)
-// ============================================================================
