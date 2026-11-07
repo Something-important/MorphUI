@@ -14,7 +14,7 @@ src/
 │   ├── theme/         ThemeProvider, theme.css (generated), 5 preset themes
 │   └── index.ts       the public export surface
 ├── utils/             theme.ts (347 LOC), animation.ts (269), accessibility.ts (404)
-└── stories/           Storybook assets + Configure.mdx
+└── stories/           Storybook showcase pages (ThemeShowcase; Design Tokens + Token Builder pending v1.5.0)
 test/                  38 Jest suites (one per component + cross-cutting)
 scripts/               theme token tooling in Python (generate + check)
 ```
