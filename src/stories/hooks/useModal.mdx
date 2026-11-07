@@ -1,0 +1,94 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as UseModalStories from './useModal.stories';
+
+<Meta of={UseModalStories} />
+
+# useModal
+
+Headless modal behavior: open/close state, Escape-to-close, Tab focus
+trapping, optional focus-loss close, and body scroll lock. Attach
+`modalRef` to the dialog element and render conditionally on `isOpen`.
+
+## Usage
+
+### Uncontrolled
+
+```tsx
+import { useModal } from 'morphui-react';
+
+function App() {
+  const { isOpen, open, close, modalRef } = useModal();
+
+  return (
+    <>
+      <button onClick={open}>Open</button>
+      {isOpen && (
+        <div className="modal-backdrop" onClick={close}>
+          <div className="modal" ref={modalRef}>
+            <p>Modal content</p>
+            <button onClick={close}>Close</button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+### Controlled
+
+```tsx
+import { useState } from 'react';
+import { useModal } from 'morphui-react';
+
+function App() {
+  const [open, setOpen] = useState(false);
+  const { isOpen, close, modalRef } = useModal({
+    isOpen: open,
+    onClose: () => setOpen(false),
+  });
+  // ...
+}
+```
+
+## API
+
+```ts
+interface UseModalOptions {
+  defaultOpen?: boolean; // Initial open state (uncontrolled). Default: false
+  isOpen?: boolean; // Controlled open state
+  onClose?: () => void; // Called when modal requests close (ESC, focus loss)
+  closeOnEsc?: boolean; // Default: true
+  closeOnFocusLoss?: boolean; // Default: false
+  trapFocus?: boolean; // Tab focus trap. Default: true
+  lockScroll?: boolean; // Body overflow:hidden. Default: true
+}
+
+interface UseModalResult {
+  isOpen: boolean;
+  open: () => void; // Uncontrolled only
+  close: () => void;
+  toggle: () => void; // Uncontrolled only
+  modalRef: RefObject<HTMLDivElement | null>;
+}
+
+function useModal(options?: UseModalOptions): UseModalResult;
+```
+
+## Examples
+
+### Default (uncontrolled)
+
+<Canvas of={UseModalStories.Default} />
+
+### Controlled
+
+<Canvas of={UseModalStories.Controlled} />
+
+### All options (focus-loss close)
+
+<Canvas of={UseModalStories.Options} />
+
+### Sign-in form integration
+
+<Canvas of={UseModalStories.Integration} />

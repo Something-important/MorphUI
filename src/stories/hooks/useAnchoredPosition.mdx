@@ -1,0 +1,110 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as UseAnchoredPositionStories from './useAnchoredPosition.stories';
+
+<Meta of={UseAnchoredPositionStories} />
+
+# useAnchoredPosition
+
+Position a `position: fixed` floating element relative to an anchor
+element in viewport coordinates. Measures both elements, applies the
+computed inline styles imperatively, and reports the resolved placement
+(for CSS classes / arrows). Shared by Tooltip and Popover.
+
+## Usage
+
+```tsx
+import { useRef, useState } from 'react';
+import { useAnchoredPosition } from 'morphui-react';
+
+function Tooltip({ children, content }) {
+  const [active, setActive] = useState(false);
+  const anchorRef = useRef<HTMLButtonElement>(null);
+  const floatingRef = useRef<HTMLDivElement>(null);
+  const { position } = useAnchoredPosition({
+    anchorRef,
+    floatingRef,
+    position: 'top',
+    offset: 8,
+    active,
+  });
+
+  return (
+    <>
+      <button
+        ref={anchorRef}
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+      >
+        {children}
+      </button>
+      {active && (
+        <div ref={floatingRef} style={{ position: 'fixed' }}>
+          {content} (positioned: {position})
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+## API
+
+```ts
+type AnchoredPosition =
+  | 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end';
+
+type AnchoredPositionInput = AnchoredPosition | 'auto';
+
+interface UseAnchoredPositionOptions {
+  anchorRef: RefObject<HTMLElement | null>;
+  floatingRef: RefObject<HTMLElement | null>;
+  position: AnchoredPositionInput; // 'auto' picks the roomiest side
+  offset?: number; // Gap in px. Default: 8
+  autoPosition?: boolean; // Master switch for JS positioning. Default: true
+  active?: boolean; // Only measure while visible. Default: true
+}
+
+interface UseAnchoredPositionResult {
+  position: AnchoredPositionInput; // Resolved placement (for CSS classes / arrows)
+}
+
+function useAnchoredPosition(options: UseAnchoredPositionOptions): UseAnchoredPositionResult;
+```
+
+## Placement guide
+
+| Position                            | Alignment                                                       |
+| ----------------------------------- | --------------------------------------------------------------- |
+| `top` / `bottom` / `left` / `right` | Centered on the trigger                                         |
+| `*-start`                           | Aligned to the trigger's leading edge                           |
+| `*-end`                             | Aligned to the trigger's trailing edge                          |
+| `auto`                              | Picks the side with the most room (bottom → top → right → left) |
+
+## Examples
+
+### Default
+
+<Canvas of={UseAnchoredPositionStories.Default} />
+
+### All 12 positions
+
+<Canvas of={UseAnchoredPositionStories.Positions} />
+
+### Auto-positioning
+
+<Canvas of={UseAnchoredPositionStories.AutoPosition} />
+
+### Custom offset
+
+<Canvas of={UseAnchoredPositionStories.Offset} />
