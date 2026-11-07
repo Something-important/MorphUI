@@ -1,27 +1,32 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Carousel } from './Carousel';
+import { Demo, Stack, ThemeGrid } from '../../../stories/_shared';
 
 const meta: Meta<typeof Carousel> = {
-  title: 'Components/Carousel',
+  title: 'Patterns/Carousel',
   component: Carousel,
-  parameters: { layout: 'centered' },
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component:
+          'Carousel renders a slide viewer with prev/next arrows, dots, autoplay, and loop. 4 variants, controlled/uncontrolled slide index.',
+      },
+    },
+  },
 };
 export default meta;
-type Story = StoryObj<typeof Carousel>;
+type Story = StoryObj<typeof meta>;
 
 const slides = [
   <div
     key="1"
     style={{
-      height: 200,
-      background: '#3b82f6',
+      background: '#0070f3',
       color: '#fff',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: 24,
-      borderRadius: 8,
+      padding: '40px',
+      textAlign: 'center',
+      borderRadius: '8px',
     }}
   >
     Slide 1
@@ -29,14 +34,11 @@ const slides = [
   <div
     key="2"
     style={{
-      height: 200,
       background: '#10b981',
       color: '#fff',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: 24,
-      borderRadius: 8,
+      padding: '40px',
+      textAlign: 'center',
+      borderRadius: '8px',
     }}
   >
     Slide 2
@@ -44,14 +46,11 @@ const slides = [
   <div
     key="3"
     style={{
-      height: 200,
       background: '#f59e0b',
       color: '#fff',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: 24,
-      borderRadius: 8,
+      padding: '40px',
+      textAlign: 'center',
+      borderRadius: '8px',
     }}
   >
     Slide 3
@@ -59,14 +58,11 @@ const slides = [
   <div
     key="4"
     style={{
-      height: 200,
       background: '#ef4444',
       color: '#fff',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: 24,
-      borderRadius: 8,
+      padding: '40px',
+      textAlign: 'center',
+      borderRadius: '8px',
     }}
   >
     Slide 4
@@ -74,33 +70,107 @@ const slides = [
 ];
 
 export const Default: Story = {
+  args: {
+    slides,
+    style: { width: '400px' },
+  },
+};
+
+export const Variants: Story = {
   render: () => (
-    <div style={{ width: 500 }}>
-      <Carousel slides={slides} shadow="lg" />
-    </div>
+    <Demo title="All variants">
+      <Stack gap={16}>
+        {(['primary', 'secondary', 'ghost', 'outline'] as const).map((v) => (
+          <Carousel key={v} slides={slides} variant={v} style={{ width: '400px' }} />
+        ))}
+      </Stack>
+    </Demo>
   ),
 };
 
+export const States: Story = {
+  render: () => (
+    <Demo title="No arrows, no dots, no loop">
+      <Stack gap={16}>
+        <Carousel slides={slides} showArrows={false} style={{ width: '400px' }} />
+        <Carousel slides={slides} showDots={false} style={{ width: '400px' }} />
+        <Carousel slides={slides} loop={false} style={{ width: '400px' }} />
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Autoplay & interval">
+      <Stack gap={16}>
+        <Carousel slides={slides} autoplay autoplayInterval={2000} style={{ width: '400px' }} />
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const Controlled: Story = {
+  render: () => (
+    <Demo title="Controlled vs uncontrolled">
+      <Stack gap={16}>
+        <Carousel slides={slides} defaultSlide={0} style={{ width: '400px' }} />
+        <Carousel
+          slides={slides}
+          currentSlide={2}
+          onSlideChange={() => {}}
+          style={{ width: '400px' }}
+        />
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Carousel across all 5 preset themes">
+      <ThemeGrid>
+        <Carousel slides={slides.slice(0, 2)} style={{ width: '100%' }} />
+      </ThemeGrid>
+    </Demo>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — single slide, many slides">
+      <Stack gap={16}>
+        <Carousel slides={[slides[0]]} style={{ width: '400px' }} />
+        <Carousel
+          slides={Array.from({ length: 8 }, (_, i) => (
+            <div
+              key={i}
+              style={{
+                background: '#667eea',
+                color: '#fff',
+                padding: '40px',
+                textAlign: 'center',
+                borderRadius: '8px',
+              }}
+            >
+              Slide {i + 1}
+            </div>
+          ))}
+          style={{ width: '400px' }}
+        />
+      </Stack>
+    </Demo>
+  ),
+};
+
+// Extra: Autoplay story (justified per plan Part 4 — Carousel has unique autoplay behavior)
 export const Autoplay: Story = {
   render: () => (
-    <div style={{ width: 500 }}>
-      <Carousel slides={slides} autoplay autoplayInterval={2000} shadow="md" />
-    </div>
-  ),
-};
-
-export const NoLoop: Story = {
-  render: () => (
-    <div style={{ width: 500 }}>
-      <Carousel slides={slides} loop={false} />
-    </div>
-  ),
-};
-
-export const Minimal: Story = {
-  render: () => (
-    <div style={{ width: 500 }}>
-      <Carousel slides={slides} showArrows={false} showDots={false} />
-    </div>
+    <Demo
+      title="Autoplay with 1.5s interval"
+      description="Extra story — Carousel's autoplay is a unique feature worth its own demo"
+    >
+      <Carousel slides={slides} autoplay autoplayInterval={1500} style={{ width: '400px' }} />
+    </Demo>
   ),
 };
