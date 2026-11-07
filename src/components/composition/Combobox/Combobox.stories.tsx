@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Combobox } from './Combobox';
 import type { ComboboxOption } from './Combobox';
-import { ThemeProvider } from '../../theme';
 
 const meta: Meta<typeof Combobox> = {
   title: 'Components/Combobox',
@@ -22,21 +21,17 @@ const fruits: ComboboxOption[] = [
 
 export const Default: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ maxWidth: 320 }}>
-        <Combobox options={fruits} placeholder="Pick a fruit" />
-      </div>
-    </ThemeProvider>
+    <div style={{ maxWidth: 320 }}>
+      <Combobox options={fruits} placeholder="Pick a fruit" />
+    </div>
   ),
 };
 
 export const Clearable: Story = {
   render: () => (
-    <ThemeProvider>
-      <div style={{ maxWidth: 320 }}>
-        <Combobox options={fruits} clearable defaultValue="banana" placeholder="Pick a fruit" />
-      </div>
-    </ThemeProvider>
+    <div style={{ maxWidth: 320 }}>
+      <Combobox options={fruits} clearable defaultValue="banana" placeholder="Pick a fruit" />
+    </div>
   ),
 };
 
@@ -44,12 +39,10 @@ export const FreeText: Story = {
   render: () => {
     const [value, setValue] = useState<string | number | null>(null);
     return (
-      <ThemeProvider>
-        <div style={{ maxWidth: 320 }}>
-          <Combobox options={fruits} allowFreeText placeholder="Type or pick" onChange={setValue} />
-          <p style={{ marginTop: 12 }}>Selected: {String(value ?? '(none)')}</p>
-        </div>
-      </ThemeProvider>
+      <div style={{ maxWidth: 320 }}>
+        <Combobox options={fruits} allowFreeText placeholder="Type or pick" onChange={setValue} />
+        <p style={{ marginTop: 12 }}>Selected: {String(value ?? '(none)')}</p>
+      </div>
     );
   },
 };
@@ -64,11 +57,9 @@ export const Async: Story = {
         ),
       );
     return (
-      <ThemeProvider>
-        <div style={{ maxWidth: 320 }}>
-          <Combobox options={[]} loadOptions={loadOptions} placeholder="Search (async)..." />
-        </div>
-      </ThemeProvider>
+      <div style={{ maxWidth: 320 }}>
+        <Combobox options={[]} loadOptions={loadOptions} placeholder="Search (async)..." />
+      </div>
     );
   },
 };

@@ -53,37 +53,35 @@ const ThemedToastStory: React.FC<{
   autoDismiss?: boolean;
   pauseOnHover?: boolean;
 }> = ({
-  themeName,
+  themeName: _themeName,
   position,
   duration = 4000,
   maxToasts = 3,
   autoDismiss = true,
   pauseOnHover = true,
 }) => (
-  <ThemeProvider theme={themes[themeName]}>
-    <ToastProvider
-      position={position}
-      duration={duration}
-      maxToasts={maxToasts}
-      autoDismiss={autoDismiss}
-      pauseOnHover={pauseOnHover}
+  <ToastProvider
+    position={position}
+    duration={duration}
+    maxToasts={maxToasts}
+    autoDismiss={autoDismiss}
+    pauseOnHover={pauseOnHover}
+  >
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '16px',
+        background: 'var(--color-background-secondary)',
+        flexWrap: 'wrap',
+        padding: '24px',
+      }}
     >
-      <div
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '16px',
-          background: 'var(--color-background-secondary)',
-          flexWrap: 'wrap',
-          padding: '24px',
-        }}
-      >
-        <ToastLauncher />
-      </div>
-    </ToastProvider>
-  </ThemeProvider>
+      <ToastLauncher />
+    </div>
+  </ToastProvider>
 );
 
 export default {

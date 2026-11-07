@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Spinner } from './Spinner';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Button } from '../Button';
 
 export default {
@@ -203,68 +202,6 @@ export const FullScreen: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = useState<ThemeName>('light');
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              gap: '3rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-            }}
-          >
-            <div style={{ textAlign: 'center' }}>
-              <Spinner variant="primary" size="lg" />
-              <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Primary</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <Spinner variant="success" size="lg" />
-              <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Success</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <Spinner variant="warning" size="lg" />
-              <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Warning</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <Spinner variant="danger" size="lg" />
-              <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Error</p>
-            </div>
-          </div>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Usage examples
 export const UsageExamples: Story = {
   render: () => {

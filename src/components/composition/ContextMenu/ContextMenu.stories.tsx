@@ -2,7 +2,6 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ContextMenu } from './ContextMenu';
 import type { ContextMenuItem } from './ContextMenu';
-import { ThemeProvider } from '../../theme';
 
 const meta: Meta<typeof ContextMenu> = {
   title: 'Components/ContextMenu',
@@ -24,20 +23,18 @@ const items: ContextMenuItem[] = [
 
 export const Default: Story = {
   render: () => (
-    <ThemeProvider>
-      <ContextMenu items={items}>
-        <div
-          style={{
-            padding: 40,
-            border: '2px dashed #cbd5e1',
-            borderRadius: 8,
-            textAlign: 'center',
-            color: '#64748b',
-          }}
-        >
-          Right-click here
-        </div>
-      </ContextMenu>
-    </ThemeProvider>
+    <ContextMenu items={items}>
+      <div
+        style={{
+          padding: 40,
+          border: '2px dashed #cbd5e1',
+          borderRadius: 8,
+          textAlign: 'center',
+          color: '#64748b',
+        }}
+      >
+        Right-click here
+      </div>
+    </ContextMenu>
   ),
 };

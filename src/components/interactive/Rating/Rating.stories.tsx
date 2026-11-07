@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Rating } from './Rating';
-import { ThemeProvider } from '../../theme';
 
 const meta: Meta<typeof Rating> = {
   title: 'Components/Rating',
@@ -12,33 +11,17 @@ export default meta;
 type Story = StoryObj<typeof Rating>;
 
 export const Default: Story = {
-  render: () => (
-    <ThemeProvider>
-      <Rating defaultValue={3} />
-    </ThemeProvider>
-  ),
+  render: () => <Rating defaultValue={3} />,
 };
 
 export const HalfStars: Story = {
-  render: () => (
-    <ThemeProvider>
-      <Rating defaultValue={3.5} allowHalf />
-    </ThemeProvider>
-  ),
+  render: () => <Rating defaultValue={3.5} allowHalf />,
 };
 
 export const Readonly: Story = {
-  render: () => (
-    <ThemeProvider>
-      <Rating value={4} readonly size="lg" />
-    </ThemeProvider>
-  ),
+  render: () => <Rating value={4} readonly size="lg" />,
 };
 
 export const TenStars: Story = {
-  render: () => (
-    <ThemeProvider>
-      <Rating defaultValue={7} max={10} />
-    </ThemeProvider>
-  ),
+  render: () => <Rating defaultValue={7} max={10} />,
 };

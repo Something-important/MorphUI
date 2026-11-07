@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Table, type TableColumn } from './Table';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Button } from '../../basic/Button';
 
 // Sample data types
@@ -401,41 +400,6 @@ export const Gradients: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = useState<ThemeName>('light');
-    const columns: TableColumn<User>[] = [
-      { key: 'name', label: 'Name', sortable: true },
-      { key: 'email', label: 'Email', sortable: true },
-      { key: 'role', label: 'Role', sortable: true },
-      { key: 'status', label: 'Status', sortable: true },
-    ];
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ marginRight: '10px' }}>Theme:</label>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{ padding: '8px', fontSize: '16px' }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <Table data={sampleUsers} columns={columns} pagination pageSize={5} />
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Interactive example
 export const Interactive: Story = {
   render: () => {

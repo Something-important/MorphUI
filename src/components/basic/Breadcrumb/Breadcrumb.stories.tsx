@@ -3,7 +3,6 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Breadcrumb } from './Breadcrumb';
 import { Button } from '../Button';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 
 export default {
   title: 'Components/Breadcrumb',
@@ -228,50 +227,6 @@ export const Interactive: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = React.useState<ThemeName>('light');
-    const items = [
-      { label: 'Home', href: '/' },
-      { label: 'Products', href: '/products' },
-      { label: 'Electronics', href: '/products/electronics' },
-      { label: 'Laptops' },
-    ];
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <Breadcrumb items={items} />
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Long paths
 export const LongPaths: Story = {
   render: () => {

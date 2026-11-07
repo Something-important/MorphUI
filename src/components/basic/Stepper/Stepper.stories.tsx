@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Stepper, type StepperStep } from './Stepper';
 import { Button } from '../Button';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 
 export default {
   title: 'Components/Stepper',
@@ -250,61 +249,6 @@ export const Gradients: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = useState<ThemeName>('light');
-    const [activeStep, setActiveStep] = useState(1);
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <div style={{ marginBottom: '20px' }}>
-            <Button
-              onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
-              disabled={activeStep === 0}
-            >
-              Previous
-            </Button>
-            <Button
-              onClick={() => setActiveStep(Math.min(defaultSteps.length - 1, activeStep + 1))}
-              disabled={activeStep === defaultSteps.length - 1}
-              style={{ marginLeft: '10px' }}
-            >
-              Next
-            </Button>
-          </div>
-
-          <Stepper steps={defaultSteps} activeStep={activeStep} />
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Interactive wizard
 export const InteractiveWizard: Story = {
   render: () => {

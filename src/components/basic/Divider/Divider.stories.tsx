@@ -2,7 +2,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Divider } from './Divider';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 import { Button } from '../Button';
 
 export default {
@@ -230,56 +229,6 @@ export const Gradients: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = React.useState<ThemeName>('light');
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div>
-              <p>Content above</p>
-              <Divider />
-              <p>Content below</p>
-            </div>
-            <div>
-              <Divider text="OR" />
-            </div>
-            <div>
-              <Divider variant="dashed" />
-            </div>
-          </div>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Real-world examples
 export const RealWorldExamples: Story = {
   render: () => {

@@ -2,7 +2,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Avatar } from './Avatar';
-import { ThemeProvider, themes, type ThemeName } from '../../theme';
 
 export default {
   title: 'Components/Avatar',
@@ -273,72 +272,6 @@ export const Gradients: Story = {
 };
 
 // Theme switching
-export const ThemeSwitching: Story = {
-  render: () => {
-    const [theme, setTheme] = React.useState<ThemeName>('light');
-
-    return (
-      <ThemeProvider theme={themes[theme]}>
-        <div style={{ padding: '20px' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <h2 style={{ marginBottom: '15px' }}>Theme Switching Demo</h2>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as ThemeName)}
-              style={{
-                padding: '10px 15px',
-                fontSize: '16px',
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                cursor: 'pointer',
-              }}
-            >
-              {Object.keys(themes).map((themeName) => (
-                <option key={themeName} value={themeName}>
-                  {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-                </option>
-              ))}
-            </select>
-            <p style={{ marginTop: '10px', color: '#6b7280' }}>
-              Current theme: <strong>{theme}</strong>
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div>
-              <h3 style={{ marginBottom: '1rem' }}>With Images</h3>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <Avatar src="https://i.pravatar.cc/150?img=1" name="Alice" />
-                <Avatar src="https://i.pravatar.cc/150?img=12" name="Bob" />
-                <Avatar src="https://i.pravatar.cc/150?img=33" name="Charlie" />
-              </div>
-            </div>
-
-            <div>
-              <h3 style={{ marginBottom: '1rem' }}>With Initials</h3>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <Avatar name="John Doe" />
-                <Avatar name="Jane Smith" />
-                <Avatar name="Alice Johnson" />
-              </div>
-            </div>
-
-            <div>
-              <h3 style={{ marginBottom: '1rem' }}>With Status</h3>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <Avatar name="Online User" status="online" />
-                <Avatar name="Away User" status="away" />
-                <Avatar name="Busy User" status="busy" />
-                <Avatar name="Offline User" status="offline" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </ThemeProvider>
-    );
-  },
-};
-
 // Group/Stack
 export const AvatarGroup: Story = {
   render: () => {

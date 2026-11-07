@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CommandPalette, type CommandItem } from './CommandPalette';
-import { ThemeProvider } from '../../theme';
 
 const commands: CommandItem[] = [
   {
@@ -45,10 +44,10 @@ export const Default: Story = {
   render: () => {
     const [isOpen, setIsOpen] = React.useState(true);
     return (
-      <ThemeProvider>
+      <>
         <button onClick={() => setIsOpen(true)}>Open palette (or press ⌘K)</button>
         <CommandPalette items={commands} isOpen={isOpen} onOpenChange={setIsOpen} />
-      </ThemeProvider>
+      </>
     );
   },
 };
@@ -58,7 +57,7 @@ export const Controlled: Story = {
     const [isOpen, setIsOpen] = React.useState(false);
     const [lastAction, setLastAction] = React.useState('(none)');
     return (
-      <ThemeProvider>
+      <>
         <button onClick={() => setIsOpen(true)}>Open palette</button>
         <p>Last action: {lastAction}</p>
         <CommandPalette
@@ -69,7 +68,7 @@ export const Controlled: Story = {
           isOpen={isOpen}
           onOpenChange={setIsOpen}
         />
-      </ThemeProvider>
+      </>
     );
   },
 };
