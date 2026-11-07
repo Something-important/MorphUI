@@ -23,19 +23,24 @@ tests, a story, and exported types.
 | Skeleton   | 112 |     171 |                                                                   |
 | Label      |  87 |     108 |                                                                   |
 
-## Interactive — `src/components/interactive/` (7)
+## Interactive — `src/components/interactive/` (12)
 
-| Component  | LOC | CSS LOC | Notes                                                  |
-| ---------- | --: | ------: | ------------------------------------------------------ |
-| Dropdown   | 689 |     671 | Largest single file in the library                     |
-| Slider     | 475 |     327 |                                                        |
-| Modal      | 457 |     700 | Focus trap / escape / scroll lock — extract `useModal` |
-| RadioGroup | 448 |     816 |                                                        |
-| Accordion  | 391 |     481 |                                                        |
-| Pagination | 363 |     281 |                                                        |
-| Card       | 312 |     603 |                                                        |
+| Component      | LOC | CSS LOC | Notes                                                  |
+| -------------- | --: | ------: | ------------------------------------------------------ |
+| Dropdown       | 689 |     671 | Largest single file in the library                     |
+| Slider         | 475 |     327 |                                                        |
+| Modal          | 457 |     700 | Focus trap / escape / scroll lock — extract `useModal` |
+| RadioGroup     | 448 |     816 |                                                        |
+| Accordion      | 391 |     481 |                                                        |
+| Pagination     | 363 |     281 |                                                        |
+| TreeView       | 350 |     200 | Recursive tree with expand/collapse + selection        |
+| Card           | 312 |     603 |                                                        |
+| Carousel       | 280 |     150 | Slide viewer with autoplay, loop, arrows/dots          |
+| FileUpload     | 250 |     120 | Drag-and-drop with file list, size/type limits         |
+| Rating         | 220 |      90 | Star rating with half-star precision                   |
+| CommandPalette | 200 |     100 | Cmd+K search-driven command menu                       |
 
-## Composition — `src/components/composition/` (12)
+## Composition — `src/components/composition/` (13)
 
 | Component        |                   LOC | CSS LOC | Notes                                                                    |
 | ---------------- | --------------------: | ------: | ------------------------------------------------------------------------ |

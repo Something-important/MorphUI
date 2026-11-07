@@ -13,10 +13,10 @@ default state. The test suite includes:
 | ------------------------------------------- | ------------------------------------------------------- | ------- |
 | **a11y smoke** (`test/a11y.smoke.test.tsx`) | 25 components in default state                          | 25      |
 | **Dedicated a11y suites**                   | Dropdown, Sidebar, Input, Table, Popover, Modal         | 6 files |
-| **SSR smoke** (`test/ssr.smoke.test.tsx`)   | All 33 components via `renderToString`                  | 31      |
+| **SSR smoke** (`test/ssr.smoke.test.tsx`)   | All 39 components via `renderToString`                  | 37      |
 | **Beyond-axe assertions**                   | aria-controls, aria-labelledby, aria-sort, keyboard nav | 9       |
 
-Total: 31 of 33 components have a11y coverage. The two without
+Total: 37 of 39 components have a11y coverage. The two without
 (ContextMenu + Sidebar sub-components) are exercised via the Sidebar
 family's dedicated suite.
 
@@ -173,6 +173,6 @@ provides viewport-correct positioning for floating elements.
 
 ## SSR
 
-All 33 components render correctly in server-side rendering. Portal-based
+All 39 components render correctly in server-side rendering. Portal-based
 components (ContextMenu, SidebarToggle) use `isMounted` guards to avoid
 `document` access during SSR.
