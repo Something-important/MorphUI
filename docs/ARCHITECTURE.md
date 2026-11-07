@@ -9,8 +9,8 @@ The current state of MorphUI as of 1.0.0. For where it is headed, see
 src/
 ├── components/
 │   ├── basic/         14 components — Button, Input, Checkbox, Toggle, Switch, …
-│   ├── interactive/    7 components — Modal, Dropdown, Slider, Accordion, …
-│   ├── composition/   12 components — Table, Tabs, Toast, Sidebar, Form, …
+│   ├── interactive/   12 components — Modal, Dropdown, Slider, Accordion, Carousel, …
+│   ├── composition/   13 components — Table, Tabs, Toast, Sidebar, Form, …
 │   ├── theme/         ThemeProvider, theme.css (generated), 5 preset themes
 │   └── index.ts       the public export surface
 ├── utils/             theme.ts (347 LOC), animation.ts (269), accessibility.ts (404)
@@ -120,10 +120,10 @@ Rollup 4, single entry `src/components/index.ts`:
   declarations are emitted via `tsconfig.build.json`, which excludes
   `*.stories.tsx` and `src/stories` so no Storybook declarations leak into
   `dist`.
-- `exports` map: `.` (types/import — ESM-only since 0.14.0, no
+- `exports` map: `.` (types/import — ESM-only since 1.0.0, no
   `require`), `./css`, `./css/<component>` (per-component), `./dist/*`,
   `./package.json`.
-- **ESM-only** since 0.14.0 (no CJS `dist/index.js`). Per-component
+- **ESM-only** since 1.0.0 (no CJS `dist/index.js`). Per-component
   subpath exports (`morphui-react/button`) resolve to the preserveModules
   ESM files; per-component CSS (`morphui-react/css/button`) to
   `dist/css/`. The single-file ESM barrel (`.`) and full CSS (`./css`)
@@ -132,7 +132,7 @@ Rollup 4, single entry `src/components/index.ts`:
 ## Quality infrastructure
 
 - **Jest 29 + React Testing Library + jest-axe**, jsdom environment, CSS
-  mocked via `identity-obj-proxy`. 47 suites / 1,926 tests, ~33 seconds, all
+  mocked via `identity-obj-proxy`. 55 suites / 2,177 tests, ~19 seconds, all
   green. Coverage thresholds are currently 0 (informational only).
 - **CI** (`.github/workflows/ci.yml`): lint → prettier check → theme token
   gate (regenerate `theme.css`, fail on diff, `npm run tokens:check`) →

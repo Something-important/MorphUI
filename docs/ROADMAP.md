@@ -8,7 +8,7 @@ statement / 84.7% branch coverage**. **39 components**. React 18 + 19
 verified. SSR-compatible. Auto-publish pipeline proven (10 releases, zero
 manual dispatch).
 
-**dev + master in sync @ `8286e50`** (2026-11-06): v1.4.1 released — patch
+**dev + master in sync @ `7b62435`** (2026-11-08): v1.5.0 Storybook sprint complete — 12 phases shipped across PRs #82–#92. Sidebar reorganized into 6 sections (Getting Started, Foundations, Primitives, Composition, Patterns, Hooks). 46 sidebar entries, ~26k→~5k story LOC (-81%), 240 logical CSS properties (RTL functional), build 17.33s→11.07s.
 for lint fixes (0 errors + 0 warnings). Chromatic CI is live. All 39
 components have MDX docs. Ready for the next round of feature work.
 

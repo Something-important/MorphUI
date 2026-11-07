@@ -19,17 +19,17 @@ User-facing documentation lives in the [README](../README.md) and on the
 
 ## Repository facts
 
-| Field           | Value                                                                 |
-| --------------- | --------------------------------------------------------------------- |
-| Package         | `morphui-react` (npm, MIT)                                            |
-| Current release | 1.0.0 (2026-11-02, OIDC trusted publishing with provenance)           |
-| Stack           | React 18/19 (peer), TypeScript 5, Rollup 4, Jest 29, Storybook 9      |
-| Components      | 33 — 14 basic / 7 interactive / 12 composition, plus the theme system |
-| Source size     | ~14.2k lines of component TSX + ~14.9k lines of component CSS         |
-| Tests           | 48 suites / 1,974 tests, all passing (~17s), all passing (~33s)       |
-| Bundle          | ESM 449 kB + CJS 457 kB + single minified CSS ~300 kB                 |
-| Tarball         | 99 files, 487.7 kB packed / 3.2 MB unpacked                           |
-| Branches        | `master` (releases) ← `dev` (integration, PR target)                  |
+| Field           | Value                                                                  |
+| --------------- | ---------------------------------------------------------------------- |
+| Package         | `morphui-react` (npm, MIT)                                             |
+| Current release | 1.4.4 (2026-11-07, OIDC trusted publishing with provenance)            |
+| Stack           | React 18/19 (peer), TypeScript 5, Rollup 4, Jest 29, Storybook 9       |
+| Components      | 39 — 14 basic / 12 interactive / 13 composition, plus the theme system |
+| Source size     | ~14.2k lines of component TSX + ~14.9k lines of component CSS          |
+| Tests           | 55 suites / 2,177 tests, all passing (~19s)                            |
+| Bundle          | ESM-only, 41 tree-shakeable subpath exports + single extracted CSS     |
+| Tarball         | 99 files, 487.7 kB packed / 3.2 MB unpacked                            |
+| Branches        | `master` (releases) ← `dev` (integration, PR target)                   |
 
 ## Keeping this knowledge base honest
 

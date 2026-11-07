@@ -11,7 +11,7 @@ workflow, code conventions, and the quality gates every change must pass.
 ## Development setup
 
 Requires Node.js >= 20 and npm >= 8 (see `engines` in `package.json`). CI runs
-the test matrix on Node 20; publishing runs on Node 22 — see
+the test matrix on Node 22; publishing runs on Node 22 — see
 [PUBLISH_SETUP.md](PUBLISH_SETUP.md).
 
 ```bash
@@ -25,7 +25,7 @@ npm run storybook   # http://localhost:6006
 
 | Script                                  | What it does                                          |
 | --------------------------------------- | ----------------------------------------------------- |
-| `npm run build`                         | Rollup build to `dist/` (CJS + ESM + extracted CSS)   |
+| `npm run build`                         | Rollup build to `dist/` (ESM + extracted CSS)         |
 | `npm run build:types`                   | TypeScript declarations only                          |
 | `npm run build:all`                     | `build:types` + `build` — what gets published         |
 | `npm test`                              | Jest suite (jsdom + React Testing Library + jest-axe) |

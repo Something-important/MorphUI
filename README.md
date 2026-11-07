@@ -6,29 +6,33 @@ A flexible, adaptable React + TypeScript UI component library for modern web app
 
 ## ✨ Features
 
-- ⚡ **Reusable Components**: Button, Accordion, Card, Dropdown, Input, Modal, RadioGroup, Sidebar, Table, Tabs, Toast, Tooltip, and more
+- ⚡ **39 Components**: Button, Input, Modal, Sidebar, Table, Tabs, Toast, Tooltip, Combobox, DatePicker, Dropdown, Carousel, CommandPalette, FileUpload, Rating, Slider, TreeView, and more — organized into Primitives (14), Composition (13), and Patterns (12) tiers
 - 🎨 **Flexible Theming**: CSS custom properties with runtime theme switching across 5 built-in themes (light, dark, cool, warm, purple)
 - 🧪 **Type Safe**: Full TypeScript support with comprehensive type definitions
 - ♿ **Accessible**: Built following WCAG guidelines and accessibility best practices
-- 📚 **Storybook**: Interactive documentation and component playground
-- 🛠️ **Modern Build**: Rollup-based ESM/CJS builds — the JS is tree-shakeable (`sideEffects` is limited to CSS), and all styles ship as one extracted stylesheet (`morphui-react/css`)
+- 📚 **Storybook**: Interactive documentation with a global theme toolbar, Design Tokens page, and Token Builder
+- 🛠️ **Modern Build**: ESM-only, Rollup-based, tree-shakeable (`sideEffects` is limited to CSS), with 41 per-component subpath exports for granular imports
+- 🌐 **RTL Support**: Logical CSS properties throughout — toggle RTL via the Storybook toolbar to see layouts flip correctly
 
 ## 🚀 Installation
 
-MorphUI is currently distributed via GitHub (not yet published to npm as a stable release).
-
 ```bash
-# Install directly from GitHub
-npm install github:Something-important/MorphUI
+npm install morphui-react
 ```
 
 Or with yarn:
 
 ```bash
-yarn add github:Something-important/MorphUI
+yarn add morphui-react
 ```
 
-The package is in active pre-1.0 development — APIs may change between versions. Pin to a specific commit or tag if you need stability.
+Or with pnpm:
+
+```bash
+pnpm add morphui-react
+```
+
+MorphUI requires React 18 or 19 as a peer dependency. The package is ESM-only and tree-shakeable.
 
 ## 📖 Quick Start
 
@@ -36,7 +40,7 @@ The package is in active pre-1.0 development — APIs may change between version
 import { Button, ThemeProvider, lightTheme } from 'morphui-react';
 // Component styles — import once, and load it BEFORE your own stylesheets
 // so your CSS can override ours without !important.
-import 'morphui-react/dist/morphui.css';
+import 'morphui-react/css';
 
 function App() {
   return (
@@ -85,7 +89,7 @@ const customTheme = {
 
 `ThemeProvider` merges `baseTheme` + `theme`, cleans up stale variables when the theme changes, can scope to a subtree via the `target` prop, sets a `data-theme` attribute, and exposes the active theme through `useTheme()`.
 
-See the [Theme Showcase story](https://something-important.github.io/MorphUI/?path=/story/theme-theme-showcase--theme-showcase) for a live preview of all built-in themes.
+See the [Theme Showcase](https://something-important.github.io/MorphUI/?path=/story/foundations-theme-showcase--all-themes) story for a live preview of all built-in themes.
 
 ### Token single source of truth
 
@@ -131,7 +135,7 @@ Features: six variants (`success` / `danger` / `warning` / `info` / `primary` / 
 
 ## 🧪 Testing
 
-MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **48 test suites / 1,974 tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
+MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **55 test suites / 2,177 tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
 
 ```bash
 # Run all tests
@@ -180,10 +184,10 @@ npm run verify
 
 ## 📦 Package Contents
 
-- **ESM**: `dist/index.esm.js` - Modern ES modules
-- **CommonJS**: `dist/index.js` - Node.js compatibility
-- **Types**: `dist/index.d.ts` - TypeScript declarations
-- **Styles**: `dist/morphui.css` - all component styles (also reachable as `morphui-react/css`)
+- **ESM**: `dist/index.esm.js` + `dist/esm/` — Modern ES modules (tree-shakeable)
+- **Types**: `dist/` — TypeScript declarations (`.d.ts`)
+- **Styles**: `dist/morphui.css` — all component styles (also reachable as `morphui-react/css`, or per-component as `morphui-react/css/<name>`)
+- **Per-component subpaths**: 41 JS + 41 CSS subpath exports (e.g. `morphui-react/button`, `morphui-react/css/button`)
 - **Source Maps**: For debugging and development
 
 ## 🤝 Contributing
@@ -198,7 +202,7 @@ We welcome contributions! Please see our contributing guidelines:
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request
 
-All pull requests should target the `dev` branch. Merges to `master` are released to GitHub Pages automatically.
+All pull requests should target the `master` branch. Merges to `master` trigger CI (tests, lint, size budgets, Chromatic) and the Storybook deploy workflow.
 
 ## 📄 License
 
