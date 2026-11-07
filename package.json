@@ -1,6 +1,6 @@
 {
   "name": "morphui-react",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "MorphUI: A flexible, adaptable React + TypeScript UI component library for modern web apps.",
   "module": "dist/index.esm.js",
   "types": "./dist/components/index.d.ts",

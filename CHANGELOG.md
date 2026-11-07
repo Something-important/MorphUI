@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/Something-important/MorphUI/compare/v1.4.4...v1.4.5) (2026-11-07)
+
+
+### Bug Fixes
+
+* **docs:** sync all in-repo docs to v1.5.0 reality ([#93](https://github.com/Something-important/MorphUI/issues/93)) ([4851a3b](https://github.com/Something-important/MorphUI/commit/4851a3baf34b7ea2156258dd23485aa529f63da5))
+
 ## [1.4.4](https://github.com/Something-important/MorphUI/compare/v1.4.3...v1.4.4) (2026-11-06)
 
 
