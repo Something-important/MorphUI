@@ -1,14 +1,11 @@
 // Modal.stories.tsx
 import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
-import { Modal, Button, Dropdown, Checkbox } from '../../index';
+import { Modal, Button } from '../../index';
 
 type ModalVariant = NonNullable<React.ComponentProps<typeof Modal>['variant']>;
 type ModalSize = NonNullable<React.ComponentProps<typeof Modal>['size']>;
 type ModalPosition = NonNullable<React.ComponentProps<typeof Modal>['position']>;
-type ModalBackdrop = NonNullable<React.ComponentProps<typeof Modal>['backdrop']>;
-type ModalAnimation = NonNullable<React.ComponentProps<typeof Modal>['animation']>;
-type ModalShadow = NonNullable<React.ComponentProps<typeof Modal>['shadow']>;
 
 export default {
   title: 'Components/Modal',

@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
 import { Button } from './Button';
-import { themes } from '../../theme';
 
 // Mock icons for stories
 const ChevronRightIcon = () => (

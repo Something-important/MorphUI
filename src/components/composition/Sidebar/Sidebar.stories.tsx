@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import {
   SidebarRoot,
@@ -11,22 +11,7 @@ import {
   SidebarSeparator,
   SidebarToggle,
 } from './index';
-import { Button, Badge, Dropdown, Checkbox, Input, themes } from '../../index';
-
-type PlaygroundVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'info'
-  | 'danger'
-  | 'ghost'
-  | 'outline';
-type PlaygroundSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-type PlaygroundShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
-type PlaygroundPosition = 'left' | 'right';
-type PlaygroundToggleMode = 'auto' | 'persistent' | 'floating' | 'none';
-type PlaygroundContentComplexity = 'minimal' | 'standard' | 'rich';
+import { Button, Badge } from '../../index';
 
 // Mock icons for stories
 const HomeIcon = () => (

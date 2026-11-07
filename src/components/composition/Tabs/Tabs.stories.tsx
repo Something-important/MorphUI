@@ -1,6 +1,6 @@
-import React, {  } from 'react';
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tabs, Dropdown, ThemeProvider, themes } from '../../index';
+import { Tabs, ThemeProvider, themes } from '../../index';
 
 const meta: Meta<typeof Tabs> = {
   title: 'Components/Tabs',

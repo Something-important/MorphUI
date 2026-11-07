@@ -53,7 +53,7 @@ const ThemedToastStory: React.FC<{
   autoDismiss?: boolean;
   pauseOnHover?: boolean;
 }> = ({
-  themeName,
+  themeName: _themeName,
   position,
   duration = 4000,
   maxToasts = 3,

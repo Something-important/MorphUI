@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Popover, Button, Dropdown } from '../../index';
-
-type PopoverPosition = NonNullable<React.ComponentProps<typeof Popover>['position']>;
-type PopoverTrigger = NonNullable<React.ComponentProps<typeof Popover>['trigger']>;
-type PopoverVariant = NonNullable<React.ComponentProps<typeof Popover>['variant']>;
-type PopoverSize = NonNullable<React.ComponentProps<typeof Popover>['size']>;
+import { Popover } from '../../index';
 
 const meta: Meta<typeof Popover> = {
   title: 'Components/Popover',

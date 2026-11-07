@@ -11,25 +11,17 @@ export default meta;
 type Story = StoryObj<typeof Rating>;
 
 export const Default: Story = {
-  render: () => (
-    <Rating defaultValue={3} />
-  ),
+  render: () => <Rating defaultValue={3} />,
 };
 
 export const HalfStars: Story = {
-  render: () => (
-    <Rating defaultValue={3.5} allowHalf />
-  ),
+  render: () => <Rating defaultValue={3.5} allowHalf />,
 };
 
 export const Readonly: Story = {
-  render: () => (
-    <Rating value={4} readonly size="lg" />
-  ),
+  render: () => <Rating value={4} readonly size="lg" />,
 };
 
 export const TenStars: Story = {
-  render: () => (
-    <Rating defaultValue={7} max={10} />
-  ),
+  render: () => <Rating defaultValue={7} max={10} />,
 };

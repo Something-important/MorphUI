@@ -1,12 +1,7 @@
 // Card.stories.tsx
 import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
-import { Card, Button, Dropdown, Checkbox } from '../../index';
-
-type CardVariant = NonNullable<React.ComponentProps<typeof Card>['variant']>;
-type CardSize = NonNullable<React.ComponentProps<typeof Card>['size']>;
-type CardHoverEffect = NonNullable<React.ComponentProps<typeof Card>['hoverEffect']>;
-type CardShadow = NonNullable<React.ComponentProps<typeof Card>['shadow']>;
+import { Card, Button } from '../../index';
 
 export default {
   title: 'Components/Card',

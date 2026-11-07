@@ -1,7 +1,7 @@
 // Input.stories.tsx
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Input, Button, Dropdown, Checkbox } from '../../index';
+import { Input } from '../../index';
 
 // Utility function to create controlled inputs with state
 const createControlledInputs = (fields: string[]) => {

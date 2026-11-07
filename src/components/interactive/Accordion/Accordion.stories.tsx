@@ -1,6 +1,6 @@
-import React, {  } from 'react';
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Accordion, Button, Dropdown } from '../../index';
+import { Accordion, Button } from '../../index';
 
 export default {
   title: 'Components/Accordion',
