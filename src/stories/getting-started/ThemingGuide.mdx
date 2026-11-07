@@ -1,0 +1,171 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/Theming Guide" />
+
+# Theming Guide
+
+MorphUI's theming system is built on CSS custom properties (CSS
+variables). This means:
+
+- **Zero runtime overhead** — themes are just CSS variables, no JS re-renders
+- **Full inheritance** — variables cascade through the DOM like any CSS property
+- **Scoping** — themes can be applied globally or to a subtree
+- **Override-friendly** — any single token can be overridden without redefining the whole theme
+
+## How ThemeProvider works
+
+`ThemeProvider` takes a `theme` prop (a flat object of token keys to
+CSS values, without the `--` prefix) and writes them as inline CSS
+variables on its `target` (default: `document.documentElement`).
+
+```tsx
+import { ThemeProvider, lightTheme } from 'morphui-react';
+
+<ThemeProvider theme={lightTheme}>
+  <App />
+</ThemeProvider>;
+```
+
+This sets `--color-primary: #0070f3` (and 352 others) on `:root`. Every
+component reads these variables via `var(--color-primary)` in its CSS.
+
+## Built-in themes
+
+Five presets ship out of the box:
+
+```tsx
+import { lightTheme, darkTheme, warmTheme, coolTheme, purpleTheme } from 'morphui-react';
+// or
+import { themes } from 'morphui-react';
+themes.light; // same as lightTheme
+themes.dark; // same as darkTheme
+// etc.
+```
+
+| Theme    | Primary color | Background | Best for               |
+| -------- | ------------- | ---------- | ---------------------- |
+| `light`  | `#0070f3`     | `#ffffff`  | Default, high-contrast |
+| `dark`   | `#3b82f6`     | `#1f2937`  | Dark mode              |
+| `warm`   | `#ea580c`     | `#fff7ed`  | Warm, inviting         |
+| `cool`   | `#0891b2`     | `#ecfeff`  | Cool, calm             |
+| `purple` | `#9333ea`     | `#faf5ff`  | Creative, bold         |
+
+## Custom themes
+
+### Override individual tokens
+
+Extend a preset and override only the tokens you want to change:
+
+```tsx
+import { ThemeProvider, lightTheme, type Theme } from 'morphui-react';
+
+const brandedTheme: Theme = {
+  ...lightTheme,
+  'color-primary': '#ff0055',
+  'color-primary-hover': '#cc0044',
+  'color-primary-active': '#990033',
+  'border-radius': '12px',
+  'font-family': 'Inter, sans-serif',
+};
+
+<ThemeProvider theme={brandedTheme}>
+  <App />
+</ThemeProvider>;
+```
+
+### Build a theme from scratch
+
+A `Theme` is just `Record<string, string>` — you can define one without
+extending a preset, but you'll need to provide all the tokens your
+components use (or rely on the defaults from `theme.css`).
+
+Use the **Foundations → Token Builder** page to interactively build a
+custom theme and export it as a `.ts` file.
+
+### Merge multiple themes
+
+`mergeThemes` combines themes (later ones win):
+
+```tsx
+import { ThemeProvider, mergeThemes, lightTheme } from 'morphui-react';
+
+const overrides = { 'color-primary': '#ff0055' };
+const merged = mergeThemes(lightTheme, overrides);
+
+<ThemeProvider theme={merged}>
+  <App />
+</ThemeProvider>;
+```
+
+## Scoping themes to a subtree
+
+Pass a `target` prop (HTMLElement or RefObject) to scope a theme. CSS
+variables inherit, so only the target's subtree sees the overrides:
+
+```tsx
+import { useRef } from 'react';
+import { ThemeProvider, darkTheme } from 'morphui-react';
+
+function App() {
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  return (
+    <div style={{ display: 'flex' }}>
+      <ThemeProvider theme={darkTheme} target={sidebarRef}>
+        <div ref={sidebarRef}>
+          <Sidebar />
+        </div>
+      </ThemeProvider>
+      <main>
+        <Content /> {/* uses the global light theme */}
+      </main>
+    </div>
+  );
+}
+```
+
+This is how the **Foundations → Theme Showcase** page renders all 5
+themes side-by-side without conflict.
+
+## Reading the active theme in code
+
+Use the `useTheme` hook to read the merged theme object:
+
+```tsx
+import { useTheme } from 'morphui-react';
+
+function MyComponent() {
+  const theme = useTheme();
+  const primary = theme['color-primary']; // '#0070f3'
+  return <div style={{ color: `var(--color-primary)` }}>Themed text</div>;
+}
+```
+
+`useTheme` throws if used outside a `ThemeProvider`. Use
+`useThemeOptional` if you want `undefined` instead.
+
+## Token categories
+
+The 353 tokens are grouped into 49 families (see **Foundations → Design
+Tokens** for the full list with live previews):
+
+- **Colors**: `--color-primary`, `--color-success`, `--color-gray-500`, etc.
+- **Gradients**: `--gradient-primary`, `--gradient-sunset`, etc.
+- **Typography**: `--font-family`, `--font-size-md`, `--font-weight-bold`, etc.
+- **Spacing**: `--spacing-xs` (0.25rem) through `--spacing-9xl` (16rem)
+- **Border radius**: `--border-radius-sm` (4px) through `--border-radius-full` (9999px)
+- **Shadows**: `--shadow-sm` through `--shadow-2xl`
+- **Animations**: `--duration-200`, `--ease-in-out`, `--transition-colors`, etc.
+- **Layout**: `--width-full`, `--max-width-md`, `--height-screen`, etc.
+- **Z-index**: `--z-dropdown` (1000), `--z-modal` (1050), `--z-tooltip` (1100), `--z-toast` (1150)
+- **Component-specific**: `--input-height-md`, `--modal-max-width-lg`, `--sidebar-width-md`, etc.
+
+## Tips
+
+- **Don't hardcode colors in your app** — use `var(--color-primary)` so your
+  app respects the active theme.
+- **Override at the ThemeProvider level**, not via inline styles, so
+  components stay consistent.
+- **Use the Token Builder** to prototype themes before committing them
+  to code — it exports a copy-paste-ready `.ts` file.
+- **Test all 5 themes** using the Storybook toolbar (paintbrush icon) on
+  any component page.
