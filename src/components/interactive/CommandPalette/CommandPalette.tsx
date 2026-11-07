@@ -2,6 +2,7 @@
 import React, { forwardRef, useState, useCallback, useRef, useEffect, useId, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { useModal } from '../../../hooks';
 import './CommandPalette.css';
 
 export type CommandPaletteVariant = 'primary' | 'secondary' | 'ghost' | 'outline';
@@ -107,10 +108,6 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
     const inputId = `${generatedId}-input`;
     const listId = `${generatedId}-list`;
 
-    const isControlled = controlledOpen !== undefined;
-    const [internalOpen, setInternalOpen] = useState(defaultIsOpen);
-    const isOpen = isControlled ? controlledOpen : internalOpen;
-
     const [query, setQuery] = useState('');
     const [activeIndex, setActiveIndex] = useState(0);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -120,17 +117,30 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
       setMounted(true);
     }, []);
 
-    const close = useCallback(() => {
-      if (!isControlled) setInternalOpen(false);
-      onOpenChange?.(false);
-      setQuery('');
-      setActiveIndex(0);
-    }, [isControlled, onOpenChange]);
+    // Adopt useModal for open/close state, Escape-to-close (document-level),
+    // and body scroll lock (was missing — bug fix). trapFocus is false
+    // because CommandPalette manages its own focus (focuses the search input).
+    const {
+      isOpen,
+      close,
+      open: modalOpen,
+    } = useModal({
+      isOpen: controlledOpen,
+      defaultOpen: defaultIsOpen,
+      onClose: () => {
+        onOpenChange?.(false);
+        setQuery('');
+        setActiveIndex(0);
+      },
+      closeOnEsc: true,
+      trapFocus: false,
+      lockScroll: true,
+    });
 
     const open = useCallback(() => {
-      if (!isControlled) setInternalOpen(true);
+      modalOpen();
       onOpenChange?.(true);
-    }, [isControlled, onOpenChange]);
+    }, [modalOpen, onOpenChange]);
 
     // Global Cmd+K / Ctrl+K listener
     useEffect(() => {
@@ -148,15 +158,12 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
       return () => document.removeEventListener('keydown', handler);
     }, [isOpen, open, close]);
 
-    // Focus input when opened
+    // Focus input when opened (useModal handles Escape + scroll lock;
+    // we focus the input manually since trapFocus is false).
     useEffect(() => {
       if (isOpen) {
-        // Small delay to let the portal render
         const timer = setTimeout(() => inputRef.current?.focus(), 0);
         return () => clearTimeout(timer);
-      } else {
-        setQuery('');
-        setActiveIndex(0);
       }
     }, [isOpen]);
 
@@ -192,12 +199,10 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(
           e.preventDefault();
           const item = flatEnabled[activeIndex];
           if (item) selectItem(item);
-        } else if (e.key === 'Escape') {
-          e.preventDefault();
-          close();
         }
+        // Escape is handled by useModal on the document level
       },
-      [flatEnabled, activeIndex, selectItem, close],
+      [flatEnabled, activeIndex, selectItem],
     );
 
     // Theme resolution
