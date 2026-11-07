@@ -128,6 +128,7 @@ Features: six variants (`success` / `danger` / `warning` / `info` / `primary` / 
 - **Live Storybook**: Browse all components and interact with them at <https://something-important.github.io/MorphUI/>
 - **Run locally**: `npm run storybook` opens Storybook at `http://localhost:6006/`
 - **Build a static copy**: `npm run build-storybook` produces a `storybook-static/` folder you can deploy anywhere
+- **Migrating from Radix/shadcn?** See the [Radix → MorphUI migration guide](./docs/MIGRATION-FROM-RADIX.md)
 - **Engineering docs**: architecture, theming guide, a11y guide, migration
   guide, component inventory, roadmap, and the publish pipeline live in
   [`docs/`](./docs) — start at [`docs/README.md`](./docs/README.md); the
