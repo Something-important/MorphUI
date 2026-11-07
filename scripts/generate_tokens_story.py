@@ -12,7 +12,20 @@ Source: src/components/theme/theme.css (which is itself auto-generated
 
 Output: src/stories/foundations/DesignTokens.stories.tsx
 
-The generated story renders every token grouped by family, with
+The generated story renders every token grouped by family, split across
+multiple category stories to stay under Chromatic's 25M px screenshot
+limit (a single all-tokens story was 3198x20444px = ~65M px).
+
+Stories emitted:
+  - Overview (summary counts, no token rows)
+  - Colors (color-*, gradient-*)
+  - Typography (font-*, letter-spacing, line-height, text-decoration)
+  - Spacing & Layout (spacing-*, width-*, height-*, max-width-*, min-width-*, container-*, breakpoint-*)
+  - Borders, Shadows & Effects (border-radius, shadow-*, backdrop-blur, opacity, transform, filter)
+  - Animation (duration-*, delay-*, ease-*, transition-*)
+  - Component Tokens (input-*, checkbox-*, radio-*, switch-*, nav-*, sidebar-*, header-*, modal-*, z-*, color-option, color-content)
+
+Each category story renders only the families in its group, with
 appropriate visualizations:
   - color-* / gradient-*  → swatch box + hex/rgba value
   - spacing-* / font-size-* / width-* / height-* / max-width-* /
@@ -362,62 +375,133 @@ const TokenSection = ({ title, family, tokens }: { title: string; family: string
 // Map family → strategy, populated at generation time.
 const STRATEGIES: Record<string, string> = __STRATEGIES_JSON__;
 
-export const AllTokens: Story = {
-  render: () => (
-    <div
-      style={{
-        padding: '32px 48px',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        background: 'var(--color-background, #fff)',
-        color: 'var(--color-text, #111827)',
-        minHeight: '100vh',
-      }}
-    >
-      <header style={{ marginBottom: '32px' }}>
-        <h1
-          style={{
-            fontSize: 'var(--font-size-3xl, 24px)',
-            fontWeight: 'var(--font-weight-bold, 700)',
-            color: 'var(--color-heading-primary, #111827)',
-            margin: '0 0 8px 0',
-          }}
-        >
-          Design Tokens
-        </h1>
-        <p style={{ color: 'var(--color-text-secondary, #6b7280)', margin: 0 }}>
-          {__TOTAL_TOKENS__} CSS custom properties across {__TOTAL_FAMILIES__} families. Switch themes
-          via the toolbar to see how each preset overrides the defaults.
-        </p>
-      </header>
-      __SECTIONS__
-    </div>
-  ),
-};
+// ---- story wrapper (shared layout) ----
+
+const StoryWrapper = ({ title, subtitle, children }: { title: string; subtitle: string; children: ReactNode }) => (
+  <div
+    style={{
+      padding: '32px 48px',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      background: 'var(--color-background, #fff)',
+      color: 'var(--color-text, #111827)',
+      minHeight: '100vh',
+    }}
+  >
+    <header style={{ marginBottom: '32px' }}>
+      <h1
+        style={{
+          fontSize: 'var(--font-size-3xl, 24px)',
+          fontWeight: 'var(--font-weight-bold, 700)',
+          color: 'var(--color-heading-primary, #111827)',
+          margin: '0 0 8px 0',
+        }}
+      >
+        {title}
+      </h1>
+      <p style={{ color: 'var(--color-text-secondary, #6b7280)', margin: 0 }}>
+        {subtitle}
+      </p>
+    </header>
+    {children}
+  </div>
+);
+
+__STORIES__
 """
 
 # Build the strategies JSON: family → strategy
 strategies_map = {fam: render_strategy(fam) for fam in seen_families}
 
-# Build the sections JSX (call TokenSection per family)
-sections_jsx = []
-for fam in seen_families:
+# ---- category groupings ----
+# Maps family name → story category. Families not listed here fall into
+# "Component Tokens". This splits the 353 tokens across 6 stories so each
+# stays under Chromatic's 25M px screenshot limit (was 65M px in one story).
+CATEGORIES = {
+    'Colors': [
+        'color-primary', 'color-secondary', 'color-success', 'color-warning',
+        'color-danger', 'color-info', 'color-gray', 'color-background',
+        'color-text', 'color-border', 'color-heading', 'color-link',
+        'color-white', 'color-black', 'gradient',
+    ],
+    'Typography': [
+        'font-family', 'font-size', 'font-weight',
+        'letter-spacing', 'line-height', 'text-decoration',
+    ],
+    'Spacing & Layout': [
+        'spacing', 'width', 'height', 'max-width', 'min-width',
+        'container', 'breakpoint',
+    ],
+    'Borders, Shadows & Effects': [
+        'border-radius', 'shadow', 'backdrop-blur',
+        'opacity', 'transform', 'filter',
+    ],
+    'Animation': [
+        'duration', 'delay', 'ease', 'transition',
+    ],
+    'Component Tokens': [
+        'input', 'checkbox', 'radio', 'switch', 'nav', 'sidebar',
+        'header', 'modal', 'z', 'color-option', 'color-content',
+    ],
+}
+
+def family_in_category(fam, cat_families):
+    """Check if a family belongs to a category (exact match or prefix)."""
+    return any(fam == f or fam.startswith(f) for f in cat_families)
+
+# Build per-category family lists (preserving first-appearance order)
+category_families = {}
+for cat_name, cat_fams in CATEGORIES.items():
+    category_families[cat_name] = [f for f in seen_families if family_in_category(f, cat_fams)]
+
+# Build a section JSX string for one family
+def build_section_jsx(fam):
     tokens = groups[fam]
-    # Each token is [name, value] — emit as JS array literal:
-    # [['color-primary', '#0070f3'], ['color-primary-hover', '#0051cc'], ...]
     tokens_js = ', '.join(f"['{k}', {json.dumps(v)}]" for k, v in tokens)
-    # Emit JSX: <TokenSection title="family" tokens={[['k','v'],...]} />
-    # Note the doubled {{ and }} for literal braces in the f-string.
-    sections_jsx.append(
-        '{<TokenSection title=' + json.dumps(fam) + ' family=' + json.dumps(fam) + ' tokens={[' + tokens_js + ']} />}'
-    )
+    return '{<TokenSection title=' + json.dumps(fam) + ' family=' + json.dumps(fam) + ' tokens={[' + tokens_js + ']} />}'
+
+# Build stories: one Overview + one per category
+stories = []
+
+# Overview story (no token rows — just summary counts)
+overview_cards = '\n'.join(
+    '        <div style={{ padding: 16, border: \'1px solid var(--color-border, #d1d5db)\', borderRadius: 8 }}>'
+    '<strong>' + cat + '</strong><br />'
+    '<span style={{ color: \'var(--color-text-secondary, #6b7280)\', fontSize: \'var(--font-size-sm, 12px)\' }}>'
+    + str(len(category_families[cat])) + ' families</span></div>'
+    for cat in CATEGORIES
+)
+stories.append(f"""export const Overview: Story = {{
+  render: () => (
+    <StoryWrapper title="Design Tokens" subtitle="{len(entries)} CSS custom properties across {len(seen_families)} families. Switch themes via the toolbar to see how each preset overrides the defaults. Browse individual category stories for full token details.">
+      <div style={{{{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}}}>
+{overview_cards}
+      </div>
+    </StoryWrapper>
+  ),
+}};""")
+
+# Category stories
+for cat_name, cat_fams in CATEGORIES.items():
+    if not cat_fams:
+        continue
+    sections = [build_section_jsx(f) for f in cat_fams]
+    cat_token_count = sum(len(groups[f]) for f in cat_fams)
+    story_export_name = cat_name.replace(' ', '').replace('&', 'And').replace(',', '')
+    stories.append(f"""export const {story_export_name}: Story = {{
+  render: () => (
+    <StoryWrapper title="{cat_name}" subtitle="{cat_token_count} tokens across {len(cat_fams)} families. Switch themes via the toolbar.">
+{chr(10).join(f'      {s}' for s in sections)}
+    </StoryWrapper>
+  ),
+}};""")
+
+stories_js = '\n\n'.join(stories)
 
 # Assemble the file
 content = HEADER
 content = content.replace('__STRATEGIES_JSON__', json.dumps(strategies_map, indent=2))
-content = content.replace('__TOTAL_TOKENS__', str(len(entries)))
-content = content.replace('__TOTAL_FAMILIES__', str(len(seen_families)))
-content = content.replace('__SECTIONS__', '\n      '.join(sections_jsx))
+content = content.replace('__STORIES__', stories_js)
 
 OUT.write_text(content)
 
