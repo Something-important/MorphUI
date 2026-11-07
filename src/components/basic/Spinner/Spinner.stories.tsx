@@ -1,43 +1,23 @@
-// Spinner.stories.tsx
-import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Spinner } from './Spinner';
-import { Button } from '../Button';
+import { Demo, Row, Stack, ThemeGrid, OnDark, OnLight } from '../../../stories/_shared';
 
-export default {
-  title: 'Components/Spinner',
+const meta: Meta<typeof Spinner> = {
+  title: 'Primitives/Spinner',
   component: Spinner,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'A versatile loading spinner component with multiple animation styles, sizes, and full theming support. Perfect for indicating loading states throughout your application.',
+          'Spinner renders a loading indicator with 6 variants, 5 sizes, and 5 animation types (spin, pulse, dots, bars, wave).',
       },
     },
   },
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    animation: {
-      control: { type: 'select' },
-      options: ['spin', 'pulse', 'dots', 'bars', 'wave'],
-    },
-    fullScreen: {
-      control: { type: 'boolean' },
-    },
-  },
-} satisfies Meta<typeof Spinner>;
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof Spinner>;
-
-// Default
 export const Default: Story = {
   args: {
     variant: 'primary',
@@ -46,198 +26,103 @@ export const Default: Story = {
   },
 };
 
-// Animations
-export const Animations: Story = {
-  render: () => {
-    const animations: Array<'spin' | 'pulse' | 'dots' | 'bars' | 'wave'> = [
-      'spin',
-      'pulse',
-      'dots',
-      'bars',
-      'wave',
-    ];
-
-    return (
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        {animations.map((animation) => (
-          <div key={animation} style={{ textAlign: 'center' }}>
-            <Spinner animation={animation} size="lg" />
-            <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-              {animation.charAt(0).toUpperCase() + animation.slice(1)}
-            </p>
-          </div>
-        ))}
-      </div>
-    );
-  },
-};
-
-// Sizes
-export const Sizes: Story = {
-  render: () => {
-    const sizes: Array<'xs' | 'sm' | 'md' | 'lg' | 'xl'> = ['xs', 'sm', 'md', 'lg', 'xl'];
-
-    return (
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        {sizes.map((size) => (
-          <div key={size} style={{ textAlign: 'center' }}>
-            <Spinner size={size} />
-            <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-              {size.toUpperCase()}
-            </p>
-          </div>
-        ))}
-      </div>
-    );
-  },
-};
-
-// Variants
 export const Variants: Story = {
-  render: () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
-      'primary',
-      'secondary',
-      'success',
-      'warning',
-      'danger',
-      'info',
-    ];
-
-    return (
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        {variants.map((variant) => (
-          <div key={variant} style={{ textAlign: 'center' }}>
-            <Spinner variant={variant} size="lg" />
-            <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-              {variant.charAt(0).toUpperCase() + variant.slice(1)}
-            </p>
-          </div>
-        ))}
-      </div>
-    );
-  },
+  render: () => (
+    <Demo title="All variants">
+      <Row gap={16} align="center">
+        <Spinner variant="primary" />
+        <Spinner variant="secondary" />
+        <Spinner variant="success" />
+        <Spinner variant="warning" />
+        <Spinner variant="danger" />
+        <Spinner variant="info" />
+      </Row>
+    </Demo>
+  ),
 };
 
-// With label
-export const WithLabel: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center' }}>
-        <Spinner label="Loading..." />
-        <Spinner label="Processing..." variant="success" />
-        <Spinner label="Please wait..." variant="warning" size="lg" />
-      </div>
-    );
-  },
+export const Sizes: Story = {
+  render: () => (
+    <Demo title="All sizes">
+      <Row gap={16} align="center">
+        <Spinner size="xs" />
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+        <Spinner size="xl" />
+      </Row>
+    </Demo>
+  ),
 };
 
-// Custom colors
-export const CustomColors: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🎨 Custom Colors
-          </h3>
-          <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Spinner color="#8b5cf6" size="lg" />
-            <Spinner color="#f97316" size="lg" />
-            <Spinner color="#06b6d4" size="lg" />
-            <Spinner color="#ec4899" size="lg" />
-          </div>
-        </div>
-      </div>
-    );
-  },
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Animation types & custom colors">
+      <Stack gap={16}>
+        <Row gap={16} align="center">
+          <Spinner animation="spin" />
+          <Spinner animation="pulse" />
+          <Spinner animation="dots" />
+          <Spinner animation="bars" />
+          <Spinner animation="wave" />
+        </Row>
+        <Row gap={16} align="center">
+          <Spinner color="#ff0055" />
+          <Spinner gradient="linear-gradient(135deg, #667eea, #764ba2)" />
+        </Row>
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Gradients
-export const Gradients: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🌈 Gradient Spinners
-          </h3>
-          <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Spinner
-              gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-              size="lg"
-              animation="spin"
-            />
-            <Spinner
-              gradient="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-              size="lg"
-              animation="pulse"
-            />
-            <Spinner
-              gradient="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-              size="lg"
-              animation="dots"
-            />
-          </div>
+export const States: Story = {
+  render: () => (
+    <Demo title="With label & full screen">
+      <Stack gap={24}>
+        <Spinner label="Loading data..." />
+        <div
+          style={{
+            position: 'relative',
+            height: '120px',
+            border: '1px solid var(--color-border, #d1d5db)',
+            borderRadius: 'var(--border-radius-md, 8px)',
+            overflow: 'hidden',
+          }}
+        >
+          <Spinner fullScreen />
         </div>
-      </div>
-    );
-  },
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Full screen
-export const FullScreen: Story = {
-  render: () => {
-    const [showFullScreen, setShowFullScreen] = useState(false);
-
-    return (
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <Button onClick={() => setShowFullScreen(!showFullScreen)}>
-          {showFullScreen ? 'Hide' : 'Show'} Full Screen Spinner
-        </Button>
-        {showFullScreen && <Spinner fullScreen label="Loading..." variant="primary" size="lg" />}
-      </div>
-    );
-  },
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Spinner across all 5 preset themes">
+      <ThemeGrid>
+        <Spinner size="lg" />
+      </ThemeGrid>
+    </Demo>
+  ),
 };
 
-// Theme switching
-// Usage examples
-export const UsageExamples: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', padding: '2rem' }}>
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>Inline with Text</h3>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Spinner size="sm" />
-            <span>Loading data...</span>
-          </div>
-        </div>
-
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>Button Loading State</h3>
-          <Button disabled>
-            <Spinner size="xs" variant="primary" />
-            Processing...
-          </Button>
-        </div>
-
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>Card Loading Overlay</h3>
-          <div
-            style={{
-              position: 'relative',
-              padding: '2rem',
-              border: '1px solid #e5e7eb',
-              borderRadius: '8px',
-              minHeight: '200px',
-            }}
-          >
-            <Spinner size="lg" label="Loading content..." />
-          </div>
-        </div>
-      </div>
-    );
-  },
+export const Contrast: Story = {
+  render: () => (
+    <Demo title="On dark / on light backgrounds">
+      <Stack gap={12}>
+        <OnDark>
+          <Row gap={16}>
+            <Spinner variant="info" />
+            <Spinner variant="warning" />
+          </Row>
+        </OnDark>
+        <OnLight>
+          <Row gap={16}>
+            <Spinner variant="primary" />
+            <Spinner variant="danger" />
+          </Row>
+        </OnLight>
+      </Stack>
+    </Demo>
+  ),
 };

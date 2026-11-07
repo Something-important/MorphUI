@@ -24,11 +24,13 @@ export const Row = ({
   gap = 8,
   align = 'center',
   wrap = false,
+  style,
 }: {
   children: ReactNode;
   gap?: number;
   align?: 'center' | 'start' | 'end' | 'baseline' | 'stretch';
   wrap?: boolean;
+  style?: CSSProperties;
 }) => (
   <div
     style={{
@@ -36,6 +38,7 @@ export const Row = ({
       flexDirection: 'row',
       alignItems: align,
       flexWrap: wrap ? 'wrap' : 'nowrap',
+      ...style,
     }}
   >
     {children}
@@ -55,16 +58,19 @@ export const Stack = ({
   children,
   gap = 16,
   align = 'stretch',
+  style,
 }: {
   children: ReactNode;
   gap?: number;
   align?: 'center' | 'start' | 'end' | 'baseline' | 'stretch';
+  style?: CSSProperties;
 }) => (
   <div
     style={{
       ...baseFlex(gap),
       flexDirection: 'column',
       alignItems: align,
+      ...style,
     }}
   >
     {children}
@@ -85,16 +91,19 @@ export const Grid = ({
   children,
   cols = 3,
   gap = 12,
+  style,
 }: {
   children: ReactNode;
   cols?: number;
   gap?: number;
+  style?: CSSProperties;
 }) => (
   <div
     style={{
       display: 'grid',
       gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
       gap: `${gap}px`,
+      ...style,
     }}
   >
     {children}

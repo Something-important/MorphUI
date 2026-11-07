@@ -1,902 +1,153 @@
-// Button.stories.tsx
-import React, { useState } from 'react';
-import type { StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
+import { Demo, Row, Stack, ThemeGrid, OnDark, OnLight } from '../../../stories/_shared';
 
-// Mock icons for stories
-const ChevronRightIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <polyline points="9,18 15,12 9,6"></polyline>
-  </svg>
-);
-
-const DownloadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-    <polyline points="7,10 12,15 17,10"></polyline>
-    <line x1="12" y1="15" x2="12" y2="3"></line>
-  </svg>
-);
-
-const HeartIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-  </svg>
-);
-
-export default {
-  title: 'Components/Button',
+const meta: Meta<typeof Button> = {
+  title: 'Primitives/Button',
   component: Button,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'A highly customizable button component with support for variants, sizes, colors, gradients, loading states, icons, ripple effects, and advanced theming.',
+          'Button is the primary action trigger. Supports 8 variants, 5 sizes, shadows, hover effects, gradients, ripple, loading state, and full color customization.',
       },
     },
   },
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['primary', 'secondary', 'success', 'warning', 'info', 'danger', 'ghost', 'outline'],
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    shadow: {
-      control: { type: 'select' },
-      options: ['none', 'sm', 'md', 'lg', 'xl'],
-    },
-    hoverEffect: {
-      control: { type: 'select' },
-      options: ['none', 'lift', 'glow', 'scale'],
-    },
-    ripple: {
-      control: { type: 'boolean' },
-    },
-    loading: {
-      control: { type: 'boolean' },
-    },
-    loadingText: {
-      control: { type: 'text' },
-    },
-    iconLeft: {
-      control: { type: 'text' },
-    },
-    iconRight: {
-      control: { type: 'text' },
-    },
-    fullWidth: {
-      control: { type: 'boolean' },
-    },
-    rounded: {
-      control: { type: 'boolean' },
-    },
-    disabled: {
-      control: { type: 'boolean' },
-    },
-    color: {
-      control: { type: 'text' },
-    },
-    gradient: {
-      control: { type: 'text' },
-    },
-    textColor: {
-      control: { type: 'text' },
-    },
-    borderColor: {
-      control: { type: 'text' },
-    },
-  },
-  decorators: [
-    (Story: React.FC) => (
-      <div style={{ padding: '20px', maxWidth: '800px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
-type Story = StoryObj<typeof Button>;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
+    children: 'Click me',
     variant: 'primary',
     size: 'md',
-    children: 'Primary Button',
   },
 };
 
-export const AllVariants: Story = {
+export const Variants: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="success">Success</Button>
-      <Button variant="warning">Warning</Button>
-      <Button variant="danger">Danger</Button>
-      <Button variant="info">Info</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="outline">Outline</Button>
-    </div>
+    <Demo title="All variants">
+      <Row gap={8} wrap>
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="danger">Danger</Button>
+        <Button variant="success">Success</Button>
+        <Button variant="warning">Warning</Button>
+        <Button variant="info">Info</Button>
+      </Row>
+    </Demo>
   ),
 };
 
-export const AllSizes: Story = {
+export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-      <Button size="xs">Extra Small</Button>
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
-      <Button size="xl">Extra Large</Button>
-    </div>
+    <Demo title="All sizes">
+      <Row gap={8} align="center">
+        <Button size="xs">XS</Button>
+        <Button size="sm">SM</Button>
+        <Button size="md">MD</Button>
+        <Button size="lg">LG</Button>
+        <Button size="xl">XL</Button>
+      </Row>
+    </Demo>
   ),
 };
 
-export const ShadowLevels: Story = {
+export const States: Story = {
   render: () => (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
-    >
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button shadow="none">No Shadow</Button>
-        <Button shadow="sm">Small Shadow</Button>
-        <Button shadow="md">Medium Shadow</Button>
-        <Button shadow="lg">Large Shadow</Button>
-        <Button shadow="xl">Extra Large Shadow</Button>
-      </div>
-    </div>
-  ),
-};
-
-export const HoverEffects: Story = {
-  render: () => (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
-    >
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button hoverEffect="lift">Lift Effect</Button>
-        <Button hoverEffect="glow">Glow Effect</Button>
-        <Button hoverEffect="scale">Scale Effect</Button>
-        <Button hoverEffect="none">No Effect</Button>
-      </div>
-    </div>
-  ),
-};
-
-export const WithIcons: Story = {
-  render: () => (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-start' }}
-    >
-      <Button iconLeft={<DownloadIcon />}>Download</Button>
-      <Button variant="secondary" iconRight={<ChevronRightIcon />}>
-        Continue
-      </Button>
-      <Button variant="ghost" iconLeft={<HeartIcon />} iconRight={<ChevronRightIcon />}>
-        Like & Share
-      </Button>
-    </div>
-  ),
-};
-
-export const LoadingStates: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
-          Basic Loading States
-        </h3>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button loading>Loading...</Button>
-          <Button loading variant="success">
-            Processing
-          </Button>
-          <Button loading variant="warning">
-            Saving
-          </Button>
-          <Button loading variant="danger">
-            Deleting
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
-          Loading with Custom Text
-        </h3>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button loading loadingText="Submitting...">
-            Submit
-          </Button>
-          <Button loading loadingText="Uploading..." variant="success">
-            Upload File
-          </Button>
-          <Button loading loadingText="Please wait..." variant="info">
-            Process Data
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
-          Loading with Icons
-        </h3>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button loading iconLeft="📤" loadingText="Sending...">
-            Send Message
-          </Button>
-          <Button loading iconRight="💾" loadingText="Saving...">
-            Save Document
-          </Button>
-          <Button loading iconLeft="🔄" iconRight="✅" loadingText="Syncing...">
-            Sync Data
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
-          Loading with Gradients
-        </h3>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Button
-            loading
-            gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-            loadingText="Processing..."
-          >
-            Gradient Loading
-          </Button>
-          <Button
-            loading
-            gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)"
-            loadingText="Working..."
-          >
-            Colorful Loading
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
-          Loading vs Normal with Effects
-        </h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <Button shadow="lg" hoverEffect="glow">
-              Normal Button (Hover me!)
-            </Button>
-            <Button loading shadow="lg" hoverEffect="glow" loadingText="Loading...">
-              Loading Button (Effects disabled)
-            </Button>
-          </div>
-          <p style={{ fontSize: '12px', color: '#666', margin: '0', fontStyle: 'italic' }}>
-            Notice: Loading buttons disable hover effects and show only the spinner
-          </p>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
-          Interactive Loading Demo
-        </h3>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <LoadingDemo />
-        </div>
-      </div>
-    </div>
-  ),
-};
-
-// Interactive loading demo component
-const LoadingDemo = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('Processing...');
-
-  const handleClick = () => {
-    setIsLoading(true);
-    // Simulate async operation
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  };
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-      <Button
-        loading={isLoading}
-        loadingText={loadingText}
-        onClick={handleClick}
-        disabled={isLoading}
-        variant="primary"
-      >
-        {isLoading ? 'Working...' : 'Click to Load'}
-      </Button>
-      <input
-        type="text"
-        value={loadingText}
-        onChange={(e) => setLoadingText(e.target.value)}
-        placeholder="Custom loading text..."
-        style={{
-          padding: '4px 8px',
-          border: '1px solid #ddd',
-          borderRadius: '4px',
-          fontSize: '12px',
-          width: '150px',
-        }}
-      />
-    </div>
-  );
-};
-
-export const DisabledStates: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-      <Button disabled>Disabled Primary</Button>
-      <Button variant="secondary" disabled>
-        Disabled Secondary
-      </Button>
-      <Button variant="success" disabled>
-        Disabled Success
-      </Button>
-      <Button variant="warning" disabled>
-        Disabled Warning
-      </Button>
-      <Button variant="danger" disabled>
-        Disabled Danger
-      </Button>
-      <Button variant="info" disabled>
-        Disabled Info
-      </Button>
-      <Button variant="ghost" disabled>
-        Disabled Ghost
-      </Button>
-      <Button variant="outline" disabled>
-        Disabled Outline
-      </Button>
-    </div>
-  ),
-};
-
-export const FullWidthButtons: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <Button fullWidth>Full Width Primary</Button>
-      <Button variant="secondary" fullWidth>
-        Full Width Secondary
-      </Button>
-      <Button variant="outline" fullWidth iconLeft={<DownloadIcon />}>
-        Full Width with Icon
-      </Button>
-    </div>
-  ),
-};
-
-export const RoundedButtons: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-      <Button rounded>Rounded Primary</Button>
-      <Button variant="secondary" rounded>
-        Rounded Secondary
-      </Button>
-      <Button variant="outline" rounded iconLeft={<HeartIcon />}>
-        Rounded with Icon
-      </Button>
-    </div>
-  ),
-};
-
-export const AsAnchorTag: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-      <Button as="a" href="#" variant="primary">
-        Link Button
-      </Button>
-      <Button as="a" href="#" variant="outline" iconRight={<ChevronRightIcon />}>
-        External Link
-      </Button>
-    </div>
-  ),
-};
-
-export const CustomColors: Story = {
-  render: () => (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
-    >
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button color="#10b981">Custom Green</Button>
-        <Button color="#f59e0b">Custom Orange</Button>
-        <Button color="#8b5cf6">Custom Purple</Button>
-        <Button color="#ec4899">Custom Pink</Button>
-      </div>
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button color="#10b981" textColor="#ffffff">
-          Green with White Text
+    <Demo title="Disabled & loading states">
+      <Row gap={8} wrap>
+        <Button variant="primary" disabled>
+          Disabled
         </Button>
-        <Button color="#f59e0b" textColor="#000000">
-          Orange with Black Text
+        <Button variant="primary" loading>
+          Loading
         </Button>
-        <Button color="#8b5cf6" borderColor="#4c1d95">
-          Purple with Dark Border
+        <Button variant="outline" loading loadingText="Saving...">
+          Save
         </Button>
-      </div>
-    </div>
+        <Button variant="ghost" disabled>
+          Disabled Ghost
+        </Button>
+      </Row>
+    </Demo>
   ),
 };
 
-export const Gradients: Story = {
+export const Customization: Story = {
   render: () => (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
-    >
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button gradient="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)">Red to Blue</Button>
-        <Button gradient="linear-gradient(90deg, #10b981 0%, #3b82f6 100%)">Green to Blue</Button>
-        <Button gradient="linear-gradient(90deg, #f59e0b 0%, #ec4899 100%)">Orange to Pink</Button>
-        <Button gradient="linear-gradient(90deg, #8b5cf6 0%, #06b6d4 100%)">Purple to Cyan</Button>
-      </div>
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">Diagonal Blue</Button>
-        <Button gradient="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">Diagonal Pink</Button>
-        <Button gradient="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">Diagonal Cyan</Button>
-      </div>
-    </div>
+    <Demo title="Shadows, hover effects, gradients, icons, ripple, rounded">
+      <Stack gap={12}>
+        <Row gap={8} wrap>
+          <Button shadow="sm">Shadow SM</Button>
+          <Button shadow="md">Shadow MD</Button>
+          <Button shadow="lg">Shadow LG</Button>
+          <Button shadow="xl">Shadow XL</Button>
+        </Row>
+        <Row gap={8} wrap>
+          <Button hoverEffect="lift">Lift</Button>
+          <Button hoverEffect="glow">Glow</Button>
+          <Button hoverEffect="scale">Scale</Button>
+        </Row>
+        <Row gap={8} wrap>
+          <Button gradient="linear-gradient(135deg, #667eea, #764ba2)">Gradient</Button>
+          <Button rounded>Rounded</Button>
+          <Button ripple>Ripple (click me)</Button>
+          <Button iconLeft={<span>←</span>}>Left icon</Button>
+          <Button iconRight={<span>→</span>}>Right icon</Button>
+        </Row>
+      </Stack>
+    </Demo>
   ),
 };
 
-export const ThemeIntegration: Story = {
+export const AllThemes: Story = {
   render: () => (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}
-    >
-      <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600' }}>
-        Using Theme Keys
-      </h3>
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button color="color-success">Theme Success</Button>
-        <Button color="color-warning">Theme Warning</Button>
-        <Button color="color-info">Theme Info</Button>
-        <Button gradient="gradient-primary">Theme Gradient</Button>
-      </div>
-      <h3 style={{ margin: '16px 0 12px 0', fontSize: '16px', fontWeight: '600' }}>
-        Using CSS Variables
-      </h3>
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <Button color="--color-success">CSS Variable Success</Button>
-        <Button color="--color-warning">CSS Variable Warning</Button>
-        <Button gradient="--gradient-primary">CSS Variable Gradient</Button>
-      </div>
-    </div>
+    <Demo title="Button across all 5 preset themes">
+      <ThemeGrid>
+        <Button variant="primary">Primary</Button>
+      </ThemeGrid>
+    </Demo>
   ),
 };
 
-export const InteractivePlayground: Story = {
-  args: {
-    variant: 'primary',
-    size: 'md',
-    children: 'Interactive Button',
-    loading: false,
-    disabled: false,
-    fullWidth: false,
-    rounded: false,
-    loadingText: 'Loading...',
-    shadow: 'md',
-    hoverEffect: 'lift',
-  },
-};
-
-export const ButtonGroups: Story = {
+export const EdgeCases: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Action Group</h3>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Button size="sm">Edit</Button>
-          <Button variant="secondary" size="sm">
-            Duplicate
-          </Button>
-          <Button variant="danger" size="sm">
-            Delete
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Form Actions</h3>
-        <div
-          style={{
-            border: '1px solid #e5e7eb',
-            borderRadius: '8px',
-            padding: '20px',
-            maxWidth: '400px',
-          }}
-        >
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-              Title:
-            </label>
-            <input
-              type="text"
-              placeholder="Enter title"
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                border: '1px solid #d1d5db',
-                borderRadius: '4px',
-                fontSize: '14px',
-              }}
-            />
-          </div>
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-              Description:
-            </label>
-            <textarea
-              placeholder="Enter description"
-              rows={3}
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                border: '1px solid #d1d5db',
-                borderRadius: '4px',
-                fontSize: '14px',
-                resize: 'vertical',
-              }}
-            />
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              gap: '12px',
-              justifyContent: 'flex-start',
-              borderTop: '1px solid #e5e7eb',
-              paddingTop: '16px',
-              marginTop: '16px',
-            }}
-          >
-            <Button variant="ghost">Cancel</Button>
-            <Button variant="outline">Save Draft</Button>
-            <Button>Publish</Button>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>
-          Status Buttons
-        </h3>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Button variant="success" size="sm">
-            ✓ Approved
-          </Button>
-          <Button variant="warning" size="sm">
-            ⚠ Pending
-          </Button>
-          <Button variant="danger" size="sm">
-            ✗ Rejected
-          </Button>
-          <Button variant="info" size="sm">
-            ℹ Info
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600' }}>Navigation</h3>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Button variant="outline" size="sm">
-            ← Previous
-          </Button>
-          <Button size="sm">Next →</Button>
-        </div>
-      </div>
-    </div>
+    <Demo title="Edge cases — full width, long text, link button">
+      <Stack gap={12}>
+        <Button fullWidth>Full width button</Button>
+        <Button>
+          This button has a very long label that might wrap or truncate depending on container width
+        </Button>
+        <Button as="a" href="#">
+          Link button
+        </Button>
+      </Stack>
+    </Demo>
   ),
 };
 
-export const ThemeVariations: Story = {
+export const Contrast: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🎨 Theme Color Buttons
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="success">Success</Button>
-          <Button variant="warning">Warning</Button>
-          <Button variant="danger">Danger</Button>
-          <Button variant="info">Info</Button>
-        </div>
-        <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
-          💡 These buttons use theme colors - they change when you switch themes in the Interactive
-          Theme Builder!
-        </p>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🌈 Theme Gradient Buttons
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button gradient="gradient-primary">Primary Gradient</Button>
-          <Button gradient="gradient-success">Success Gradient</Button>
-          <Button gradient="gradient-warning">Warning Gradient</Button>
-          <Button gradient="gradient-danger">Danger Gradient</Button>
-        </div>
-        <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
-          💡 These buttons use theme gradients - they also change with themes!
-        </p>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🎭 Mixed Examples
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button variant="ghost">Ghost Button</Button>
-          <Button variant="outline">Outline Button</Button>
-          <Button rounded>Rounded Button</Button>
-          <Button shadow="lg">Shadow Button</Button>
-          <Button hoverEffect="glow">Glow Button</Button>
-        </div>
-        <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
-          💡 These show different button styles that work with any theme!
-        </p>
-      </div>
-
-      <div
-        style={{
-          padding: '16px',
-          background: '#f8fafc',
-          borderRadius: '8px',
-          border: '1px solid #e2e8f0',
-        }}
-      >
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600', color: '#334155' }}>
-          🚀 How to Use Themes
-        </h4>
-        <div style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>1. Switch Themes:</strong> Go to the Interactive Theme Builder above and click
-            different theme buttons.
-          </p>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>2. Watch Changes:</strong> All theme-based buttons above will instantly change
-            colors!
-          </p>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>3. Custom Colors:</strong> Use the color picker and gradient builder to create
-            your own styles.
-          </p>
-          <p style={{ margin: '0 0 0 0' }}>
-            <strong>4. Integration:</strong> Copy working colors/gradients to use in your own Button
-            components.
-          </p>
-        </div>
-      </div>
-    </div>
-  ),
-};
-
-export const AdvancedGradients: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🌈 Complex Custom Gradients
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57)">
-            Multi-Color Gradient
-          </Button>
-          <Button gradient="radial-gradient(circle at 30% 20%, #ff6b6b, #4ecdc4, #45b7d1)">
-            Radial Gradient
-          </Button>
-          <Button gradient="conic-gradient(from 45deg, #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b)">
-            Conic Gradient
-          </Button>
-          <Button gradient="linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)">
-            Three-Stop Gradient
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          ✨ Gradients with Effects
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button gradient="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)" shadow="lg">
-            Gradient + Shadow
-          </Button>
-          <Button gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" hoverEffect="glow">
-            Gradient + Glow (Hover me!)
-          </Button>
-          <Button gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)" rounded shadow="xl">
-            Gradient + Rounded + Shadow
-          </Button>
-          <Button
-            gradient="conic-gradient(from 45deg, #ff6b6b, #4ecdc4, #45b7d1)"
-            hoverEffect="scale"
-          >
-            Gradient + Scale (Hover me!)
-          </Button>
-        </div>
-        <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
-          💡 Hover over the buttons to see the effects in action!
-        </p>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🎨 Custom Color Combinations
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button gradient="linear-gradient(90deg, #f43f5e 0%, #3b82f6 100%)" textColor="#ffffff">
-            Gradient + White Text
-          </Button>
-          <Button
-            gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-            borderColor="#4c1d95"
-          >
-            Gradient + Custom Border
-          </Button>
-          <Button
-            gradient="linear-gradient(45deg, #ff6b6b, #4ecdc4)"
-            textColor="#ffffff"
-            borderColor="#dc2626"
-          >
-            Gradient + White Text + Red Border
-          </Button>
-        </div>
-      </div>
-
-      <div
-        style={{
-          padding: '16px',
-          background: '#f8fafc',
-          borderRadius: '8px',
-          border: '1px solid #e2e8f0',
-        }}
-      >
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600', color: '#334155' }}>
-          🚀 How to Create Amazing Gradients
-        </h4>
-        <div style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>1. Linear Gradients:</strong> Use{' '}
-            <code>linear-gradient(direction, color1, color2, ...)</code>
-          </p>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>2. Radial Gradients:</strong> Use{' '}
-            <code>radial-gradient(shape at position, color1, color2, ...)</code>
-          </p>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>3. Conic Gradients:</strong> Use{' '}
-            <code>conic-gradient(from angle, color1, color2, ...)</code>
-          </p>
-          <p style={{ margin: '0 0 0 0' }}>
-            <strong>4. Combine with Effects:</strong> Add shadows, hover effects, and rounded
-            corners for amazing results!
-          </p>
-        </div>
-      </div>
-    </div>
-  ),
-};
-
-export const RippleEffects: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          ✨ Ripple Effects
-        </h3>
-        <p style={{ fontSize: '14px', color: '#666', marginBottom: '16px', lineHeight: '1.5' }}>
-          Click any button below to see the Material Design-style ripple effect! The ripple appears
-          where you click and spreads outward.
-        </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button ripple>Click Me!</Button>
-          <Button ripple variant="success">
-            Success Ripple
-          </Button>
-          <Button ripple variant="warning">
-            Warning Ripple
-          </Button>
-          <Button ripple variant="danger">
-            Danger Ripple
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🎨 Ripple with Different Styles
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button ripple rounded>
-            Rounded Ripple
-          </Button>
-          <Button ripple shadow="lg">
-            Shadow + Ripple
-          </Button>
-          <Button ripple hoverEffect="glow">
-            Glow + Ripple
-          </Button>
-          <Button ripple gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
-            Gradient Ripple
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          🔄 Ripple with Icons
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button ripple iconLeft="🚀">
-            Launch with Ripple
-          </Button>
-          <Button ripple iconRight="💾" variant="success">
-            Save with Ripple
-          </Button>
-          <Button ripple iconLeft="📤" iconRight="📥">
-            Transfer with Ripple
-          </Button>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-          ⚡ Ripple vs No Ripple
-        </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
-          <Button>No Ripple</Button>
-          <Button ripple>With Ripple</Button>
-          <Button variant="outline">No Ripple</Button>
-          <Button variant="outline" ripple>
-            With Ripple
-          </Button>
-        </div>
-        <p style={{ fontSize: '12px', color: '#666', margin: '8px 0 0 0', fontStyle: 'italic' }}>
-          💡 Notice the difference? Ripple adds a satisfying click feedback!
-        </p>
-      </div>
-
-      <div
-        style={{
-          padding: '16px',
-          background: '#f8fafc',
-          borderRadius: '8px',
-          border: '1px solid #e2e8f0',
-        }}
-      >
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600', color: '#334155' }}>
-          🚀 How Ripple Effects Work
-        </h4>
-        <div style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>1. Click Detection:</strong> Ripple appears exactly where you click on the
-            button.
-          </p>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>2. Animation:</strong> Smooth scale and fade animation that spreads outward.
-          </p>
-          <p style={{ margin: '0 0 8px 0' }}>
-            <strong>3. Auto-Cleanup:</strong> Ripple elements are automatically removed after
-            animation.
-          </p>
-          <p style={{ margin: '0 0 0 0' }}>
-            <strong>4. Performance:</strong> Lightweight DOM manipulation with CSS animations.
-          </p>
-        </div>
-      </div>
-    </div>
+    <Demo title="On dark / on light backgrounds">
+      <Stack gap={12}>
+        <OnDark>
+          <Row gap={8}>
+            <Button variant="primary">Primary</Button>
+            <Button variant="outline">Outline</Button>
+          </Row>
+        </OnDark>
+        <OnLight>
+          <Row gap={8}>
+            <Button variant="primary">Primary</Button>
+            <Button variant="ghost">Ghost</Button>
+          </Row>
+        </OnLight>
+      </Stack>
+    </Demo>
   ),
 };

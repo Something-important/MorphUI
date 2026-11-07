@@ -1,258 +1,119 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-import { Checkbox } from '../../index';
+import { Checkbox } from './Checkbox';
+import { Demo, Stack, ThemeGrid } from '../../../stories/_shared';
 
 const meta: Meta<typeof Checkbox> = {
-  title: 'Components/Checkbox',
+  title: 'Primitives/Checkbox',
   component: Checkbox,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'A customizable checkbox component with advanced theming, multiple variants, and comprehensive accessibility features.',
+          'Checkbox is a binary toggle with label, description, and 8 variants. Supports controlled and uncontrolled usage.',
       },
     },
   },
-  argTypes: {
-    checked: {
-      control: 'boolean',
-      description: 'Controlled checked state',
-    },
-    defaultChecked: {
-      control: 'boolean',
-      description: 'Default checked state for uncontrolled usage',
-    },
-    onChange: {
-      action: 'changed',
-      description: 'Callback when checkbox state changes',
-    },
-    label: {
-      control: 'text',
-      description: 'Label text for the checkbox',
-    },
-    description: {
-      control: 'text',
-      description: 'Description text below the label',
-    },
-    variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'info', 'danger', 'ghost', 'outline'],
-      description: 'Visual variant of the checkbox',
-    },
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-      description: 'Size of the checkbox',
-    },
-    color: {
-      control: 'color',
-      description: 'Custom color for the checkbox',
-    },
-    gradient: {
-      control: 'text',
-      description: 'Custom gradient for the checkbox',
-    },
-    textColor: {
-      control: 'color',
-      description: 'Custom text color',
-    },
-    borderColor: {
-      control: 'color',
-      description: 'Custom border color',
-    },
-    backgroundColor: {
-      control: 'color',
-      description: 'Custom background color',
-    },
-    labelColor: {
-      control: 'color',
-      description: 'Custom label color',
-    },
-    descriptionColor: {
-      control: 'color',
-      description: 'Custom description color',
-    },
-    shadow: {
-      control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'xl'],
-      description: 'Shadow size',
-    },
-    hoverEffect: {
-      control: 'select',
-      options: ['none', 'lift', 'glow', 'scale', 'slide'],
-      description: 'Hover animation effect',
-    },
-    rounded: {
-      control: 'boolean',
-      description: 'Apply rounded corners',
-    },
-    bordered: {
-      control: 'boolean',
-      description: 'Show border',
-    },
-    disabled: {
-      control: 'boolean',
-      description: 'Disable the checkbox',
-    },
-    loading: {
-      control: 'boolean',
-      description: 'Show loading state',
-    },
-    required: {
-      control: 'boolean',
-      description: 'Mark as required',
-    },
-    invalid: {
-      control: 'boolean',
-      description: 'Mark as invalid',
-    },
-    readOnly: {
-      control: 'boolean',
-      description: 'Make the checkbox read-only',
-    },
-    indeterminate: {
-      control: 'boolean',
-      description: 'Show indeterminate state',
-    },
-    className: {
-      control: 'text',
-      description: 'Additional CSS classes',
-    },
-    style: {
-      control: 'object',
-      description: 'Inline styles',
-    },
-  },
 };
-
 export default meta;
-type Story = StoryObj<typeof Checkbox>;
+type Story = StoryObj<typeof meta>;
 
-// Basic Checkbox
 export const Default: Story = {
   args: {
-    label: 'Accept terms and conditions',
-    description: 'Please read and accept our terms of service',
+    label: 'Accept terms',
+    defaultChecked: true,
   },
 };
 
-// Variants
 export const Variants: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Checkbox variant="primary" label="Primary Checkbox" />
-      <Checkbox variant="secondary" label="Secondary Checkbox" />
-      <Checkbox variant="success" label="Success Checkbox" />
-      <Checkbox variant="warning" label="Warning Checkbox" />
-      <Checkbox variant="info" label="Info Checkbox" />
-      <Checkbox variant="danger" label="Danger Checkbox" />
-      <Checkbox variant="ghost" label="Ghost Checkbox" />
-      <Checkbox variant="outline" label="Outline Checkbox" />
-    </div>
+    <Demo title="All variants">
+      <Stack gap={8}>
+        <Checkbox variant="primary" label="Primary" defaultChecked />
+        <Checkbox variant="secondary" label="Secondary" defaultChecked />
+        <Checkbox variant="success" label="Success" defaultChecked />
+        <Checkbox variant="warning" label="Warning" defaultChecked />
+        <Checkbox variant="danger" label="Danger" defaultChecked />
+        <Checkbox variant="info" label="Info" defaultChecked />
+        <Checkbox variant="ghost" label="Ghost" defaultChecked />
+        <Checkbox variant="outline" label="Outline" defaultChecked />
+      </Stack>
+    </Demo>
   ),
 };
 
-// Sizes
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Checkbox size="xs" label="Extra Small Checkbox" />
-      <Checkbox size="sm" label="Small Checkbox" />
-      <Checkbox size="md" label="Medium Checkbox" />
-      <Checkbox size="lg" label="Large Checkbox" />
-      <Checkbox size="xl" label="Extra Large Checkbox" />
-    </div>
+    <Demo title="All sizes">
+      <Stack gap={8}>
+        <Checkbox size="sm" label="Small" defaultChecked />
+        <Checkbox size="md" label="Medium" defaultChecked />
+        <Checkbox size="lg" label="Large" defaultChecked />
+      </Stack>
+    </Demo>
   ),
 };
 
-// States
 export const States: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Checkbox label="Default Checkbox" />
-      <Checkbox checked label="Checked Checkbox" />
-      <Checkbox indeterminate label="Indeterminate Checkbox" />
-      <Checkbox disabled label="Disabled Checkbox" />
-      <Checkbox loading label="Loading Checkbox" />
-      <Checkbox required label="Required Checkbox" />
-      <Checkbox invalid label="Invalid Checkbox" />
-      <Checkbox readOnly label="Read Only Checkbox" />
-    </div>
+    <Demo title="Disabled, with description">
+      <Stack gap={8}>
+        <Checkbox label="Disabled unchecked" disabled />
+        <Checkbox label="Disabled checked" defaultChecked disabled />
+        <Checkbox
+          label="Subscribe to newsletter"
+          description="Get notified about product updates and releases"
+          defaultChecked
+        />
+        <Checkbox
+          label="Disabled with description"
+          description="This option is unavailable"
+          defaultChecked
+          disabled
+        />
+      </Stack>
+    </Demo>
   ),
 };
 
-// With Descriptions
-export const WithDescriptions: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Checkbox
-        label="Email notifications"
-        description="Receive email updates about your account and orders"
-      />
-      <Checkbox
-        label="SMS notifications"
-        description="Get text messages for urgent updates and delivery status"
-      />
-      <Checkbox
-        label="Marketing communications"
-        description="Receive promotional offers and product recommendations"
-      />
-      <Checkbox
-        label="Data sharing"
-        description="Allow us to share your data with trusted partners for better service"
-      />
-    </div>
-  ),
-};
-
-// Interactive Examples
-export const InteractiveExamples: Story = {
+export const Controlled: Story = {
   render: () => {
-    const [checkboxes, setCheckboxes] = useState({
-      notifications: true,
-      darkMode: false,
-      autoSave: true,
-      analytics: false,
-    });
-
-    const handleToggle = (key: keyof typeof checkboxes) => {
-      setCheckboxes((prev) => ({ ...prev, [key]: !prev[key] }));
-    };
-
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <Checkbox
-          checked={checkboxes.notifications}
-          onChange={() => handleToggle('notifications')}
-          variant="primary"
-          label="Push Notifications"
-          description="Receive notifications for important updates"
-        />
-        <Checkbox
-          checked={checkboxes.darkMode}
-          onChange={() => handleToggle('darkMode')}
-          variant="secondary"
-          label="Dark Mode"
-          description="Switch to dark theme"
-        />
-        <Checkbox
-          checked={checkboxes.autoSave}
-          onChange={() => handleToggle('autoSave')}
-          variant="success"
-          label="Auto Save"
-          description="Automatically save your work"
-        />
-        <Checkbox
-          checked={checkboxes.analytics}
-          onChange={() => handleToggle('analytics')}
-          variant="info"
-          label="Analytics"
-          description="Help us improve by sharing usage data"
-        />
-      </div>
+      <Demo title="Controlled vs uncontrolled">
+        <Stack gap={8}>
+          <Checkbox label="Uncontrolled (defaultChecked)" defaultChecked />
+          <Checkbox label="Controlled (checked=true)" checked onChange={() => {}} />
+        </Stack>
+      </Demo>
     );
   },
 };
 
-// Interactive Theme Builder
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Checkbox across all 5 preset themes">
+      <ThemeGrid>
+        <Checkbox label="Theme" defaultChecked />
+      </ThemeGrid>
+    </Demo>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — long label, no label, multiline description">
+      <Stack gap={8}>
+        <Checkbox
+          label="This is a very long checkbox label that might wrap or truncate depending on the container width and layout"
+          defaultChecked
+        />
+        <Checkbox defaultChecked />
+        <Checkbox
+          label="Multiline"
+          description="This description spans multiple lines and should wrap gracefully without breaking the layout or alignment of the checkbox itself"
+          defaultChecked
+        />
+      </Stack>
+    </Demo>
+  ),
+};

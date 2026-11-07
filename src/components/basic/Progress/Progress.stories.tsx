@@ -1,373 +1,114 @@
-// Progress.stories.tsx
-import React, { useState, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Progress } from './Progress';
-import { Button } from '../Button';
+import { Demo, Row, Stack, ThemeGrid } from '../../../stories/_shared';
 
-export default {
-  title: 'Components/Progress',
+const meta: Meta<typeof Progress> = {
+  title: 'Primitives/Progress',
   component: Progress,
   parameters: {
-    layout: 'padded',
+    layout: 'centered',
     docs: {
       description: {
         component:
-          'A versatile progress indicator component supporting both linear and circular styles, determinate and indeterminate states, with full theming support. Perfect for showing task completion, file uploads, and loading states.',
+          'Progress renders a linear or circular progress indicator. Supports 6 variants, 5 sizes, indeterminate state, striped/animated modes, and labels.',
       },
     },
   },
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    type: {
-      control: { type: 'select' },
-      options: ['linear', 'circular'],
-    },
-    striped: {
-      control: { type: 'boolean' },
-    },
-    animated: {
-      control: { type: 'boolean' },
-    },
-  },
-} satisfies Meta<typeof Progress>;
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof Progress>;
-
-// Default
 export const Default: Story = {
   args: {
-    value: 50,
+    value: 60,
+    type: 'linear',
     variant: 'primary',
     size: 'md',
-    type: 'linear',
   },
 };
 
-// Types
-export const Types: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', alignItems: 'center' }}>
-        <div style={{ width: '100%', maxWidth: '400px' }}>
-          <h3 style={{ marginBottom: '1rem' }}>Linear Progress</h3>
-          <Progress value={65} type="linear" />
-        </div>
-        <div>
-          <h3 style={{ marginBottom: '1rem', textAlign: 'center' }}>Circular Progress</h3>
-          <Progress value={65} type="circular" showValue />
-        </div>
-      </div>
-    );
-  },
-};
-
-// Sizes - Linear
-export const SizesLinear: Story = {
-  render: () => {
-    const sizes: Array<'xs' | 'sm' | 'md' | 'lg' | 'xl'> = ['xs', 'sm', 'md', 'lg', 'xl'];
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-        {sizes.map((size) => (
-          <div key={size}>
-            <p style={{ marginBottom: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-              {size.toUpperCase()}
-            </p>
-            <Progress value={60} size={size} type="linear" />
-          </div>
-        ))}
-      </div>
-    );
-  },
-};
-
-// Sizes - Circular
-export const SizesCircular: Story = {
-  render: () => {
-    const sizes: Array<'xs' | 'sm' | 'md' | 'lg' | 'xl'> = ['xs', 'sm', 'md', 'lg', 'xl'];
-
-    return (
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        {sizes.map((size) => (
-          <div key={size} style={{ textAlign: 'center' }}>
-            <Progress value={60} size={size} type="circular" showValue />
-            <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-              {size.toUpperCase()}
-            </p>
-          </div>
-        ))}
-      </div>
-    );
-  },
-};
-
-// Variants
 export const Variants: Story = {
-  render: () => {
-    const variants: Array<'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'> = [
-      'primary',
-      'secondary',
-      'success',
-      'warning',
-      'danger',
-      'info',
-    ];
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-        {variants.map((variant) => (
-          <div key={variant}>
-            <p style={{ marginBottom: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-              {variant.charAt(0).toUpperCase() + variant.slice(1)}
-            </p>
-            <Progress value={65} variant={variant} />
-          </div>
-        ))}
-      </div>
-    );
-  },
+  render: () => (
+    <Demo title="All variants (linear)">
+      <Stack gap={12} style={{ width: '320px' }}>
+        <Progress value={60} variant="primary" />
+        <Progress value={60} variant="secondary" />
+        <Progress value={60} variant="success" />
+        <Progress value={60} variant="warning" />
+        <Progress value={60} variant="danger" />
+        <Progress value={60} variant="info" />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Determinate vs Indeterminate
-export const DeterminateIndeterminate: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>Determinate (with value)</h3>
-          <Progress value={45} label="Upload Progress" showValue />
-        </div>
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>Indeterminate (loading)</h3>
-          <Progress label="Processing..." />
-        </div>
-      </div>
-    );
-  },
+export const Sizes: Story = {
+  render: () => (
+    <Demo title="All sizes (linear)">
+      <Stack gap={12} style={{ width: '320px' }}>
+        <Progress value={60} size="xs" />
+        <Progress value={60} size="sm" />
+        <Progress value={60} size="md" />
+        <Progress value={60} size="lg" />
+        <Progress value={60} size="xl" />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// With labels and values
-export const WithLabels: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-        <Progress value={75} label="Storage Used" showValue />
-        <Progress value={50} label="Bandwidth" showValue />
-        <Progress value={90} label="CPU Usage" showValue variant="warning" />
-      </div>
-    );
-  },
+export const States: Story = {
+  render: () => (
+    <Demo title="Indeterminate (no value)">
+      <Stack gap={12} style={{ width: '320px' }}>
+        <Progress variant="primary" />
+        <Progress variant="success" />
+        <Progress variant="danger" />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Striped and animated
-export const StripedAnimated: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-        <div>
-          <p style={{ marginBottom: '0.5rem' }}>Striped</p>
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Circular type, striped, animated, labels, custom colors">
+      <Stack gap={16}>
+        <Row gap={24} align="center">
+          <Progress value={60} type="circular" size="lg" />
+          <Progress value={40} type="circular" size="md" variant="success" />
+          <Progress value={80} type="circular" size="sm" variant="danger" />
+        </Row>
+        <Stack gap={8} style={{ width: '320px' }}>
           <Progress value={60} striped />
-        </div>
-        <div>
-          <p style={{ marginBottom: '0.5rem' }}>Animated Striped</p>
           <Progress value={60} striped animated />
-        </div>
-      </div>
-    );
-  },
+          <Progress value={60} label="Uploading..." showValue />
+          <Progress value={60} color="#ff0055" />
+          <Progress value={60} gradient="linear-gradient(90deg, #667eea, #764ba2)" />
+        </Stack>
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Animated progress (simulated)
-export const AnimatedProgress: Story = {
-  render: () => {
-    const [value, setValue] = useState(0);
-
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setValue((prev) => {
-          if (prev >= 100) return 0;
-          return prev + 1;
-        });
-      }, 100);
-
-      return () => clearInterval(interval);
-    }, []);
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%' }}>
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>Animated Linear Progress</h3>
-          <Progress value={value} label="Loading..." showValue />
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Progress across all 5 preset themes">
+      <ThemeGrid>
+        <div style={{ width: '100%', padding: '8px' }}>
+          <Progress value={60} />
         </div>
-        <div>
-          <h3 style={{ marginBottom: '1rem', textAlign: 'center' }}>Animated Circular Progress</h3>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Progress value={value} type="circular" showValue />
-          </div>
-        </div>
-        <Button onClick={() => setValue(0)} size="sm">
-          Reset
-        </Button>
-      </div>
-    );
-  },
+      </ThemeGrid>
+    </Demo>
+  ),
 };
 
-// Custom colors
-export const CustomColors: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🎨 Custom Colors
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-            <Progress value={60} color="#8b5cf6" label="Purple Progress" />
-            <Progress value={60} color="#f97316" label="Orange Progress" />
-            <Progress value={60} color="#06b6d4" label="Cyan Progress" />
-            <Progress value={60} color="#ec4899" label="Pink Progress" />
-          </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Gradients
-export const Gradients: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🌈 Gradient Progress
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-            <Progress
-              value={60}
-              gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-              label="Purple Gradient"
-            />
-            <Progress
-              value={60}
-              gradient="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-              label="Pink Gradient"
-            />
-            <Progress
-              value={60}
-              gradient="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-              label="Blue Gradient"
-            />
-          </div>
-        </div>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🌈 Gradient Circular
-          </h3>
-          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
-            <Progress
-              value={60}
-              type="circular"
-              gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-              showValue
-              size="lg"
-            />
-            <Progress
-              value={60}
-              type="circular"
-              gradient="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-              showValue
-              size="lg"
-            />
-            <Progress
-              value={60}
-              type="circular"
-              gradient="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-              showValue
-              size="lg"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Theme switching
-// Usage examples
-export const UsageExamples: Story = {
-  render: () => {
-    const [uploadProgress, setUploadProgress] = useState(0);
-    const [isUploading, setIsUploading] = useState(false);
-
-    const startUpload = () => {
-      setIsUploading(true);
-      setUploadProgress(0);
-
-      const interval = setInterval(() => {
-        setUploadProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setIsUploading(false);
-            return 100;
-          }
-          return prev + 2;
-        });
-      }, 50);
-    };
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', padding: '2rem' }}>
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>File Upload Progress</h3>
-          <Progress
-            value={uploadProgress}
-            label="Uploading file..."
-            showValue
-            variant="primary"
-            striped
-            animated
-          />
-          <Button onClick={startUpload} disabled={isUploading} style={{ marginTop: '1rem' }}>
-            {isUploading ? 'Uploading...' : 'Start Upload'}
-          </Button>
-        </div>
-
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>System Stats</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Progress value={45} label="CPU Usage" showValue variant="success" />
-            <Progress value={78} label="Memory Usage" showValue variant="warning" />
-            <Progress value={92} label="Disk Usage" showValue variant="danger" />
-          </div>
-        </div>
-
-        <div>
-          <h3 style={{ marginBottom: '1rem', textAlign: 'center' }}>Circular Progress Cards</h3>
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <div style={{ textAlign: 'center' }}>
-              <Progress value={75} type="circular" showValue size="lg" variant="success" />
-              <p style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>Success</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <Progress value={50} type="circular" showValue size="lg" variant="warning" />
-              <p style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>Warning</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <Progress value={25} type="circular" showValue size="lg" variant="danger" />
-              <p style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>Error</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  },
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — 0%, 100%, wide container">
+      <Stack gap={12} style={{ width: '320px' }}>
+        <Progress value={0} showValue />
+        <Progress value={100} showValue />
+        <Progress value={50} />
+      </Stack>
+    </Demo>
+  ),
 };

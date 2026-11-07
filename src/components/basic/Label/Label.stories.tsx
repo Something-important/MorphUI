@@ -1,400 +1,115 @@
-// Label.stories.tsx
-import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Label, Input, Button } from '../../index';
+import { Label } from './Label';
+import { Input } from '../Input';
+import { Demo, Stack, ThemeGrid } from '../../../stories/_shared';
 
 const meta: Meta<typeof Label> = {
-  title: 'Components/Label',
+  title: 'Primitives/Label',
   component: Label,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'A flexible label component for form inputs with support for variants, sizes, custom colors, gradients, and theming. Perfect for creating accessible form labels with consistent styling.',
+          'Label renders a form field label with optional required indicator, 6 variants, and 4 sizes.',
       },
     },
   },
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
-      description: 'Visual variant of the label',
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg'],
-      description: 'Size of the label',
-    },
-    required: {
-      control: { type: 'boolean' },
-      description: 'Whether the label is for a required field',
-    },
-    textColor: {
-      control: { type: 'text' },
-      description: 'Custom text color or gradient',
-    },
-    requiredColor: {
-      control: { type: 'text' },
-      description: 'Custom color for required indicator',
-    },
-  },
-  decorators: [
-    (Story: React.FC) => (
-      <div style={{ padding: '20px', maxWidth: '800px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
-
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Basic Label
 export const Default: Story = {
   args: {
-    children: 'Email Address',
-    htmlFor: 'email',
+    children: 'Username',
+    htmlFor: 'username',
   },
 };
 
-// With Input
-export const WithInput: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '300px' }}>
-        <Label htmlFor="email-input" required>
-          Email Address
-        </Label>
-        <Input
-          id="email-input"
-          type="email"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Enter your email"
-        />
-      </div>
-    );
-  },
-};
-
-// Variants
 export const Variants: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
-      <div>
-        <Label variant="primary" htmlFor="primary">
-          Primary Label
-        </Label>
-      </div>
-      <div>
-        <Label variant="secondary" htmlFor="secondary">
-          Secondary Label
-        </Label>
-      </div>
-      <div>
-        <Label variant="success" htmlFor="success">
-          Success Label
-        </Label>
-      </div>
-      <div>
-        <Label variant="warning" htmlFor="warning">
-          Warning Label
-        </Label>
-      </div>
-      <div>
-        <Label variant="danger" htmlFor="danger">
-          Danger Label
-        </Label>
-      </div>
-      <div>
-        <Label variant="info" htmlFor="info">
-          Info Label
-        </Label>
-      </div>
-    </div>
+    <Demo title="All variants">
+      <Stack gap={8}>
+        <Label variant="primary">Primary</Label>
+        <Label variant="secondary">Secondary</Label>
+        <Label variant="success">Success</Label>
+        <Label variant="warning">Warning</Label>
+        <Label variant="danger">Danger</Label>
+        <Label variant="info">Info</Label>
+      </Stack>
+    </Demo>
   ),
 };
 
-// Sizes
 export const Sizes: Story = {
-  render: () => {
-    const [xsValue, setXsValue] = useState('');
-    const [smValue, setSmValue] = useState('');
-    const [mdValue, setMdValue] = useState('');
-    const [lgValue, setLgValue] = useState('');
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '300px' }}>
-        <div>
-          <Label size="xs" htmlFor="xs-input">
-            Extra Small Label
-          </Label>
-          <Input
-            id="xs-input"
-            size="xs"
-            value={xsValue}
-            onChange={(e) => setXsValue(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label size="sm" htmlFor="sm-input">
-            Small Label
-          </Label>
-          <Input
-            id="sm-input"
-            size="sm"
-            value={smValue}
-            onChange={(e) => setSmValue(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label size="md" htmlFor="md-input">
-            Medium Label
-          </Label>
-          <Input
-            id="md-input"
-            size="md"
-            value={mdValue}
-            onChange={(e) => setMdValue(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label size="lg" htmlFor="lg-input">
-            Large Label
-          </Label>
-          <Input
-            id="lg-input"
-            size="lg"
-            value={lgValue}
-            onChange={(e) => setLgValue(e.target.value)}
-          />
-        </div>
-      </div>
-    );
-  },
+  render: () => (
+    <Demo title="All sizes">
+      <Stack gap={8}>
+        <Label size="xs">Extra small</Label>
+        <Label size="sm">Small</Label>
+        <Label size="md">Medium</Label>
+        <Label size="lg">Large</Label>
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Required
-export const Required: Story = {
-  render: () => {
-    const [value1, setValue1] = useState('');
-    const [value2, setValue2] = useState('');
-    const [value3, setValue3] = useState('');
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
-        <div>
-          <Label htmlFor="required-default" required>
-            Required Field (Default)
-          </Label>
-          <Input
-            id="required-default"
-            required
-            value={value1}
-            onChange={(e) => setValue1(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label htmlFor="required-custom" required requiredColor="#8b5cf6">
-            Required Field (Custom Color)
-          </Label>
-          <Input
-            id="required-custom"
-            required
-            value={value2}
-            onChange={(e) => setValue2(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label htmlFor="optional">Optional Field</Label>
-          <Input id="optional" value={value3} onChange={(e) => setValue3(e.target.value)} />
-        </div>
-      </div>
-    );
-  },
+export const States: Story = {
+  render: () => (
+    <Demo title="Required indicator">
+      <Stack gap={8}>
+        <Label>Plain label</Label>
+        <Label required>Required field</Label>
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Custom Colors
-export const CustomColors: Story = {
-  render: () => {
-    const [value1, setValue1] = useState('');
-    const [value2, setValue2] = useState('');
-    const [value3, setValue3] = useState('');
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
-        <div>
-          <Label htmlFor="custom-1" textColor="#3b82f6">
-            Custom Blue Label
-          </Label>
-          <Input id="custom-1" value={value1} onChange={(e) => setValue1(e.target.value)} />
-        </div>
-        <div>
-          <Label htmlFor="custom-2" textColor="#10b981">
-            Custom Green Label
-          </Label>
-          <Input id="custom-2" value={value2} onChange={(e) => setValue2(e.target.value)} />
-        </div>
-        <div>
-          <Label htmlFor="custom-3" textColor="#f59e0b">
-            Custom Orange Label
-          </Label>
-          <Input id="custom-3" value={value3} onChange={(e) => setValue3(e.target.value)} />
-        </div>
-      </div>
-    );
-  },
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Custom colors">
+      <Stack gap={8}>
+        <Label color="#ff0055">Custom color</Label>
+        <Label textColor="#10b981">Custom text color</Label>
+        <Label required requiredColor="#0070f3">
+          Custom required indicator
+        </Label>
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Gradients
-export const Gradients: Story = {
-  render: () => {
-    const [value1, setValue1] = useState('');
-    const [value2, setValue2] = useState('');
-    const [value3, setValue3] = useState('');
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
-        <div>
-          <Label htmlFor="gradient-1" textColor="linear-gradient(90deg, #667eea 0%, #764ba2 100%)">
-            Gradient Label (Purple)
-          </Label>
-          <Input id="gradient-1" value={value1} onChange={(e) => setValue1(e.target.value)} />
-        </div>
-        <div>
-          <Label htmlFor="gradient-2" textColor="linear-gradient(90deg, #f093fb 0%, #f5576c 100%)">
-            Gradient Label (Pink)
-          </Label>
-          <Input id="gradient-2" value={value2} onChange={(e) => setValue2(e.target.value)} />
-        </div>
-        <div>
-          <Label htmlFor="gradient-3" textColor="linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)">
-            Gradient Label (Blue)
-          </Label>
-          <Input id="gradient-3" value={value3} onChange={(e) => setValue3(e.target.value)} />
-        </div>
-      </div>
-    );
-  },
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Label across all 5 preset themes">
+      <ThemeGrid>
+        <Label required>Field label</Label>
+      </ThemeGrid>
+    </Demo>
+  ),
 };
 
-// Form Example
-export const FormExample: Story = {
-  render: () => {
-    const [formData, setFormData] = useState({
-      name: '',
-      email: '',
-      password: '',
-    });
-
-    return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
-          width: '400px',
-          padding: '24px',
-          border: '1px solid var(--color-border, #e5e7eb)',
-          borderRadius: '8px',
-        }}
-      >
-        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '600' }}>Sign Up Form</h3>
-
-        <div>
-          <Label htmlFor="name" required>
-            Full Name
-          </Label>
-          <Input
-            id="name"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            placeholder="John Doe"
-          />
-        </div>
-
+export const Integration: Story = {
+  render: () => (
+    <Demo title="Label + Input composition">
+      <Stack gap={8} style={{ width: '320px' }}>
         <div>
           <Label htmlFor="email" required>
-            Email Address
+            Email address
           </Label>
-          <Input
-            id="email"
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder="john@example.com"
-          />
+          <div style={{ marginTop: '4px' }}>
+            <Input id="email" type="email" placeholder="you@example.com" />
+          </div>
         </div>
-
         <div>
-          <Label htmlFor="password" required>
+          <Label htmlFor="pwd" required>
             Password
           </Label>
-          <Input
-            id="password"
-            type="password"
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            placeholder="••••••••"
-          />
+          <div style={{ marginTop: '4px' }}>
+            <Input id="pwd" type="password" placeholder="••••••••" />
+          </div>
         </div>
-
-        <Button variant="primary" fullWidth>
-          Sign Up
-        </Button>
-      </div>
-    );
-  },
-};
-
-// Theme Showcase
-// With Form Validation States
-export const ValidationStates: Story = {
-  render: () => {
-    const [validValue, setValidValue] = useState('valid@example.com');
-    const [invalidValue, setInvalidValue] = useState('invalid');
-    const [warningValue, setWarningValue] = useState('warning');
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '300px' }}>
-        <div>
-          <Label htmlFor="valid" variant="success">
-            Valid Input
-          </Label>
-          <Input
-            id="valid"
-            value={validValue}
-            onChange={(e) => setValidValue(e.target.value)}
-            success
-          />
-        </div>
-        <div>
-          <Label htmlFor="invalid" variant="danger" required>
-            Invalid Input
-          </Label>
-          <Input
-            id="invalid"
-            value={invalidValue}
-            onChange={(e) => setInvalidValue(e.target.value)}
-            error
-            errorMessage="Invalid email format"
-          />
-        </div>
-        <div>
-          <Label htmlFor="warning" variant="warning">
-            Warning Input
-          </Label>
-          <Input
-            id="warning"
-            value={warningValue}
-            onChange={(e) => setWarningValue(e.target.value)}
-            warning
-          />
-        </div>
-      </div>
-    );
-  },
+      </Stack>
+    </Demo>
+  ),
 };
