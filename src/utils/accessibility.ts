@@ -37,6 +37,11 @@ export interface KeyboardProps {
 /**
  * Generates a unique ID for ARIA relationships
  *
+ * @deprecated Use React 18's built-in `useId()` hook instead. All MorphUI
+ * components now use `useId()` which is SSR-safe and doesn't require a
+ * utility. This function is retained for backward compatibility but will
+ * be removed in a future major version.
+ *
  * @param prefix - Prefix for the ID
  * @returns Unique ID string
  *

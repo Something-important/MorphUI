@@ -1,6 +1,7 @@
 // Drawer.tsx
-import React, { ReactNode, forwardRef, useEffect, useRef, useState, useCallback } from 'react';
+import React, { ReactNode, forwardRef, useEffect, useRef } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { useModal } from '../../../hooks';
 import './Drawer.css';
 
 export type DrawerPosition = 'left' | 'right' | 'top' | 'bottom';
@@ -115,21 +116,33 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const drawerRef = useRef<HTMLDivElement>(null);
     const previousActiveElement = useRef<HTMLElement | null>(null);
 
-    // Controlled vs uncontrolled: if `isOpen` is provided, the parent owns
-    // the state. Otherwise, we manage it internally from `defaultOpen`.
-    // Mirrors the Alert/Toast uncontrolled pattern.
-    const isControlled = controlledIsOpen !== undefined;
-    const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen ?? false);
-    const open = isControlled ? controlledIsOpen : internalIsOpen;
+    // Adopt useModal for open/close state, Escape-to-close, and body scroll
+    // lock (was hand-rolled with 3 separate useEffects). trapFocus is false
+    // because Drawer doesn't trap Tab — it manages focus save/restore below.
+    const { isOpen: open, close: closeDrawer } = useModal({
+      isOpen: controlledIsOpen,
+      defaultOpen,
+      onClose,
+      closeOnEsc,
+      trapFocus: false,
+      lockScroll: true,
+    });
 
-    // Centralized close handler: updates internal state in uncontrolled mode
-    // and notifies the parent. Used by ESC, backdrop click, and close button.
-    const closeDrawer = useCallback(() => {
-      if (!isControlled) {
-        setInternalIsOpen(false);
+    // Focus management: save previous active element, focus drawer on open,
+    // restore focus on close. (useModal handles this when trapFocus=true,
+    // but Drawer sets trapFocus=false so we keep this manually.)
+    useEffect(() => {
+      if (open) {
+        previousActiveElement.current = document.activeElement as HTMLElement;
+        if (drawerRef.current) {
+          drawerRef.current.focus();
+        }
+      } else {
+        if (previousActiveElement.current) {
+          previousActiveElement.current.focus();
+        }
       }
-      onClose?.();
-    }, [isControlled, onClose]);
+    }, [open]);
 
     // Resolve theme values
     const resolvedColor = resolveThemeValue(color);
@@ -146,51 +159,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       (resolvedGradient.includes('linear-gradient') ||
         resolvedGradient.includes('radial-gradient') ||
         resolvedGradient.includes('conic-gradient'));
-
-    // Handle ESC key
-    useEffect(() => {
-      if (!open || !closeOnEsc) return;
-
-      const handleEsc = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          closeDrawer();
-        }
-      };
-
-      document.addEventListener('keydown', handleEsc);
-      return () => document.removeEventListener('keydown', handleEsc);
-    }, [open, closeOnEsc, closeDrawer]);
-
-    // Focus management
-    useEffect(() => {
-      if (open) {
-        // Store previous active element
-        previousActiveElement.current = document.activeElement as HTMLElement;
-
-        // Focus drawer when opened
-        if (drawerRef.current) {
-          drawerRef.current.focus();
-        }
-      } else {
-        // Restore focus when closed
-        if (previousActiveElement.current) {
-          previousActiveElement.current.focus();
-        }
-      }
-    }, [open]);
-
-    // Prevent body scroll when drawer is open
-    useEffect(() => {
-      if (open) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-
-      return () => {
-        document.body.style.overflow = '';
-      };
-    }, [open]);
 
     // Handle backdrop click
     const handleBackdropClick = (e: React.MouseEvent) => {
