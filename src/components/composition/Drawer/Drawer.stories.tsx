@@ -1,273 +1,140 @@
-// Drawer.stories.tsx
-import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Drawer } from './Drawer';
 import { Button } from '../../basic/Button';
-import { Input } from '../../basic/Input';
-import { Label } from '../../basic/Label';
+import { Demo, Stack, ThemeGrid } from '../../../stories/_shared';
 
-export default {
-  title: 'Components/Drawer',
+const meta: Meta<typeof Drawer> = {
+  title: 'Composition/Drawer',
   component: Drawer,
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
         component:
-          'A slide-in panel component that can appear from any edge of the screen. Perfect for navigation menus, filters, settings panels, and secondary content. Supports animations, custom styling, and full accessibility.',
+          'Drawer renders a sliding panel from any screen edge. Supports controlled/uncontrolled open state, 4 positions, 6 sizes, custom dimensions, and header/footer content.',
       },
     },
   },
-  argTypes: {
-    position: {
-      control: { type: 'select' },
-      options: ['left', 'right', 'top', 'bottom'],
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl', 'full'],
-    },
-  },
-} satisfies Meta<typeof Drawer>;
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof Drawer>;
-
-// Default
 export const Default: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <div style={{ padding: '2rem' }}>
-        <Button onClick={() => setIsOpen(true)}>Open Drawer</Button>
-        <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
-          <p>This is the drawer content.</p>
-        </Drawer>
-      </div>
-    );
-  },
+  render: () => (
+    <div style={{ padding: '24px' }}>
+      <Drawer defaultOpen position="right" size="md">
+        <div style={{ padding: '16px' }}>
+          <h3>Drawer content</h3>
+          <p>This drawer slides in from the right.</p>
+        </div>
+      </Drawer>
+      <p>The drawer is open by default — click the X to close it.</p>
+    </div>
+  ),
 };
 
-// Positions
 export const Positions: Story = {
-  render: () => {
-    const positions: Array<'left' | 'right' | 'top' | 'bottom'> = [
-      'left',
-      'right',
-      'top',
-      'bottom',
-    ];
-    const [openPosition, setOpenPosition] = useState<string | null>(null);
-
-    return (
-      <div style={{ padding: '2rem' }}>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          {positions.map((position) => (
-            <Button key={position} onClick={() => setOpenPosition(position)}>
-              Open {position.charAt(0).toUpperCase() + position.slice(1)}
-            </Button>
-          ))}
-        </div>
-
-        {positions.map((position) => (
-          <Drawer
-            key={position}
-            isOpen={openPosition === position}
-            onClose={() => setOpenPosition(null)}
-            position={position}
-            title={`Drawer from ${position}`}
-          >
-            <p>This drawer slides in from the {position} side.</p>
+  render: () => (
+    <Demo title="All positions (each drawer opens by default)">
+      <Stack gap={12}>
+        {(['left', 'right', 'top', 'bottom'] as const).map((pos) => (
+          <Drawer key={pos} defaultOpen position={pos} size="sm">
+            <div style={{ padding: '12px' }}>
+              <strong>{pos}</strong> drawer
+            </div>
           </Drawer>
         ))}
-      </div>
-    );
-  },
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Sizes
 export const Sizes: Story = {
-  render: () => {
-    const sizes: Array<'xs' | 'sm' | 'md' | 'lg' | 'xl'> = ['xs', 'sm', 'md', 'lg', 'xl'];
-    const [openSize, setOpenSize] = useState<string | null>(null);
-
-    return (
-      <div style={{ padding: '2rem' }}>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          {sizes.map((size) => (
-            <Button key={size} onClick={() => setOpenSize(size)}>
-              Open {size.toUpperCase()}
-            </Button>
-          ))}
-        </div>
-
-        {sizes.map((size) => (
-          <Drawer
-            key={size}
-            isOpen={openSize === size}
-            onClose={() => setOpenSize(null)}
-            size={size}
-            position="right"
-            title={`${size.toUpperCase()} Drawer`}
-          >
-            <p>This is a {size} sized drawer.</p>
+  render: () => (
+    <Demo title="All sizes (left/right drawers)">
+      <Stack gap={12}>
+        {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((sz) => (
+          <Drawer key={sz} defaultOpen position="right" size={sz}>
+            <div style={{ padding: '12px' }}>
+              <strong>{sz}</strong> size
+            </div>
           </Drawer>
         ))}
-      </div>
-    );
-  },
+      </Stack>
+    </Demo>
+  ),
 };
 
-// With header and footer
-export const WithHeaderFooter: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
+export const States: Story = {
+  render: () => (
+    <Demo title="Controlled open/close">
+      <DrawerTriggerExample />
+    </Demo>
+  ),
+};
 
-    return (
-      <div style={{ padding: '2rem' }}>
-        <Button onClick={() => setIsOpen(true)}>Open Drawer with Header/Footer</Button>
-        <Drawer
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="Settings"
-          description="Manage your application settings"
-          footer={
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={() => setIsOpen(false)}>Save Changes</Button>
-            </div>
-          }
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div>
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" value="" onChange={() => {}} placeholder="Enter name" />
-            </div>
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" value="" onChange={() => {}} placeholder="Enter email" />
-            </div>
+const DrawerTriggerExample = () => (
+  <Stack gap={8}>
+    <Drawer isOpen onClose={() => {}} position="right" size="md">
+      <div style={{ padding: '16px' }}>
+        <h3>Controlled drawer</h3>
+        <p>This drawer is controlled (isOpen=true).</p>
+      </div>
+    </Drawer>
+    <Button variant="primary">Drawer is open →</Button>
+  </Stack>
+);
+
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Custom colors, gradients, header/footer">
+      <Stack gap={12}>
+        <Drawer defaultOpen position="right" size="md" color="#ff0055" textColor="#fff">
+          <div style={{ padding: '16px' }}>
+            <strong>Custom color drawer</strong>
           </div>
         </Drawer>
-      </div>
-    );
-  },
+        <Drawer
+          defaultOpen
+          position="right"
+          size="md"
+          gradient="linear-gradient(135deg, #667eea, #764ba2)"
+          textColor="#fff"
+        >
+          <div style={{ padding: '16px' }}>
+            <strong>Gradient drawer</strong>
+          </div>
+        </Drawer>
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Custom colors
-export const CustomColors: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-      <div style={{ padding: '2rem' }}>
-        <Button onClick={() => setIsOpen(true)}>Open Custom Colored Drawer</Button>
-        <Drawer
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          backgroundColor="#1f2937"
-          textColor="#ffffff"
-          headerBackgroundColor="#111827"
-          title="Dark Drawer"
-        >
-          <p style={{ color: '#e5e7eb' }}>This drawer has a custom dark theme.</p>
-        </Drawer>
-      </div>
-    );
-  },
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Drawer trigger across all 5 preset themes">
+      <ThemeGrid>
+        <Button variant="primary">Open drawer</Button>
+      </ThemeGrid>
+    </Demo>
+  ),
 };
 
-// Gradients
-export const Gradients: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-      <div style={{ padding: '2rem' }}>
-        <Button onClick={() => setIsOpen(true)}>Open Gradient Drawer</Button>
-        <Drawer
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-          textColor="#ffffff"
-          title="Gradient Drawer"
-        >
-          <p style={{ color: '#ffffff' }}>This drawer has a beautiful gradient background.</p>
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — full size, custom dimensions">
+      <Stack gap={12}>
+        <Drawer defaultOpen position="right" size="full">
+          <div style={{ padding: '16px' }}>
+            <strong>Full size</strong> — nearly the entire viewport
+          </div>
         </Drawer>
-      </div>
-    );
-  },
-};
-
-// Glassmorphism
-export const Glassmorphism: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-      <div
-        style={{
-          padding: '2rem',
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        }}
-      >
-        <Button onClick={() => setIsOpen(true)}>Open Glassmorphism Drawer</Button>
-        <Drawer
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          glassmorphism
-          backdropBlur
-          title="Glassmorphism Drawer"
-        >
-          <p>This drawer has a frosted glass effect.</p>
+        <Drawer defaultOpen position="right" width="600px">
+          <div style={{ padding: '16px' }}>
+            <strong>Custom width</strong> — 600px
+          </div>
         </Drawer>
-      </div>
-    );
-  },
-};
-
-// Without backdrop
-export const WithoutBackdrop: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-      <div style={{ padding: '2rem' }}>
-        <Button onClick={() => setIsOpen(true)}>Open Drawer Without Backdrop</Button>
-        <Drawer
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          backdrop={false}
-          title="No Backdrop"
-        >
-          <p>This drawer doesn't have a backdrop overlay.</p>
-        </Drawer>
-      </div>
-    );
-  },
-};
-
-// Theme switching
-// Full-width drawer
-export const FullWidth: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-      <div style={{ padding: '2rem' }}>
-        <Button onClick={() => setIsOpen(true)}>Open Full-Width Drawer</Button>
-        <Drawer
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          size="full"
-          position="left"
-          title="Full-Width Drawer"
-        >
-          <p>This drawer takes up the full height of the viewport.</p>
-        </Drawer>
-      </div>
-    );
-  },
+      </Stack>
+    </Demo>
+  ),
 };
