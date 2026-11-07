@@ -87,18 +87,18 @@
   }
 
   .sidebar-root--overlay.sidebar-root--left {
-    left: 0;
+    inset-inline-start: 0;
   }
 
   .sidebar-root--overlay.sidebar-root--right {
-    right: 0;
+    inset-inline-end: 0;
   }
 
   .sidebar-root__backdrop {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: calc(var(--z-modal, 1050) - 1);
@@ -184,13 +184,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: var(--spacing-sm);
+    margin-inline-end: var(--spacing-sm);
     flex-shrink: 0;
   }
 
   .sidebar-item__label {
     flex: 1;
-    text-align: left;
+    text-align: start;
   }
 
   /* Override Button component styles for sidebar items */
@@ -221,14 +221,14 @@
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
-    text-align: left;
+    text-align: start;
     cursor: pointer;
     border-radius: var(--border-radius-sm);
     transition: var(--transition-colors);
   }
 
   .sidebar-group__icon {
-    margin-right: var(--spacing-sm);
+    margin-inline-end: var(--spacing-sm);
     flex-shrink: 0;
   }
 
@@ -248,7 +248,7 @@
   }
 
   .sidebar-group__content {
-    padding-left: var(--spacing-md);
+    padding-inline-start: var(--spacing-md);
   }
 
   /* The expand animation plays when the group transitions into the expanded
@@ -307,28 +307,28 @@
   }
 
   .sidebar-toggle--floating-left {
-    left: 1rem;
+    inset-inline-start: 1rem;
   }
 
   .sidebar-toggle--floating-right {
-    right: 1rem;
+    inset-inline-end: 1rem;
   }
 
   /* ===== Enhanced Right-Side Positioning ===== */
 
   .sidebar-root--right {
-    border-top-left-radius: var(--border-radius-lg);
-    border-bottom-left-radius: var(--border-radius-lg);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-start-start-radius: var(--border-radius-lg);
+    border-end-start-radius: var(--border-radius-lg);
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
   }
 
   .sidebar-root--overlay.sidebar-root--right {
-    right: 0;
-    left: auto;
+    inset-inline-end: 0;
+    inset-inline-start: auto;
     border-radius: 0;
-    border-top-left-radius: var(--border-radius-lg);
-    border-bottom-left-radius: var(--border-radius-lg);
+    border-start-start-radius: var(--border-radius-lg);
+    border-end-start-radius: var(--border-radius-lg);
   }
 
   /* Right-side header alignment */
@@ -425,7 +425,7 @@
   }
 
   .sidebar-group--collapsed .sidebar-group__content {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 }
 

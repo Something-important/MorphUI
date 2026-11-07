@@ -67,7 +67,7 @@
 
   .label-component__required {
     color: var(--label-custom-required-color, var(--label-required-color, var(--color-danger)));
-    margin-left: 2px;
+    margin-inline-start: 2px;
     font-weight: 600;
   }
 

@@ -37,8 +37,8 @@
   .stepper-component--horizontal .stepper-component__connector {
     position: absolute;
     top: calc(var(--stepper-indicator-size, 24px) / 2);
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     height: 2px;
     background: var(--color-border, #e5e7eb);
     z-index: 0;
@@ -70,7 +70,7 @@
 
   .stepper-component--vertical .stepper-component__connector {
     position: absolute;
-    left: calc(var(--stepper-indicator-size, 24px) / 2);
+    inset-inline-start: calc(var(--stepper-indicator-size, 24px) / 2);
     top: var(--stepper-indicator-size, 24px);
     bottom: 0;
     width: 2px;
@@ -168,7 +168,7 @@
 
   .stepper-component--vertical .stepper-component__label-container {
     align-items: flex-start;
-    text-align: left;
+    text-align: start;
   }
 
   .stepper-component__label {

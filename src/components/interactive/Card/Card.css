@@ -339,7 +339,7 @@
   .card-component__badge {
     position: absolute;
     top: var(--spacing-sm, 0.5rem);
-    right: var(--spacing-sm, 0.5rem);
+    inset-inline-end: var(--spacing-sm, 0.5rem);
     z-index: 10;
     font-size: var(--card-badge-size);
     font-weight: 600;
@@ -464,8 +464,8 @@
   .card-component__loading-overlay {
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     bottom: 0;
     background: var(--color-background, rgba(255, 255, 255, 0.8));
     backdrop-filter: var(--backdrop-blur-sm, blur(4px));

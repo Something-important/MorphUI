@@ -74,15 +74,15 @@
 
   .divider-component--horizontal.divider-component--dashed {
     border-top-width: 1px;
-    border-left: none;
-    border-right: none;
+    border-inline-start: none;
+    border-inline-end: none;
     border-bottom: none;
   }
 
   .divider-component--vertical.divider-component--dashed {
-    border-left-width: 1px;
+    border-inline-start-width: 1px;
     border-top: none;
-    border-right: none;
+    border-inline-end: none;
     border-bottom: none;
   }
 
@@ -94,15 +94,15 @@
 
   .divider-component--horizontal.divider-component--dotted {
     border-top-width: 1px;
-    border-left: none;
-    border-right: none;
+    border-inline-start: none;
+    border-inline-end: none;
     border-bottom: none;
   }
 
   .divider-component--vertical.divider-component--dotted {
-    border-left-width: 1px;
+    border-inline-start-width: 1px;
     border-top: none;
-    border-right: none;
+    border-inline-end: none;
     border-bottom: none;
   }
 
@@ -118,8 +118,8 @@
   }
 
   .divider-component--spacing-xs.divider-component--vertical {
-    margin-left: var(--spacing-xs, 0.25rem);
-    margin-right: var(--spacing-xs, 0.25rem);
+    margin-inline-start: var(--spacing-xs, 0.25rem);
+    margin-inline-end: var(--spacing-xs, 0.25rem);
   }
 
   .divider-component--spacing-sm.divider-component--horizontal {
@@ -128,8 +128,8 @@
   }
 
   .divider-component--spacing-sm.divider-component--vertical {
-    margin-left: var(--spacing-sm, 0.5rem);
-    margin-right: var(--spacing-sm, 0.5rem);
+    margin-inline-start: var(--spacing-sm, 0.5rem);
+    margin-inline-end: var(--spacing-sm, 0.5rem);
   }
 
   .divider-component--spacing-md.divider-component--horizontal {
@@ -138,8 +138,8 @@
   }
 
   .divider-component--spacing-md.divider-component--vertical {
-    margin-left: var(--spacing-md, 1rem);
-    margin-right: var(--spacing-md, 1rem);
+    margin-inline-start: var(--spacing-md, 1rem);
+    margin-inline-end: var(--spacing-md, 1rem);
   }
 
   .divider-component--spacing-lg.divider-component--horizontal {
@@ -148,8 +148,8 @@
   }
 
   .divider-component--spacing-lg.divider-component--vertical {
-    margin-left: var(--spacing-lg, 1.5rem);
-    margin-right: var(--spacing-lg, 1.5rem);
+    margin-inline-start: var(--spacing-lg, 1.5rem);
+    margin-inline-end: var(--spacing-lg, 1.5rem);
   }
 
   .divider-component--spacing-xl.divider-component--horizontal {
@@ -158,8 +158,8 @@
   }
 
   .divider-component--spacing-xl.divider-component--vertical {
-    margin-left: var(--spacing-xl, 2rem);
-    margin-right: var(--spacing-xl, 2rem);
+    margin-inline-start: var(--spacing-xl, 2rem);
+    margin-inline-end: var(--spacing-xl, 2rem);
   }
 
   /* Divider with text */
@@ -236,16 +236,16 @@
 
   .divider-component--horizontal.divider-component--dashed .divider-component__line {
     border-top-width: 1px;
-    border-left: none;
-    border-right: none;
+    border-inline-start: none;
+    border-inline-end: none;
     border-bottom: none;
     border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
   }
 
   .divider-component--vertical.divider-component--dashed .divider-component__line {
-    border-left-width: 1px;
+    border-inline-start-width: 1px;
     border-top: none;
-    border-right: none;
+    border-inline-end: none;
     border-bottom: none;
     border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
   }
@@ -257,16 +257,16 @@
 
   .divider-component--horizontal.divider-component--dotted .divider-component__line {
     border-top-width: 1px;
-    border-left: none;
-    border-right: none;
+    border-inline-start: none;
+    border-inline-end: none;
     border-bottom: none;
     border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
   }
 
   .divider-component--vertical.divider-component--dotted .divider-component__line {
-    border-left-width: 1px;
+    border-inline-start-width: 1px;
     border-top: none;
-    border-right: none;
+    border-inline-end: none;
     border-bottom: none;
     border-color: var(--divider-custom-color, var(--divider-color, var(--color-border, #e5e7eb)));
   }

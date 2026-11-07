@@ -78,10 +78,10 @@
   cursor: not-allowed;
 }
 .carousel-component__arrow--prev {
-  left: var(--spacing-sm, 0.5rem);
+  inset-inline-start: var(--spacing-sm, 0.5rem);
 }
 .carousel-component__arrow--next {
-  right: var(--spacing-sm, 0.5rem);
+  inset-inline-end: var(--spacing-sm, 0.5rem);
 }
 
 /* Dots */

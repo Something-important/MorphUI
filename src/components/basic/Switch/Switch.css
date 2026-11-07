@@ -63,11 +63,11 @@
   }
 
   .switch-component__icon--left {
-    margin-right: var(--switch-icon-gap, 0.5rem);
+    margin-inline-end: var(--switch-icon-gap, 0.5rem);
   }
 
   .switch-component__icon--right {
-    margin-left: var(--switch-icon-gap, 0.5rem);
+    margin-inline-start: var(--switch-icon-gap, 0.5rem);
   }
 
   /* Input Wrapper */
@@ -135,7 +135,7 @@
 
   .switch-component__thumb {
     position: absolute;
-    left: var(--switch-thumb-offset, 2px);
+    inset-inline-start: var(--switch-thumb-offset, 2px);
     top: 50%;
     transform: translateY(-50%);
     width: var(--switch-thumb-size, 20px);
@@ -367,7 +367,9 @@
   }
 
   .switch-component--checked .switch-component__thumb {
-    left: calc(100% - var(--switch-thumb-size, 20px) - var(--switch-thumb-offset, 2px));
+    inset-inline-start: calc(
+      100% - var(--switch-thumb-size, 20px) - var(--switch-thumb-offset, 2px)
+    );
     background: var(--switch-thumb-checked-bg, #ffffff);
   }
 

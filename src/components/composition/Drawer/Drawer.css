@@ -7,8 +7,8 @@
   .drawer-component__backdrop {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     bottom: 0;
     z-index: calc(var(--z-modal, 1050) - 1);
     transition: opacity var(--transition-normal, 0.3s ease);
@@ -39,12 +39,12 @@
 
   .drawer-component--left {
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     bottom: 0;
     width: 320px;
     max-width: 90vw;
-    border-top-right-radius: var(--border-radius-lg, 8px);
-    border-bottom-right-radius: var(--border-radius-lg, 8px);
+    border-start-end-radius: var(--border-radius-lg, 8px);
+    border-end-end-radius: var(--border-radius-lg, 8px);
   }
 
   .drawer-component--animated.drawer-component--left {
@@ -56,12 +56,12 @@
 
   .drawer-component--right {
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     bottom: 0;
     width: 320px;
     max-width: 90vw;
-    border-top-left-radius: var(--border-radius-lg, 8px);
-    border-bottom-left-radius: var(--border-radius-lg, 8px);
+    border-start-start-radius: var(--border-radius-lg, 8px);
+    border-end-start-radius: var(--border-radius-lg, 8px);
   }
 
   .drawer-component--animated.drawer-component--right {
@@ -73,12 +73,12 @@
 
   .drawer-component--top {
     top: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     height: 400px;
     max-height: 90vh;
-    border-bottom-left-radius: var(--border-radius-lg, 8px);
-    border-bottom-right-radius: var(--border-radius-lg, 8px);
+    border-end-start-radius: var(--border-radius-lg, 8px);
+    border-end-end-radius: var(--border-radius-lg, 8px);
   }
 
   .drawer-component--animated.drawer-component--top {
@@ -90,12 +90,12 @@
 
   .drawer-component--bottom {
     bottom: 0;
-    left: 0;
-    right: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
     height: 400px;
     max-height: 90vh;
-    border-top-left-radius: var(--border-radius-lg, 8px);
-    border-top-right-radius: var(--border-radius-lg, 8px);
+    border-start-start-radius: var(--border-radius-lg, 8px);
+    border-start-end-radius: var(--border-radius-lg, 8px);
   }
 
   .drawer-component--animated.drawer-component--bottom {
@@ -174,7 +174,7 @@
   .drawer-component__close {
     position: absolute;
     top: var(--spacing-md, 1rem);
-    right: var(--spacing-md, 1rem);
+    inset-inline-end: var(--spacing-md, 1rem);
     width: 32px;
     height: 32px;
     display: flex;

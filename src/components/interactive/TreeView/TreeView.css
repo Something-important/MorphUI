@@ -130,7 +130,9 @@
 .treeview-component--lined .treeview-component__row::before {
   content: '';
   position: absolute;
-  left: calc(var(--treeview-depth) * var(--treeview-indent) - var(--treeview-indent) + 9px);
+  inset-inline-start: calc(
+    var(--treeview-depth) * var(--treeview-indent) - var(--treeview-indent) + 9px
+  );
   top: 0;
   bottom: 50%;
   width: 1px;

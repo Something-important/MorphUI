@@ -92,7 +92,7 @@
   .datepicker-component__dialog {
     position: absolute;
     top: calc(100% + 4px);
-    left: 0;
+    inset-inline-start: 0;
     z-index: var(--z-dropdown, 1000);
     border: 1px solid
       var(--datepicker-custom-border, var(--datepicker-border, var(--color-border, #d1d5db)));
