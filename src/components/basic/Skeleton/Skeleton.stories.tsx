@@ -1,39 +1,23 @@
-// Skeleton.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Skeleton } from './Skeleton';
-import { Card } from '../../interactive/Card';
+import { Demo, Row, Stack, ThemeGrid } from '../../../stories/_shared';
 
-export default {
-  title: 'Components/Skeleton',
+const meta: Meta<typeof Skeleton> = {
+  title: 'Primitives/Skeleton',
   component: Skeleton,
   parameters: {
-    layout: 'padded',
+    layout: 'centered',
     docs: {
       description: {
         component:
-          'Animated loading placeholder component for better UX during content loading. Supports multiple variants, sizes, and can be combined to create skeleton screens. Perfect for improving perceived performance and reducing layout shift.',
+          'Skeleton renders a placeholder shimmer while content loads. Supports 4 variants (text/circular/rectangular/rounded), 5 sizes, custom dimensions, and animation toggle.',
       },
     },
   },
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['text', 'circular', 'rectangular', 'rounded'],
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    animated: {
-      control: { type: 'boolean' },
-    },
-  },
-} satisfies Meta<typeof Skeleton>;
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof Skeleton>;
-
-// Default
 export const Default: Story = {
   args: {
     variant: 'text',
@@ -42,188 +26,115 @@ export const Default: Story = {
   },
 };
 
-// Variants
 export const Variants: Story = {
-  render: () => {
-    const variants: Array<'text' | 'circular' | 'rectangular' | 'rounded'> = [
-      'text',
-      'circular',
-      'rectangular',
-      'rounded',
-    ];
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', padding: '2rem' }}>
-        {variants.map((variant) => (
-          <div key={variant} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <p style={{ fontSize: '0.875rem', color: '#666' }}>
-              {variant.charAt(0).toUpperCase() + variant.slice(1)}
-            </p>
-            <Skeleton variant={variant} size="lg" />
-          </div>
-        ))}
-      </div>
-    );
-  },
+  render: () => (
+    <Demo title="All variants">
+      <Stack gap={16}>
+        <Skeleton variant="text" width={200} />
+        <Row gap={12} align="center">
+          <Skeleton variant="circular" size="lg" />
+          <Stack gap={8}>
+            <Skeleton variant="text" width={120} />
+            <Skeleton variant="text" width={80} />
+          </Stack>
+        </Row>
+        <Skeleton variant="rectangular" width={300} height={100} />
+        <Skeleton variant="rounded" width={300} height={60} />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Sizes
 export const Sizes: Story = {
-  render: () => {
-    const sizes: Array<'xs' | 'sm' | 'md' | 'lg' | 'xl'> = ['xs', 'sm', 'md', 'lg', 'xl'];
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
-        {sizes.map((size) => (
-          <div key={size} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span style={{ fontSize: '0.875rem', color: '#666', minWidth: '60px' }}>
-              {size.toUpperCase()}
-            </span>
-            <Skeleton variant="text" size={size} width="200px" />
-          </div>
-        ))}
-      </div>
-    );
-  },
+  render: () => (
+    <Demo title="All sizes (rectangular)">
+      <Stack gap={12}>
+        <Skeleton variant="rectangular" size="xs" width={200} />
+        <Skeleton variant="rectangular" size="sm" width={200} />
+        <Skeleton variant="rectangular" size="md" width={200} />
+        <Skeleton variant="rectangular" size="lg" width={200} />
+        <Skeleton variant="rectangular" size="xl" width={200} />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Custom colors
-export const CustomColors: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🎨 Custom Background Colors
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Skeleton variant="text" backgroundColor="#8b5cf6" width="300px" />
-            <Skeleton variant="text" backgroundColor="#f97316" width="250px" />
-            <Skeleton variant="text" backgroundColor="#06b6d4" width="280px" />
-          </div>
-        </div>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🎨 Circular with Custom Colors
-          </h3>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Skeleton variant="circular" size="lg" backgroundColor="#8b5cf6" />
-            <Skeleton variant="circular" size="lg" backgroundColor="#f97316" />
-            <Skeleton variant="circular" size="lg" backgroundColor="#06b6d4" />
-          </div>
-        </div>
-      </div>
-    );
-  },
+export const States: Story = {
+  render: () => (
+    <Demo title="Animated vs static">
+      <Stack gap={12}>
+        <Skeleton variant="text" width={200} animated />
+        <Skeleton variant="text" width={200} animated={false} />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Custom dimensions
-export const CustomDimensions: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2rem' }}>
-        <Skeleton variant="rectangular" width="100%" height="120px" />
-        <Skeleton variant="text" width="80%" />
-        <Skeleton variant="text" width="60%" />
-        <Skeleton variant="text" width="90%" />
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <Skeleton variant="circular" width={60} height={60} />
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <Skeleton variant="text" width="70%" />
-            <Skeleton variant="text" width="50%" />
-          </div>
-        </div>
-      </div>
-    );
-  },
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Custom dimensions & colors">
+      <Stack gap={16}>
+        <Skeleton variant="text" width={400} height={20} />
+        <Skeleton variant="text" width={300} height={16} />
+        <Skeleton variant="text" width={200} height={12} />
+        <Skeleton variant="rounded" width={120} height={120} color="#ff0055" />
+        <Skeleton variant="rectangular" width={200} height={40} backgroundColor="#e5e7eb" />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Multiple skeletons
-export const Multiple: Story = {
-  render: () => {
-    return (
-      <div style={{ padding: '2rem' }}>
-        <Skeleton variant="text" count={3} />
-        <div style={{ marginTop: '2rem' }}>
-          <Skeleton variant="text" count={5} width="80%" />
-        </div>
-      </div>
-    );
-  },
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Skeleton across all 5 preset themes">
+      <ThemeGrid>
+        <Stack gap={8}>
+          <Skeleton variant="text" width={120} />
+          <Skeleton variant="text" width={80} />
+        </Stack>
+      </ThemeGrid>
+    </Demo>
+  ),
 };
 
-// Animated vs static
-export const AnimatedVsStatic: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', padding: '2rem' }}>
-        <div>
-          <p style={{ marginBottom: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Animated</p>
-          <Skeleton variant="text" animated width="300px" />
-        </div>
-        <div>
-          <p style={{ marginBottom: '0.5rem', fontSize: '0.875rem', color: '#666' }}>Static</p>
-          <Skeleton variant="text" animated={false} width="300px" />
-        </div>
-      </div>
-    );
-  },
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — count, very small, very large">
+      <Stack gap={16}>
+        <Stack gap={4}>
+          <Skeleton variant="text" width={250} count={3} />
+        </Stack>
+        <Skeleton variant="circular" size="xs" />
+        <Skeleton variant="rectangular" width={500} height={200} />
+      </Stack>
+    </Demo>
+  ),
 };
 
-// Real-world examples
-export const RealWorldExamples: Story = {
-  render: () => {
-    return (
-      <div style={{ padding: '2rem', maxWidth: '800px' }}>
-        <h2 style={{ marginBottom: '2rem' }}>Skeleton Screen Examples</h2>
-
-        {/* Card skeleton */}
-        <div style={{ marginBottom: '3rem' }}>
-          <h3 style={{ marginBottom: '1rem' }}>Card Skeleton</h3>
-          <Card>
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-              <Skeleton variant="circular" size="lg" />
-              <div style={{ flex: 1 }}>
-                <Skeleton variant="text" width="60%" style={{ marginBottom: '0.5rem' }} />
-                <Skeleton variant="text" width="40%" />
-              </div>
-            </div>
-            <Skeleton variant="rectangular" height="200px" style={{ marginBottom: '1rem' }} />
-            <Skeleton variant="text" count={3} />
-          </Card>
-        </div>
-
-        {/* List skeleton */}
-        <div style={{ marginBottom: '3rem' }}>
-          <h3 style={{ marginBottom: '1rem' }}>List Skeleton</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {[1, 2, 3, 4, 5].map((item) => (
-              <div key={item} style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <Skeleton variant="circular" size="md" />
-                <div style={{ flex: 1 }}>
-                  <Skeleton variant="text" width="70%" style={{ marginBottom: '0.25rem' }} />
-                  <Skeleton variant="text" width="50%" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Profile skeleton */}
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>Profile Skeleton</h3>
-          <div
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
-          >
-            <Skeleton variant="circular" size="xl" />
-            <Skeleton variant="text" width="200px" />
-            <Skeleton variant="text" width="150px" />
-            <div style={{ width: '100%', marginTop: '1rem' }}>
-              <Skeleton variant="text" count={4} />
-            </div>
-          </div>
-        </div>
+export const Integration: Story = {
+  render: () => (
+    <Demo title="Card loading skeleton (composition example)">
+      <div
+        style={{
+          width: '300px',
+          padding: '16px',
+          border: '1px solid var(--color-border, #d1d5db)',
+          borderRadius: 'var(--border-radius-md, 8px)',
+        }}
+      >
+        <Stack gap={12}>
+          <Row gap={12} align="center">
+            <Skeleton variant="circular" size="md" />
+            <Stack gap={4}>
+              <Skeleton variant="text" width={120} />
+              <Skeleton variant="text" width={80} />
+            </Stack>
+          </Row>
+          <Skeleton variant="rectangular" width="100%" height={120} />
+          <Skeleton variant="text" width="100%" />
+          <Skeleton variant="text" width="60%" />
+        </Stack>
       </div>
-    );
-  },
+    </Demo>
+  ),
 };
-
-// Theme switching

@@ -1,347 +1,154 @@
-// Avatar.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Avatar } from './Avatar';
+import { Demo, Row, Stack, ThemeGrid, OnDark, OnLight } from '../../../stories/_shared';
 
-export default {
-  title: 'Components/Avatar',
+const meta: Meta<typeof Avatar> = {
+  title: 'Primitives/Avatar',
   component: Avatar,
   parameters: {
-    layout: 'padded',
+    layout: 'centered',
     docs: {
       description: {
         component:
-          'A versatile avatar component that displays user images with fallback to initials or icons. Supports status indicators, badges, multiple sizes, and full theming. Perfect for user profiles, lists, and navigation components.',
+          'Avatar renders a user image, initials fallback, or icon. Supports status indicators, sizes, shapes, and full color customization.',
       },
     },
   },
-  argTypes: {
-    size: {
-      control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    shape: {
-      control: { type: 'select' },
-      options: ['circle', 'square', 'rounded'],
-    },
-    status: {
-      control: { type: 'select' },
-      options: ['online', 'offline', 'away', 'busy'],
-    },
-  },
-} satisfies Meta<typeof Avatar>;
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof Avatar>;
-
-// Default
 export const Default: Story = {
   args: {
-    name: 'John Doe',
+    name: 'Jane Doe',
     size: 'md',
     shape: 'circle',
   },
 };
 
-// With image
-export const WithImage: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <Avatar src="https://i.pravatar.cc/150?img=1" name="Alice Johnson" alt="Alice" />
-        <Avatar src="https://i.pravatar.cc/150?img=12" name="Bob Smith" alt="Bob" />
-        <Avatar src="https://i.pravatar.cc/150?img=33" name="Charlie Brown" alt="Charlie" />
-      </div>
-    );
-  },
+export const Variants: Story = {
+  render: () => (
+    <Demo title="Image / Initials / Icon fallback">
+      <Row gap={16}>
+        <Avatar src="https://i.pravatar.cc/80?img=1" name="With Image" size="lg" />
+        <Avatar name="Initials Only" size="lg" />
+        <Avatar name="JD" size="lg" />
+        <Avatar icon={<span>👤</span>} size="lg" />
+      </Row>
+    </Demo>
+  ),
 };
 
-// With initials (fallback)
-export const WithInitials: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <Avatar name="John Doe" />
-        <Avatar name="Jane Smith" />
-        <Avatar name="Alice Johnson" />
-        <Avatar name="Bob" />
-      </div>
-    );
-  },
-};
-
-// Sizes
 export const Sizes: Story = {
-  render: () => {
-    const sizes: Array<'xs' | 'sm' | 'md' | 'lg' | 'xl'> = ['xs', 'sm', 'md', 'lg', 'xl'];
-    return (
-      <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', padding: '2rem' }}>
-        {sizes.map((size) => (
-          <div
-            key={size}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
-          >
-            <Avatar name="John Doe" size={size} />
-            <span style={{ fontSize: '0.75rem', color: '#666' }}>{size.toUpperCase()}</span>
-          </div>
+  render: () => (
+    <Demo title="All sizes (xs → xl)">
+      <Row gap={12} align="end">
+        <Avatar name="XS" size="xs" />
+        <Avatar name="SM" size="sm" />
+        <Avatar name="MD" size="md" />
+        <Avatar name="LG" size="lg" />
+        <Avatar name="XL" size="xl" />
+      </Row>
+    </Demo>
+  ),
+};
+
+export const States: Story = {
+  render: () => (
+    <Demo title="Status indicators">
+      <Row gap={16}>
+        <Avatar name="Online" size="lg" status="online" />
+        <Avatar name="Away" size="lg" status="away" />
+        <Avatar name="Busy" size="lg" status="busy" />
+        <Avatar name="Offline" size="lg" status="offline" />
+      </Row>
+    </Demo>
+  ),
+};
+
+export const Customization: Story = {
+  render: () => (
+    <Demo title="Shapes & custom colors">
+      <Stack gap={16}>
+        <Row gap={12}>
+          <Avatar name="Circle" size="lg" shape="circle" />
+          <Avatar name="Square" size="lg" shape="square" />
+          <Avatar name="Rounded" size="lg" shape="rounded" />
+        </Row>
+        <Row gap={12}>
+          <Avatar name="Custom" size="lg" color="#ff0055" textColor="#fff" />
+          <Avatar
+            name="Gradient"
+            size="lg"
+            gradient="linear-gradient(135deg, #667eea, #764ba2)"
+            textColor="#fff"
+          />
+          <Avatar name="BG" size="lg" backgroundColor="#10b981" textColor="#fff" />
+        </Row>
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const AllThemes: Story = {
+  render: () => (
+    <Demo title="Avatar across all 5 preset themes">
+      <ThemeGrid>
+        <Avatar name="Jane Doe" size="lg" status="online" />
+      </ThemeGrid>
+    </Demo>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <Demo title="Edge cases — long names, single char, empty">
+      <Stack gap={16}>
+        <Row gap={12} align="center">
+          <Avatar name="Alexander Maximilian Worthington III" size="lg" />
+          <Avatar name="A" size="lg" />
+          <Avatar name="" size="lg" icon={<span>?</span>} />
+        </Row>
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const Contrast: Story = {
+  render: () => (
+    <Demo title="On dark / on light backgrounds">
+      <Stack gap={12}>
+        <OnDark>
+          <Row gap={12}>
+            <Avatar name="Dark BG" size="lg" />
+            <Avatar name="Status" size="lg" status="online" />
+          </Row>
+        </OnDark>
+        <OnLight>
+          <Row gap={12}>
+            <Avatar name="Light BG" size="lg" />
+            <Avatar name="Status" size="lg" status="busy" />
+          </Row>
+        </OnLight>
+      </Stack>
+    </Demo>
+  ),
+};
+
+export const Integration: Story = {
+  render: () => (
+    <Demo title="Avatar group (composition example)">
+      <Row gap={-8} align="center">
+        {['Alice', 'Bob', 'Carol', 'Dave'].map((n) => (
+          <Avatar
+            key={n}
+            name={n}
+            size="md"
+            style={{ border: '2px solid var(--color-background, #fff)' }}
+          />
         ))}
-      </div>
-    );
-  },
-};
-
-// Shapes
-export const Shapes: Story = {
-  render: () => {
-    const shapes: Array<'circle' | 'square' | 'rounded'> = ['circle', 'square', 'rounded'];
-    return (
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', padding: '2rem' }}>
-        {shapes.map((shape) => (
-          <div
-            key={shape}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
-          >
-            <Avatar name="John Doe" shape={shape} size="lg" />
-            <span style={{ fontSize: '0.875rem', color: '#666' }}>
-              {shape.charAt(0).toUpperCase() + shape.slice(1)}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  },
-};
-
-// Status indicators
-export const StatusIndicators: Story = {
-  render: () => {
-    const statuses: Array<'online' | 'offline' | 'away' | 'busy'> = [
-      'online',
-      'offline',
-      'away',
-      'busy',
-    ];
-    return (
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', padding: '2rem' }}>
-        {statuses.map((status) => (
-          <div
-            key={status}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
-          >
-            <Avatar name="John Doe" status={status} size="lg" />
-            <span style={{ fontSize: '0.875rem', color: '#666' }}>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  },
-};
-
-// With badges
-export const WithBadges: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', padding: '2rem' }}>
-        <Avatar name="John Doe" badge={3} showBadge />
-        <Avatar name="Jane Smith" badge={12} showBadge />
-        <Avatar name="Alice" badge={99} showBadge />
-        <Avatar name="Bob" badge={150} showBadge />
-        <Avatar name="Charlie" badge="New" showBadge />
-      </div>
-    );
-  },
-};
-
-// Custom colors
-export const CustomColors: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🎨 Custom Background Colors
-          </h3>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Avatar name="John Doe" color="#8b5cf6" />
-            <Avatar name="Jane Smith" color="#f97316" />
-            <Avatar name="Alice" color="#06b6d4" />
-            <Avatar name="Bob" color="#ec4899" />
-            <Avatar name="Charlie" color="#10b981" />
-          </div>
-        </div>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🎨 Custom Text Colors
-          </h3>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Avatar name="John Doe" backgroundColor="#1f2937" textColor="#fbbf24" />
-            <Avatar name="Jane Smith" backgroundColor="#065f46" textColor="#d1fae5" />
-            <Avatar name="Alice" backgroundColor="#7c2d12" textColor="#fed7aa" />
-          </div>
-        </div>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🎨 Auto-generated Colors from Names
-          </h3>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Avatar name="Alice Johnson" />
-            <Avatar name="Bob Smith" />
-            <Avatar name="Charlie Brown" />
-            <Avatar name="Diana Prince" />
-            <Avatar name="Edward Norton" />
-          </div>
-          <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: '#666' }}>
-            Each name generates a consistent color automatically
-          </p>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Gradients
-export const Gradients: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🌈 Gradient Avatars
-          </h3>
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-            <Avatar
-              name="John Doe"
-              gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-              size="lg"
-            />
-            <Avatar
-              name="Jane Smith"
-              gradient="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-              size="lg"
-            />
-            <Avatar
-              name="Alice"
-              gradient="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-              size="lg"
-            />
-            <Avatar
-              name="Bob"
-              gradient="linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
-              size="lg"
-            />
-          </div>
-        </div>
-        <div>
-          <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600', color: '#333' }}>
-            🌈 Gradient with Status
-          </h3>
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-            <Avatar
-              name="John Doe"
-              gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-              status="online"
-              size="lg"
-            />
-            <Avatar
-              name="Jane Smith"
-              gradient="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-              status="away"
-              size="lg"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Theme switching
-// Group/Stack
-export const AvatarGroup: Story = {
-  render: () => {
-    return (
-      <div style={{ padding: '2rem' }}>
-        <div style={{ marginBottom: '2rem' }}>
-          <h3 style={{ marginBottom: '1rem' }}>Avatar Stack</h3>
-          <div style={{ display: 'flex', gap: '-0.5rem', alignItems: 'center' }}>
-            {['Alice', 'Bob', 'Charlie', 'Diana', 'Edward'].map((name, index) => (
-              <div
-                key={name}
-                style={{
-                  marginLeft: index > 0 ? '-0.5rem' : '0',
-                  border: '2px solid white',
-                  borderRadius: '50%',
-                }}
-              >
-                <Avatar name={name} size="md" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h3 style={{ marginBottom: '1rem' }}>User List Example</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '300px' }}>
-            {[
-              { name: 'Alice Johnson', status: 'online' as const, badge: 3 },
-              { name: 'Bob Smith', status: 'away' as const },
-              { name: 'Charlie Brown', status: 'busy' as const, badge: 12 },
-              { name: 'Diana Prince', status: 'online' as const },
-            ].map((user) => (
-              <div
-                key={user.name}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '0.75rem',
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px',
-                }}
-              >
-                <Avatar
-                  name={user.name}
-                  status={user.status}
-                  badge={user.badge}
-                  showBadge={!!user.badge}
-                />
-                <span style={{ fontWeight: '500' }}>{user.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// Image error fallback
-export const ImageErrorFallback: Story = {
-  render: () => {
-    return (
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', padding: '2rem' }}>
-        <Avatar src="https://invalid-url.com/image.jpg" name="John Doe" alt="John" />
-        <Avatar src="https://invalid-url.com/image.jpg" name="Jane Smith" alt="Jane" />
-        <p style={{ fontSize: '0.875rem', color: '#666' }}>
-          Images fail to load → fallback to initials
-        </p>
-      </div>
-    );
-  },
+        <Avatar name="+5" size="md" backgroundColor="var(--color-gray-200, #e5e7eb)" />
+      </Row>
+    </Demo>
+  ),
 };
