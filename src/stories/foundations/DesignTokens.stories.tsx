@@ -285,34 +285,146 @@ const STRATEGIES: Record<string, string> = {
   z: 'raw',
 };
 
-export const AllTokens: Story = {
+// ---- story wrapper (shared layout) ----
+
+const StoryWrapper = ({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle: string;
+  children: ReactNode;
+}) => (
+  <div
+    style={{
+      padding: '32px 48px',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      background: 'var(--color-background, #fff)',
+      color: 'var(--color-text, #111827)',
+      minHeight: '100vh',
+    }}
+  >
+    <header style={{ marginBottom: '32px' }}>
+      <h1
+        style={{
+          fontSize: 'var(--font-size-3xl, 24px)',
+          fontWeight: 'var(--font-weight-bold, 700)',
+          color: 'var(--color-heading-primary, #111827)',
+          margin: '0 0 8px 0',
+        }}
+      >
+        {title}
+      </h1>
+      <p style={{ color: 'var(--color-text-secondary, #6b7280)', margin: 0 }}>{subtitle}</p>
+    </header>
+    {children}
+  </div>
+);
+
+export const Overview: Story = {
   render: () => (
-    <div
-      style={{
-        padding: '32px 48px',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        background: 'var(--color-background, #fff)',
-        color: 'var(--color-text, #111827)',
-        minHeight: '100vh',
-      }}
+    <StoryWrapper
+      title="Design Tokens"
+      subtitle="353 CSS custom properties across 49 families. Switch themes via the toolbar to see how each preset overrides the defaults. Browse individual category stories for full token details."
     >
-      <header style={{ marginBottom: '32px' }}>
-        <h1
-          style={{
-            fontSize: 'var(--font-size-3xl, 24px)',
-            fontWeight: 'var(--font-weight-bold, 700)',
-            color: 'var(--color-heading-primary, #111827)',
-            margin: '0 0 8px 0',
-          }}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+        <div
+          style={{ padding: 16, border: '1px solid var(--color-border, #d1d5db)', borderRadius: 8 }}
         >
-          Design Tokens
-        </h1>
-        <p style={{ color: 'var(--color-text-secondary, #6b7280)', margin: 0 }}>
-          {353} CSS custom properties across {49} families. Switch themes via the toolbar to see how
-          each preset overrides the defaults.
-        </p>
-      </header>
+          <strong>Colors</strong>
+          <br />
+          <span
+            style={{
+              color: 'var(--color-text-secondary, #6b7280)',
+              fontSize: 'var(--font-size-sm, 12px)',
+            }}
+          >
+            15 families
+          </span>
+        </div>
+        <div
+          style={{ padding: 16, border: '1px solid var(--color-border, #d1d5db)', borderRadius: 8 }}
+        >
+          <strong>Typography</strong>
+          <br />
+          <span
+            style={{
+              color: 'var(--color-text-secondary, #6b7280)',
+              fontSize: 'var(--font-size-sm, 12px)',
+            }}
+          >
+            6 families
+          </span>
+        </div>
+        <div
+          style={{ padding: 16, border: '1px solid var(--color-border, #d1d5db)', borderRadius: 8 }}
+        >
+          <strong>Spacing & Layout</strong>
+          <br />
+          <span
+            style={{
+              color: 'var(--color-text-secondary, #6b7280)',
+              fontSize: 'var(--font-size-sm, 12px)',
+            }}
+          >
+            7 families
+          </span>
+        </div>
+        <div
+          style={{ padding: 16, border: '1px solid var(--color-border, #d1d5db)', borderRadius: 8 }}
+        >
+          <strong>Borders, Shadows & Effects</strong>
+          <br />
+          <span
+            style={{
+              color: 'var(--color-text-secondary, #6b7280)',
+              fontSize: 'var(--font-size-sm, 12px)',
+            }}
+          >
+            6 families
+          </span>
+        </div>
+        <div
+          style={{ padding: 16, border: '1px solid var(--color-border, #d1d5db)', borderRadius: 8 }}
+        >
+          <strong>Animation</strong>
+          <br />
+          <span
+            style={{
+              color: 'var(--color-text-secondary, #6b7280)',
+              fontSize: 'var(--font-size-sm, 12px)',
+            }}
+          >
+            4 families
+          </span>
+        </div>
+        <div
+          style={{ padding: 16, border: '1px solid var(--color-border, #d1d5db)', borderRadius: 8 }}
+        >
+          <strong>Component Tokens</strong>
+          <br />
+          <span
+            style={{
+              color: 'var(--color-text-secondary, #6b7280)',
+              fontSize: 'var(--font-size-sm, 12px)',
+            }}
+          >
+            11 families
+          </span>
+        </div>
+      </div>
+    </StoryWrapper>
+  ),
+};
+
+export const Colors: Story = {
+  render: () => (
+    <StoryWrapper
+      title="Colors"
+      subtitle="100 tokens across 15 families. Switch themes via the toolbar."
+    >
       {
         <TokenSection
           title="color-primary"
@@ -359,19 +471,6 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
-          title="color-danger"
-          family="color-danger"
-          tokens={[
-            ['color-danger', '#ef4444'],
-            ['color-danger-hover', '#dc2626'],
-            ['color-danger-active', '#b91c1c'],
-            ['color-danger-light', 'rgba(239, 68, 68, 0.1)'],
-            ['color-danger-rgb', '239, 68, 68'],
-          ]}
-        />
-      }
-      {
-        <TokenSection
           title="color-success"
           family="color-success"
           tokens={[
@@ -398,6 +497,19 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
+          title="color-danger"
+          family="color-danger"
+          tokens={[
+            ['color-danger', '#ef4444'],
+            ['color-danger-hover', '#dc2626'],
+            ['color-danger-active', '#b91c1c'],
+            ['color-danger-light', 'rgba(239, 68, 68, 0.1)'],
+            ['color-danger-rgb', '239, 68, 68'],
+          ]}
+        />
+      }
+      {
+        <TokenSection
           title="color-info"
           family="color-info"
           tokens={[
@@ -407,20 +519,6 @@ export const AllTokens: Story = {
             ['color-info-light', 'rgba(6, 182, 212, 0.1)'],
             ['color-info-rgb', '59, 130, 246'],
           ]}
-        />
-      }
-      {
-        <TokenSection
-          title="color-white"
-          family="color-white"
-          tokens={[['color-white', '#ffffff']]}
-        />
-      }
-      {
-        <TokenSection
-          title="color-black"
-          family="color-black"
-          tokens={[['color-black', '#000000']]}
         />
       }
       {
@@ -457,17 +555,6 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
-          title="color-option"
-          family="color-option"
-          tokens={[
-            ['color-option-background', 'transparent'],
-            ['color-option-background-hover', 'rgba(0, 0, 0, 0.05)'],
-            ['color-option-background-selected', 'rgba(0, 112, 243, 0.1)'],
-          ]}
-        />
-      }
-      {
-        <TokenSection
           title="color-text"
           family="color-text"
           tokens={[
@@ -486,6 +573,18 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
+          title="color-border"
+          family="color-border"
+          tokens={[
+            ['color-border', '#d1d5db'],
+            ['color-border-hover', '#9ca3af'],
+            ['color-border-focus', '#3b82f6'],
+            ['color-border-light', '#eeeeee'],
+          ]}
+        />
+      }
+      {
+        <TokenSection
           title="color-heading"
           family="color-heading"
           tokens={[
@@ -493,18 +592,6 @@ export const AllTokens: Story = {
             ['color-heading-secondary', '#374151'],
             ['color-heading-tertiary', '#4b5563'],
             ['color-heading-muted', '#6b7280'],
-          ]}
-        />
-      }
-      {
-        <TokenSection
-          title="color-content"
-          family="color-content"
-          tokens={[
-            ['color-content-primary', '#374151'],
-            ['color-content-secondary', '#4b5563'],
-            ['color-content-muted', '#6b7280'],
-            ['color-content-light', '#9ca3af'],
           ]}
         />
       }
@@ -522,14 +609,16 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
-          title="color-border"
-          family="color-border"
-          tokens={[
-            ['color-border', '#d1d5db'],
-            ['color-border-hover', '#9ca3af'],
-            ['color-border-focus', '#3b82f6'],
-            ['color-border-light', '#eeeeee'],
-          ]}
+          title="color-white"
+          family="color-white"
+          tokens={[['color-white', '#ffffff']]}
+        />
+      }
+      {
+        <TokenSection
+          title="color-black"
+          family="color-black"
+          tokens={[['color-black', '#000000']]}
         />
       }
       {
@@ -552,6 +641,16 @@ export const AllTokens: Story = {
           ]}
         />
       }
+    </StoryWrapper>
+  ),
+};
+
+export const Typography: Story = {
+  render: () => (
+    <StoryWrapper
+      title="Typography"
+      subtitle="41 tokens across 6 families. Switch themes via the toolbar."
+    >
       {
         <TokenSection
           title="font-family"
@@ -609,20 +708,6 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
-          title="line-height"
-          family="line-height"
-          tokens={[
-            ['line-height-none', '1'],
-            ['line-height-tight', '1.25'],
-            ['line-height-snug', '1.375'],
-            ['line-height-normal', '1.5'],
-            ['line-height-relaxed', '1.625'],
-            ['line-height-loose', '2'],
-          ]}
-        />
-      }
-      {
-        <TokenSection
           title="letter-spacing"
           family="letter-spacing"
           tokens={[
@@ -632,6 +717,20 @@ export const AllTokens: Story = {
             ['letter-spacing-wide', '0.025em'],
             ['letter-spacing-wider', '0.05em'],
             ['letter-spacing-widest', '0.1em'],
+          ]}
+        />
+      }
+      {
+        <TokenSection
+          title="line-height"
+          family="line-height"
+          tokens={[
+            ['line-height-none', '1'],
+            ['line-height-tight', '1.25'],
+            ['line-height-snug', '1.375'],
+            ['line-height-normal', '1.5'],
+            ['line-height-relaxed', '1.625'],
+            ['line-height-loose', '2'],
           ]}
         />
       }
@@ -647,6 +746,16 @@ export const AllTokens: Story = {
           ]}
         />
       }
+    </StoryWrapper>
+  ),
+};
+
+export const SpacingAndLayout: Story = {
+  render: () => (
+    <StoryWrapper
+      title="Spacing & Layout"
+      subtitle="68 tokens across 7 families. Switch themes via the toolbar."
+    >
       {
         <TokenSection
           title="spacing"
@@ -698,19 +807,6 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
-          title="min-width"
-          family="min-width"
-          tokens={[
-            ['min-width-0', '0px'],
-            ['min-width-full', '100%'],
-            ['min-width-min', 'min-content'],
-            ['min-width-max', 'max-content'],
-            ['min-width-fit', 'fit-content'],
-          ]}
-        />
-      }
-      {
-        <TokenSection
           title="max-width"
           family="max-width"
           tokens={[
@@ -741,14 +837,14 @@ export const AllTokens: Story = {
       }
       {
         <TokenSection
-          title="breakpoint"
-          family="breakpoint"
+          title="min-width"
+          family="min-width"
           tokens={[
-            ['breakpoint-sm', '640px'],
-            ['breakpoint-md', '768px'],
-            ['breakpoint-lg', '1024px'],
-            ['breakpoint-xl', '1280px'],
-            ['breakpoint-2xl', '1536px'],
+            ['min-width-0', '0px'],
+            ['min-width-full', '100%'],
+            ['min-width-min', 'min-content'],
+            ['min-width-max', 'max-content'],
+            ['min-width-fit', 'fit-content'],
           ]}
         />
       }
@@ -771,6 +867,29 @@ export const AllTokens: Story = {
           ]}
         />
       }
+      {
+        <TokenSection
+          title="breakpoint"
+          family="breakpoint"
+          tokens={[
+            ['breakpoint-sm', '640px'],
+            ['breakpoint-md', '768px'],
+            ['breakpoint-lg', '1024px'],
+            ['breakpoint-xl', '1280px'],
+            ['breakpoint-2xl', '1536px'],
+          ]}
+        />
+      }
+    </StoryWrapper>
+  ),
+};
+
+export const BordersShadowsAndEffects: Story = {
+  render: () => (
+    <StoryWrapper
+      title="Borders, Shadows & Effects"
+      subtitle="64 tokens across 6 families. Switch themes via the toolbar."
+    >
       {
         <TokenSection
           title="border-radius"
@@ -818,24 +937,6 @@ export const AllTokens: Story = {
             ['backdrop-blur-xl', 'blur(24px)'],
             ['backdrop-blur-2xl', 'blur(40px)'],
             ['backdrop-blur-3xl', 'blur(64px)'],
-          ]}
-        />
-      }
-      {
-        <TokenSection
-          title="filter"
-          family="filter"
-          tokens={[
-            ['filter-brightness-50', 'brightness(0.5)'],
-            ['filter-brightness-75', 'brightness(0.75)'],
-            ['filter-brightness-90', 'brightness(0.9)'],
-            ['filter-brightness-95', 'brightness(0.95)'],
-            ['filter-brightness-100', 'brightness(1)'],
-            ['filter-brightness-105', 'brightness(1.05)'],
-            ['filter-brightness-110', 'brightness(1.1)'],
-            ['filter-brightness-125', 'brightness(1.25)'],
-            ['filter-brightness-150', 'brightness(1.5)'],
-            ['filter-brightness-200', 'brightness(2)'],
           ]}
         />
       }
@@ -889,6 +990,34 @@ export const AllTokens: Story = {
           ]}
         />
       }
+      {
+        <TokenSection
+          title="filter"
+          family="filter"
+          tokens={[
+            ['filter-brightness-50', 'brightness(0.5)'],
+            ['filter-brightness-75', 'brightness(0.75)'],
+            ['filter-brightness-90', 'brightness(0.9)'],
+            ['filter-brightness-95', 'brightness(0.95)'],
+            ['filter-brightness-100', 'brightness(1)'],
+            ['filter-brightness-105', 'brightness(1.05)'],
+            ['filter-brightness-110', 'brightness(1.1)'],
+            ['filter-brightness-125', 'brightness(1.25)'],
+            ['filter-brightness-150', 'brightness(1.5)'],
+            ['filter-brightness-200', 'brightness(2)'],
+          ]}
+        />
+      }
+    </StoryWrapper>
+  ),
+};
+
+export const Animation: Story = {
+  render: () => (
+    <StoryWrapper
+      title="Animation"
+      subtitle="30 tokens across 4 families. Switch themes via the toolbar."
+    >
       {
         <TokenSection
           title="duration"
@@ -954,6 +1083,16 @@ export const AllTokens: Story = {
           ]}
         />
       }
+    </StoryWrapper>
+  ),
+};
+
+export const ComponentTokens: Story = {
+  render: () => (
+    <StoryWrapper
+      title="Component Tokens"
+      subtitle="50 tokens across 11 families. Switch themes via the toolbar."
+    >
       {
         <TokenSection
           title="input"
@@ -1069,6 +1208,29 @@ export const AllTokens: Story = {
           ]}
         />
       }
-    </div>
+      {
+        <TokenSection
+          title="color-option"
+          family="color-option"
+          tokens={[
+            ['color-option-background', 'transparent'],
+            ['color-option-background-hover', 'rgba(0, 0, 0, 0.05)'],
+            ['color-option-background-selected', 'rgba(0, 112, 243, 0.1)'],
+          ]}
+        />
+      }
+      {
+        <TokenSection
+          title="color-content"
+          family="color-content"
+          tokens={[
+            ['color-content-primary', '#374151'],
+            ['color-content-secondary', '#4b5563'],
+            ['color-content-muted', '#6b7280'],
+            ['color-content-light', '#9ca3af'],
+          ]}
+        />
+      }
+    </StoryWrapper>
   ),
 };
