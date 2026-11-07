@@ -1,0 +1,145 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/Introduction" />
+
+# MorphUI
+
+A flexible, adaptable React + TypeScript component library with 39
+components, 5 preset themes, and 353 design tokens — all driven by CSS
+custom properties for zero-runtime theming.
+
+## Installation
+
+```bash
+npm install morphui-react
+# or
+yarn add morphui-react
+# or
+pnpm add morphui-react
+```
+
+MorphUI requires React 18 or 19 as a peer dependency.
+
+## Quick start
+
+Wrap your app in `ThemeProvider` and import the component you need:
+
+```tsx
+import { ThemeProvider, Button } from 'morphui-react';
+
+function App() {
+  return (
+    <ThemeProvider theme="light">
+      <Button variant="primary" onClick={() => alert('Hello!')}>
+        Click me
+      </Button>
+    </ThemeProvider>
+  );
+}
+```
+
+## Import paths
+
+MorphUI ships ESM-only with tree-shakeable subpath exports. Import from
+the barrel for convenience, or from a subpath for smaller bundles:
+
+```tsx
+// Barrel (tree-shakeable)
+import { Button, Modal, ThemeProvider } from 'morphui-react';
+
+// Subpath (slightly smaller, useful for micro-frontends)
+import { Button } from 'morphui-react/button';
+import { Modal } from 'morphui-react/modal';
+```
+
+The barrel re-exports all 39 components, `ThemeProvider`, `useTheme`,
+and the 5 preset themes (`lightTheme`, `darkTheme`, `warmTheme`,
+`coolTheme`, `purpleTheme`).
+
+## Theming
+
+MorphUI uses CSS custom properties for theming — no JavaScript runtime
+overhead beyond setting the variables. The `ThemeProvider` component
+sets variables on `:root` (or a scoped target) from a theme object.
+
+### Built-in themes
+
+Five presets ship out of the box:
+
+| Theme    | Vibe                           |
+| -------- | ------------------------------ |
+| `light`  | Default — clean, high-contrast |
+| `dark`   | Dark mode                      |
+| `warm`   | Warm orange/red accents        |
+| `cool`   | Cool blue/teal accents         |
+| `purple` | Purple/violet accents          |
+
+### Custom themes
+
+Override individual tokens or build a full custom theme:
+
+```tsx
+import { ThemeProvider, lightTheme, type Theme } from 'morphui-react';
+
+const myTheme: Theme = {
+  ...lightTheme,
+  'color-primary': '#ff0055',
+  'color-primary-hover': '#cc0044',
+  'border-radius': '12px',
+};
+
+<ThemeProvider theme={myTheme}>
+  <App />
+</ThemeProvider>;
+```
+
+### Scoped themes
+
+Pass a `target` prop to scope a theme to a subtree (CSS variables
+inherit, so only that subtree sees the overrides):
+
+```tsx
+import { ThemeProvider, darkTheme } from 'morphui-react';
+
+<ThemeProvider theme={darkTheme} target={sidebarRef}>
+  <Sidebar />
+</ThemeProvider>;
+```
+
+### Design tokens
+
+All 353 CSS custom properties are documented on the
+**Foundations → Design Tokens** page (auto-generated from the theme
+presets). Use the **Foundations → Token Builder** page to interactively
+tweak tokens and export a custom `.ts` theme file.
+
+## The Storybook toolbar
+
+This Storybook has two toolbar toggles (top-right of the canvas):
+
+- **Theme** (paintbrush icon): switch between light / dark / warm / cool / purple
+- **Direction** (transfer icon): toggle LTR / RTL (cosmetic until logical CSS migration lands)
+
+Every story responds to these toggles — try switching themes on any
+component page to see how it adapts.
+
+## Component organization
+
+Components are grouped by tier:
+
+| Group       | Count | Description                                    |
+| ----------- | ----- | ---------------------------------------------- |
+| Foundations | 3     | Design Tokens, Token Builder, Theme Showcase   |
+| Primitives  | 14    | Button, Input, Badge, Avatar, Checkbox, etc.   |
+| Composition | 13    | Modal, Sidebar, Table, Tabs, Toast, Form, etc. |
+| Patterns    | 12    | Accordion, Card, Dropdown, Carousel, etc.      |
+
+Each component page follows the same structure: Usage → Variants →
+Theming → Accessibility → Props → Examples.
+
+## Next steps
+
+- **Foundations → Design Tokens**: browse all 353 tokens
+- **Foundations → Token Builder**: build and export a custom theme
+- **Foundations → Theme Showcase**: see all components across 5 themes
+- Pick a component from the sidebar to explore its props and variants

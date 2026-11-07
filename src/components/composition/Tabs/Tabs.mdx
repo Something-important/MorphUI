@@ -1,0 +1,84 @@
+import { Meta, Controls, Canvas } from '@storybook/addon-docs/blocks';
+import * as TabsStories from './Tabs.stories';
+
+<Meta of={TabsStories} />
+
+# Tabs
+
+A tabbed interface for switching between panels of content. Supports 8
+variants, 5 sizes, icons, badges, disabled tabs, and controlled /
+uncontrolled active state.
+
+## Usage
+
+```tsx
+import { Tabs } from 'morphui-react';
+
+const items = [
+  { id: 'overview', label: 'Overview', content: <div>Overview content</div> },
+  { id: 'details', label: 'Details', content: <div>Details content</div> },
+];
+
+<Tabs items={items} defaultActiveTab="overview" />;
+```
+
+## Variants
+
+Eight variants cover the common semantic contexts:
+
+| Variant     | Use case                      |
+| ----------- | ----------------------------- |
+| `primary`   | Default tabbed navigation     |
+| `secondary` | Alternative styling           |
+| `success`   | Completion / positive context |
+| `warning`   | Caution context               |
+| `info`      | Informational context         |
+| `danger`    | Destructive / error context   |
+| `ghost`     | Subtle, minimal styling       |
+| `outline`   | Bordered, emphasized          |
+
+## Theming
+
+All color props accept three formats:
+
+- **Theme keys**: `color-primary`, `color-success` (resolves via ThemeProvider)
+- **CSS variables**: `var(--color-primary)`
+- **Literal CSS values**: `#3b82f6`, `rgb(59, 130, 246)`, `linear-gradient(...)`
+
+Use the **Theme** toolbar (top of the Storybook canvas) to switch between
+the 5 preset themes (light / dark / warm / cool / purple) and see how
+Tabs responds to each.
+
+## Accessibility
+
+- Tab list has `role="tablist"`; each tab has `role="tab"`
+- Active tab has `aria-selected="true"`; inactive tabs have `aria-selected="false"`
+- Tab panels have `role="tabpanel"` and `aria-labelledby` linking to the active tab
+- Keyboard: **Arrow Left/Right** moves between tabs; **Enter/Space** activates
+- Disabled tabs are not focusable and have `aria-disabled="true"`
+
+## Props
+
+<Controls />
+
+## Examples
+
+### Default
+
+<Canvas of={TabsStories.Default} />
+
+### Variants
+
+<Canvas of={TabsStories.Variants} />
+
+### Sizes
+
+<Canvas of={TabsStories.Sizes} />
+
+### All themes
+
+<Canvas of={TabsStories.AllThemes} />
+
+### Edge cases
+
+<Canvas of={TabsStories.EdgeCases} />
