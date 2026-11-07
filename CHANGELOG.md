@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/Something-important/MorphUI/compare/v1.4.4...v2.0.0) (2026-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storybook:** Storybook URL paths changed (Components/X -> Primitives/X, Composition/X, Patterns/X). Bookmarks to old paths will 404.
+
+### Features
+
+* **storybook:** v1.5.0 — Storybook reorganization sprint complete ([#95](https://github.com/Something-important/MorphUI/issues/95)) ([1fcfbda](https://github.com/Something-important/MorphUI/commit/1fcfbda2d26af910f5ae4711cec441f650d75b90))
+* **storybook:** v1.5.0 Storybook reorganization sprint ([#97](https://github.com/Something-important/MorphUI/issues/97)) ([e320032](https://github.com/Something-important/MorphUI/commit/e320032779eef3727d4abd8b69a5b533e8df77a7))
+
+
+### Bug Fixes
+
+* **docs:** sync all in-repo docs to v1.5.0 reality ([#93](https://github.com/Something-important/MorphUI/issues/93)) ([4851a3b](https://github.com/Something-important/MorphUI/commit/4851a3baf34b7ea2156258dd23485aa529f63da5))
+
 ## [1.4.4](https://github.com/Something-important/MorphUI/compare/v1.4.3...v1.4.4) (2026-11-06)
 
 
