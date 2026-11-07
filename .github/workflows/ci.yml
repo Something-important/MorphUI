@@ -40,12 +40,18 @@ jobs:
 
       - name: Theme tokens single-source-of-truth check
         # The theme presets (src/components/theme/themes/*.ts) are the only
-        # place tokens may be defined. theme.css is generated from lightTheme.
-        # 1) regenerate and diff -> catches hand-edits to theme.css and
-        #    forgotten regeneration after preset changes
+        # place tokens may be defined. theme.css is generated from lightTheme,
+        # and DesignTokens.stories.tsx is generated from theme.css. Both are
+        # regenerated and diffed here so they can never drift.
+        # 1) regenerate theme.css + diff -> catches hand-edits to theme.css
+        #    and forgotten regeneration after preset changes
         # 2) check script -> catches key-set drift between the 5 presets
         #    (a token missing from one preset becomes a stale variable when
         #    users switch themes)
+        # 3) regenerate DesignTokens.stories.tsx + diff -> catches drift
+        #    between the auto-generated Storybook tokens page and theme.css
+        #    (e.g. a new token was added to lightTheme.ts but the script
+        #    wasn't re-run)
         run: |
           python3 scripts/generate_theme_css.py
           git diff --exit-code src/components/theme/theme.css || {
@@ -54,6 +60,12 @@ jobs:
             exit 1
           }
           npm run tokens:check
+          python3 scripts/generate_tokens_story.py
+          git diff --exit-code src/stories/foundations/DesignTokens.stories.tsx || {
+            echo "::error::src/stories/foundations/DesignTokens.stories.tsx is out of date."
+            echo "::error::Run: npm run tokens:story:generate  (or npm run tokens:generate to regen both theme.css and the story)"
+            exit 1
+          }
 
       - name: Typecheck
         run: |
