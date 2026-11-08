@@ -6,12 +6,13 @@ A flexible, adaptable React + TypeScript UI component library for modern web app
 
 ## ✨ Features
 
-- ⚡ **39 Components**: Button, Input, Modal, Sidebar, Table, Tabs, Toast, Tooltip, Combobox, DatePicker, Dropdown, Carousel, CommandPalette, FileUpload, Rating, Slider, TreeView, and more — organized into Primitives (14), Composition (13), and Patterns (12) tiers
+- ⚡ **40 Components**: Button, Input, Modal, Sidebar, Table, Tabs, Toast, Tooltip, Combobox, DatePicker, Dropdown, Carousel, CommandPalette, FileUpload, OTPInput, Rating, Slider, TreeView, and more — organized into Primitives (15), Composition (13), and Patterns (12) tiers
 - 🎨 **Flexible Theming**: CSS custom properties with runtime theme switching across 5 built-in themes (light, dark, cool, warm, purple)
 - 🧪 **Type Safe**: Full TypeScript support with comprehensive type definitions
 - ♿ **Accessible**: Built following WCAG guidelines and accessibility best practices
 - 📚 **Storybook**: Interactive documentation with a global theme toolbar, Design Tokens page, and Token Builder
-- 🛠️ **Modern Build**: ESM-only, Rollup-based, tree-shakeable (`sideEffects` is limited to CSS), with 41 per-component subpath exports for granular imports
+- 🛠️ **Modern Build**: ESM-only, Rollup-based, tree-shakeable (`sideEffects` is limited to CSS), with 43 per-component subpath exports for granular imports
+- 🪝 **7 Headless Hooks**: `useModal`, `useAnchoredPosition`, `useCombobox`, `useTabs`, `useAccordion`, `useDropdown`, `useTreeView` — extract the behavior, bring your own UI
 - 🌐 **RTL Support**: Logical CSS properties throughout — toggle RTL via the Storybook toolbar to see layouts flip correctly
 
 ## 🚀 Installation
@@ -136,7 +137,7 @@ Features: six variants (`success` / `danger` / `warning` / `info` / `primary` / 
 
 ## 🧪 Testing
 
-MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **55 test suites / 2,177 tests**: one behavioral suite per component, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
+MorphUI uses [Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/) + [jest-axe](https://github.com/nickcolley/jest-axe) to keep every component reliable and accessible. The suite currently covers **61 test suites / 2,296 tests**: one behavioral suite per component, one per headless hook, an accessibility smoke suite, and full unit coverage of the `utils` modules (theme, animation, accessibility).
 
 ```bash
 # Run all tests

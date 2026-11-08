@@ -1,0 +1,52 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as UseComboboxStories from './useCombobox.stories';
+
+<Meta of={UseComboboxStories} />
+
+# useCombobox
+
+Headless combobox behavior: filtering, keyboard navigation, selection,
+async loading, open/close state, and outside-click handling. Extracted
+from the Combobox component.
+
+## Usage
+
+```tsx
+import { useCombobox } from 'morphui-react';
+
+const {
+  isOpen,
+  inputValue,
+  filteredOptions,
+  highlightedIndex,
+  handleKeyDown,
+  handleInputChange,
+  commitSelection,
+  clear,
+  inputRef,
+  listboxRef,
+  listboxId,
+  optionId,
+} = useCombobox({ options, onChange });
+```
+
+## API
+
+```ts
+interface UseComboboxOptions {
+  options: ComboboxOption[];
+  value?: string | number | null;
+  defaultValue?: string | number | null;
+  onChange?: (value: string | number | null) => void;
+  onInputChange?: (inputValue: string) => void;
+  filterOption?: (option: ComboboxOption, inputValue: string) => boolean;
+  loadOptions?: (inputValue: string) => Promise<ComboboxOption[]>;
+  allowFreeText?: boolean;
+  disabled?: boolean;
+  clearable?: boolean;
+}
+```
+
+## Examples
+
+<Canvas of={UseComboboxStories.Default} />

@@ -15,7 +15,7 @@ src/
 │   └── index.ts       the public export surface
 ├── utils/             theme.ts (347 LOC), animation.ts (269), accessibility.ts (404)
 └── stories/           Storybook showcase pages (ThemeShowcase; Design Tokens + Token Builder pending v1.5.0)
-test/                  38 Jest suites (one per component + cross-cutting)
+test/                  61 Jest suites (one per component + one per hook + cross-cutting)
 scripts/               theme token tooling in Python (generate + check)
 ```
 
@@ -132,7 +132,7 @@ Rollup 4, single entry `src/components/index.ts`:
 ## Quality infrastructure
 
 - **Jest 29 + React Testing Library + jest-axe**, jsdom environment, CSS
-  mocked via `identity-obj-proxy`. 55 suites / 2,177 tests, ~19 seconds, all
+  mocked via `identity-obj-proxy`. 61 suites / 2,296 tests, ~19 seconds, all
   green. Coverage thresholds are currently 0 (informational only).
 - **CI** (`.github/workflows/ci.yml`): lint → prettier check → theme token
   gate (regenerate `theme.css`, fail on diff, `npm run tokens:check`) →

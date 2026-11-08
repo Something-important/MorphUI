@@ -603,6 +603,74 @@ const options: ComboboxOption[] = [
 
 ---
 
+## Headless hooks API
+
+If you liked Radix's headless primitives approach, MorphUI also ships
+headless hooks — extracted behavior without the UI. Use these when you
+want full control over rendering:
+
+| Hook                  | Replaces                     | What it handles                                                      |
+| --------------------- | ---------------------------- | -------------------------------------------------------------------- |
+| `useModal`            | Modal overlay logic          | Open/close state, Escape-to-close, focus trap, scroll lock           |
+| `useAnchoredPosition` | Floating element positioning | 12 placements, auto-positioning, viewport clamping                   |
+| `useCombobox`         | Combobox behavior            | Filtering, keyboard nav, selection, async loading, open/close        |
+| `useTabs`             | Tab state                    | Active tab, controlled/uncontrolled, item validation                 |
+| `useAccordion`        | Accordion state              | Open/close, toggle, callbacks, disabled/loading guards               |
+| `useDropdown`         | Dropdown behavior            | Open/close, single/multi-select, keyboard nav, search, outside-click |
+| `useTreeView`         | Tree state                   | Expand/collapse, selection, visible-node flattening, keyboard nav    |
+
+```tsx
+import { useCombobox } from 'morphui-react';
+
+function MyCustomCombobox({ options }) {
+  const {
+    isOpen,
+    inputValue,
+    filteredOptions,
+    highlightedIndex,
+    handleKeyDown,
+    handleInputChange,
+    commitSelection,
+    inputRef,
+    listboxRef,
+    optionId,
+    listboxId,
+  } = useCombobox({ options, onChange: (v) => console.log(v) });
+
+  // Render your own UI with full control
+  return (
+    <div>
+      <input
+        ref={inputRef}
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        role="combobox"
+        aria-expanded={isOpen}
+        aria-controls={listboxId}
+      />
+      {isOpen && (
+        <div ref={listboxRef} id={listboxId} role="listbox">
+          {filteredOptions.map((opt, i) => (
+            <div
+              key={opt.value}
+              id={optionId(i)}
+              role="option"
+              aria-selected={i === highlightedIndex}
+              onClick={() => commitSelection(opt)}
+            >
+              {opt.label}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+---
+
 ## Patterns that don't have direct equivalents
 
 | Radix/shadcn pattern                       | MorphUI approach                                                                    |
