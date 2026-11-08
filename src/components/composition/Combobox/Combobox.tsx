@@ -1,24 +1,12 @@
 // Combobox.tsx
-import React, {
-  forwardRef,
-  useState,
-  useRef,
-  useId,
-  useMemo,
-  useCallback,
-  useEffect,
-  useDeferredValue,
-} from 'react';
+import React, { forwardRef, useState, useMemo } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { useCombobox } from '../../../hooks';
 import './Combobox.css';
 
-export interface ComboboxOption {
-  label: string;
-  value: string | number;
-  disabled?: boolean;
-  icon?: React.ReactNode;
-  description?: string;
-}
+// Re-export ComboboxOption for backward compatibility (was originally
+// defined here; now lives in the hook so consumers of either can use it)
+export type { ComboboxOption } from '../../../hooks/useCombobox';
 
 export type ComboboxVariant = 'primary' | 'secondary' | 'ghost' | 'outline';
 export type ComboboxSize = 'sm' | 'md' | 'lg';
@@ -75,10 +63,7 @@ export interface ComboboxProps {
   style?: React.CSSProperties;
 }
 
-const defaultFilter = (option: ComboboxOption, inputValue: string): boolean => {
-  if (!inputValue) return true;
-  return option.label.toLowerCase().includes(inputValue.toLowerCase());
-};
+import type { ComboboxOption } from '../../../hooks/useCombobox';
 
 export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
   (
@@ -88,7 +73,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       defaultValue = null,
       onChange,
       onInputChange,
-      filterOption = defaultFilter,
+      filterOption,
       loadOptions,
       allowFreeText = false,
       placeholder = 'Search...',
@@ -115,39 +100,43 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     },
     ref,
   ) => {
-    const autoId = useId();
-    const listboxId = `${autoId}-listbox`;
-    const inputRef = useRef<HTMLInputElement>(null);
-    const listboxRef = useRef<HTMLDivElement>(null);
-
-    const [internalValue, setInternalValue] = useState<string | number | null>(defaultValue);
-    const [inputValue, setInputValue] = useState('');
-    const [isOpen, setIsOpen] = useState(false);
-    const [highlightedIndex, setHighlightedIndex] = useState(-1);
-    const [scrollTop, setScrollTop] = useState(0);
-    const [asyncOptions, setAsyncOptions] = useState<ComboboxOption[] | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-
-    const isControlled = controlledValue !== undefined;
-    const selectedValue = isControlled ? controlledValue : internalValue;
-
-    // The effective options: async (if loading) or the static options filtered.
-    // useDeferredValue keeps the input responsive when filtering 1000+ options —
-    // the filter runs at lower priority so typing doesn't block.
-    const sourceOptions = asyncOptions ?? options;
-    const deferredInput = useDeferredValue(inputValue);
-    const isFiltering = deferredInput !== inputValue;
-    const filteredOptions = useMemo(() => {
-      if (loadOptions) return sourceOptions; // async: loadOptions already filtered
-      return sourceOptions.filter((opt) => filterOption(opt, deferredInput));
-    }, [sourceOptions, loadOptions, deferredInput, filterOption]);
-
-    const selectedOption = options.find((opt) => opt.value === selectedValue) ?? null;
+    // The hook handles all behavior: filtering, keyboard nav, selection,
+    // open/close, async loading, outside-click. The component is the UI layer.
+    const {
+      selectedValue,
+      selectedOption,
+      inputValue,
+      isOpen,
+      highlightedIndex,
+      filteredOptions,
+      isLoading,
+      isFiltering,
+      listboxId,
+      optionId,
+      inputRef,
+      listboxRef,
+      setHighlightedIndex,
+      commitSelection,
+      clear,
+      toggle,
+      handleKeyDown,
+      handleInputChange,
+    } = useCombobox({
+      options,
+      value: controlledValue,
+      defaultValue,
+      onChange,
+      onInputChange,
+      filterOption,
+      loadOptions,
+      allowFreeText,
+      disabled,
+      clearable,
+    });
 
     // Virtualization: when enabled, render only the visible window of
-    // options. The listbox is a scroll container of height listboxMaxHeight;
-    // each option is itemHeight tall. We render a buffer of items above and
-    // below the visible viewport so arrow-key navigation feels contiguous.
+    // options. This stays in the component because it's a rendering concern.
+    const [scrollTop, setScrollTop] = useState(0);
     const virtualWindow = useMemo(() => {
       if (!virtualize || filteredOptions.length === 0) return null;
       const viewportItems = Math.ceil(listboxMaxHeight / itemHeight);
@@ -162,139 +151,6 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
       };
     }, [virtualize, filteredOptions.length, scrollTop, itemHeight, listboxMaxHeight]);
 
-    // Reset highlight when the list opens or the filtered set changes.
-    useEffect(() => {
-      if (isOpen) {
-        setHighlightedIndex(filteredOptions.length > 0 ? 0 : -1);
-      }
-    }, [isOpen, filteredOptions]);
-
-    // Async loader.
-    useEffect(() => {
-      if (!loadOptions || !isOpen) return;
-      let cancelled = false;
-      setIsLoading(true);
-      loadOptions(inputValue)
-        .then((result) => {
-          if (!cancelled) {
-            setAsyncOptions(result);
-            setIsLoading(false);
-          }
-        })
-        .catch(() => {
-          if (!cancelled) setIsLoading(false);
-        });
-      return () => {
-        cancelled = true;
-      };
-    }, [loadOptions, isOpen, inputValue]);
-
-    const commitSelection = useCallback(
-      (option: ComboboxOption) => {
-        if (option.disabled) return;
-        if (!isControlled) setInternalValue(option.value);
-        setInputValue(option.label);
-        onChange?.(option.value);
-        setIsOpen(false);
-        inputRef.current?.focus();
-      },
-      [isControlled, onChange],
-    );
-
-    const clear = useCallback(() => {
-      if (!isControlled) setInternalValue(null);
-      setInputValue('');
-      onChange?.(null);
-      setHighlightedIndex(-1);
-      inputRef.current?.focus();
-    }, [isControlled, onChange]);
-
-    const open = () => {
-      if (disabled) return;
-      setIsOpen(true);
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const next = e.target.value;
-      setInputValue(next);
-      onInputChange?.(next);
-      if (!isOpen) setIsOpen(true);
-      // free-text: if the user is typing and the text doesn't match the selected option,
-      // the selection is conceptually in flux; we don't clear the value unless they commit
-      // a different option or clear.
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (disabled) return;
-      switch (e.key) {
-        case 'ArrowDown':
-          e.preventDefault();
-          if (!isOpen) {
-            open();
-          } else if (filteredOptions.length > 0) {
-            setHighlightedIndex((prev) => (prev === -1 ? 0 : (prev + 1) % filteredOptions.length));
-          }
-          break;
-        case 'ArrowUp':
-          e.preventDefault();
-          if (isOpen && filteredOptions.length > 0) {
-            setHighlightedIndex((prev) => (prev <= 0 ? filteredOptions.length - 1 : prev - 1));
-          }
-          break;
-        case 'Enter':
-          if (isOpen && highlightedIndex >= 0) {
-            e.preventDefault();
-            const option = filteredOptions[highlightedIndex];
-            if (option) commitSelection(option);
-          } else if (isOpen && allowFreeText && inputValue) {
-            e.preventDefault();
-            if (!isControlled) setInternalValue(inputValue as string | number);
-            onChange?.(inputValue as string | number);
-            setIsOpen(false);
-          }
-          break;
-        case 'Escape':
-          if (isOpen) {
-            e.preventDefault();
-            setIsOpen(false);
-          } else if (clearable && (inputValue || selectedValue != null)) {
-            e.preventDefault();
-            clear();
-          }
-          break;
-        case 'Tab':
-          if (isOpen) setIsOpen(false);
-          break;
-        case 'Home':
-          if (isOpen && filteredOptions.length > 0) {
-            e.preventDefault();
-            setHighlightedIndex(0);
-          }
-          break;
-        case 'End':
-          if (isOpen && filteredOptions.length > 0) {
-            e.preventDefault();
-            setHighlightedIndex(filteredOptions.length - 1);
-          }
-          break;
-      }
-    };
-
-    // Close on outside click.
-    useEffect(() => {
-      if (!isOpen) return;
-      const handlePointerDown = (e: MouseEvent) => {
-        const target = e.target as Node;
-        if (listboxRef.current?.contains(target)) return;
-        if (inputRef.current?.contains(target)) return;
-        setIsOpen(false);
-      };
-      document.addEventListener('mousedown', handlePointerDown);
-      return () => document.removeEventListener('mousedown', handlePointerDown);
-    }, [isOpen]);
-
-    const optionId = (index: number) => `${autoId}-option-${index}`;
-
     const classes = [
       'combobox-component',
       `combobox-component--${variant}`,
@@ -308,14 +164,12 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
 
     const showClear = clearable && !disabled && (inputValue || selectedValue != null);
 
-    // Resolve theme values (literal CSS value, "var(--x)", or theme key like "color-primary")
+    // Resolve theme values
     const resolvedColor = resolveThemeValue(color);
     const resolvedGradient = resolveThemeValue(gradient);
     const resolvedTextColor = resolveThemeValue(textColor);
     const resolvedBorderColor = resolveThemeValue(borderColor);
 
-    // Component style object writing the --combobox-custom-* channel.
-    // Gradient wins over color for the background slot; unset slots are skipped.
     const componentStyle: React.CSSProperties & Record<string, string> = {
       ...(resolvedGradient && { '--combobox-custom-bg': resolvedGradient }),
       ...(resolvedColor && !resolvedGradient && { '--combobox-custom-bg': resolvedColor }),
@@ -331,24 +185,58 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
         }),
     };
 
-    // Explicitly merge with the user's style prop (user style takes precedence)
     const mergedStyle = { ...componentStyle, ...style };
-
-    // ARIA attributes for the combobox input
     const ariaProps = getAriaProps({ label: ariaLabel, describedBy: ariaDescribedBy });
+
+    const renderOption = (option: ComboboxOption, index: number, virtualItemHeight?: number) => {
+      const isHighlighted = index === highlightedIndex;
+      const isSelected = option.value === selectedValue;
+      return (
+        <div
+          key={`${option.value}-${index}`}
+          id={optionId(index)}
+          role="option"
+          tabIndex={-1}
+          aria-selected={isSelected || isHighlighted}
+          aria-disabled={option.disabled || undefined}
+          style={virtualItemHeight ? { height: virtualItemHeight } : undefined}
+          className={[
+            'combobox-component__option',
+            isHighlighted && 'combobox-component__option--highlighted',
+            isSelected && 'combobox-component__option--selected',
+            option.disabled && 'combobox-component__option--disabled',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            if (!option.disabled) commitSelection(option);
+          }}
+          onMouseEnter={() => setHighlightedIndex(index)}
+        >
+          {option.icon && <span className="combobox-component__option-icon">{option.icon}</span>}
+          <span className="combobox-component__option-label">{option.label}</span>
+          {option.description && (
+            <span className="combobox-component__option-description">{option.description}</span>
+          )}
+        </div>
+      );
+    };
 
     return (
       <div ref={ref} className={classes} style={mergedStyle} {...rest}>
         <div className="combobox-component__control">
           <input
-            ref={inputRef}
+            ref={inputRef as React.RefObject<HTMLInputElement>}
             type="text"
             className="combobox-component__input"
             placeholder={selectedOption && !inputValue ? selectedOption.label : placeholder}
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            onFocus={open}
+            onFocus={() => {
+              if (!disabled) toggle();
+            }}
             disabled={disabled}
             role="combobox"
             aria-autocomplete="list"
@@ -375,7 +263,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
           <button
             type="button"
             className="combobox-component__toggle"
-            onClick={() => (isOpen ? setIsOpen(false) : open())}
+            onClick={toggle}
             tabIndex={-1}
             aria-hidden="true"
             disabled={disabled}
@@ -386,7 +274,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
 
         {isOpen && (
           <div
-            ref={listboxRef}
+            ref={listboxRef as React.RefObject<HTMLDivElement>}
             id={listboxId}
             role="listbox"
             className={`combobox-component__listbox${isFiltering ? ' combobox-component__listbox--filtering' : ''}`}
@@ -404,92 +292,17 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
             ) : filteredOptions.length === 0 ? (
               <div className="combobox-component__message">{emptyMessage}</div>
             ) : virtualize && virtualWindow ? (
-              // Windowed render: a spacer of the full scroll height, with
-              // only the visible slice of options rendered (offset by
-              // padding-top so they land at the right scroll position).
               <div style={{ height: virtualWindow.totalHeight, position: 'relative' }}>
                 <div style={{ paddingTop: virtualWindow.offsetTop }}>
                   {filteredOptions
                     .slice(virtualWindow.startIndex, virtualWindow.endIndex)
-                    .map((option, i) => {
-                      const index = virtualWindow.startIndex + i;
-                      const isHighlighted = index === highlightedIndex;
-                      const isSelected = option.value === selectedValue;
-                      return (
-                        <div
-                          key={`${option.value}-${index}`}
-                          id={optionId(index)}
-                          role="option"
-                          tabIndex={-1}
-                          aria-selected={isSelected || isHighlighted}
-                          aria-disabled={option.disabled || undefined}
-                          style={{ height: itemHeight }}
-                          className={[
-                            'combobox-component__option',
-                            isHighlighted && 'combobox-component__option--highlighted',
-                            isSelected && 'combobox-component__option--selected',
-                            option.disabled && 'combobox-component__option--disabled',
-                          ]
-                            .filter(Boolean)
-                            .join(' ')}
-                          onMouseDown={(e) => {
-                            e.preventDefault();
-                            if (!option.disabled) commitSelection(option);
-                          }}
-                          onMouseEnter={() => setHighlightedIndex(index)}
-                        >
-                          {option.icon && (
-                            <span className="combobox-component__option-icon">{option.icon}</span>
-                          )}
-                          <span className="combobox-component__option-label">{option.label}</span>
-                          {option.description && (
-                            <span className="combobox-component__option-description">
-                              {option.description}
-                            </span>
-                          )}
-                        </div>
-                      );
-                    })}
+                    .map((option, i) =>
+                      renderOption(option, virtualWindow.startIndex + i, itemHeight),
+                    )}
                 </div>
               </div>
             ) : (
-              filteredOptions.map((option, index) => {
-                const isHighlighted = index === highlightedIndex;
-                const isSelected = option.value === selectedValue;
-                return (
-                  <div
-                    key={`${option.value}-${index}`}
-                    id={optionId(index)}
-                    role="option"
-                    tabIndex={-1}
-                    aria-selected={isSelected || isHighlighted}
-                    aria-disabled={option.disabled || undefined}
-                    className={[
-                      'combobox-component__option',
-                      isHighlighted && 'combobox-component__option--highlighted',
-                      isSelected && 'combobox-component__option--selected',
-                      option.disabled && 'combobox-component__option--disabled',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      if (!option.disabled) commitSelection(option);
-                    }}
-                    onMouseEnter={() => setHighlightedIndex(index)}
-                  >
-                    {option.icon && (
-                      <span className="combobox-component__option-icon">{option.icon}</span>
-                    )}
-                    <span className="combobox-component__option-label">{option.label}</span>
-                    {option.description && (
-                      <span className="combobox-component__option-description">
-                        {option.description}
-                      </span>
-                    )}
-                  </div>
-                );
-              })
+              filteredOptions.map((option, index) => renderOption(option, index))
             )}
           </div>
         )}

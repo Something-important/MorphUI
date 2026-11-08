@@ -12,3 +12,9 @@ export {
 } from './useAnchoredPosition';
 
 export { useModal, type UseModalOptions, type UseModalResult } from './useModal';
+export {
+  useCombobox,
+  type ComboboxOption as UseComboboxOption,
+  type UseComboboxOptions,
+  type UseComboboxResult,
+} from './useCombobox';
