@@ -1,96 +1,37 @@
 // TreeView.tsx
-import React, { forwardRef, useState, useCallback, useRef, useId, useMemo } from 'react';
+import React, { forwardRef, useId } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { useTreeView } from '../../../hooks';
 import './TreeView.css';
 
 export type TreeViewVariant = 'primary' | 'secondary' | 'ghost' | 'outline';
 export type TreeViewSize = 'sm' | 'md' | 'lg';
 
-export interface TreeNode<T = unknown> {
-  /** Unique id for this node. */
-  id: string;
-  /** Display label (string or ReactNode). */
-  label: React.ReactNode;
-  /** Optional icon rendered before the label. */
-  icon?: React.ReactNode;
-  /** Whether the node is disabled (not selectable, not expandable). */
-  disabled?: boolean;
-  /** Child nodes (recursive). When present, the node is expandable. */
-  children?: TreeNode<T>[];
-  /** Consumer-defined payload data for this node. */
-  data?: T;
-}
+// Re-export TreeNode for backward compatibility
+export type { TreeNode } from '../../../hooks/useTreeView';
+import type { TreeNode } from '../../../hooks/useTreeView';
 
 export interface TreeViewProps<T = unknown> {
-  /** Tree data (recursive). */
   nodes: TreeNode<T>[];
-  /** Controlled expanded node ids. */
   expandedNodeIds?: string[];
-  /** Uncontrolled initial expanded node ids. */
   defaultExpandedNodeIds?: string[];
   onExpandChange?: (expandedNodeIds: string[]) => void;
-  /** Controlled selected node id (single-select). */
   selectedNodeId?: string | null;
-  /** Uncontrolled initial selected node id. */
   defaultSelectedNodeId?: string | null;
   onSelect?: (nodeId: string | null, node: TreeNode<T> | null) => void;
-  /** Show tree connector lines (vertical guides). Default: true. */
   showLines?: boolean;
-  /** Variant. */
   variant?: TreeViewVariant;
-  /** Size. */
   size?: TreeViewSize;
-  /** Theme override for the selected node accent + focus ring. */
   color?: string;
-  /** Text color override. */
   textColor?: string;
-  /** Border color override. */
   borderColor?: string;
-  /** Border radius override. */
   borderRadius?: string | number;
-  /** Shadow level. */
   shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   style?: React.CSSProperties;
-  /** Accessibility label for the tree. */
   ariaLabel?: string;
   id?: string;
 }
-
-/* ---------- helpers ---------- */
-
-/** Flatten the tree into a visible node list (only expanded nodes' children
- *  are included). Returns nodes in depth-first order with their depth. */
-const flattenVisible = <T,>(
-  nodes: TreeNode<T>[],
-  expanded: Set<string>,
-): Array<{ node: TreeNode<T>; depth: number }> => {
-  const result: Array<{ node: TreeNode<T>; depth: number }> = [];
-  const walk = (list: TreeNode<T>[], depth: number) => {
-    for (const node of list) {
-      result.push({ node, depth });
-      if (node.children && node.children.length > 0 && expanded.has(node.id)) {
-        walk(node.children, depth + 1);
-      }
-    }
-  };
-  walk(nodes, 0);
-  return result;
-};
-
-/** Find a node by id in the tree. Returns the node or null. */
-const findNode = <T,>(nodes: TreeNode<T>[], id: string): TreeNode<T> | null => {
-  for (const node of nodes) {
-    if (node.id === id) return node;
-    if (node.children) {
-      const found = findNode(node.children, id);
-      if (found) return found;
-    }
-  }
-  return null;
-};
-
-/* ---------- component ---------- */
 
 // Generic forwardRef components can't have a static displayName without
 // a cast; the cast below preserves the generic signature. The display name
@@ -123,123 +64,27 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
 
     const generatedId = useId();
 
-    const isControlledExpanded = controlledExpanded !== undefined;
-    const isControlledSelected = controlledSelected !== undefined;
-    const [internalExpanded, setInternalExpanded] = useState<string[]>(defaultExpandedNodeIds);
-    const [internalSelected, setInternalSelected] = useState<string | null>(defaultSelectedNodeId);
-
-    const expandedIds = isControlledExpanded ? controlledExpanded! : internalExpanded;
-    const expandedSet = useMemo(() => new Set(expandedIds), [expandedIds]);
-    const selectedId = isControlledSelected ? controlledSelected! : internalSelected;
-
-    const visibleNodes = useMemo(() => flattenVisible(nodes, expandedSet), [nodes, expandedSet]);
-
-    const focusIndexRef = useRef(0);
-    const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-
-    const toggleExpand = useCallback(
-      (nodeId: string) => {
-        const isExpanded = expandedSet.has(nodeId);
-        const newExpanded = isExpanded
-          ? expandedIds.filter((id) => id !== nodeId)
-          : [...expandedIds, nodeId];
-        if (!isControlledExpanded) {
-          setInternalExpanded(newExpanded);
-        }
-        onExpandChange?.(newExpanded);
-      },
-      [expandedSet, expandedIds, isControlledExpanded, onExpandChange],
-    );
-
-    const selectNode = useCallback(
-      (nodeId: string | null) => {
-        const node = nodeId ? findNode(nodes, nodeId) : null;
-        if (nodeId && node?.disabled) return;
-        if (!isControlledSelected) {
-          setInternalSelected(nodeId);
-        }
-        onSelect?.(nodeId, node);
-      },
-      [nodes, isControlledSelected, onSelect],
-    );
-
-    const focusItem = useCallback(
-      (index: number) => {
-        const clamped = Math.max(0, Math.min(index, visibleNodes.length - 1));
-        focusIndexRef.current = clamped;
-        const node = visibleNodes[clamped];
-        if (node) {
-          const el = itemRefs.current.get(node.node.id);
-          el?.focus();
-        }
-      },
-      [visibleNodes],
-    );
-
-    const handleKeyDown = useCallback(
-      (e: React.KeyboardEvent) => {
-        const current = visibleNodes[focusIndexRef.current];
-        if (!current) return;
-        const { node, depth } = current;
-        const hasChildren = !!(node.children && node.children.length > 0);
-        const isExpanded = expandedSet.has(node.id);
-
-        switch (e.key) {
-          case 'ArrowDown': {
-            e.preventDefault();
-            focusItem(focusIndexRef.current + 1);
-            break;
-          }
-          case 'ArrowUp': {
-            e.preventDefault();
-            focusItem(focusIndexRef.current - 1);
-            break;
-          }
-          case 'ArrowRight': {
-            e.preventDefault();
-            if (hasChildren && !isExpanded) {
-              toggleExpand(node.id);
-            } else if (hasChildren && isExpanded) {
-              focusItem(focusIndexRef.current + 1);
-            }
-            break;
-          }
-          case 'ArrowLeft': {
-            e.preventDefault();
-            if (hasChildren && isExpanded) {
-              toggleExpand(node.id);
-            } else if (depth > 0) {
-              for (let i = focusIndexRef.current - 1; i >= 0; i--) {
-                if (visibleNodes[i].depth === depth - 1) {
-                  focusItem(i);
-                  break;
-                }
-              }
-            }
-            break;
-          }
-          case 'Enter':
-          case ' ': {
-            e.preventDefault();
-            if (!node.disabled) {
-              selectNode(node.id);
-            }
-            break;
-          }
-          case 'Home': {
-            e.preventDefault();
-            focusItem(0);
-            break;
-          }
-          case 'End': {
-            e.preventDefault();
-            focusItem(visibleNodes.length - 1);
-            break;
-          }
-        }
-      },
-      [visibleNodes, expandedSet, toggleExpand, selectNode, focusItem],
-    );
+    // useTreeView handles: expand/collapse, selection, visible-node
+    // flattening, keyboard navigation (roving-tabindex), and focus
+    // management. The component is purely the UI layer.
+    const {
+      expandedSet,
+      selectedId,
+      visibleNodes,
+      toggleExpand,
+      selectNode,
+      focusIndexRef,
+      itemRefs,
+      handleKeyDown,
+    } = useTreeView<T>({
+      nodes,
+      expandedNodeIds: controlledExpanded,
+      defaultExpandedNodeIds,
+      onExpandChange,
+      selectedNodeId: controlledSelected,
+      defaultSelectedNodeId,
+      onSelect,
+    });
 
     // Theme resolution
     const resolvedColor = resolveThemeValue(color);
@@ -272,10 +117,6 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
       .join(' ');
 
     return (
-      // The tree uses the roving-tabindex pattern: the tree container is
-      // programmatically focusable (tabIndex={-1}) while one treeitem at a
-      // time carries tabIndex={0}. Keyboard navigation is handled centrally
-      // by the tree's onKeyDown.
       <div
         ref={ref}
         id={id || generatedId}
@@ -294,10 +135,6 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
           const isFocused = index === focusIndexRef.current;
 
           return (
-            // Treeitem click selection is also reachable via Enter/Space,
-            // which is handled by the tree's onKeyDown (bubbled up from the
-            // focused treeitem via the roving-tabindex pattern).
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
             <div
               key={node.id}
               ref={(el) => {
