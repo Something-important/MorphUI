@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useEffect, useRef, createContext, useContext } from 'react';
 import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { useTabs } from '../../../hooks';
 import './Tabs.css';
 
 // Context for tab state management
@@ -177,16 +178,18 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     },
     ref,
   ) => {
-    // Internal state
-    const [internalActiveTab, setInternalActiveTab] = useState(
-      defaultActiveTab || items[0]?.id || '',
-    );
-    const [tabs, setTabs] = useState<Array<{ id: string; label: string }>>([]);
+    // Internal state — animation only; tab state is managed by useTabs
     const [isAnimating, setIsAnimating] = useState(false);
 
-    // Determine if this is a controlled or uncontrolled component
-    const isControlled = controlledActiveTab !== undefined;
-    const currentActiveTab = isControlled ? controlledActiveTab : internalActiveTab;
+    // useTabs handles: active tab state (controlled/uncontrolled),
+    // tab-change callback, and items validation (reset if active tab
+    // disappears from the items array).
+    const { activeTab: currentActiveTab, setActiveTab } = useTabs({
+      items,
+      defaultActiveTab,
+      activeTab: controlledActiveTab,
+      onChange,
+    });
 
     // Refs
     const tabsRef = useRef<HTMLDivElement>(null);
@@ -388,15 +391,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       label: ariaLabel || 'Tabs',
     });
 
-    // Handle tab change
+    // Handle tab change — delegates to useTabs's setActiveTab, plus
+    // triggers the CSS animation class.
     const handleTabChange = (tabId: string) => {
-      if (isControlled) {
-        onChange?.(tabId);
-      } else {
-        setInternalActiveTab(tabId);
-        onChange?.(tabId);
-      }
-
+      setActiveTab(tabId);
       // Trigger animation
       if (animated) {
         setIsAnimating(true);
@@ -410,29 +408,20 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       onTabClose?.(tabId);
     };
 
-    // Context value
+    // Context value — useTabs handles state; context exposes it to
+    // composed Tab/TabPanel sub-components.
     const contextValue: TabsContextType = {
       activeTab: currentActiveTab,
       setActiveTab: handleTabChange,
-      registerTab: (id: string, label: string) => {
-        setTabs((prev) => [...prev.filter((tab) => tab.id !== id), { id, label }]);
+      registerTab: (_id: string, _label: string) => {
+        // Registration is a no-op for state purposes (useTabs validates
+        // items directly); kept for backward compatibility with composed API.
       },
-      unregisterTab: (id: string) => {
-        setTabs((prev) => prev.filter((tab) => tab.id !== id));
+      unregisterTab: (_id: string) => {
+        // No-op (see registerTab)
       },
-      tabs,
+      tabs: [],
     };
-
-    // Update active tab when items change
-    useEffect(() => {
-      if (items.length > 0 && !items.find((item) => item.id === currentActiveTab)) {
-        const newActiveTab = items[0].id;
-        if (!isControlled) {
-          setInternalActiveTab(newActiveTab);
-        }
-        onChange?.(newActiveTab);
-      }
-    }, [items, currentActiveTab, isControlled, onChange]);
 
     return (
       <TabsContext.Provider value={contextValue}>

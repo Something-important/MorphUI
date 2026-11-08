@@ -18,3 +18,4 @@ export {
   type UseComboboxOptions,
   type UseComboboxResult,
 } from './useCombobox';
+export { useTabs, type UseTabsOptions, type UseTabsResult } from './useTabs';
