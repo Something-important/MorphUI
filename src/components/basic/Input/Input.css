@@ -421,7 +421,7 @@
   .input-component__ripple {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(var(--color-white-rgb), 0.3);
     transform: scale(0);
     animation: input-ripple 0.6s linear;
     pointer-events: none;
@@ -691,7 +691,7 @@
 
   .input-component[style*='--input-custom-backdrop-blur'] {
     backdrop-filter: var(--input-custom-backdrop-blur);
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(var(--color-white-rgb), 0.8);
   }
 }
 

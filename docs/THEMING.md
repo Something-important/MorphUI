@@ -155,20 +155,55 @@ Per-component CSS files live in `dist/css/`. The full bundle is
 
 ## Token reference
 
-353 tokens across 49 families. The full list is in
+356 tokens across 50 families. The full list is in
 `src/components/theme/themes/lightTheme.ts`. Key families:
 
-| Family        | Examples                                                         | Count |
-| ------------- | ---------------------------------------------------------------- | ----- |
-| Colors        | `--color-primary`, `--color-danger`, `--color-gray-500`          | ~80   |
-| Backgrounds   | `--color-background`, `--color-background-hover`                 | ~10   |
-| Text          | `--color-text`, `--color-text-muted`, `--color-text-secondary`   | ~8    |
-| Spacing       | `--spacing-xs`, `--spacing-sm`, `--spacing-md`, `--spacing-lg`   | ~8    |
-| Shadows       | `--shadow-sm`, `--shadow-md`, `--shadow-lg`, `--shadow-xl`       | ~5    |
-| Border radius | `--border-radius-sm`, `--border-radius-md`, `--border-radius-lg` | ~5    |
-| Typography    | `--font-size-sm`, `--font-weight-medium`, `--line-height-normal` | ~20   |
-| Transitions   | `--transition-fast`, `--ease-out`, `--duration-150`              | ~10   |
-| Z-index       | `--z-dropdown`, `--z-modal`, `--z-tooltip`                       | ~5    |
+| Family        | Examples                                                           | Count |
+| ------------- | ------------------------------------------------------------------ | ----- |
+| Colors        | `--color-primary`, `--color-danger`, `--color-gray-500`            | ~80   |
+| Backgrounds   | `--color-background`, `--color-background-hover`                   | ~10   |
+| Text          | `--color-text`, `--color-text-muted`, `--color-text-secondary`     | ~8    |
+| RGB triplets  | `--color-primary-rgb`, `--color-white-rgb`                         | 7     |
+| Spacing       | `--spacing-xs`, `--spacing-sm`, `--spacing-md`, `--spacing-lg`     | ~8    |
+| Shadows       | `--shadow-sm` … `--shadow-2xl`, `--shadow-glass`, `--shadow-inner` | 8     |
+| Border radius | `--border-radius-sm`, `--border-radius-md`, `--border-radius-lg`   | ~5    |
+| Typography    | `--font-size-sm`, `--font-weight-medium`, `--line-height-normal`   | ~20   |
+| Transitions   | `--transition-fast`, `--ease-out`, `--duration-150`                | ~10   |
+| Z-index       | `--z-dropdown`, `--z-modal`, `--z-tooltip`                         | ~5    |
+
+### Alpha-composable colors (RGB triplets)
+
+Seven tokens end in `-rgb` and hold bare triplet values (`0, 112, 243`),
+not full colors. They exist so alpha effects keep working when a consumer
+re-themes the palette:
+
+```css
+.box:focus {
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+}
+.overlay {
+  background: rgba(var(--color-white-rgb), 0.1);
+}
+```
+
+The same idea powers `--shadow-glass`, the canonical glassmorphism shadow
+(`0 8px 32px 0 rgba(31, 38, 135, 0.37)`) used by every frosted-glass
+variant (Checkbox, Switch, Modal, Alert, Tabs, Tooltip, Popover).
+
+### Token usage inventory (2026-11-08 audit)
+
+Of the 356 tokens:
+
+- **139 are consumed by MorphUI components** (referenced in component CSS/TSX)
+- **217 are reserved for application theming** — defined by the design
+  system, available to consumer CSS, but not referenced by the library's
+  own components (e.g. `--color-link-*` with no Link component in the
+  library, `--breakpoint-*` responsive primitives, `--backdrop-blur-*`,
+  palette steps like `--color-gray-500`)
+
+Reserved tokens are **part of the public theming API**: apps are encouraged
+to build with them so their UI matches the library palette. They are
+intentionally retained and only removable in a major release.
 
 ## CI token gate
 
@@ -193,4 +228,4 @@ This prevents stale-variable bugs when switching themes at runtime.
 3. Run `npm run tokens:generate` (regenerates `theme.css`).
 4. Run `npm run tokens:check` (verifies key parity).
 
-The token gate ensures the new preset has all 353 keys.
+The token gate ensures the new preset has all 356 keys.

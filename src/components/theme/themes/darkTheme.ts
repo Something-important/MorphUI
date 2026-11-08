@@ -95,6 +95,7 @@ export const darkTheme: Theme = {
   'shadow-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3)',
   'shadow-2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
   'shadow-inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.3)',
+  'shadow-glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
   // Advanced Color Tokens - RGB Values (for opacity calculations)
   'color-primary-rgb': '59, 130, 246',
   'color-secondary-rgb': '156, 163, 175',
@@ -102,6 +103,7 @@ export const darkTheme: Theme = {
   'color-warning-rgb': '217, 119, 6',
   'color-danger-rgb': '220, 38, 38',
   'color-info-rgb': '6, 182, 212',
+  'color-white-rgb': '255, 255, 255',
   // Advanced Color Tokens - Opacity Variants
   'color-primary-10': 'rgba(59, 130, 246, 0.1)',
   'color-primary-20': 'rgba(59, 130, 246, 0.2)',

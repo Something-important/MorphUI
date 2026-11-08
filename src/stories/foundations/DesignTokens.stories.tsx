@@ -328,7 +328,7 @@ export const Overview: Story = {
   render: () => (
     <StoryWrapper
       title="Design Tokens"
-      subtitle="354 CSS custom properties across 50 families. Switch themes via the toolbar to see how each preset overrides the defaults. Browse individual category stories for full token details."
+      subtitle="356 CSS custom properties across 50 families. Switch themes via the toolbar to see how each preset overrides the defaults. Browse individual category stories for full token details."
     >
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
         <div
@@ -424,7 +424,7 @@ export const Colors: Story = {
   render: () => (
     <StoryWrapper
       title="Colors"
-      subtitle="100 tokens across 15 families. Switch themes via the toolbar."
+      subtitle="101 tokens across 15 families. Switch themes via the toolbar."
     >
       {
         <TokenSection
@@ -612,7 +612,10 @@ export const Colors: Story = {
         <TokenSection
           title="color-white"
           family="color-white"
-          tokens={[['color-white', '#ffffff']]}
+          tokens={[
+            ['color-white', '#ffffff'],
+            ['color-white-rgb', '255, 255, 255'],
+          ]}
         />
       }
       {
@@ -889,7 +892,7 @@ export const BordersShadowsAndEffects: Story = {
   render: () => (
     <StoryWrapper
       title="Borders, Shadows & Effects"
-      subtitle="64 tokens across 6 families. Switch themes via the toolbar."
+      subtitle="65 tokens across 6 families. Switch themes via the toolbar."
     >
       {
         <TokenSection
@@ -923,6 +926,7 @@ export const BordersShadowsAndEffects: Story = {
             ['shadow-2xl', '0 25px 50px -12px rgba(0, 0, 0, 0.25)'],
             ['shadow-inner', 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'],
             ['shadow-none', '0 0 #0000'],
+            ['shadow-glass', '0 8px 32px 0 rgba(31, 38, 135, 0.37)'],
           ]}
         />
       }
