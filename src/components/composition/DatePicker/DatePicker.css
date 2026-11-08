@@ -228,12 +228,12 @@
       --datepicker-custom-accent,
       var(--datepicker-accent, var(--color-primary, #0070f3))
     );
-    color: #fff;
+    color: var(--color-white);
     font-weight: 600;
   }
 
   .datepicker-component__day--selected.datepicker-component__day--today {
-    border-color: #fff;
+    border-color: var(--color-white);
   }
 
   /* Range mode: days between start and end get a subtle tint.

@@ -385,32 +385,32 @@
 
   .toggle-component--track-gradient .toggle-component__track {
     background: var(--toggle-custom-track-gradient);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Active track gradient support */
 
   .toggle-component--active-track-gradient.toggle-component--checked .toggle-component__track {
     background: var(--toggle-custom-active-track-gradient);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Thumb gradient support */
 
   .toggle-component--thumb-gradient .toggle-component__thumb {
     background: var(--toggle-custom-thumb-gradient);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Active thumb gradient support */
 
   .toggle-component--active-thumb-gradient.toggle-component--checked .toggle-component__thumb {
     background: var(--toggle-custom-active-thumb-gradient);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Label gradient support */

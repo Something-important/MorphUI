@@ -124,4 +124,7 @@ export const coolTheme: Theme = {
   'color-secondary-70': 'rgba(59, 130, 246, 0.7)',
   'color-secondary-80': 'rgba(59, 130, 246, 0.8)',
   'color-secondary-90': 'rgba(59, 130, 246, 0.9)',
+
+  // Overlay/scrim — used by Modal, Drawer, CommandPalette backdrops
+  'color-scrim': 'rgba(0, 0, 0, 0.5)',
 };

@@ -121,4 +121,7 @@ export const darkTheme: Theme = {
   'color-secondary-70': 'rgba(156, 163, 175, 0.7)',
   'color-secondary-80': 'rgba(156, 163, 175, 0.8)',
   'color-secondary-90': 'rgba(156, 163, 175, 0.9)',
+
+  // Overlay/scrim — used by Modal, Drawer, CommandPalette backdrops
+  'color-scrim': 'rgba(0, 0, 0, 0.7)',
 };

@@ -192,10 +192,10 @@
     --checkbox-border: var(--color-border, #d1d5db);
     --checkbox-checked-bg: var(--color-primary, #0070f3);
     --checkbox-checked-border: var(--color-primary, #0070f3);
-    --checkbox-checked-color: #ffffff;
+    --checkbox-checked-color: var(--color-white);
     --checkbox-indeterminate-bg: var(--color-primary, #0070f3);
     --checkbox-indeterminate-border: var(--color-primary, #0070f3);
-    --checkbox-indeterminate-color: #ffffff;
+    --checkbox-indeterminate-color: var(--color-white);
     --checkbox-label-color: var(--color-text, #111827);
     --checkbox-description-color: var(--color-text-secondary, #4b5563);
     --checkbox-hover-border: var(--color-primary, #0070f3);
@@ -207,10 +207,10 @@
     --checkbox-border: var(--color-border, #d1d5db);
     --checkbox-checked-bg: var(--color-secondary, #6b7280);
     --checkbox-checked-border: var(--color-secondary, #6b7280);
-    --checkbox-checked-color: #ffffff;
+    --checkbox-checked-color: var(--color-white);
     --checkbox-indeterminate-bg: var(--color-secondary, #6b7280);
     --checkbox-indeterminate-border: var(--color-secondary, #6b7280);
-    --checkbox-indeterminate-color: #ffffff;
+    --checkbox-indeterminate-color: var(--color-white);
     --checkbox-label-color: var(--color-text, #111827);
     --checkbox-description-color: var(--color-text-secondary, #4b5563);
     --checkbox-hover-border: var(--color-secondary, #6b7280);
@@ -222,10 +222,10 @@
     --checkbox-border: var(--color-success, #10b981);
     --checkbox-checked-bg: var(--color-success, #10b981);
     --checkbox-checked-border: var(--color-success, #10b981);
-    --checkbox-checked-color: #ffffff;
+    --checkbox-checked-color: var(--color-white);
     --checkbox-indeterminate-bg: var(--color-success, #10b981);
     --checkbox-indeterminate-border: var(--color-success, #10b981);
-    --checkbox-indeterminate-color: #ffffff;
+    --checkbox-indeterminate-color: var(--color-white);
     --checkbox-label-color: var(--color-text, #111827);
     --checkbox-description-color: var(--color-text-secondary, #4b5563);
     --checkbox-hover-border: var(--color-success, #10b981);
@@ -237,10 +237,10 @@
     --checkbox-border: var(--color-warning, #f59e0b);
     --checkbox-checked-bg: var(--color-warning, #f59e0b);
     --checkbox-checked-border: var(--color-warning, #f59e0b);
-    --checkbox-checked-color: #ffffff;
+    --checkbox-checked-color: var(--color-white);
     --checkbox-indeterminate-bg: var(--color-warning, #f59e0b);
     --checkbox-indeterminate-border: var(--color-warning, #f59e0b);
-    --checkbox-indeterminate-color: #ffffff;
+    --checkbox-indeterminate-color: var(--color-white);
     --checkbox-label-color: var(--color-text, #111827);
     --checkbox-description-color: var(--color-text-secondary, #4b5563);
     --checkbox-hover-border: var(--color-warning, #f59e0b);
@@ -252,10 +252,10 @@
     --checkbox-border: var(--color-danger, #ef4444);
     --checkbox-checked-bg: var(--color-danger, #ef4444);
     --checkbox-checked-border: var(--color-danger, #ef4444);
-    --checkbox-checked-color: #ffffff;
+    --checkbox-checked-color: var(--color-white);
     --checkbox-indeterminate-bg: var(--color-danger, #ef4444);
     --checkbox-indeterminate-border: var(--color-danger, #ef4444);
-    --checkbox-indeterminate-color: #ffffff;
+    --checkbox-indeterminate-color: var(--color-white);
     --checkbox-label-color: var(--color-text, #111827);
     --checkbox-description-color: var(--color-text-secondary, #4b5563);
     --checkbox-hover-border: var(--color-danger, #ef4444);
@@ -267,10 +267,10 @@
     --checkbox-border: var(--color-info, #3b82f6);
     --checkbox-checked-bg: var(--color-info, #3b82f6);
     --checkbox-checked-border: var(--color-info, #3b82f6);
-    --checkbox-checked-color: #ffffff;
+    --checkbox-checked-color: var(--color-white);
     --checkbox-indeterminate-bg: var(--color-info, #3b82f6);
     --checkbox-indeterminate-border: var(--color-info, #3b82f6);
-    --checkbox-indeterminate-color: #ffffff;
+    --checkbox-indeterminate-color: var(--color-white);
     --checkbox-label-color: var(--color-text, #111827);
     --checkbox-description-color: var(--color-text-secondary, #4b5563);
     --checkbox-hover-border: var(--color-info, #3b82f6);
@@ -297,10 +297,10 @@
     --checkbox-border: var(--color-border, #d1d5db);
     --checkbox-checked-bg: var(--color-primary, #0070f3);
     --checkbox-checked-border: var(--color-primary, #0070f3);
-    --checkbox-checked-color: #ffffff;
+    --checkbox-checked-color: var(--color-white);
     --checkbox-indeterminate-bg: var(--color-primary, #0070f3);
     --checkbox-indeterminate-border: var(--color-primary, #0070f3);
-    --checkbox-indeterminate-color: #ffffff;
+    --checkbox-indeterminate-color: var(--color-white);
     --checkbox-label-color: var(--color-text, #111827);
     --checkbox-description-color: var(--color-text-secondary, #4b5563);
     --checkbox-hover-border: var(--color-primary, #0070f3);
@@ -383,7 +383,7 @@
       .checkbox-component--loading
     )
     .checkbox-component__checkbox {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 20px rgba(var(--color-info-rgb), \1);
   }
 
   .checkbox-component--hover-scale:hover:not(.checkbox-component--disabled):not(

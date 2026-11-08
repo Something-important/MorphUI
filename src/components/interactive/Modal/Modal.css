@@ -20,7 +20,7 @@
   /* Backdrop variants */
 
   .modal-component__overlay--dark {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--color-scrim, rgba(0, 0, 0, 0.5));
   }
 
   .modal-component__overlay--light {
@@ -28,7 +28,7 @@
   }
 
   .modal-component__overlay--blur {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--color-scrim, rgba(0, 0, 0, 0.3));
     backdrop-filter: blur(8px);
   }
 
@@ -512,7 +512,7 @@
     /* Ensure text is visible on gradient backgrounds */
     color: var(--modal-custom-color, #ffffff);
     text-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.5),
+      0 1px 3px var(--color-scrim, rgba(0, 0, 0, 0.5)),
       0 0 1px rgba(0, 0, 0, 0.8);
     font-weight: 500;
   }
@@ -546,12 +546,12 @@
     padding: 1px;
     background: var(--modal-custom-border);
     -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+      linear-gradient(var(--color-white) 0 0) content-box,
+      linear-gradient(var(--color-white) 0 0);
     -webkit-mask-composite: xor;
     mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+      linear-gradient(var(--color-white) 0 0) content-box,
+      linear-gradient(var(--color-white) 0 0);
     mask-composite: exclude;
     pointer-events: none;
   }
