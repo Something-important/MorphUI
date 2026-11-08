@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.1](https://github.com/Something-important/MorphUI/compare/v2.1.0...v2.1.1) (2026-11-08)
+
+
+### Bug Fixes
+
+* **build:** correct OTPInput CSS filename casing and validate css exports ([#114](https://github.com/Something-important/MorphUI/issues/114)) ([194a268](https://github.com/Something-important/MorphUI/commit/194a26870d858bf9d1575a2ec0b6023d7bb01226))
+* meta-audit gap fixes — Storybook stories for 5 new hooks, README/docs updates, migration guide hooks section ([#112](https://github.com/Something-important/MorphUI/issues/112)) ([e1f9dff](https://github.com/Something-important/MorphUI/commit/e1f9dff965a51b27badc5a3babef8a2e01347a99))
+
 ## [2.1.0](https://github.com/Something-important/MorphUI/compare/v2.0.0...v2.1.0) (2026-11-08)
 
 
