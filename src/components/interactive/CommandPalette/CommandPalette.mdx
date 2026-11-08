@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as CommandPaletteStories from './CommandPalette.stories';
 
 <Meta of={CommandPaletteStories} />
@@ -67,4 +67,30 @@ Press **⌘K** (Mac) or **Ctrl+K** (Windows/Linux) to open/close the palette.
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={CommandPaletteStories.Variants} />
+
+### States
+
+<Canvas of={CommandPaletteStories.States} />
+
+### Controlled
+
+<Canvas of={CommandPaletteStories.Controlled} />
+
+### Customization
+
+<Canvas of={CommandPaletteStories.Customization} />
+
+### All Themes
+
+<Canvas of={CommandPaletteStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={CommandPaletteStories.EdgeCases} />
+
+### Integration
+
+<Canvas of={CommandPaletteStories.Integration} />

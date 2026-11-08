@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as DividerStories from './Divider.stories';
 
 <Meta of={DividerStories} />
@@ -28,4 +28,22 @@ Renders `<hr>` for horizontal (semantic separator) or `<div>` with `role="separa
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={DividerStories.Variants} />
+
+### Sizes
+
+<Canvas of={DividerStories.Sizes} />
+
+### Customization
+
+<Canvas of={DividerStories.Customization} />
+
+### All Themes
+
+<Canvas of={DividerStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={DividerStories.EdgeCases} />

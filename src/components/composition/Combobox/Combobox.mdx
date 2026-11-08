@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as ComboboxStories from './Combobox.stories';
 
 <Meta of={ComboboxStories} />
@@ -34,4 +34,30 @@ Full ARIA 1.2 combobox pattern: `role="combobox"`, `aria-expanded`, `aria-active
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={ComboboxStories.Variants} />
+
+### Sizes
+
+<Canvas of={ComboboxStories.Sizes} />
+
+### States
+
+<Canvas of={ComboboxStories.States} />
+
+### Controlled
+
+<Canvas of={ComboboxStories.Controlled} />
+
+### Customization
+
+<Canvas of={ComboboxStories.Customization} />
+
+### All Themes
+
+<Canvas of={ComboboxStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={ComboboxStories.EdgeCases} />

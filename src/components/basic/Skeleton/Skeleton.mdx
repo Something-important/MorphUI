@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as SkeletonStories from './Skeleton.stories';
 
 <Meta of={SkeletonStories} />
@@ -28,4 +28,30 @@ Renders `<div role="img" aria-label="Loading">` with a shimmer animation. The an
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={SkeletonStories.Variants} />
+
+### Sizes
+
+<Canvas of={SkeletonStories.Sizes} />
+
+### States
+
+<Canvas of={SkeletonStories.States} />
+
+### Customization
+
+<Canvas of={SkeletonStories.Customization} />
+
+### All Themes
+
+<Canvas of={SkeletonStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={SkeletonStories.EdgeCases} />
+
+### Integration
+
+<Canvas of={SkeletonStories.Integration} />

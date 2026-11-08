@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as CheckboxStories from './Checkbox.stories';
 
 <Meta of={CheckboxStories} />
@@ -28,4 +28,26 @@ Native `<input type="checkbox">` with correct `aria-checked`. Indeterminate stat
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={CheckboxStories.Variants} />
+
+### Sizes
+
+<Canvas of={CheckboxStories.Sizes} />
+
+### States
+
+<Canvas of={CheckboxStories.States} />
+
+### Controlled
+
+<Canvas of={CheckboxStories.Controlled} />
+
+### All Themes
+
+<Canvas of={CheckboxStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={CheckboxStories.EdgeCases} />

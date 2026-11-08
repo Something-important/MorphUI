@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as AccordionStories from './Accordion.stories';
 
 <Meta of={AccordionStories} />
@@ -31,4 +31,26 @@ Trigger button has `aria-expanded` and `aria-controls` pointing to the content p
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={AccordionStories.Variants} />
+
+### Sizes
+
+<Canvas of={AccordionStories.Sizes} />
+
+### States
+
+<Canvas of={AccordionStories.States} />
+
+### Customization
+
+<Canvas of={AccordionStories.Customization} />
+
+### All Themes
+
+<Canvas of={AccordionStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={AccordionStories.EdgeCases} />

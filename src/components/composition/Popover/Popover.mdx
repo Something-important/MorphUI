@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as PopoverStories from './Popover.stories';
 
 <Meta of={PopoverStories} />
@@ -29,4 +29,26 @@ Trigger has `aria-describedby` pointing to the popover content. Popover has `rol
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={PopoverStories.Variants} />
+
+### Positions
+
+<Canvas of={PopoverStories.Positions} />
+
+### States
+
+<Canvas of={PopoverStories.States} />
+
+### Customization
+
+<Canvas of={PopoverStories.Customization} />
+
+### All Themes
+
+<Canvas of={PopoverStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={PopoverStories.EdgeCases} />

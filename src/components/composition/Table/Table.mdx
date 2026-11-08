@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as TableStories from './Table.stories';
 
 <Meta of={TableStories} />
@@ -143,4 +143,26 @@ Enable expandable rows with `expandable` + `renderExpandedRow`. Click the
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={TableStories.Variants} />
+
+### Sizes
+
+<Canvas of={TableStories.Sizes} />
+
+### States
+
+<Canvas of={TableStories.States} />
+
+### Customization
+
+<Canvas of={TableStories.Customization} />
+
+### All Themes
+
+<Canvas of={TableStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={TableStories.EdgeCases} />

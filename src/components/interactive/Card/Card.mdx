@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as CardStories from './Card.stories';
 
 <Meta of={CardStories} />
@@ -31,4 +31,26 @@ Renders `<div>` with no implicit role. Add `role="region"` + `aria-label` if the
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={CardStories.Variants} />
+
+### Sizes
+
+<Canvas of={CardStories.Sizes} />
+
+### States
+
+<Canvas of={CardStories.States} />
+
+### Customization
+
+<Canvas of={CardStories.Customization} />
+
+### All Themes
+
+<Canvas of={CardStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={CardStories.EdgeCases} />

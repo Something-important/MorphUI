@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as DropdownStories from './Dropdown.stories';
 
 <Meta of={DropdownStories} />
@@ -95,4 +95,30 @@ Filters options by case-insensitive substring match on the label.
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={DropdownStories.Variants} />
+
+### Sizes
+
+<Canvas of={DropdownStories.Sizes} />
+
+### States
+
+<Canvas of={DropdownStories.States} />
+
+### Controlled
+
+<Canvas of={DropdownStories.Controlled} />
+
+### Customization
+
+<Canvas of={DropdownStories.Customization} />
+
+### All Themes
+
+<Canvas of={DropdownStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={DropdownStories.EdgeCases} />

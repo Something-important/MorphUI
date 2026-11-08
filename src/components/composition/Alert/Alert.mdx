@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as AlertStories from './Alert.stories';
 
 <Meta of={AlertStories} />
@@ -29,4 +29,26 @@ import { Alert } from 'morphui-react';
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={AlertStories.Variants} />
+
+### Sizes
+
+<Canvas of={AlertStories.Sizes} />
+
+### States
+
+<Canvas of={AlertStories.States} />
+
+### Customization
+
+<Canvas of={AlertStories.Customization} />
+
+### All Themes
+
+<Canvas of={AlertStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={AlertStories.EdgeCases} />
