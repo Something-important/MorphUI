@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useCombobox, type UseComboboxOption } from '../../hooks';
 import { Button } from '../../components/basic/Button';
