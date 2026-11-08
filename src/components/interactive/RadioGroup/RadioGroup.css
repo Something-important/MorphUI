@@ -127,8 +127,8 @@
     --radio-group-bg: transparent;
     --radio-group-color: var(--color-primary, #0070f3);
     --radio-group-border: transparent;
-    --radio-group-hover: rgba(var(--color-primary-rgb), \1);
-    --radio-group-active: rgba(var(--color-primary-rgb), \1);
+    --radio-group-hover: rgba(var(--color-primary-rgb), 0.1);
+    --radio-group-active: rgba(var(--color-primary-rgb), 0.2);
     --radio-group-focus: var(--color-primary, #0070f3);
   }
 
@@ -195,7 +195,7 @@
 
   .radio-group-component--hover-glow {
     --radio-group-hover-transform: none;
-    --radio-group-hover-shadow: 0 0 20px rgba(var(--color-info-rgb), \1);
+    --radio-group-hover-shadow: 0 0 20px rgba(var(--color-info-rgb), 0.3);
   }
 
   .radio-group-component--hover-scale {
@@ -445,7 +445,7 @@
   }
 
   .radio-group-component--hover-glow:hover:not(.radio-group-component--disabled) {
-    box-shadow: 0 0 20px rgba(var(--color-info-rgb), \1);
+    box-shadow: 0 0 20px rgba(var(--color-info-rgb), 0.4);
   }
 
   .radio-group-component--hover-scale:hover:not(.radio-group-component--hover-lift):not(

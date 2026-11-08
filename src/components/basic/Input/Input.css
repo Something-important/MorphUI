@@ -506,7 +506,7 @@
 
   .input-component:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), \1);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
     transform: translateY(-1px);
   }
 
@@ -534,7 +534,7 @@
   }
 
   .input-suggestion-item:active {
-    background-color: rgba(var(--color-primary-rgb), \1);
+    background-color: rgba(var(--color-primary-rgb), 0.1);
   }
 
   /* Hover effects (match Button exactly) */
@@ -562,7 +562,7 @@
   .input-component:focus-visible {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), \1);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.2);
   }
 }
 
@@ -585,14 +585,14 @@
 
   .input-component.input-component--error:focus {
     border-color: var(--color-danger);
-    box-shadow: 0 0 0 3px rgba(var(--color-danger-rgb), \1);
+    box-shadow: 0 0 0 3px rgba(var(--color-danger-rgb), 0.1);
   }
 
   /* Focused state */
 
   .input-component.input-component--focused {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), \1);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
   }
 
   /* Loading state */
