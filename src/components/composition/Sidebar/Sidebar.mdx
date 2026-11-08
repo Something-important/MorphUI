@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as SidebarStories from './Sidebar.stories';
 
 <Meta of={SidebarStories} />
@@ -33,4 +33,26 @@ import { Sidebar } from 'morphui-react';
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={SidebarStories.Variants} />
+
+### Positions
+
+<Canvas of={SidebarStories.Positions} />
+
+### States
+
+<Canvas of={SidebarStories.States} />
+
+### Customization
+
+<Canvas of={SidebarStories.Customization} />
+
+### All Themes
+
+<Canvas of={SidebarStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={SidebarStories.EdgeCases} />

@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as AvatarStories from './Avatar.stories';
 
 <Meta of={AvatarStories} />
@@ -28,4 +28,34 @@ Renders `role="img"` with `aria-label` from the `alt` prop. When no image loads,
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={AvatarStories.Variants} />
+
+### Sizes
+
+<Canvas of={AvatarStories.Sizes} />
+
+### States
+
+<Canvas of={AvatarStories.States} />
+
+### Customization
+
+<Canvas of={AvatarStories.Customization} />
+
+### All Themes
+
+<Canvas of={AvatarStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={AvatarStories.EdgeCases} />
+
+### Contrast
+
+<Canvas of={AvatarStories.Contrast} />
+
+### Integration
+
+<Canvas of={AvatarStories.Integration} />

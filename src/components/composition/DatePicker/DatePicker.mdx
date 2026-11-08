@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as DatePickerStories from './DatePicker.stories';
 
 <Meta of={DatePickerStories} />
@@ -50,4 +50,30 @@ Pass `range` to select a start + end date instead of a single date.
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={DatePickerStories.Variants} />
+
+### Sizes
+
+<Canvas of={DatePickerStories.Sizes} />
+
+### States
+
+<Canvas of={DatePickerStories.States} />
+
+### Controlled
+
+<Canvas of={DatePickerStories.Controlled} />
+
+### Customization
+
+<Canvas of={DatePickerStories.Customization} />
+
+### All Themes
+
+<Canvas of={DatePickerStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={DatePickerStories.EdgeCases} />

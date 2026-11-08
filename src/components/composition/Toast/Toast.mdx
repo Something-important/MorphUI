@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as ToastStories from './Toast.stories';
 
 <Meta of={ToastStories} />
@@ -32,4 +32,30 @@ toast({ message: 'Saved!', variant: 'success' });
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={ToastStories.Variants} />
+
+### Sizes
+
+<Canvas of={ToastStories.Sizes} />
+
+### States
+
+<Canvas of={ToastStories.States} />
+
+### Controlled
+
+<Canvas of={ToastStories.Controlled} />
+
+### Customization
+
+<Canvas of={ToastStories.Customization} />
+
+### All Themes
+
+<Canvas of={ToastStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={ToastStories.EdgeCases} />

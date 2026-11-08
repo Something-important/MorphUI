@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as CarouselStories from './Carousel.stories';
 
 <Meta of={CarouselStories} />
@@ -61,4 +61,30 @@ Or pass slides as children:
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={CarouselStories.Variants} />
+
+### States
+
+<Canvas of={CarouselStories.States} />
+
+### Customization
+
+<Canvas of={CarouselStories.Customization} />
+
+### Controlled
+
+<Canvas of={CarouselStories.Controlled} />
+
+### All Themes
+
+<Canvas of={CarouselStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={CarouselStories.EdgeCases} />
+
+### Autoplay
+
+<Canvas of={CarouselStories.Autoplay} />

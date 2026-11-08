@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as ButtonStories from './Button.stories';
 
 <Meta of={ButtonStories} />
@@ -62,4 +62,30 @@ All color props accept three formats:
 
 ### All Variants
 
-<Stories />
+### Variants
+
+<Canvas of={ButtonStories.Variants} />
+
+### Sizes
+
+<Canvas of={ButtonStories.Sizes} />
+
+### States
+
+<Canvas of={ButtonStories.States} />
+
+### Customization
+
+<Canvas of={ButtonStories.Customization} />
+
+### All Themes
+
+<Canvas of={ButtonStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={ButtonStories.EdgeCases} />
+
+### Contrast
+
+<Canvas of={ButtonStories.Contrast} />

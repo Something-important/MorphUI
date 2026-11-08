@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as RatingStories from './Rating.stories';
 
 <Meta of={RatingStories} />
@@ -31,4 +31,26 @@ import { Rating } from 'morphui-react';
 
 <Primary />
 
-<Stories />
+### Sizes
+
+<Canvas of={RatingStories.Sizes} />
+
+### States
+
+<Canvas of={RatingStories.States} />
+
+### Controlled
+
+<Canvas of={RatingStories.Controlled} />
+
+### Customization
+
+<Canvas of={RatingStories.Customization} />
+
+### All Themes
+
+<Canvas of={RatingStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={RatingStories.EdgeCases} />

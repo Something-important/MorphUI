@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as FormStories from './Form.stories';
 
 <Meta of={FormStories} />
@@ -32,4 +32,26 @@ Renders `<form>` with `noValidate` (the library handles validation client-side).
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={FormStories.Variants} />
+
+### Sizes
+
+<Canvas of={FormStories.Sizes} />
+
+### States
+
+<Canvas of={FormStories.States} />
+
+### Customization
+
+<Canvas of={FormStories.Customization} />
+
+### All Themes
+
+<Canvas of={FormStories.AllThemes} />
+
+### Integration
+
+<Canvas of={FormStories.Integration} />

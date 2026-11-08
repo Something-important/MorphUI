@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as TreeViewStories from './TreeView.stories';
 
 <Meta of={TreeViewStories} />
@@ -56,4 +56,30 @@ When both are provided, the controlled value wins.
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={TreeViewStories.Variants} />
+
+### Sizes
+
+<Canvas of={TreeViewStories.Sizes} />
+
+### States
+
+<Canvas of={TreeViewStories.States} />
+
+### Controlled
+
+<Canvas of={TreeViewStories.Controlled} />
+
+### Customization
+
+<Canvas of={TreeViewStories.Customization} />
+
+### All Themes
+
+<Canvas of={TreeViewStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={TreeViewStories.EdgeCases} />

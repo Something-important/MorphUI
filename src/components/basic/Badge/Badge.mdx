@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Primary, Controls, Canvas } from '@storybook/addon-docs/blocks';
 import * as BadgeStories from './Badge.stories';
 
 <Meta of={BadgeStories} />
@@ -28,4 +28,30 @@ Renders a `<span>` with no implicit role. For status indicators, set `aria-label
 
 <Primary />
 
-<Stories />
+### Variants
+
+<Canvas of={BadgeStories.Variants} />
+
+### Sizes
+
+<Canvas of={BadgeStories.Sizes} />
+
+### States
+
+<Canvas of={BadgeStories.States} />
+
+### Customization
+
+<Canvas of={BadgeStories.Customization} />
+
+### All Themes
+
+<Canvas of={BadgeStories.AllThemes} />
+
+### Edge Cases
+
+<Canvas of={BadgeStories.EdgeCases} />
+
+### Contrast
+
+<Canvas of={BadgeStories.Contrast} />
