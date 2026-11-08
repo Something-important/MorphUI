@@ -21,9 +21,16 @@ const ROOT = path.resolve(__dirname, '..');
 const SRC = path.join(ROOT, 'src', 'components');
 const OUT = path.join(ROOT, 'dist', 'css');
 
-// CamelCase -> lowercase-hyphenated (Button -> button, RadioGroup -> radio-group)
+// CamelCase -> lowercase-hyphenated, acronym-aware.
+// Button -> button, RadioGroup -> radio-group, OTPInput -> otp-input.
+// A naive split-on-every-capital turns OTPInput into o-t-p-input, which
+// breaks the `morphui-react/css/otp-input` export (shipped as v2.1.0 bug,
+// fixed in v2.1.1).
 function toKebab(name) {
-  return name.replace(/(?<!^)(?=[A-Z])/g, '-').toLowerCase();
+  return name
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2') // lower/digit followed by Capital: aB -> a-B
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2') // acronym followed by word: OTPInput -> OTP-Input
+    .toLowerCase();
 }
 
 async function minifyCss(filePath) {
@@ -74,6 +81,41 @@ async function main() {
   }
 
   console.log(`Wrote ${Object.keys(entries).length} CSS files to dist/css/`);
+
+  // 3. Validate against package.json: every `./css/*` export must resolve to
+  //    a file this script just wrote, and every written file must be exported.
+  //    This is the guard that would have caught the otp-input casing bug.
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const cssExports = Object.entries(pkg.exports || {})
+    .filter(([key]) => key.startsWith('./css/'))
+    .map(([key, target]) => ({ key, file: path.basename(target) }));
+
+  const written = new Set(Object.keys(entries));
+  const problems = [];
+
+  for (const { key, file } of cssExports) {
+    if (!written.has(file.replace(/\.css$/, ''))) {
+      problems.push(`export ${key} -> ${file}, but that file was not generated`);
+    }
+  }
+  for (const name of written) {
+    const isExported = cssExports.some(({ file }) => file.replace(/\.css$/, '') === name);
+    if (!isExported) {
+      problems.push(`generated ${name}.css, but no ./css/* export points at it`);
+    }
+  }
+
+  if (problems.length > 0) {
+    console.error(
+      `\nCSS export validation FAILED (${problems.length} problem${problems.length > 1 ? 's' : ''}):`,
+    );
+    for (const p of problems) {
+      console.error(`  - ${p}`);
+    }
+    console.error('\npackage.json exports and scripts/generate_component_css.cjs are out of sync.');
+    process.exit(1);
+  }
+  console.log(`  exports validated: ${cssExports.length} ./css/* subpaths all resolve`);
 }
 
 main().catch((err) => {
