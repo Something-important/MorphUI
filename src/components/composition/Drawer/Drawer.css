@@ -281,19 +281,19 @@
   /* Glassmorphism */
 
   :where(.drawer-component--glassmorphism) {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(var(--color-white-rgb), 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
 
   :where(.drawer-component--glassmorphism.drawer-component__header),
   :where(.drawer-component--glassmorphism .drawer-component__header) {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(var(--color-white-rgb), 0.6);
   }
 
   :where(.drawer-component--glassmorphism.drawer-component__footer),
   :where(.drawer-component--glassmorphism .drawer-component__footer) {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(var(--color-white-rgb), 0.6);
   }
 
   /* Gradient support */

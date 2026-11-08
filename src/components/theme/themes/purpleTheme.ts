@@ -83,10 +83,12 @@ export const purpleTheme: Theme = {
   'shadow-lg': '0 10px 15px -3px rgba(139, 92, 246, 0.1), 0 4px 6px -2px rgba(139, 92, 246, 0.05)',
   'shadow-2xl': '0 25px 50px -12px rgba(139, 92, 246, 0.25)',
   'shadow-inner': 'inset 0 2px 4px 0 rgba(139, 92, 246, 0.06)',
+  'shadow-glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
   // Advanced Color Tokens - RGB Values (for opacity calculations)
   'color-primary-rgb': '139, 92, 246',
   'color-secondary-rgb': '167, 139, 250',
   'color-info-rgb': '6, 182, 212',
+  'color-white-rgb': '255, 255, 255',
   // Advanced Color Tokens - Opacity Variants
   'color-primary-10': 'rgba(139, 92, 246, 0.1)',
   'color-primary-20': 'rgba(139, 92, 246, 0.2)',

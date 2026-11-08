@@ -103,6 +103,7 @@ export const warmTheme: Theme = {
   'shadow-xl': '0 20px 25px -5px rgba(146, 64, 14, 0.2), 0 10px 10px -5px rgba(146, 64, 14, 0.1)',
   'shadow-2xl': '0 25px 50px -12px rgba(146, 64, 14, 0.3)',
   'shadow-inner': 'inset 0 2px 4px 0 rgba(146, 64, 14, 0.1)',
+  'shadow-glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
   // Advanced Color Tokens - RGB Values (for opacity calculations)
   'color-primary-rgb': '249, 115, 22',
   'color-secondary-rgb': '245, 158, 11',
@@ -110,6 +111,7 @@ export const warmTheme: Theme = {
   'color-warning-rgb': '234, 88, 12',
   'color-danger-rgb': '220, 38, 38',
   'color-info-rgb': '14, 165, 233',
+  'color-white-rgb': '255, 255, 255',
   // Advanced Color Tokens - Opacity Variants
   'color-primary-10': 'rgba(249, 115, 22, 0.1)',
   'color-primary-20': 'rgba(249, 115, 22, 0.2)',

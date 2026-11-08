@@ -24,7 +24,7 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          'The single interactive theme playground for MorphUI. Tweak any of the 353 CSS custom properties, see the changes live on a curated grid of representative primitives, then export your customized theme as a `.ts` file matching the `Theme` type for copy-paste. This replaces the 15 per-component `InteractiveThemeBuilder` stories deleted in PR #83 — one tool, not fifteen.',
+          'The single interactive theme playground for MorphUI. Tweak any of the 355 CSS custom properties, see the changes live on a curated grid of representative primitives, then export your customized theme as a `.ts` file matching the `Theme` type for copy-paste. This replaces the 15 per-component `InteractiveThemeBuilder` stories deleted in PR #83 — one tool, not fifteen.',
       },
     },
   },

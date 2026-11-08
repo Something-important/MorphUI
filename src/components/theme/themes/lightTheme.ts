@@ -258,6 +258,7 @@ export const lightTheme = {
   'shadow-2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
   'shadow-inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
   'shadow-none': '0 0 #0000',
+  'shadow-glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
 
   // Visual Effects - Backdrop Filters
   'backdrop-blur-none': 'blur(0)',
@@ -415,6 +416,7 @@ export const lightTheme = {
   'color-warning-rgb': '245, 158, 11',
   'color-danger-rgb': '239, 68, 68',
   'color-info-rgb': '59, 130, 246',
+  'color-white-rgb': '255, 255, 255',
 
   // Advanced Color Tokens - Opacity Variants
   'color-primary-10': 'rgba(0, 112, 243, 0.1)',
