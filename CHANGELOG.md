@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.1.0](https://github.com/Something-important/MorphUI/compare/v2.0.0...v2.1.0) (2026-11-08)
+
+
+### Features
+
+* extract useAccordion headless hook from Accordion component ([#109](https://github.com/Something-important/MorphUI/issues/109)) ([9c272a1](https://github.com/Something-important/MorphUI/commit/9c272a1554446fe1d4c0e724183f6a8b233e8546))
+* extract useCombobox headless hook from Combobox component ([#107](https://github.com/Something-important/MorphUI/issues/107)) ([f29748b](https://github.com/Something-important/MorphUI/commit/f29748b12683ad31a6db2826ea462afe3ff92deb))
+* extract useDropdown headless hook from Dropdown component ([#110](https://github.com/Something-important/MorphUI/issues/110)) ([026508f](https://github.com/Something-important/MorphUI/commit/026508ffaaa3c6f155eb9ccd686b887c465268fe))
+* extract useTabs headless hook from Tabs component ([#108](https://github.com/Something-important/MorphUI/issues/108)) ([ff34be5](https://github.com/Something-important/MorphUI/commit/ff34be5be69386ba2feac95218a72185ebe9dcad))
+* extract useTreeView headless hook — HEADLESS HOOKS SPRINT COMPLETE ([#111](https://github.com/Something-important/MorphUI/issues/111)) ([4bb9d7c](https://github.com/Something-important/MorphUI/commit/4bb9d7c2500832b625bca87b1ca819714feeec23))
+* **otp-input:** new OTPInput component for 2FA/verification code input ([#105](https://github.com/Something-important/MorphUI/issues/105)) ([a7c4e97](https://github.com/Something-important/MorphUI/commit/a7c4e9769dd7c45dcc58ac1692bc06a1165b0309))
+* token consolidation — replace 85 hardcoded colors with theme tokens ([#106](https://github.com/Something-important/MorphUI/issues/106)) ([91c9b6d](https://github.com/Something-important/MorphUI/commit/91c9b6d16a7078d6e7e126a7ab3efeb9ab04423c))
+* utility adoption sprint — adopt useModal in Drawer + CommandPalette, deprecate generateId ([#104](https://github.com/Something-important/MorphUI/issues/104)) ([9227ade](https://github.com/Something-important/MorphUI/commit/9227adeddc59240993adfdc419429c409c74bfc7))
+
+
+### Bug Fixes
+
+* **storybook:** split Design Tokens into 7 stories to fix Chromatic 25M px limit ([#101](https://github.com/Something-important/MorphUI/issues/101)) ([dee9b18](https://github.com/Something-important/MorphUI/commit/dee9b18d64780478a934a462d8de303e4cc7a2c2))
+
 ## [2.0.0](https://github.com/Something-important/MorphUI/compare/v1.4.4...v2.0.0) (2026-11-07)
 
 
