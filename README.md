@@ -11,7 +11,7 @@ A flexible, adaptable React + TypeScript UI component library for modern web app
 - 🧪 **Type Safe**: Full TypeScript support with comprehensive type definitions
 - ♿ **Accessible**: Built following WCAG guidelines and accessibility best practices
 - 📚 **Storybook**: Interactive documentation with a global theme toolbar, Design Tokens page, and Token Builder
-- 🛠️ **Modern Build**: ESM-only, Rollup-based, tree-shakeable (`sideEffects` is limited to CSS), with 43 per-component subpath exports for granular imports
+- 🛠️ **Modern Build**: ESM-only, Rollup-based, tree-shakeable (`sideEffects` is limited to CSS), with 42 JS + 42 CSS per-component subpath exports for granular imports
 - 🪝 **7 Headless Hooks**: `useModal`, `useAnchoredPosition`, `useCombobox`, `useTabs`, `useAccordion`, `useDropdown`, `useTreeView` — extract the behavior, bring your own UI
 - 🌐 **RTL Support**: Logical CSS properties throughout — toggle RTL via the Storybook toolbar to see layouts flip correctly
 
@@ -189,7 +189,7 @@ npm run verify
 - **ESM**: `dist/index.esm.js` + `dist/esm/` — Modern ES modules (tree-shakeable)
 - **Types**: `dist/` — TypeScript declarations (`.d.ts`)
 - **Styles**: `dist/morphui.css` — all component styles (also reachable as `morphui-react/css`, or per-component as `morphui-react/css/<name>`)
-- **Per-component subpaths**: 41 JS + 41 CSS subpath exports (e.g. `morphui-react/button`, `morphui-react/css/button`)
+- **Per-component subpaths**: 42 JS + 42 CSS subpath exports (e.g. `morphui-react/button`, `morphui-react/css/button`)
 - **Source Maps**: For debugging and development
 
 ## 🤝 Contributing

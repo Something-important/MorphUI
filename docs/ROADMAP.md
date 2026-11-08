@@ -2,15 +2,22 @@
 
 MorphUI 1.x is shipped. This file tracks what's done and what's next.
 
-**Current release:** `morphui-react@1.4.1` on npm (2026-11-06, OIDC trusted
-publishing with Sigstore provenance). **2,153 tests** (49 suites), **95.3%
-statement / 84.7% branch coverage**. **39 components**. React 18 + 19
-verified. SSR-compatible. Auto-publish pipeline proven (10 releases, zero
-manual dispatch).
+**Current release:** `morphui-react@2.1.0` on npm (2026-11-08, OIDC trusted
+publishing with Sigstore provenance). **2,296 tests** (61 suites), **91.8%
+statement / 83.2% branch coverage**. **40 components** + **7 headless
+hooks**. React 18 + 19 verified. SSR-compatible. Auto-publish pipeline
+proven (27 tagged releases, zero manual dispatch).
 
-**dev + master in sync @ `7b62435`** (2026-11-08): v1.5.0 Storybook sprint complete — 12 phases shipped across PRs #82–#92. Sidebar reorganized into 6 sections (Getting Started, Foundations, Primitives, Composition, Patterns, Hooks). 46 sidebar entries, ~26k→~5k story LOC (-81%), 240 logical CSS properties (RTL functional), build 17.33s→11.07s.
-for lint fixes (0 errors + 0 warnings). Chromatic CI is live. All 39
-components have MDX docs. Ready for the next round of feature work.
+**master @ `e1f9dff`** (2026-11-08): v2.0.0 Storybook sprint (12 phases,
+PRs #82–#92) and the v2.1.0 roadmap sprint (Radix migration guide,
+OTPInput, token consolidation, 5 extracted headless hooks, utility
+adoption) both shipped. 52 sidebar entries across 6 sections (Getting
+Started, Foundations, Primitives, Composition, Patterns, Hooks), ~26k→~5k
+story LOC (-81%), 240 logical CSS properties (RTL functional), 354 design
+tokens, build 17.33s→~11s. Chromatic CI is live. Lint passes
+(0 errors, 4 pre-existing jsx-a11y warnings in Dropdown/TreeView). All 40
+components have MDX docs. Ready for the
+next round of feature work.
 
 ## Done (1.0 → 1.1)
 
@@ -145,14 +152,20 @@ Storybook (live per-PR review URL).
 
 ## Short-term (next ~2 weeks)
 
+- **Ship v2.1.1 patch** — `morphui-react/css/otp-input` resolves to
+  `dist/css/otp-input.css`, but the kebab-casing in
+  `scripts/generate_component_css.cjs` wrote `o-t-p-input.css` (consecutive
+  capitals), so the published v2.1.0 subpath import is broken. Fix landed
+  locally (acronym-aware casing + a build-time export validator); push,
+  merge, then merge the pending release-please v2.1.1 PR. Also sync `dev`.
 - **Rotate the Chromatic project token** — was shared in plaintext during
   setup; reset in Chromatic Manage → update the GitHub Secret value. No
   code changes needed (workflow references the secret by name).
 - **FormField rest spread audit** — verify no other components have the
   same `{...rest}` pass-through gap that Dropdown had (now fixed).
-- **v1.5.0** — when there are enough `feat:` commits to warrant a minor
-  bump. Potential candidates: OTPInput, SegmentedControl, ColorPicker,
-  DataGrid, migration guide.
+- **Next minor (v2.2.0)** — when there are enough `feat:` commits.
+  Remaining candidates: SegmentedControl, ColorPicker, DataGrid,
+  MentionInput. (OTPInput and the migration guide shipped in v2.1.0.)
 
 ## Medium-term (this quarter)
 
@@ -175,11 +188,11 @@ Storybook (live per-PR review URL).
 - **Documentation site** — Storybook as the docs portal: theming guide,
   per-component a11y notes, migration guides per breaking release.
   Chromatic published Storybook is already live; MDX docs are complete
-  (all 39 components).
+  (all 40 components).
 - **Community growth** — issue templates (done), demo site, blog posts,
   contribution guide polish.
 - **Feature expansion** — DataGrid (Table + filtering + sorting +
-  pagination integrated), OTPInput, SegmentedControl, ColorPicker,
+  pagination integrated), SegmentedControl, ColorPicker,
   MentionInput. Only after the stability + docs work lands.
 
 ## Non-goals
