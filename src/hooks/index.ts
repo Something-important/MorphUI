@@ -27,3 +27,9 @@ export {
   type UseDropdownOptions,
   type UseDropdownResult,
 } from './useDropdown';
+export {
+  useTreeView,
+  type TreeNode as UseTreeNode,
+  type UseTreeViewOptions,
+  type UseTreeViewResult,
+} from './useTreeView';
