@@ -4,7 +4,7 @@ Verified 2026-11-02. LOC counts implementation `.tsx` (stories excluded);
 CSS LOC counts the component stylesheet. Every component ships matching
 tests, a story, and exported types.
 
-## Basic — `src/components/basic/` (14)
+## Basic — `src/components/basic/` (15)
 
 | Component  | LOC | CSS LOC | Notes                                                             |
 | ---------- | --: | ------: | ----------------------------------------------------------------- |
@@ -22,6 +22,7 @@ tests, a story, and exported types.
 | Divider    | 135 |     322 |                                                                   |
 | Skeleton   | 112 |     171 |                                                                   |
 | Label      |  87 |     108 |                                                                   |
+| OTPInput   | 200 |     120 | Multi-cell one-time password input (v2.1.0)                       |
 
 ## Interactive — `src/components/interactive/` (12)
 

@@ -18,6 +18,13 @@ export {
 } from './basic/Input';
 export { Label, type LabelProps, type LabelVariant, type LabelSize } from './basic/Label';
 export { Toggle, type ToggleProps, type ToggleVariant, type ToggleSize } from './basic/Toggle';
+export {
+  OTPInput,
+  type OTPInputProps,
+  type OTPInputVariant,
+  type OTPInputSize,
+  type OTPInputType,
+} from './basic/OTPInput';
 export { Switch, type SwitchProps, type SwitchVariant, type SwitchSize } from './basic/Switch';
 export {
   Spinner,

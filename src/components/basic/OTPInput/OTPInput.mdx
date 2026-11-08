@@ -1,0 +1,95 @@
+import { Meta, Controls, Canvas } from '@storybook/addon-docs/blocks';
+import * as OTPInputStories from './OTPInput.stories';
+
+<Meta of={OTPInputStories} />
+
+# OTPInput
+
+A multi-cell one-time password / verification code input. Supports
+numeric and alphanumeric modes, paste-handling, keyboard arrow
+navigation, mask mode, and `autoComplete` for browser autofill.
+
+## Usage
+
+```tsx
+import { OTPInput } from 'morphui-react';
+
+function VerifyForm() {
+  const [code, setCode] = useState('');
+
+  return (
+    <OTPInput
+      length={6}
+      type="numeric"
+      value={code}
+      onChange={setCode}
+      onComplete={(fullCode) => {
+        console.log('User entered:', fullCode);
+        // Submit to API
+      }}
+    />
+  );
+}
+```
+
+## Features
+
+- **Keyboard navigation**: Arrow Left/Right, Home, End move between cells
+- **Backspace**: Deletes current cell; if empty, moves to previous cell and deletes
+- **Paste**: Paste a full code and it distributes across cells automatically
+- **`autoComplete="one-time-code"`**: Enables browser autofill from SMS on mobile
+- **Numeric / alphanumeric**: `type="numeric"` restricts to digits; `type="alphanumeric"` accepts A-Z, 0-9
+- **Mask mode**: `mask` hides characters (password-style)
+- **`onComplete` callback**: Fires when all cells are filled — perfect for auto-submit
+
+## Theming
+
+All color props accept three formats:
+
+- **Theme keys**: `color-primary`, `color-danger` (resolves via ThemeProvider)
+- **CSS variables**: `var(--color-primary)`
+- **Literal CSS values**: `#3b82f6`, `rgb(59, 130, 246)`
+
+Use the **Theme** toolbar to switch between the 5 preset themes.
+
+## Accessibility
+
+- Root element has `role="group"` and `aria-label`
+- Each cell has `aria-label="Digit N of M"`
+- `autoComplete="one-time-code"` on the first cell for mobile SMS autofill
+- `inputMode="numeric"` for numeric type (shows numeric keyboard on mobile)
+- Keyboard: Arrow Left/Right, Home, End, Backspace
+
+## Props
+
+<Controls />
+
+## Examples
+
+### Default
+
+<Canvas of={OTPInputStories.Default} />
+
+### All variants
+
+<Canvas of={OTPInputStories.Variants} />
+
+### All sizes
+
+<Canvas of={OTPInputStories.Sizes} />
+
+### Disabled & error
+
+<Canvas of={OTPInputStories.States} />
+
+### Customization (length, type, mask, colors)
+
+<Canvas of={OTPInputStories.Customization} />
+
+### All themes
+
+<Canvas of={OTPInputStories.AllThemes} />
+
+### Edge cases
+
+<Canvas of={OTPInputStories.EdgeCases} />
