@@ -1,5 +1,6 @@
 import React, { ReactNode, forwardRef, useState, useRef, useEffect } from 'react';
 import { resolveThemeValue, createRipple } from '../../../utils';
+import { useAccordion } from '../../../hooks';
 import './Accordion.css';
 
 export type AccordionVariant =
@@ -114,11 +115,20 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     },
     ref,
   ) => {
-    // Controlled vs uncontrolled: if `open` is provided, the parent owns
-    // the state. Otherwise, we manage it internally from `defaultOpen`.
-    const isControlled = controlledOpen !== undefined;
-    const [internalIsOpen, setInternalIsOpen] = useState(defaultOpen);
-    const isOpen = isControlled ? controlledOpen : internalIsOpen;
+    // useAccordion handles: open/close state (controlled/uncontrolled),
+    // toggle with callback fan-out (onToggle/onOpen/onClose), and
+    // disabled/loading guards. The component keeps animation, styling,
+    // keyboard nav, focus management, and ripple effects.
+    const { isOpen, toggle: hookToggle } = useAccordion({
+      defaultOpen,
+      open: controlledOpen,
+      onToggle,
+      onOpen,
+      onClose,
+      disabled,
+      loading,
+    });
+
     const [isAnimating, setIsAnimating] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -242,25 +252,10 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       }
     }, []);
 
-    // ARIA attributes
-    // Core toggle logic (event-agnostic) — used by both click and keyboard activation
-    const toggle = async () => {
-      if (disabled || loading) return;
-
-      const newIsOpen = !isOpen;
-      if (!isControlled) {
-        setInternalIsOpen(newIsOpen);
-      }
-
-      // Call callbacks
-      onToggle?.(newIsOpen);
-      if (newIsOpen) {
-        onOpen?.();
-      } else {
-        onClose?.();
-      }
-
-      // Handle animation
+    // Core toggle logic — delegates to useAccordion's toggle, plus
+    // triggers the CSS animation class.
+    const toggle = () => {
+      hookToggle();
       if (animation !== 'none') {
         setIsAnimating(true);
         setTimeout(() => setIsAnimating(false), animationDuration);
@@ -268,7 +263,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     };
 
     // Handle toggle with click (adds ripple effect)
-    const handleToggle = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled || loading) return;
 
       // Create ripple effect
@@ -280,7 +275,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       // Auto-cleanup after animation
       setTimeout(removeRipple, 600);
 
-      await toggle();
+      toggle();
     };
 
     // Handle keyboard events
@@ -291,18 +286,18 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
         case 'Enter':
         case ' ':
           e.preventDefault();
-          void toggle();
+          toggle();
           break;
         case 'ArrowDown':
           e.preventDefault();
           if (!isOpen) {
-            void toggle();
+            toggle();
           }
           break;
         case 'ArrowUp':
           e.preventDefault();
           if (isOpen) {
-            void toggle();
+            toggle();
           }
           break;
       }
