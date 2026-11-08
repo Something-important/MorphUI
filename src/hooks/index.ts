@@ -20,3 +20,10 @@ export {
 } from './useCombobox';
 export { useTabs, type UseTabsOptions, type UseTabsResult } from './useTabs';
 export { useAccordion, type UseAccordionOptions, type UseAccordionResult } from './useAccordion';
+export {
+  useDropdown,
+  type DropdownOption as UseDropdownOption,
+  type DropdownOptionGroup as UseDropdownOptionGroup,
+  type UseDropdownOptions,
+  type UseDropdownResult,
+} from './useDropdown';
