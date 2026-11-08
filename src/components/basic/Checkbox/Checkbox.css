@@ -383,7 +383,7 @@
       .checkbox-component--loading
     )
     .checkbox-component__checkbox {
-    box-shadow: 0 0 20px rgba(var(--color-info-rgb), \1);
+    box-shadow: 0 0 20px rgba(var(--color-info-rgb), 0.3);
   }
 
   .checkbox-component--hover-scale:hover:not(.checkbox-component--disabled):not(

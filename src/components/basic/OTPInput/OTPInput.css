@@ -51,7 +51,7 @@
     --otp-custom-focus-color,
     var(--otp-custom-accent, var(--color-primary, #0070f3))
   );
-  box-shadow: 0 0 0 3px var(--otp-custom-accent, var(--color-primary, #0070f3)) 19;
+  box-shadow: 0 0 0 3px var(--otp-custom-accent, var(--color-primary, #0070f3));
 }
 
 /* Filled state — subtle accent border */
@@ -73,7 +73,7 @@
 
 .otp-input-component--error .otp-input-component__cell:focus {
   border-color: var(--color-danger, #ef4444);
-  box-shadow: 0 0 0 3px rgba(var(--color-danger-rgb), \1);
+  box-shadow: 0 0 0 3px rgba(var(--color-danger-rgb), 0.1);
 }
 
 .otp-input-component--error .otp-input-component__cell[data-filled='true'] {
@@ -98,27 +98,27 @@
 /* Variant accents (border color on focus) */
 .otp-input-component--secondary .otp-input-component__cell:focus {
   border-color: var(--color-secondary, #6b7280);
-  box-shadow: 0 0 0 3px rgba(var(--color-secondary-rgb), \1);
+  box-shadow: 0 0 0 3px rgba(var(--color-secondary-rgb), 0.1);
 }
 
 .otp-input-component--success .otp-input-component__cell:focus {
   border-color: var(--color-success, #10b981);
-  box-shadow: 0 0 0 3px rgba(var(--color-success-rgb), \1);
+  box-shadow: 0 0 0 3px rgba(var(--color-success-rgb), 0.1);
 }
 
 .otp-input-component--warning .otp-input-component__cell:focus {
   border-color: var(--color-warning, #f59e0b);
-  box-shadow: 0 0 0 3px rgba(var(--color-warning-rgb), \1);
+  box-shadow: 0 0 0 3px rgba(var(--color-warning-rgb), 0.1);
 }
 
 .otp-input-component--danger .otp-input-component__cell:focus {
   border-color: var(--color-danger, #ef4444);
-  box-shadow: 0 0 0 3px rgba(var(--color-danger-rgb), \1);
+  box-shadow: 0 0 0 3px rgba(var(--color-danger-rgb), 0.1);
 }
 
 .otp-input-component--info .otp-input-component__cell:focus {
   border-color: var(--color-info, #3b82f6);
-  box-shadow: 0 0 0 3px rgba(var(--color-info-rgb), \1);
+  box-shadow: 0 0 0 3px rgba(var(--color-info-rgb), 0.1);
 }
 
 .otp-input-component--ghost .otp-input-component__cell {
