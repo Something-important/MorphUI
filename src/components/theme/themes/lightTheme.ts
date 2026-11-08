@@ -30,6 +30,9 @@ export const lightTheme = {
   // Neutral colors
   'color-white': '#ffffff',
   'color-black': '#000000',
+
+  // Overlay/scrim — used by Modal, Drawer, CommandPalette backdrops
+  'color-scrim': 'rgba(0, 0, 0, 0.5)',
   'color-gray-50': '#f9fafb',
   'color-gray-100': '#f3f4f6',
   'color-gray-200': '#e5e7eb',

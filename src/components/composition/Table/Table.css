@@ -400,8 +400,8 @@
 
   .table-component--header-gradient .table-component__thead {
     background: var(--table-custom-header-bg);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 }
 

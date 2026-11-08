@@ -100,7 +100,7 @@
     inset-inline-start: 0;
     inset-inline-end: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--color-scrim, rgba(0, 0, 0, 0.5));
     z-index: calc(var(--z-modal, 1050) - 1);
   }
 

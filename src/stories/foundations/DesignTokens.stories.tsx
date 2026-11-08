@@ -242,6 +242,7 @@ const STRATEGIES: Record<string, string> = {
   'color-info': 'swatch',
   'color-white': 'swatch',
   'color-black': 'swatch',
+  color: 'raw',
   'color-gray': 'swatch',
   'color-background': 'swatch',
   'color-option': 'swatch',
@@ -327,7 +328,7 @@ export const Overview: Story = {
   render: () => (
     <StoryWrapper
       title="Design Tokens"
-      subtitle="353 CSS custom properties across 49 families. Switch themes via the toolbar to see how each preset overrides the defaults. Browse individual category stories for full token details."
+      subtitle="354 CSS custom properties across 50 families. Switch themes via the toolbar to see how each preset overrides the defaults. Browse individual category stories for full token details."
     >
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
         <div

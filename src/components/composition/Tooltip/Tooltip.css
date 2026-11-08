@@ -625,8 +625,8 @@
 
   .tooltip-component--background-gradient .tooltip-component__content {
     background: var(--tooltip-custom-bg);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Text Gradient Support */
@@ -658,12 +658,12 @@
     background: var(--tooltip-custom-arrow-color);
     background-clip: padding-box;
     mask:
-      linear-gradient(#fff 0 0) padding-box,
-      linear-gradient(#fff 0 0);
+      linear-gradient(var(--color-white) 0 0) padding-box,
+      linear-gradient(var(--color-white) 0 0);
     mask-composite: xor;
     -webkit-mask:
-      linear-gradient(#fff 0 0) padding-box,
-      linear-gradient(#fff 0 0);
+      linear-gradient(var(--color-white) 0 0) padding-box,
+      linear-gradient(var(--color-white) 0 0);
     -webkit-mask-composite: xor;
   }
 
@@ -826,7 +826,7 @@
     .tooltip-component__content {
       position: static;
       box-shadow: none;
-      border: 1px solid #000;
+      border: 1px solid var(--color-black);
       page-break-inside: avoid;
     }
 

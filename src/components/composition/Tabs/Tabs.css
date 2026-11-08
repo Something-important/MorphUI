@@ -469,16 +469,16 @@
 
   .tabs-component--tab-gradient .tabs-component__tab {
     background: var(--tabs-custom-tab-color);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Active tab gradient support */
 
   .tabs-component--active-tab-gradient .tabs-component__tab--active {
     background: var(--tabs-custom-active-tab-color);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Hover tab gradient support */
@@ -486,16 +486,16 @@
   .tabs-component--hover-tab-gradient
     .tabs-component__tab:hover:not(.tabs-component__tab--disabled) {
     background: var(--tabs-custom-hover-tab-color);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Content gradient support */
 
   .tabs-component--content-gradient .tabs-component__panel {
     background: var(--tabs-custom-content-color);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Indicator gradient support */
@@ -508,8 +508,8 @@
 
   .tabs-component--badge-gradient .tabs-component__badge {
     background: var(--tabs-custom-badge-color);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    text-shadow: 0 1px 2px var(--color-scrim, rgba(0, 0, 0, 0.3));
   }
 
   /* Icon gradient support */

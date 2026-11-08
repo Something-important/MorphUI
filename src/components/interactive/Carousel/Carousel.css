@@ -67,7 +67,7 @@
 }
 .carousel-component__arrow:hover:not(:disabled) {
   background: var(--carousel-custom-accent, var(--carousel-accent));
-  color: #fff;
+  color: var(--color-white);
 }
 .carousel-component__arrow:focus-visible {
   outline: 2px solid var(--carousel-accent);
