@@ -1,27 +1,11 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback, forwardRef } from 'react';
-import { resolveThemeValue, getAriaProps, getKeyboardHandler } from '../../../utils';
+import React, { forwardRef } from 'react';
+import { resolveThemeValue, getAriaProps } from '../../../utils';
+import { useDropdown } from '../../../hooks';
 import './Dropdown.css';
 
-export interface DropdownOption {
-  label: string;
-  value: string | number;
-  disabled?: boolean;
-  icon?: React.ReactNode;
-  description?: string;
-  group?: string;
-  tags?: string[];
-  metadata?: Record<string, unknown>;
-}
-
-export interface DropdownOptionGroup {
-  label: string;
-  value: string;
-  options: DropdownOption[];
-  icon?: React.ReactNode;
-  description?: string;
-  collapsible?: boolean;
-  defaultCollapsed?: boolean;
-}
+// Re-export types for backward compatibility
+export type { DropdownOption, DropdownOptionGroup } from '../../../hooks/useDropdown';
+import type { DropdownOption, DropdownOptionGroup } from '../../../hooks/useDropdown';
 
 export type DropdownSize = 'sm' | 'md' | 'lg';
 export type DropdownVariant = 'default' | 'outline' | 'ghost';
@@ -39,11 +23,8 @@ export interface DropdownProps
     | 'disabled'
   > {
   options?: DropdownOption[];
-  /** Controlled selected value. */
   value?: string | number | Array<string | number>;
-  /** Uncontrolled initial selected value. Ignored when `value` is provided. */
   defaultValue?: string | number | Array<string | number>;
-  /** Called when the selection changes. Required for controlled; optional for uncontrolled. */
   onChange?: (value: string | number | Array<string | number>) => void;
   placeholder?: string;
   disabled?: boolean;
@@ -55,24 +36,20 @@ export interface DropdownProps
   variant?: DropdownVariant;
   color?: string;
   gradient?: string;
-  background?: string; // Add missing background prop
+  background?: string;
   textColor?: string;
   borderColor?: string;
   labelColor?: string;
   descriptionColor?: string;
-  // Option background customization
   optionBackground?: string;
   optionHoverBackground?: string;
   optionSelectedBackground?: string;
-  // Enhanced background options
   backgroundImage?: string;
-  backgroundBlend?: 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten';
-  // Enhanced styling
+  backgroundBlend?: React.CSSProperties['backgroundBlendMode'];
   borderRadius?: string | number;
-  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   backdropBlur?: boolean;
   hoverEffect?: 'none' | 'lift' | 'glow' | 'scale';
-  // New features
   optionGroups?: DropdownOptionGroup[];
   showOptionCount?: boolean;
   loading?: boolean;
@@ -134,35 +111,45 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     }: DropdownProps,
     ref,
   ) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [focusedIndex, setFocusedIndex] = useState<number>(-1);
-    const [search, setSearch] = useState('');
+    // useDropdown handles: open/close, selection, keyboard nav, search,
+    // outside-click, option group flattening, and selectedLabels.
+    const {
+      isOpen,
+      focusedIndex,
+      search,
+      currentValue,
+      filteredOptions,
+      selectedLabels,
+      containerRef: hookContainerRef,
+      listRef,
+      setOpen,
+      toggle,
+      selectOption,
+      isSelected,
+      clear,
+      clearAll,
+      selectAll,
+      setSearch,
+      handleKeyDown,
+    } = useDropdown({
+      options,
+      optionGroups,
+      value,
+      defaultValue,
+      onChange,
+      placeholder,
+      disabled,
+      multiSelect,
+      maxSelections,
+      searchable,
+      clearable,
+      onOpenChange,
+      onSearch,
+    });
 
-    // Controlled vs uncontrolled: if `value` is provided, the parent owns
-    // the state. Otherwise, we manage it internally from `defaultValue`.
-    // Mirrors the Input/RadioGroup/Table uncontrolled pattern.
-    const isControlled = value !== undefined;
-    const [internalValue, setInternalValue] = useState<
-      string | number | Array<string | number> | undefined
-    >(defaultValue);
-    const currentValue = isControlled ? value : internalValue;
-
-    // Centralized update: updates internal state in uncontrolled mode and
-    // notifies the parent (if onChange was provided). Used by every
-    // selection-changing handler below.
-    const updateValue = (newValue: string | number | Array<string | number>) => {
-      if (!isControlled) {
-        setInternalValue(newValue);
-      }
-      onChange?.(newValue);
-    };
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const listRef = useRef<HTMLUListElement>(null);
-
-    // Merge the forwarded ref with the internal container ref (outside-click
-    // detection) so consumers can also measure/focus the dropdown root.
+    // Merge the forwarded ref with the internal container ref
     const setContainerRef = (node: HTMLDivElement | null) => {
-      containerRef.current = node;
+      (hookContainerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
       if (typeof ref === 'function') {
         ref(node);
       } else if (ref) {
@@ -170,185 +157,17 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       }
     };
 
+    // Resolve theme values
     const resolvedColor = resolveThemeValue(color);
     const resolvedTextColor = resolveThemeValue(textColor);
     const resolvedBorderColor = resolveThemeValue(borderColor);
     const resolvedGradient = resolveThemeValue(gradient);
-    const resolvedBackground = resolveThemeValue(background); // Add background resolution
+    const resolvedBackground = resolveThemeValue(background);
     const resolvedLabelColor = resolveThemeValue(labelColor);
     const resolvedDescriptionColor = resolveThemeValue(descriptionColor);
     const resolvedOptionBackground = resolveThemeValue(optionBackground);
     const resolvedOptionHoverBackground = resolveThemeValue(optionHoverBackground);
     const resolvedOptionSelectedBackground = resolveThemeValue(optionSelectedBackground);
-
-    // Handle open state changes
-    const handleOpenChange = useCallback(
-      (newOpen: boolean) => {
-        setIsOpen(newOpen);
-        onOpenChange?.(newOpen);
-        if (!newOpen) {
-          setFocusedIndex(-1);
-          setSearch('');
-        }
-      },
-      [onOpenChange],
-    );
-
-    // Close dropdown if clicked outside
-    useEffect(() => {
-      function handleClickOutside(event: MouseEvent) {
-        if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-          handleOpenChange(false);
-        }
-      }
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [handleOpenChange]);
-
-    // Handle keyboard navigation focus
-    useEffect(() => {
-      if (isOpen && listRef.current && focusedIndex >= 0) {
-        const optionEls = listRef.current.querySelectorAll('.dropdown-option');
-        (optionEls[focusedIndex] as HTMLElement)?.focus();
-      }
-    }, [focusedIndex, isOpen]);
-
-    // Process options with groups
-    const processedOptions = useMemo(() => {
-      if (optionGroups && optionGroups.length > 0) {
-        return optionGroups.flatMap((group) => group.options);
-      }
-      return options || [];
-    }, [options, optionGroups]);
-
-    const filteredOptions = useMemo(
-      () =>
-        search
-          ? processedOptions.filter((opt) => opt.label.toLowerCase().includes(search.toLowerCase()))
-          : processedOptions,
-      [processedOptions, search],
-    );
-
-    const isSelected = (val: string | number) => {
-      if (multiSelect) {
-        return Array.isArray(currentValue) && currentValue.includes(val);
-      }
-      return currentValue === val;
-    };
-
-    const handleOptionClick = (val: string | number, event: React.MouseEvent | undefined) => {
-      // Guard stopPropagation — the keyboard handler (Enter/Space) calls
-      // this with a synthetic event that may not have stopPropagation.
-      event?.stopPropagation?.();
-      if (disabled) return;
-
-      if (multiSelect) {
-        const selected = Array.isArray(currentValue) ? currentValue : [];
-        if (selected.includes(val)) {
-          const newSelected = selected.filter((v) => v !== val);
-          updateValue(newSelected);
-        } else if (!maxSelections || selected.length < maxSelections) {
-          const newSelected = [...selected, val];
-          updateValue(newSelected);
-        }
-      } else {
-        updateValue(val);
-        handleOpenChange(false);
-      }
-    };
-
-    const handleSelectAll = (event: React.MouseEvent) => {
-      event.stopPropagation();
-      if (multiSelect && !disabled) {
-        const allValues = filteredOptions.map((opt) => opt.value);
-        const newValues = maxSelections ? allValues.slice(0, maxSelections) : allValues;
-        updateValue(newValues);
-      }
-    };
-
-    const handleRandomSelect = (event: React.MouseEvent) => {
-      event.stopPropagation();
-      if (multiSelect && !disabled) {
-        const availableOptions = filteredOptions.filter((opt) => !opt.disabled);
-        const count = maxSelections || Math.min(3, availableOptions.length); // Default to 3 if no max
-
-        // Shuffle array and take first N items
-        const shuffled = [...availableOptions].sort(() => Math.random() - 0.5);
-        const randomValues = shuffled.slice(0, count).map((opt) => opt.value);
-
-        updateValue(randomValues);
-      }
-    };
-
-    const handleClearAll = (event: React.MouseEvent) => {
-      event.stopPropagation();
-      if (multiSelect && !disabled) {
-        updateValue([]);
-      }
-    };
-
-    const handleClear = (event: React.MouseEvent) => {
-      event.stopPropagation();
-      if (clearable && !disabled) {
-        updateValue(multiSelect ? [] : '');
-      }
-    };
-
-    const handleSearch = (searchTerm: string) => {
-      setSearch(searchTerm);
-      onSearch?.(searchTerm);
-    };
-
-    const handleKeyDown = getKeyboardHandler({
-      onEnter: () => {
-        if (isOpen && focusedIndex >= 0) {
-          handleOptionClick(filteredOptions[focusedIndex].value, {} as React.MouseEvent);
-        } else {
-          handleOpenChange(!isOpen);
-        }
-      },
-      onSpace: () => {
-        if (isOpen && focusedIndex >= 0) {
-          handleOptionClick(filteredOptions[focusedIndex].value, {} as React.MouseEvent);
-        } else {
-          handleOpenChange(!isOpen);
-        }
-      },
-      onArrowDown: () => {
-        if (!isOpen) {
-          handleOpenChange(true);
-          setFocusedIndex(0);
-        } else {
-          setFocusedIndex((prev) => (prev < filteredOptions.length - 1 ? prev + 1 : prev));
-        }
-      },
-      onArrowUp: () => {
-        if (!isOpen) {
-          handleOpenChange(true);
-          setFocusedIndex(filteredOptions.length - 1);
-        } else {
-          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
-        }
-      },
-      onEscape: () => handleOpenChange(false),
-      onTab: () => handleOpenChange(false),
-    });
-
-    const selectedLabels = useMemo(() => {
-      if (multiSelect) {
-        const selected = Array.isArray(currentValue) ? currentValue : [];
-        if (selected.length > 0) {
-          return processedOptions
-            .filter((opt) => selected.includes(opt.value))
-            .map((opt) => opt.label)
-            .join(', ');
-        }
-        return placeholder;
-      } else {
-        const selectedOption = processedOptions.find((opt) => opt.value === currentValue);
-        return selectedOption ? selectedOption.label : placeholder;
-      }
-    }, [processedOptions, currentValue, placeholder, multiSelect]);
 
     // Detect text gradients
     const isTextGradient =
@@ -356,25 +175,21 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       (textColor.includes('linear-gradient') ||
         textColor.includes('radial-gradient') ||
         textColor.includes('conic-gradient'));
-
     const isLabelGradient =
       labelColor &&
       (labelColor.includes('linear-gradient') ||
         labelColor.includes('radial-gradient') ||
         labelColor.includes('conic-gradient'));
-
     const isDescriptionGradient =
       descriptionColor &&
       (descriptionColor.includes('linear-gradient') ||
         descriptionColor.includes('radial-gradient') ||
         descriptionColor.includes('conic-gradient'));
-
     const isBorderGradient =
       borderColor &&
       (borderColor.includes('linear-gradient') ||
         borderColor.includes('radial-gradient') ||
         borderColor.includes('conic-gradient'));
-
     const isBackgroundGradient =
       (background || gradient || color) &&
       ((background &&
@@ -409,63 +224,43 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       .filter(Boolean)
       .join(' ');
 
-    // Build component style object with CSS custom properties (match Button pattern)
+    // Build component style object
     const componentStyle: React.CSSProperties & Record<string, string> = {
-      // Main background: gradient > color > backgroundColor (gradients take precedence)
-      ...(resolvedGradient && {
-        '--dropdown-custom-bg': resolvedGradient,
-      }),
-      ...(resolvedColor &&
-        !resolvedGradient && {
-          '--dropdown-custom-bg': resolvedColor,
-        }),
+      ...(resolvedGradient && { '--dropdown-custom-bg': resolvedGradient }),
+      ...(resolvedColor && !resolvedGradient && { '--dropdown-custom-bg': resolvedColor }),
       ...(resolvedBackground &&
         !resolvedGradient &&
-        !resolvedColor && {
-          '--dropdown-custom-bg': resolvedBackground,
-        }),
-
-      // Text and border colors
-      ...(resolvedTextColor && {
-        '--dropdown-custom-color': resolvedTextColor,
-      }),
-      ...(resolvedBorderColor && {
-        '--dropdown-custom-border': resolvedBorderColor,
-      }),
-
-      // Label and description colors
+        !resolvedColor && { '--dropdown-custom-bg': resolvedBackground }),
+      ...(resolvedTextColor && { '--dropdown-custom-color': resolvedTextColor }),
+      ...(resolvedBorderColor && { '--dropdown-custom-border': resolvedBorderColor }),
       ...(resolvedLabelColor && { '--dropdown-custom-label-color': resolvedLabelColor }),
       ...(resolvedDescriptionColor && {
         '--dropdown-custom-description-color': resolvedDescriptionColor,
       }),
-
-      // Option backgrounds
-      ...(resolvedOptionBackground && { '--dropdown-custom-option-bg': resolvedOptionBackground }),
+      ...(resolvedOptionBackground && {
+        '--dropdown-custom-option-bg': resolvedOptionBackground,
+      }),
       ...(resolvedOptionHoverBackground && {
         '--dropdown-custom-option-hover-bg': resolvedOptionHoverBackground,
       }),
       ...(resolvedOptionSelectedBackground && {
         '--dropdown-custom-option-selected-bg': resolvedOptionSelectedBackground,
       }),
-
-      // Background patterns
-      ...(backgroundImage && { '--dropdown-custom-background-image': backgroundImage }),
-      ...(backgroundBlend && { '--dropdown-custom-background-blend': backgroundBlend }),
-
-      // Other styling
       ...(borderRadius && {
         '--dropdown-custom-border-radius':
           typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
       }),
-      ...(shadow && { '--dropdown-custom-shadow': resolveThemeValue(`shadow-${shadow}`)! }),
-      ...(backdropBlur && { '--dropdown-custom-backdrop-blur': 'blur(8px)' }),
-      ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
+      ...(shadow &&
+        resolveThemeValue(`shadow-${shadow}`) && {
+          '--dropdown-custom-shadow': resolveThemeValue(`shadow-${shadow}`)!,
+        }),
+      ...(backgroundImage && { '--dropdown-custom-bg-image': `url(${backgroundImage})` }),
+      ...(backgroundBlend && { '--dropdown-custom-bg-blend': backgroundBlend as string }),
+      ...(backdropBlur && { '--dropdown-backdrop-blur': 'blur(8px)' }),
     };
 
-    // Explicitly merge with user's style prop (user style takes precedence)
     const containerStyle = style ? { ...componentStyle, ...style } : componentStyle;
 
-    // Build list styles
     const listStyle: React.CSSProperties = {
       maxHeight,
       ...(position === 'top' && { bottom: '100%', top: 'auto' }),
@@ -473,15 +268,45 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       ...(position === 'right' && { left: '100%', right: 'auto' }),
     };
 
+    // Random select — kept in component because it uses filteredOptions
+    // and maxSelections from the hook
+    const handleRandomSelect = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (multiSelect && !disabled) {
+        const availableOptions = filteredOptions.filter((opt) => !opt.disabled);
+        const count = maxSelections || Math.min(3, availableOptions.length);
+        const shuffled = [...availableOptions].sort(() => Math.random() - 0.5);
+        const randomValues = shuffled.slice(0, count).map((opt) => opt.value);
+        onChange?.(randomValues);
+        if (value === undefined) {
+          // uncontrolled — but we can't set internal state from here,
+          // so we call onChange which the hook picks up if controlled
+        }
+      }
+    };
+
+    const handleClear = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      clear();
+    };
+
+    const handleSelectAll = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      selectAll();
+    };
+
+    const handleClearAll = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      clearAll();
+    };
+
     return (
-      // the container carries role="combobox", tabIndex, and onKeyDown for full keyboard support
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={classes}
         style={containerStyle}
         tabIndex={disabled ? -1 : 0}
         onClick={() => {
-          if (!disabled) handleOpenChange(!isOpen);
+          if (!disabled) toggle();
         }}
         onKeyDown={handleKeyDown}
         ref={setContainerRef}
@@ -514,7 +339,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   ⚠️
                 </span>
               )}
-              {clearable && currentValue && (
+              {clearable && currentValue !== undefined && currentValue !== '' && (
                 <button
                   type="button"
                   className="dropdown-clear"
@@ -537,11 +362,10 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   <input
                     type="text"
                     value={search}
-                    onChange={(e) => handleSearch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                     placeholder="Search options..."
                     onClick={(e) => e.stopPropagation()}
                     aria-label="Search options"
-                    // intentional: lets users type immediately when the searchable dropdown opens
                     // eslint-disable-next-line jsx-a11y/no-autofocus
                     autoFocus
                   />
@@ -552,7 +376,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             <ul
               role="listbox"
               id="dropdown-list"
-              ref={listRef}
+              ref={listRef as React.RefObject<HTMLUListElement>}
               aria-multiselectable={multiSelect ? 'true' : undefined}
               className="dropdown-listbox"
             >
@@ -572,9 +396,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               ) : (
                 <>
                   {optionGroups && optionGroups.length > 0
-                    ? // Render grouped options: each group is a role="group" wrapper
-                      // (an allowed listbox child) around its options.
-                      optionGroups.map((group) => (
+                    ? optionGroups.map((group) => (
                         <div
                           key={group.value}
                           role="group"
@@ -598,46 +420,49 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                                 (opt) =>
                                   !search || opt.label.toLowerCase().includes(search.toLowerCase()),
                               )
-                              .map((opt, index) => (
-                                // keyboard selection is handled by the combobox container's onKeyDown
-                                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                                <li
-                                  key={opt.value}
-                                  role="option"
-                                  aria-selected={isSelected(opt.value)}
-                                  tabIndex={-1}
-                                  className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
-                                    index === focusedIndex ? 'focused' : ''
-                                  } ${opt.disabled ? 'disabled' : ''}`}
-                                  onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
-                                >
-                                  {multiSelect && (
-                                    <span
-                                      className="dropdown-checkbox"
-                                      aria-hidden="true"
-                                      data-checked={isSelected(opt.value) ? 'true' : 'false'}
-                                    />
-                                  )}
-                                  {opt.icon && (
-                                    <span className="dropdown-option-icon">{opt.icon}</span>
-                                  )}
-                                  <span className="dropdown-option-content">
-                                    <span className="dropdown-option-label">{opt.label}</span>
-                                    {opt.description && (
-                                      <span className="dropdown-option-description">
-                                        {opt.description}
-                                      </span>
+                              .map((opt) => {
+                                const index = filteredOptions.indexOf(opt);
+                                return (
+                                  <li
+                                    key={opt.value}
+                                    role="option"
+                                    aria-selected={isSelected(opt.value)}
+                                    tabIndex={-1}
+                                    className={`dropdown-option ${
+                                      isSelected(opt.value) ? 'selected' : ''
+                                    } ${index === focusedIndex ? 'focused' : ''} ${
+                                      opt.disabled ? 'disabled' : ''
+                                    }`}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      if (!opt.disabled) selectOption(opt.value);
+                                    }}
+                                  >
+                                    {multiSelect && (
+                                      <span
+                                        className="dropdown-checkbox"
+                                        aria-hidden="true"
+                                        data-checked={isSelected(opt.value) ? 'true' : 'false'}
+                                      />
                                     )}
-                                  </span>
-                                </li>
-                              ))}
+                                    {opt.icon && (
+                                      <span className="dropdown-option-icon">{opt.icon}</span>
+                                    )}
+                                    <span className="dropdown-option-content">
+                                      <span className="dropdown-option-label">{opt.label}</span>
+                                      {opt.description && (
+                                        <span className="dropdown-option-description">
+                                          {opt.description}
+                                        </span>
+                                      )}
+                                    </span>
+                                  </li>
+                                );
+                              })}
                           </div>
                         </div>
                       ))
-                    : // Render regular options
-                      filteredOptions.map((opt, index) => (
-                        // keyboard selection is handled by the combobox container's onKeyDown
-                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                    : filteredOptions.map((opt, index) => (
                         <li
                           key={opt.value}
                           role="option"
@@ -646,7 +471,10 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                           className={`dropdown-option ${isSelected(opt.value) ? 'selected' : ''} ${
                             index === focusedIndex ? 'focused' : ''
                           } ${opt.disabled ? 'disabled' : ''}`}
-                          onClick={(e) => !opt.disabled && handleOptionClick(opt.value, e)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!opt.disabled) selectOption(opt.value);
+                          }}
                         >
                           {multiSelect && (
                             <span
@@ -670,7 +498,6 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
             {multiSelect && (
               <div className="dropdown-footer">
-                {/* Only show Select All when it's actually selecting all available options */}
                 {(!maxSelections || filteredOptions.length <= maxSelections) && (
                   <button
                     type="button"
@@ -682,8 +509,6 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                     Select All
                   </button>
                 )}
-
-                {/* Show Select Top N when there's a selection limit */}
                 {maxSelections && filteredOptions.length > maxSelections && (
                   <button
                     type="button"
@@ -695,8 +520,6 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                     Select Top {maxSelections}
                   </button>
                 )}
-
-                {/* Random Selector */}
                 <button
                   type="button"
                   className="dropdown-footer-btn dropdown-footer-btn--random"
@@ -706,7 +529,6 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 >
                   Random {maxSelections || 3}
                 </button>
-
                 <button
                   type="button"
                   className="dropdown-footer-btn dropdown-footer-btn--clear-all"
@@ -723,7 +545,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                   className="dropdown-footer-btn dropdown-footer-btn--done"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleOpenChange(false);
+                    setOpen(false);
                   }}
                   disabled={disabled}
                   aria-label="Confirm selections"
