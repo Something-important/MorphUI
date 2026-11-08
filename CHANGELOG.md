@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/Something-important/MorphUI/compare/v2.1.2...v2.2.0) (2026-11-08)
+
+
+### Features
+
+* **theme:** glass-effect tokens + token-system audit ([#119](https://github.com/Something-important/MorphUI/issues/119)) ([39f354e](https://github.com/Something-important/MorphUI/commit/39f354eda74705a8ffd09087f4a476717ed75c0d))
+
 ## [2.1.2](https://github.com/Something-important/MorphUI/compare/v2.1.1...v2.1.2) (2026-11-08)
 
 
