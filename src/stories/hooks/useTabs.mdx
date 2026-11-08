@@ -1,0 +1,37 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as UseTabsStories from './useTabs.stories';
+
+<Meta of={UseTabsStories} />
+
+# useTabs
+
+Headless tab behavior: active-tab state (controlled/uncontrolled),
+tab-change callback, and validation that the active tab still exists.
+
+## Usage
+
+```tsx
+import { useTabs } from 'morphui-react';
+
+const { activeTab, setActiveTab } = useTabs({
+  items,
+  defaultActiveTab: 'overview',
+  onChange: (id) => console.log('Switched to', id),
+});
+```
+
+## API
+
+```ts
+interface UseTabsOptions {
+  items: Array<{ id: string; disabled?: boolean }>;
+  defaultActiveTab?: string;
+  activeTab?: string;
+  onChange?: (activeTab: string) => void;
+}
+```
+
+## Examples
+
+<Canvas of={UseTabsStories.Default} />
+<Canvas of={UseTabsStories.ItemValidation} />

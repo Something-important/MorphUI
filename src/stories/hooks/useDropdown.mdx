@@ -1,0 +1,50 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as UseDropdownStories from './useDropdown.stories';
+
+<Meta of={UseDropdownStories} />
+
+# useDropdown
+
+Headless dropdown behavior: open/close, selection (single and
+multi-select), keyboard navigation, search, outside-click, and option
+group flattening.
+
+## Usage
+
+```tsx
+import { useDropdown } from 'morphui-react';
+
+const {
+  isOpen,
+  selectedLabels,
+  filteredOptions,
+  toggle,
+  selectOption,
+  isSelected,
+  clear,
+  containerRef,
+} = useDropdown({ options, onChange });
+```
+
+## API
+
+```ts
+interface UseDropdownOptions {
+  options?: DropdownOption[];
+  optionGroups?: DropdownOptionGroup[];
+  value?: string | number | Array<string | number>;
+  defaultValue?: string | number | Array<string | number>;
+  onChange?: (value: string | number | Array<string | number>) => void;
+  multiSelect?: boolean;
+  maxSelections?: number;
+  searchable?: boolean;
+  clearable?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
+  onSearch?: (searchTerm: string) => void;
+}
+```
+
+## Examples
+
+<Canvas of={UseDropdownStories.Default} />
+<Canvas of={UseDropdownStories.MultiSelect} />

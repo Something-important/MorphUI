@@ -1,0 +1,39 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as UseAccordionStories from './useAccordion.stories';
+
+<Meta of={UseAccordionStories} />
+
+# useAccordion
+
+Headless accordion behavior: open/close state, toggle with callback
+fan-out, and disabled/loading guards.
+
+## Usage
+
+```tsx
+import { useAccordion } from 'morphui-react';
+
+const { isOpen, toggle } = useAccordion({
+  defaultOpen: false,
+  onToggle: (open) => console.log(open ? 'opened' : 'closed'),
+});
+```
+
+## API
+
+```ts
+interface UseAccordionOptions {
+  defaultOpen?: boolean;
+  open?: boolean;
+  onToggle?: (isOpen: boolean) => void;
+  onOpen?: () => void;
+  onClose?: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+}
+```
+
+## Examples
+
+<Canvas of={UseAccordionStories.Default} />
+<Canvas of={UseAccordionStories.Disabled} />

@@ -1,0 +1,38 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as UseTreeViewStories from './useTreeView.stories';
+
+<Meta of={UseTreeViewStories} />
+
+# useTreeView
+
+Headless tree-view behavior: expand/collapse, selection, visible-node
+flattening, and keyboard navigation (roving-tabindex pattern).
+
+## Usage
+
+```tsx
+import { useTreeView } from 'morphui-react';
+
+const { expandedSet, selectedId, visibleNodes, toggleExpand, selectNode, itemRefs } = useTreeView({
+  nodes,
+  defaultExpandedNodeIds: ['folder1'],
+});
+```
+
+## API
+
+```ts
+interface UseTreeViewOptions<T = unknown> {
+  nodes: TreeNode<T>[];
+  expandedNodeIds?: string[];
+  defaultExpandedNodeIds?: string[];
+  onExpandChange?: (expandedNodeIds: string[]) => void;
+  selectedNodeId?: string | null;
+  defaultSelectedNodeId?: string | null;
+  onSelect?: (nodeId: string | null, node: TreeNode<T> | null) => void;
+}
+```
+
+## Examples
+
+<Canvas of={UseTreeViewStories.Default} />
