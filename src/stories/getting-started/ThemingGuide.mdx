@@ -52,6 +52,11 @@ themes.dark; // same as darkTheme
 
 ## Custom themes
 
+The **Foundations → Theme Showcase → Custom Theme** story is the fastest way
+to build one interactively: pick a base preset, tweak the primary color,
+background, border radius and font family with live controls, compare base
+vs custom side-by-side, then copy or download the generated theme file.
+
 ### Override individual tokens
 
 Extend a preset and override only the tokens you want to change:
@@ -80,7 +85,9 @@ extending a preset, but you'll need to provide all the tokens your
 components use (or rely on the defaults from `theme.css`).
 
 Use the **Foundations → Token Builder** page to interactively build a
-custom theme and export it as a `.ts` file.
+custom theme token-by-token (all 355 tokens, live preview) and export it
+as a `.ts` file; the **Theme Showcase → Custom Theme** story covers the
+common case of overriding a handful of tokens.
 
 ### Merge multiple themes
 
@@ -124,7 +131,8 @@ function App() {
 ```
 
 This is how the **Foundations → Theme Showcase** page renders all 5
-themes side-by-side without conflict.
+themes side-by-side without conflict — and how its **Custom Theme**
+story previews a custom theme next to its base preset.
 
 ## Reading the active theme in code
 
