@@ -1,0 +1,136 @@
+/* OTPInput.css — uses logical properties for RTL support (v2.0.0+) */
+
+.otp-input-component {
+  display: inline-flex;
+  gap: var(--spacing-sm, 0.5rem);
+  align-items: center;
+}
+
+.otp-input-component__cell {
+  /* Sizing via CSS custom properties — overridden by size variants */
+  --otp-cell-size: 48px;
+  --otp-cell-font-size: var(--font-size-xl, 18px);
+
+  width: var(--otp-cell-size);
+  height: var(--otp-cell-size);
+  text-align: center;
+  font-size: var(--otp-cell-font-size);
+  font-family: var(--font-family-mono, 'JetBrains Mono', monospace);
+  font-weight: var(--font-weight-semibold, 600);
+
+  /* Themed via custom properties with fallbacks */
+  color: var(--otp-custom-text-color, var(--color-text, #111827));
+  background: var(--color-background, #ffffff);
+  border: 2px solid var(--otp-custom-border, var(--color-border, #d1d5db));
+  border-radius: var(--border-radius-md, 8px);
+  outline: none;
+  transition:
+    border-color var(--transition-fast, 0.15s ease-in-out),
+    box-shadow var(--transition-fast, 0.15s ease-in-out);
+
+  /* Remove spinner */
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+.otp-input-component__cell::-webkit-outer-spin-button,
+.otp-input-component__cell::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.otp-input-component__cell::selection {
+  background: var(--otp-custom-accent, var(--color-primary, #0070f3));
+  color: #fff;
+}
+
+/* Focus state */
+.otp-input-component__cell:focus {
+  border-color: var(
+    --otp-custom-focus-color,
+    var(--otp-custom-accent, var(--color-primary, #0070f3))
+  );
+  box-shadow: 0 0 0 3px var(--otp-custom-accent, var(--color-primary, #0070f3)) 19;
+}
+
+/* Filled state — subtle accent border */
+.otp-input-component__cell[data-filled='true'] {
+  border-color: var(--otp-custom-accent, var(--color-primary, #0070f3));
+}
+
+/* Disabled state */
+.otp-input-component--disabled .otp-input-component__cell {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-background-disabled, #f5f5f5);
+}
+
+/* Error state */
+.otp-input-component--error .otp-input-component__cell {
+  border-color: var(--color-danger, #ef4444);
+}
+
+.otp-input-component--error .otp-input-component__cell:focus {
+  border-color: var(--color-danger, #ef4444);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.otp-input-component--error .otp-input-component__cell[data-filled='true'] {
+  border-color: var(--color-danger, #ef4444);
+}
+
+/* Size variants */
+.otp-input-component--sm {
+  gap: var(--spacing-xs, 0.25rem);
+}
+
+.otp-input-component--sm .otp-input-component__cell {
+  --otp-cell-size: 36px;
+  --otp-cell-font-size: var(--font-size-md, 14px);
+}
+
+.otp-input-component--lg .otp-input-component__cell {
+  --otp-cell-size: 56px;
+  --otp-cell-font-size: var(--font-size-2xl, 20px);
+}
+
+/* Variant accents (border color on focus) */
+.otp-input-component--secondary .otp-input-component__cell:focus {
+  border-color: var(--color-secondary, #6b7280);
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+}
+
+.otp-input-component--success .otp-input-component__cell:focus {
+  border-color: var(--color-success, #10b981);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.otp-input-component--warning .otp-input-component__cell:focus {
+  border-color: var(--color-warning, #f59e0b);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.otp-input-component--danger .otp-input-component__cell:focus {
+  border-color: var(--color-danger, #ef4444);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.otp-input-component--info .otp-input-component__cell:focus {
+  border-color: var(--color-info, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.otp-input-component--ghost .otp-input-component__cell {
+  border-color: transparent;
+  background: var(--color-background-secondary, #f9fafb);
+}
+
+.otp-input-component--ghost .otp-input-component__cell:focus {
+  border-color: var(--color-primary, #0070f3);
+  background: var(--color-background, #ffffff);
+}
+
+.otp-input-component--outline .otp-input-component__cell {
+  border-width: 1px;
+}

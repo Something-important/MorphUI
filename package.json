@@ -170,6 +170,10 @@
       "types": "./dist/components/basic/Toggle/index.d.ts",
       "import": "./dist/esm/components/basic/Toggle/Toggle.js"
     },
+    "./otp-input": {
+      "types": "./dist/components/basic/OTPInput/index.d.ts",
+      "import": "./dist/esm/components/basic/OTPInput/OTPInput.js"
+    },
     "./alert": {
       "types": "./dist/components/composition/Alert/index.d.ts",
       "import": "./dist/esm/components/composition/Alert/Alert.js"
@@ -293,6 +297,7 @@
     "./css/stepper": "./dist/css/stepper.css",
     "./css/switch": "./dist/css/switch.css",
     "./css/toggle": "./dist/css/toggle.css",
+    "./css/otp-input": "./dist/css/otp-input.css",
     "./css/alert": "./dist/css/alert.css",
     "./css/combobox": "./dist/css/combobox.css",
     "./css/context-menu": "./dist/css/context-menu.css",

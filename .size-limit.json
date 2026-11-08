@@ -160,6 +160,11 @@
     "limit": "3 KB"
   },
   {
+    "name": "OTPInput",
+    "path": "./dist/esm/components/basic/OTPInput/OTPInput.js",
+    "limit": "3 KB"
+  },
+  {
     "name": "Tooltip",
     "path": "./dist/esm/components/composition/Tooltip/Tooltip.js",
     "limit": "4 KB"
