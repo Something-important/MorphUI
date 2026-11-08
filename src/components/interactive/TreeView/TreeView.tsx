@@ -135,6 +135,10 @@ export const TreeView = forwardRef<HTMLDivElement, TreeViewProps>(
           const isFocused = index === focusIndexRef.current;
 
           return (
+            // Roving-tabindex treeitem: keyboard navigation (arrows, Home/End,
+            // Enter/Space) is handled by the tree container's onKeyDown from the
+            // useTreeView hook; clicking selects and toggles expansion.
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
             <div
               key={node.id}
               ref={(el) => {

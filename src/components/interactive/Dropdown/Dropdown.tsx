@@ -301,6 +301,11 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     return (
+      // role="combobox" + aria props are applied via the getAriaProps spread
+      // below; jsx-a11y can't statically see the role through the spread, so
+      // it flags this as a static element with interactions. The container
+      // is focusable (tabIndex 0) and handles keyboard via onKeyDown.
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={classes}
         style={containerStyle}
@@ -423,6 +428,11 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                               .map((opt) => {
                                 const index = filteredOptions.indexOf(opt);
                                 return (
+                                  // Keyboard navigation is handled by the combobox
+                                  // container's onKeyDown (arrow keys move the active
+                                  // option); listbox options are tabIndex={-1} per the
+                                  // ARIA combobox pattern.
+                                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                                   <li
                                     key={opt.value}
                                     role="option"
@@ -463,6 +473,10 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                         </div>
                       ))
                     : filteredOptions.map((opt, index) => (
+                        // Same ARIA listbox pattern as the searchable variant:
+                        // keyboard nav lives on the combobox container; options
+                        // are not independently focusable (tabIndex={-1}).
+                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                         <li
                           key={opt.value}
                           role="option"
