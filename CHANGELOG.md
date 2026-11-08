@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/Something-important/MorphUI/compare/v2.1.1...v2.1.2) (2026-11-08)
+
+
+### Bug Fixes
+
+* **css:** replace 17 literal \1 backreferences and stray " 19" with valid values ([#116](https://github.com/Something-important/MorphUI/issues/116)) ([b7a0730](https://github.com/Something-important/MorphUI/commit/b7a0730316973cc5818e5e727266c7bde2783c50))
+
 ## [2.1.1](https://github.com/Something-important/MorphUI/compare/v2.1.0...v2.1.1) (2026-11-08)
 
 
