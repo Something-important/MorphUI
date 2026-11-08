@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/Something-important/MorphUI/compare/v2.2.0...v2.3.0) (2026-11-08)
+
+
+### Features
+
+* **storybook:** restore the custom theme story lost in the PR [#85](https://github.com/Something-important/MorphUI/issues/85) rewrite ([#121](https://github.com/Something-important/MorphUI/issues/121)) ([92ccef9](https://github.com/Something-important/MorphUI/commit/92ccef965feba4d1d4f2785661ce505b2c9553b5))
+
 ## [2.2.0](https://github.com/Something-important/MorphUI/compare/v2.1.2...v2.2.0) (2026-11-08)
 
 
